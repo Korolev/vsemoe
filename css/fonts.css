@@ -1,0 +1,51 @@
+@font-face {
+	font-family: 'HelveticaNeue Thin';
+	src: url('../fonts/HelveticaNeueCyr-Thin.eot');
+	src: local('☺'), url('../fonts/HelveticaNeueCyr-Thin.woff') format('woff'), url('../fonts/HelveticaNeueCyr-Thin.ttf') format('truetype'), url('../fonts/HelveticaNeueCyr-Thin.svg') format('svg');
+	font-weight: 100;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'HelveticaNeue Light';
+	src: url('../fonts/HelveticaNeueCyr-Light.eot');
+	src: local('☺'), url('../fonts/HelveticaNeueCyr-Light.woff') format('woff'), url('../fonts/HelveticaNeueCyr-Light.ttf') format('truetype'), url('../fonts/HelveticaNeueCyr-Light.svg') format('svg');
+	font-weight: 200;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'HelveticaNeue';
+	src: url('../fonts/HelveticaNeueCyr-Medium.eot');
+	src: local('☺'), url('../fonts/HelveticaNeueCyr-Medium.woff') format('woff'), url('../fonts/HelveticaNeueCyr-Medium.ttf') format('truetype'), url('../fonts/HelveticaNeueCyr-Medium.svg') format('svg');
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'HelveticaNeue Bold';
+	src: url('../fonts/HelveticaNeueCyr-Bold.eot');
+	src: local('☺'), url('../fonts/HelveticaNeueCyr-Bold.woff') format('woff'), url('../fonts/HelveticaNeueCyr-Bold.ttf') format('truetype'), url('../fonts/HelveticaNeueCyr-Bold.svg') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'PFDinDisplayPro Black';
+	src: url('../fonts/PFDinDisplayPro-Black.eot');
+	src: local('☺'), url('../fonts/PFDinDisplayPro-Black.woff') format('woff'), url('../fonts/PFDinDisplayPro-Black.ttf') format('truetype'), url('../fonts/PFDinDisplayPro-Black.svg') format('svg');
+	font-weight: 900;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PFDinDisplayPro Bold';
+	src: url('../fonts/pfdindisplayprobold.eot');
+	src: local('☺'), url('../fonts/pfdindisplayprobold.woff') format('woff'), url('../fonts/pfdindisplayprobold.ttf') format('truetype'), url('../fonts/pfdindisplayprobold.svg') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'PFDinDisplayPro';
+	src: url('../fonts/PFDinDisplayPro-Regular.eot');
+	src: local('☺'), url('../fonts/PFDinDisplayPro-Regular.woff') format('woff'), url('../fonts/PFDinDisplayPro-Regular.ttf') format('truetype'), url('../fonts/PFDinDisplayPro-Regular.svg') format('svg');
+	font-weight: 400;
+	font-style: normal;
+}
+

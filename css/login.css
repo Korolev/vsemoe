@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+a {
+    color: #0076a3;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+ul li {
+    list-style: none;
+}
+
+input {
+    border: none;
+}
+
+    input[type='text'], input[type='email'], input[type='password'] {
+        height: 37px;
+        background: #fff;
+        border: 1px solid #f0f0f0;
+        box-shadow: inset 0 1px 2px #aaa;
+        border-radius: 3px;
+        font-size: 16px;
+        padding: 0 17px;
+        color: rgba(0, 0, 0, 0.85);
+    }
+
+    input[type='submit'],
+    input[type='button'] {
+        height: 32px;
+        min-width: 118px;
+        filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FF0097ca,EndColorStr=#FF00679a)!important;
+        background-image: -moz-linear-gradient(top,#0097ca 0,#00679a 100%);
+        background-image: -ms-linear-gradient(top,#0097ca 0,#00679a 100%)!important;
+        background-image: -o-linear-gradient(top,#0097ca 0,#00679a 100%);
+        background-image: -webkit-linear-gradient(top,#0097ca 0,#00679a 100%);
+        background-image: linear-gradient(to bottom,#0097ca 0,#00679a 100%)!important;
+        background-color: #00679a;
+        border-top: 1px solid #1c70c1;
+        border-bottom: 1px solid #064480;
+        border-left: 1px solid #0c5dab;
+        border-right: 1px solid #0c5dab;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.25);
+        padding: 0 10px;
+        font-family: Helvetica;
+        font-weight: bold;
+        font-size: 14px;
+        color: #fff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        letter-spacing: 1px;
+        line-height: 32px;
+        cursor: pointer;
+    }
+
+        input[type='submit']:active,
+        input[type='button']:active {
+            -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,0.25);
+            -moz-box-shadow: inset 0 3px 5px rgba(0,0,0,0.25);
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.25);
+        }
+
+    input::-webkit-input-placeholder {
+        letter-spacing: 0px!important;
+        color: #aaaaaa!important;
+    }
+
+    input:-moz-placeholder {
+        letter-spacing: 0px!important;
+        color: #aaaaaa!important;
+    }
+
+.placeholder {
+    letter-spacing: 0px!important;
+    color: #aaaaaa!important;
+}
+
+.content .form {
+    position: absolute;
+    left: 134px;
+    top: 90px;
+    width: 325px;
+    font-family: Verdana, Lucida Grande, Helvetica, Arial san-serif;
+    color: #888888;
+}
+
+    .content .form p {
+        font-size: 16px;
+    }
+
+    .content .form h1 {
+        font-weight: normal;
+        font-size: 25px;
+        margin: 0 0 25px;
+        font-family: Verdana, Lucida Grande, Helvetica, Arial san-serif;
+        color: #454545;
+    }
+
+    .content .form .form_item {
+        height: 54px;
+        position: relative;
+    }
+        /*.content .form .form_item p {color: #636363;}*/
+        .content .form .form_item input {
+            width: 100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .content .form .form_item input[type='password'] {
+                letter-spacing: 5px;
+            }
+
+                .content .form .form_item input[type='password']::-webkit-input-placeholder {
+                    letter-spacing: 0px;
+                }
+
+                .content .form .form_item input[type='password']:-moz-placeholder {
+                    letter-spacing: 0px;
+                }
+
+input[type='password'].error,
+input[type='email'].error {
+    border: 1px solid red;
+}
+
+.content .form .form_item .forgot {
+	display: inline-block;
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	top: 8px;
+	right: 7px;
+	background: #606c6f;
+	border-radius: 3px;
+	color: #ebebeb;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 22px;
+	text-decoration: none;
+}
+
+    .content .form .form_item .forgot:hover {
+        background: #424c58;
+    }
+
+.content .form .form_item input[type='reset'] {
+    position: absolute;
+    background: url(../images/reset.png) no-repeat center center;
+    width: 16px;
+    height: 16px;
+    top: 12px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.content .form .form_item.remember {
+    text-align: right;
+    font-size: 11px;
+    color: #636363;
+}
+
+    .content .form .form_item.remember input[type='checkbox'] {
+        width: auto;
+        margin-right: 4px;
+    }
+
+    .content .form .form_item.remember label {
+        cursor: pointer;
+    }
+
+.content .form .form_link {
+    display: inline-block;
+    margin: 50px 0 0;
+}
+
+.content .cup {
+    position: absolute;
+    width: 216px;
+    height: 326px;
+    right: 146px;
+    top: 90px;
+    background: url(../images/cup.png) no-repeat 0 0;
+}
+
+.content .hole {
+    position: absolute;
+    width: 14px;
+    height: 100%;
+    left: 16px;
+    top: 0;
+    background: url(../images/hole.png) repeat 0 0;
+}
+
+.content .slash {
+    position: absolute;
+    width: 2px;
+    height: 239px;
+    left: 530px;
+    top: 106px;
+    background: url(../images/slash.png) no-repeat 0 0;
+}
+
+.footer {
+    margin: 0 0 20px;
+    color: #636363;
+    font-size: 11px;
+}
+
+    .footer a {
+        color: #02a3c5;
+    }
+
+    .footer .border {
+        padding: 8px 8px 8px 15px;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        margin: 0 0 30px;
+    }
+
+        .footer .border .support {
+            display: inline-block;
+        }
+
+        .footer .border .menu {
+            float: right;
+            color: #e0e0e0;
+        }
+
+            .footer .border .menu a {
+                display: inline-block;
+                margin: 0 8px;
+            }
+
+    .footer .copyright {
+        text-align: center;
+        color: #ccc;
+        padding-bottom: 20px;
+    }
+
+        .footer .copyright a, .footer .copyright p {
+            display: inline-block;
+            margin: 0 18px;
+        }
+
+        .footer .copyright p {
+            color: #636363;
+        }
+
+.chertochka {
+    width: 2px;
+    height: 16px;
+    background: url(../images/chertochka.png) no-repeat 0 0;
+}
+
+.errortext {
+    padding-left: 10px;
+}
+
+.error {
+    color: red;
+}
+
+label.error, p.error {
+    font-size: 12px;
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.hiddenImp {
+    display: none !important;
+}
+
+.content .form .form_item {
+    height: auto;
+    margin-bottom: 20px;
+}
+
+    .content .form .form_item .error {
+        color: #ff0000;
+    }
+
+.content div img.error {
+    float: right;
+    margin-right: -40px;
+    margin-top: 7px;
+}
+
+span.email {
+    color: #02a3c5;
+}
+
+form.changepass p {
+    font-size: 14px;
+}
+
+.decor {
+    margin-top: 58px;
+}
+
+.shift {
+    margin-right: 18px;
+}
+
+.allErrors {
+    /*background: #cccccc;*/
+    width: 325px;
+    margin-bottom: 10px;
+}
+
+.resetBox, .resetBoxPassword {
+    position: absolute;
+    background: url(../images/reset.png) no-repeat center center;
+    width: 16px;
+    height: 16px;
+    top: 12px;
+    right: 10px;
+    cursor: pointer;
+}
