@@ -160,6 +160,7 @@
                 dataType: 'JSONP',
                 data: data,
                 success: function (response) {
+                    console.log(response);
                     if (response.status == 1) {
                         account.getAccountList(response.data);
                     } else {
