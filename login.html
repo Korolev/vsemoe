@@ -24,28 +24,28 @@
     <div class="wrap">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter22607524 = new Ya.Metrika({id:22607524,
-                    webvisor:true,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true});
-        } catch(e) { }
-    });
+// (function (d, w, c) {
+//     (w[c] = w[c] || []).push(function() {
+//         try {
+//             w.yaCounter22607524 = new Ya.Metrika({id:22607524,
+//                     webvisor:true,
+//                     clickmap:true,
+//                     trackLinks:true,
+//                     accurateTrackBounce:true});
+//         } catch(e) { }
+//     });
 
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+//     var n = d.getElementsByTagName("script")[0],
+//         s = d.createElement("script"),
+//         f = function () { n.parentNode.insertBefore(s, n); };
+//     s.type = "text/javascript";
+//     s.async = true;
+//     s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
+//     if (w.opera == "[object Opera]") {
+//         d.addEventListener("DOMContentLoaded", f, false);
+//     } else { f(); }
+// })(document, window, "yandex_metrika_callbacks");
 </script>
 <noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
@@ -454,8 +454,9 @@
                                     "Апреля", "Мая", "Июня",
                                     "Июля", "Августа", "Сентября",
                                     "Октября", "Ноября", "Декабря"];
+        var calendarMonthNamesLoc = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
         var date = new Date();
-        var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()];
+        var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].toLowerCase()+'.';
         //var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()] + ' ' + date.getFullYear();
         $(".noticeDate").html(time);
         //window.setTimeout(arguments.callee, 1000);

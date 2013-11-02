@@ -10,7 +10,7 @@ jQuery.validator.addMethod("existEmailRegister", function (value, element) {
     return !$(element).data("emailexist");
 }, "Данный email уже зарегестрирован в системе");
 var userToken = 0;
-var dataProcessUrl = "https://api.vsemoe.com";
+var dataProcessUrl = "http://dev.vsemoe.com";
 $.extend({
     getUrlVars: function () {
         var vars = [], hash;

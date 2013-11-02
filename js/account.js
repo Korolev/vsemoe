@@ -1,4 +1,4 @@
-﻿var account = {
+var account = {
     tk: null,
     init: function (tk) {
         account.tk = tk;
@@ -160,7 +160,6 @@
                 dataType: 'JSONP',
                 data: data,
                 success: function (response) {
-                    console.log(response);
                     if (response.status == 1) {
                         account.getAccountList(response.data);
                     } else {
@@ -225,7 +224,7 @@
         }
         $("#transPaging").find(".paging[p=selected]").text(selectPage);
     },
-    dataProcessUrl: "https://api.vsemoe.com",
+    dataProcessUrl: "http://dev.vsemoe.com",
     getUrl: function (url) {
         return account.dataProcessUrl + url;
     },
@@ -247,10 +246,79 @@
     setLastTransaction1: { amount: 0, date: 0 },
     baseTypeAccount: ["IN", "OUT", "CASH", "BANK", "CARD", "LOAN", "ELECTRON", "OTHER"],
     getAccountList: function (data) {
-        var trs = [];
+        var trs = {};
         var childs = [];
         var imp = [];
         var oth = [];
+        function getGroupTransactions(accArr) {
+            console.log(accArr);
+            var url = "/transaction/list",
+                accAds = [];
+
+            $.each(accArr, function(k, acc){
+                accAds.push(acc.a);
+            });               
+                
+            $.ajax({
+                type: "POST",
+                url: account.getUrl(url),
+                cache: false,
+                dataType: 'JSONP',
+                data: { lang: "ru", token: account.tk, account_id: accAds.join(',')},
+                success: function (response) {
+                    if (response.status == 1) {
+                        var transactions = [];
+                        var currentDate = new Date();
+                        var currentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                        currentMonth = Date.parse(currentMonth);
+                        
+                        $.each(response.data, function(k, trData){
+                            // if (((trData.created) * 1000) >= currentMonth) {
+                            if (true) {        
+                                transactions.push(trData);
+                                account.transactions.push(trData);
+                            }
+                            //TODO : calculate this
+                            // acc.s = account.trasactionSumAmount(transactions, acc.t, acc.g);
+                            // acc.tr = transactions;
+                            //TODO : I stoprd here!!
+                            // if (acc.p != 0) childs.push(acc);
+                            // else {
+                            //     if (acc.i != 0) imp.push(acc);
+                            //     else oth.push(acc);
+                            // }    
+                        });
+                        
+                        $.each(accArr,function(i,acc){
+                            var acc_tr = [];
+                            $.each(transactions,function(k,t){        
+                                if(t.from_id == acc.a || t.to_id == acc.a){
+                                    acc_tr.push(t);
+                                }     
+                            });
+                            acc.tr = acc_tr;
+                            // console.log(acc.d);
+                            // console.log(acc);
+                            // $.each(acc_tr,function(k,t){
+                            //     console.log(JSON.stringify(t));
+                            // })
+                            acc.s = account.trasactionSumAmount(acc_tr, acc.t, acc.g);
+                            acc_tr = [];
+                            if (acc.p != 0) childs.push(acc);
+                            else {
+                                if (acc.i != 0) imp.push(acc);
+                                else oth.push(acc);
+                            }    
+                        });
+                        
+                    } else console.log("error transaction set: ");
+                    var count = imp.length + oth.length + childs.length;
+                    if (count == data.length) {
+                        account.setObjIncludeChilds(imp, oth, childs);
+                    }
+                }
+            });
+        };
         function getTransactions(acc) {
             var url = "/transaction/list";
             $.ajax({
@@ -289,7 +357,7 @@
                     }
                 }
             });
-        }
+        };
         function getSum(obj) {
             var url = "/account/sum";
             $.ajax({
@@ -306,14 +374,51 @@
                     } else console.log("error sum transaction #: ", obj);
                 }
             });
-        }
+        };
+        function getGroupSum(objSet) {
+            var url = "/account/sum",
+                accIds = [],
+                accArr = [],
+                hashFromResponse = function(arr){
+                    var res = {};
+                    for(var i = 0, j = arr.length; i<j ;i +=1){
+                        res[arr[i].account_id] = arr[i].sum;
+                    }
+                    return res;
+                };
+                
+            $.each(objSet, function(k,acc){
+                accIds.push(acc.account_id);
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: account.getUrl(url),
+                cache: false,
+                dataType: 'JSONP',
+                data: { lang: "ru", token: account.tk, account_id: accIds.join(',') },
+                success: function (response) {
+                    if (response.status == 1) {
+                        var hashRes = hashFromResponse(response.data)
+                        $.each(objSet, function(k,obj){
+                            var acc = account.setObjExcepCh(obj);
+                            acc.sum = hashRes[obj.account_id];
+                            accArr.push(acc);
+                            // getTransactions(acc); 
+                        });
+                        getGroupTransactions(accArr); 
+                    } else console.log("error sum transaction #: ", accIds);
+                }
+            });
+        };
         if (data && data.length > 0) {
             account.accounts[0] = "";
             for (var i = 0; i < data.length; i++) {
                 account.totalLimited = account.totalLimited + parseFloat(data[i].creditlimit);
-                getSum(data[i]);
+                // getSum(data[i]);
                 account.accounts[data[i].account_id] = data[i].description;
             }
+            getGroupSum(data);
         }
     },
     setObjIncludeChilds: function (imp, oth, childs) {
@@ -391,7 +496,20 @@
     },
 
     setObjExcepCh: function (obj) {
-        return { a: obj.account_id, c: obj.currency_id, d: obj.description, g: obj.group, i: obj.importance, p: obj.parent, t: account.baseTypeAccount.indexOf(obj.type), ch: [], s: 0, sum: 0, tr: [], limited: obj.creditlimit };
+        return { 
+            a: obj.account_id, 
+            c: obj.currency_id, 
+            d: obj.description, 
+            g: obj.group, 
+            i: obj.importance, 
+            p: obj.parent, 
+            t: account.baseTypeAccount.indexOf(obj.type), 
+            ch: [], 
+            s: 0, 
+            sum: 0, 
+            tr: [], 
+            limited: obj.creditlimit 
+        };
     },
     getChildAccounts: function (a, childs) {
         var ch = [];
