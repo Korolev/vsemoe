@@ -136,7 +136,7 @@ $(document).ready(function () {
         var password = $("#modalLogin .password").val();
 
         $.ajax({
-            url: "http://dev.vsemoe.com/user/login",
+            url: __processUrl + "/user/login",//"http://dev.vsemoe.com/user/login",
             type: 'POST',
             dataType: 'JSONP',
             data: { user: login, password: password,lang:"ru" },

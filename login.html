@@ -16,6 +16,10 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <link href="css/login.css" rel="stylesheet" type="text/css">
     <link href="css/personal.css" rel="stylesheet">
+    
+    <script>
+        var __processUrl = "http://dev.vsemoe.com" // "https://api.vsemoe.com" // 
+    </script>
 
     <script src="js/lib/modernizr-2.6.2.min.js"></script>
 </head>
@@ -456,7 +460,7 @@
                                     "Октября", "Ноября", "Декабря"];
         var calendarMonthNamesLoc = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
         var date = new Date();
-        var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].toLowerCase()+'.';
+        var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].toUpperCase();
         //var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()] + ' ' + date.getFullYear();
         $(".noticeDate").html(time);
         //window.setTimeout(arguments.callee, 1000);

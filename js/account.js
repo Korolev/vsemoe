@@ -224,7 +224,7 @@ var account = {
         }
         $("#transPaging").find(".paging[p=selected]").text(selectPage);
     },
-    dataProcessUrl: "http://dev.vsemoe.com",
+    dataProcessUrl: __processUrl || "http://dev.vsemoe.com",
     getUrl: function (url) {
         return account.dataProcessUrl + url;
     },
@@ -251,7 +251,6 @@ var account = {
         var imp = [];
         var oth = [];
         function getGroupTransactions(accArr) {
-            console.log(accArr);
             var url = "/transaction/list",
                 accAds = [];
 
@@ -297,12 +296,10 @@ var account = {
                                 }     
                             });
                             acc.tr = acc_tr;
-                            // console.log(acc.d);
+                            //TODO:
                             // console.log(acc);
-                            // $.each(acc_tr,function(k,t){
-                            //     console.log(JSON.stringify(t));
-                            // })
-                            acc.s = account.trasactionSumAmount(acc_tr, acc.t, acc.g);
+                            // console.log(acc_tr);
+                            acc.s = account.trasactionSum(acc);
                             acc_tr = [];
                             if (acc.p != 0) childs.push(acc);
                             else {
@@ -334,7 +331,8 @@ var account = {
                         var currentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
                         currentMonth = Date.parse(currentMonth);
                         for (var d = 0; d < response.data.length; d++) {
-                            if (((response.data[d].created) * 1000) >= currentMonth) {
+                            //if (((response.data[d].created) * 1000) >= currentMonth) {
+                            if (true) {
                                 var tr = trs[response.data[d].transaction_id];
                                 if (tr == undefined) {
                                     transactions.push(response.data[d]);
@@ -343,8 +341,10 @@ var account = {
                                 }
                             }
                         }
-                        acc.s = account.trasactionSumAmount(transactions, acc.t, acc.g);
+                        //acc.s = account.trasactionSumAmount(transactions, acc.t, acc.g);
                         acc.tr = transactions;
+                        //cnanges bu mk
+                        acc.s = account.trasactionSum(acc);
                         if (acc.p != 0) childs.push(acc);
                         else {
                             if (acc.i != 0) imp.push(acc);
@@ -521,6 +521,43 @@ var account = {
             }
         }
         return ch;
+    },
+    trasactionSum: function (acc) {
+        var sum = 0,
+            id = acc.a,
+            currency = acc.c,
+            group = acc.g,
+            type = acc.t,
+            tr = acc.tr,
+            limit = parseFloat(acc.limited);
+        if (tr && tr.length > 0) {
+            for (var i = 0; i < tr.length; i++) {
+                var amount = parseFloat(tr[i].amount) * (tr[i].from_id == id ? 1 : -1);
+                var date = parseInt(tr[i].created);
+                
+                sum += amount;    
+
+                if (group == 0) {
+                    if (type == 0) account.totalGain = account.totalGain + amount;
+                    if (type == 1) account.totalConsumption = account.totalConsumption + amount;
+                    if (date >= account.getLastTransactionDate) {
+                        account.getLastTransactionDate = date;
+                        account.getLastTransactionAmount = amount;
+                    }
+                }else {
+                    if (date >= account.getLastTransactionDate1) {
+                        account.getLastTransactionDate1 = date;
+                        account.getLastTransactionAmount1 = amount;
+                    }
+                }
+                if (group == 1) account.totalActive = account.totalActive + amount;
+                if (group == 2) account.totalPassive = account.totalPassive + amount;
+            }
+            if(limit){
+                sum -= limit;
+            }
+        }
+        return sum;
     },
     trasactionSumAmount: function (arr, t, g) {
         var sum = 0;

@@ -1,4 +1,4 @@
-﻿/*голубое верхнее меню*/
+/*голубое верхнее меню*/
 .login-nav li a {
     font-family: "Verdana", "Geneva CY", sans-serif;
     font-size: 13px;
@@ -229,7 +229,8 @@ footer .copy {
     padding: 0px;
     margin: 0px auto 80px;
     background-color: #FFFFFF;
-    box-shadow: 0 3px 50px rgba(209, 230, 234, 1);
+    box-shadow: 0 3px 25px rgba(209, 230, 234, 1);
+    /*box-shadow: 0 3px 50px rgba(209, 230, 234, 1); - OLD value*/
     z-index: 1000;
 }
 
@@ -524,6 +525,8 @@ footer .copy {
         font-size: 14px;
         color: #aeaeae;
         margin-left: 2px;
+        
+        font-size: 12px;
     }
 
     .totalPercent .trend {
@@ -531,6 +534,12 @@ footer .copy {
         width: 10px;
         height: 12px;
         margin: 3px;
+        
+        background-size: contain;
+        float: right;
+        height: 10px;
+        margin: 1px;
+        width: 8px;
     }
 
 .savingBox {
@@ -980,6 +989,11 @@ footer .copy {
         width: 10px;
         height: 12px;
         margin: 1px;
+        
+        background-size: contain;
+        height: 10px;
+        margin: 1px;
+        width: 8px;
     }
 
 .noticeDate {
