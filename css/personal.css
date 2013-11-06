@@ -4,6 +4,7 @@
     font-size: 13px;
     font-weight: 400;
     color: #02a3c5;
+    color: #33ccdd;
     text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
     padding: 0 16px;
     text-transform: none;
@@ -15,7 +16,8 @@
 /*голубое верхнее меню при наведении и клике*/
 .login-nav ul li.active a,
 .login-nav ul li a:hover {
-	color: 02a3c5;
+	color: #02a3c5;
+	color: #33ccdd;
 	background: 0;
 	padding: 0 16px;
 	box-shadow: none;
