@@ -27,9 +27,24 @@
 </head>
 <body class="inner">
     <div>
-        <input type="text" data-bind="value:login">
-        <input type="password" data-bind="value:password">
-        <button data-bind="click:loginAction">Login</button>
+        <table>
+            <tr>
+                <td>Login:</td>
+                <td><input type="text" data-bind="value:login"></td>
+            </tr>
+            <tr>
+                <td>Pass:</td>
+                <td><input type="password" data-bind="value:password"></td>
+            </tr>
+            <tr>
+                <td>Serv:</td>
+                <td><select data-bind="options:ARRAY_OF_URLS, value:__processUrl"></select></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button data-bind="click:loginAction">Login</button></td>
+            </tr>
+        </table>
     </div>
     <div>
         <div id="mk_spinner" data-bind="visible:showSpinner">Loading...</div>
@@ -119,7 +134,8 @@
             this.valueHasMutated();
             return this;
         };
-        var __processUrl = "http://dev.vsemoe.com"; // "https://api.vsemoe.com"; // 
+        var __processUrl = "https://api.vsemoe.com"; // "http://dev.vsemoe.com"; //
+        var ARRAY_OF_URLS = ["https://api.vsemoe.com","http://dev.vsemoe.com"];
         
         var ApplicationViewModel = function(){
             var self = this,
@@ -130,7 +146,7 @@
                     }
                     self.showSpinner(true);
                     $.ajax({
-                        url: __processUrl+url,
+                        url: self.__processUrl()+url,
                         type: 'POST',
                         dataType: 'JSONP',
                         data: data,
@@ -142,6 +158,8 @@
                         }
                     });
                 };
+                
+            this.__processUrl = ko.observable("http://dev.vsemoe.com");
             
             this.login = ko.observable("ikaloshina@mail.ru");
             this.password = ko.observable();
@@ -193,6 +211,7 @@
                             $.each(response.data, function(k,v){
                                self.accountNames[v.account_id] = v.description;
                             });
+                            self.accounts.removeAll();
                             self.accounts.pushAll(response.data);
                         } else {
                             alert(response.text);
@@ -207,7 +226,7 @@
                    $.each(val,function(k,v){
                        accAds.push(v.account_id);
                    })
-                   createRequest("/transaction/list",{account_id: accAds.join(',')},function (response) {
+                   createRequest("/transaction/list",{/*account_id: accAds.join(',')*/},function (response) {
                     self.showSpinner(false);
                         if (response.status == 1) {
                             var data = response.data,
@@ -219,7 +238,7 @@
                                 date = new Date(data[k].created*1000);
                                 data[k].createdStr = date.toString();
                             })
-                            
+                            self.transactions.removeAll();
                             self.transactions.pushAll(data);
                         } else {
                             alert(response.text);
