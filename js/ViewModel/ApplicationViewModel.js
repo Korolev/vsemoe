@@ -125,6 +125,7 @@ var ApplicationViewModel = function () {
         var user = self.user;
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
             user.token(r.token);
+            location.hash = "observe";
         })
     };
 
