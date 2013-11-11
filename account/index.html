@@ -471,9 +471,12 @@
                                         <div class="checkbox"></div>
                                     </td>
                                     <td align="left" class="tbody1" data-bind="textdate:created"></td>
-                                    <td align="left" a="66792" class="tbody2" data-bind="accountname:from_id"></td>
+                                    <td align="left" a="66792" class="tbody2">
+                                        <span data-bind="accountname:from_id"></span>
+                                        <span data-bind=""> &rarr;</span>
+                                    </td>
                                     <td align="left" a="66695" class="tbody3" data-bind="accountname:to_id"></td>
-                                    <td align="right" class="tbody4" data-bind="digitext:amount"></td>
+                                    <td align="right" class="tbody4" data-bind="digitext:amount, css:$root.getCssClass($data)"></td>
                                     <td align="left" class="tbody5" data-bind="text:description"><div class="split"></div></td>
                                 </tr>
                             </tbody>
@@ -484,21 +487,24 @@
 
                 <!---paging-->
                 <div class="pagingBox" id="transPaging" style="cursor: pointer;">
-                    <div class="paging imgfirst" p="first" style="display: none;"></div>
-                    <div class="paging imgprev" p="prev" style="display: none;"></div>
-                    <div class="paging imgcolor" p="prev2" style="display: none;">-1</div>
-                    <div class="paging imgcolor" p="prev1" style="display: none;">0</div>
-                    <div class="paging imgnone" p="selected" style="font-weight: bold; display: none;">1</div>
-                    <div class="paging imgcolor" p="next1" style="display: none;">2</div>
-                    <div class="paging imgcolor" p="next2" style="display: none;">3</div>
-                    <div class="paging imgnext" p="next" style="display: none;"></div>
-                    <div class="paging imglast" p="last" style="display: none;"></div>
-                    <input type="text" class="selectPage pag" style="display: none;"/>
-
-                    <div class="pagingtext pag" style="display: none;">of</div>
-                    <div class="pagingcount pag" style="display: none;"></div>
-                    <div class="pagingsubmit pag" style="display: none;"></div>
+                    <div class="paging imgfirst" data-bind="click:function(){$root.currentPage(1)}"></div>
+                    <div class="paging imgprev"  data-bind="click:function(){$root.currentPage($root.currentPage()-1)}"></div>
+                    <!-- ko foreach: $root.totalPagesArr-->
+                        <div class="paging imgcolor" data-bind="
+                        text:$index()+1,
+                        click:function(){$root.currentPage($index()+1)},
+                        css:{
+                        'bold imgnone':$index()+1 == $root.currentPage(),
+                        imgcolor: $index()+1 != $root.currentPage()
+                        }"></div>
+                    <!-- /ko -->
+                    <div class="paging imgnext" p="next"  data-bind="click:function(){$root.currentPage($root.currentPage()+1)}"></div>
+                    <div class="paging imglast" p="last"  data-bind="click:function(){$root.currentPage($root.totalPages)}"></div>
                 </div>
+                <!--<input type="text" class="selectPage pag" style="display: none;"/>-->
+                <!--<div class="pagingtext pag" style="display: none;">of</div>-->
+                <!--<div class="pagingcount pag" style="display: none;"></div>-->
+                <!--<div class="pagingsubmit pag" style="display: none;"></div>-->
             </td>
         </tr>
     </table>

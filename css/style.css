@@ -15,6 +15,10 @@ input[type=text], textarea {
     outline: none;
 }
 
+.bold{
+    font-weight: bold;
+}
+
 div, header, footer {
     position: relative;
 }
