@@ -20,6 +20,7 @@ var UserViewModel = function () {
         ServerApi.options.token = val;
         var currYear = (new Date()).getFullYear();
         if(self.remember()){
+          console.log("setcookie");
             setCookie(ApplicationSettings.cookieName,val,{expires:new Date([currYear*1+1,12,30])});
         }
     });
