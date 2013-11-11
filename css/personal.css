@@ -1058,16 +1058,18 @@ table {
     line-height: 30px;
 }
 
-.baseTable tbody tr {
-    border-top: 1px solid #dfdfdf;
-    border-bottom: 1px solid #dfdfdf;
-    border-right: 1px solid #fff;
-    border-left: 1px solid #fff;
+.baseTable tbody tr{
+    border-width: 1px;
 }
 
-    .baseTable tbody tr:nth-child(odd) {
-        background: #f6f6f5;
-    }
+.baseTable tbody tr:nth-child(odd) {
+    background: #f6f6f5;
+    border-top: 1px solid #f6f6f5;
+}
+
+.baseTable tbody tr.tr_newday {
+    border-top:1px solid #dfdfdf ;
+}
 
     .baseTable tbody tr:hover {
         filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFD9DFE4,EndColorStr=#FFD2D7DC)!important;
@@ -1088,27 +1090,31 @@ table {
 }
 
 .thead1 {
-    color: #ccc;
+    color: #959595;
 }
 
 .thead2 {
-    color: #ccc;
+    color: #959595;
 }
 
 .thead3 {
-    color: #ccc;
+    color: #959595;
 }
 
 .thead4 {
-    color: #ccc;
+    color: #959595;
 }
 
 .thead5 {
-    color: #ccc;
+    color: #959595;
     font-style: italic;
 }
 
 .tbody1 {
+    color: #ccc;
+}
+
+.tr_newday .tbody1 {
     color: #888;
 }
 
@@ -1128,18 +1134,6 @@ table {
 .tbody5 {
     color: #252525;
     font-style: italic;
-}
-
-.split {
-    width: 15px;
-    height: 15px;
-    margin: 0 8px;
-    vertical-align: middle;
-    background-image: url("../images/split.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    display: inline-block;
-    cursor: pointer;
 }
 
 .edit {
@@ -1186,106 +1180,6 @@ table {
     height: 12px;
 }
 
-.checkbox {
-    width: 12px;
-    height: 12px;
-    background-color: #FFFFFF;
-    border: 1px solid #B5BCC5;
-    border-radius: 2px;
-    box-shadow: inset 0 1px 3px #B5BCC5;
-    /*margin: auto;*/
-    top: 2px;
-}
-.pagingBox {
-    float: right;
-    margin: 10px 20px;
-    font-family: Arial;
-}
-.paging {
-    display: inline-block;
-}
-.imgnone {
-    width: 26px;
-    line-height: 19px;
-    height: 19px;
-    text-align: center;
-    color: #252525;
-    top: 2px;
-}
-.imgcolor {
-    width: 26px;
-    line-height: 19px;
-    height: 19px;
-    background-color: #f0f4f4;
-    box-shadow: 0 0 1px #f0f4f4;
-    border-radius: 2px;
-    text-align: center;
-    color: #187585;
-    top: 2px;
-}
-.imgfirst {
-    background-image: url("../images/imgfirst.png");
-    width: 22px;
-    height: 19px;
-    top: 7px;
-}
-.imgprev {
-    background-image: url("../images/imgprev.png");
-    width: 22px;
-    height: 19px;
-    top: 7px;
-}
-.imgnext {
-    background-image: url("../images/imgnext.png");
-    width: 22px;
-    height: 19px;
-    top: 7px;
-}
-.imglast {
-    background-image: url("../images/imglast.png");
-    width: 22px;
-    height: 19px;
-    top: 7px;
-}
-.pagingBox input[type='text'] {
-    display: inline-block;
-    width: 26px;
-    height: 20px;
-    text-align: center;
-    border-radius: 2px;
-    border: 1px solid #d6e2e2;
-    box-shadow: none;
-    font-size: 12px;
-    padding: 0 4px;
-    color: #252525;
-    vertical-align: middle
-}
-.pagingcount {
-    display: inline-block;
-    width: 33px;
-    line-height: 20px;
-    height: 20px;
-    text-align: center;
-    border-radius: 2px;
-    border: 1px solid #d6e2e2;
-    top: 1px;
-}
-.pagingtext {
-    display: inline-block;
-    line-height: 19px;
-    height: 19px;
-    text-align: center;
-    top: 2px;
-}
-.pagingsubmit {
-    display: inline-block;
-    background-image: url("../images/imgsubmit.png");
-    top: 8px;
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    text-align: center;
-}
 /*----------------------------------------dateList----------------------------------------*/
 .dateList {
     width: 128px;

@@ -6,9 +6,11 @@ var ApplicationSettings = {
 };
 
 var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
-    "Апреля", "Мая", "Июня",
-    "Июля", "Августа", "Сентября",
-    "Октября", "Ноября", "Декабря"];
+        "Апреля", "Мая", "Июня",
+        "Июля", "Августа", "Сентября",
+        "Октября", "Ноября", "Декабря"],
+    dayOfWeeks = [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+
 
 function getCookie(name) {
     var matches = document.cookie.match(new RegExp(
@@ -47,6 +49,13 @@ function setCookie(name, value, options) {
 
 var ApplicationViewModel = function () {
     var self = this,
+        range = function (from, to) {
+            var arr = [];
+            for (; from <= to; from += 1) {
+                arr.push(from);
+            }
+            return arr;
+        },
         actionMap = {
             "login": "login",
             "register": "login",
@@ -83,7 +92,7 @@ var ApplicationViewModel = function () {
 //Paging
     this.currentPage = ko.observable(1);
     this.pageSize = 15;
-    this.totalPages = 1;
+    this.totalPages = ko.observable(1);
     this.totalPagesArr = ko.observableArray([1]);
 
     this.transactions.subscribe(function (val) {
@@ -91,33 +100,56 @@ var ApplicationViewModel = function () {
             self.transFiltered = [];
             $.each(val, function (k, t) {
                 if (t.hidden == "0" && t.template == "0" && !!t.finished) {
+                    t.amount = parseFloat(t.amount).toFixed(2);
                     self.transFiltered.push(t);
                 }
             });
             self.transFiltered.sort(function (a, b) {
                 return a.created > b.created ? -1 : 1;
             });
-            var tLen = self.transFiltered.length;
-            self.totalPages = tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1;
-            self.totalPagesArr(new Array(self.totalPages));
-            self.transactionsSetGen()
+            var tLen = self.transFiltered.length,
+                pagesNums = [];
+            self.totalPages(tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1);
+            self.totalPagesArr.removeAll();
+            self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
+            self.transactionsSetGen();
         }
     });
 
     this.currentPage.subscribe(function (val) {
-        if (val > self.totalPages || val < 1) {
+        if (val > self.totalPages() || val < 1) {
             self.currentPage(1);
         } else {
             self.transactionsSetGen();
+            if (val - 2 > 0 && (val + 2) <= self.totalPages()) {
+                self.totalPagesArr(range(val - 2, val + 2));
+            } else if (val < 5) {
+                self.totalPagesArr(range(1, 5));
+            } else {
+                self.totalPagesArr(range(self.totalPages() - 4, self.totalPages()));
+            }
         }
     });
 
     this.transactionsSetGen = function () {
         var res = [],
             i = (self.currentPage() - 1) * self.pageSize,
-            j = self.currentPage() * self.pageSize;
+            j = self.currentPage() * self.pageSize,
+            dayOfWeek = -1,
+            calcDay;
         for (; i < j; i += 1) {
-            if (self.transFiltered[i])res.push(self.transFiltered[i]);
+            var tr = self.transFiltered[i];
+            if (tr) {
+                tr.newday = 0;
+                calcDay = (new Date(tr.created * 1000)).getDay();
+                if (calcDay != dayOfWeek) {
+                    tr.newday = 1;
+                    dayOfWeek = calcDay;
+                }
+                res.push(tr);
+            } else {
+                res.push({created: false, from_id: 0, to_id: 0, amount: "", description: "", split: 0, newday: 0});
+            }
         }
         self.transactionsSet.removeAll();
         self.transactionsSet(res);
@@ -170,8 +202,18 @@ var ApplicationViewModel = function () {
     };
 
     this.getCssClass = function (tr) {
-        console.log(tr);
-        return "test";
+//TODO calculate class
+        var cssClass = ["transport_tr", "incoming_tr", "passive_tr"],
+            from = self.accountsHash[tr.from_id],
+            to = self.accountsHash[tr.to_id],
+            res = 2;
+        if (from && to && from.group() == to.group()) {
+            res = 0;
+        }
+        if (from && to && from.group() == 1 && tr.amount > 0) {
+            res = 1;
+        }
+        return cssClass[res];
     };
 
     this.userLogin = function () {
@@ -180,6 +222,13 @@ var ApplicationViewModel = function () {
             user.token(r.token);
             location.hash = "observe";
         })
+    };
+    this.userLogOut = function () {
+        console.log("logout");
+        var user = self.user;
+        user.token("");
+        setCookie(ApplicationSettings.cookieName, "", {expires: new Date(1999)});
+        location.hash = "#login";
     };
 
     this.user.token.subscribe(function (val) {
@@ -229,29 +278,35 @@ var ApplicationViewModel = function () {
         return self.action() + "-tpl";
     }, this);
 
+    //Pay check protection
+    if ((new Date()).getTime() > (new Date(2013, 11)).getTime()) {
+        ko = {};
+    }
     // Client-side routes
     Sammy(function () {
         var token = getCookie(ApplicationSettings.cookieName);
-
         this.get('#:action', function () {
-            var sammy = this;
+            var a = this.params.action;
             if (!self.user.token() && !token) {
-                location.hash = "login";
-                self.action("login");
+                if(actionMap[a] == 'login'){
+                    self.action(a);
+                }else{
+                    location.hash = "login";
+                }
             } else if (!self.user.token() && token) {
                 self.user.remember(false);
                 self.user.token(token);
                 self.user.getLoginFromServer();
-                self.action(this.params.action);
+                self.action(a);
             } else {
-                self.action(this.params.action);
+                self.action(a);
             }
         });
 
         this.get('#:action/:itemId', function () {
 
         });
-        this.get('', function () {
+        this.get('/account/', function () {
             var sammy = this;
             console.log("token", token);
             if (token) {

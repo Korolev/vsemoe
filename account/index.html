@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 7h 16h 5h -->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -26,6 +27,130 @@
         .walletBox{
             letter-spacing: 0.7px;
         }
+        td.incoming_tr{
+            color: #819625;
+        }
+        td.transport_tr{
+            color: #187585;
+        }
+        .split {
+            position: relative;
+            width: 22px;
+            height: 17px;
+            top:6px;
+            margin: 0 0 0 8px;
+            vertical-align: middle;
+            background-image: url("../images/split.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            display: inline-block;
+            cursor: pointer;
+            float: right;
+        }
+        .pagingBox {
+            float: right;
+            margin: 10px 20px;
+            font-family: Arial;
+            height: 22px;
+        }
+        .paging {
+            float: left;
+            margin-left: 3px;
+        }
+        .imgnone {
+            width: 26px;
+            line-height: 19px;
+            height: 19px;
+            text-align: center;
+            color: #252525;
+        }
+        .imgcolor {
+            width: 26px;
+            line-height: 19px;
+            height: 19px;
+            background-color: #f0f4f4;
+            box-shadow: 0 0 1px #f0f4f4;
+            border-radius: 2px;
+            text-align: center;
+            color: #187585;
+        }
+        .imgfirst {
+            background-image: url("../images/imgfirst.png");
+            width: 22px;
+            height: 19px;
+        }
+        .imgprev {
+            background-image: url("../images/imgprev.png");
+            width: 22px;
+            height: 19px;
+        }
+        .imgnext {
+            background-image: url("../images/imgnext.png");
+            width: 22px;
+            height: 19px;
+        }
+        .imglast {
+            background-image: url("../images/imglast.png");
+            width: 22px;
+            height: 19px;
+        }
+        .additional_pagin_box{
+            width: 110px;
+            height: 19px;
+            position: relative;
+            float: left;
+            margin-left: 3px;
+        }
+        .pagingBox input[type='text'] {
+            width: 30px;
+            height: 19px;
+            text-align: center;
+            border-radius: 2px;
+            border: 1px solid #d6e2e2;
+            box-shadow: none;
+            font-size: 12px;
+            color: #252525;
+            vertical-align: middle;
+            padding: 0;
+            float: left;
+        }
+        .pagingcount {
+            width: 30px;
+            line-height: 19px;
+            height: 19px;
+            text-align: center;
+            border-radius: 2px;
+            border: 1px solid #d6e2e2;
+            float: left;
+        }
+        .pagingtext {
+            line-height: 19px;
+            height: 19px;
+            width: 20px;
+            text-align: center;
+            float: left;
+        }
+        .pagingsubmit {
+            background-image: url("../images/imgsubmit.png");
+            width: 22px;
+            height: 22px;
+            text-align: center;
+            float: left;
+            margin-left: 4px;
+            top:-1px;
+        }
+
+        .checkbox {
+            width: 12px;
+            height: 12px;
+            background-color: #FFFFFF;
+            border: 1px solid #B5BCC5;
+            border-radius: 2px;
+            box-shadow: inset 0 1px 3px #B5BCC5;
+            /*margin: auto;*/
+            top: 5px;
+        }
+
     </style>
 
     <script src="../js/lib/modernizr-2.6.2.min.js"></script>
@@ -186,20 +311,24 @@
 
     <form action="/user/login" method="POST" class="login">
         <div class="form_item">
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="email" class="login" name="user" placeholder="Электронная Почта" data-bind="value: user.login"/>
-            <div class="resetBox hiddenImp"></div>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.loginError()}"/>
+            <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
+                   data-bind="value: user.login,valueUpdate:'input',css:{error:user.loginError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.login().length == 0},click:function(){$root.user.login('')}"></div>
         </div>
         <div class="form_item">
-            <a href="#restore" class="forgot hiddenToggle" title="Напомнить пароль">?</a>
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="password" name="password" placeholder="Пароль" data-bind="value: user.password"/>
-            <div class="resetBoxPassword hiddenImp"></div>
+            <a href="#restore" class="forgot hiddenToggle" title="Напомнить пароль" data-bind="css:{hiddenImp:user.password() != ''}">?</a>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <input type="password" tabindex="2" name="password" placeholder="Пароль"
+                   data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
         </div>
 
-        <div class="allErrors"></div>
-        <div class="errortext hidden error">
-            <p>Логин и пароль не соответствуют друг другу</p>
+        <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
+            <p class="error" data-bind="text:user.errorText"></p>
+        </div>
+        <div class="errortext hidden error" >
+            <p class="error" >"Логин и пароль не соответствуют друг другу"</p>
         </div>
         <div class="form_item remember">
             <input type="checkbox" id="remember" data-bind="checked: user.remember"/>
@@ -466,18 +595,19 @@
                             </tbody>
                             <!-- ko if: transactions -->
                             <tbody data-bind="foreach:transactionsSet">
-                                <tr >
-                                    <td width="24">
+                                <tr data-bind="css:{tr_newday:newday == 1}">
+                                    <td width="24" data-bind="if:created">
                                         <div class="checkbox"></div>
                                     </td>
                                     <td align="left" class="tbody1" data-bind="textdate:created"></td>
-                                    <td align="left" a="66792" class="tbody2">
+                                    <td align="left" class="tbody2">
                                         <span data-bind="accountname:from_id"></span>
-                                        <span data-bind=""> &rarr;</span>
+                                        <span>&nbsp;</span>
+                                        <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
                                     </td>
-                                    <td align="left" a="66695" class="tbody3" data-bind="accountname:to_id"></td>
+                                    <td align="left" class="tbody3" data-bind="accountname:to_id"></td>
                                     <td align="right" class="tbody4" data-bind="digitext:amount, css:$root.getCssClass($data)"></td>
-                                    <td align="left" class="tbody5" data-bind="text:description"><div class="split"></div></td>
+                                    <td align="left" class="tbody5"><span data-bind="text:description"></span><span data-bind="css:{split:split != '0'}"></span></td>
                                 </tr>
                             </tbody>
                             <!-- /ko -->
@@ -489,22 +619,31 @@
                 <div class="pagingBox" id="transPaging" style="cursor: pointer;">
                     <div class="paging imgfirst" data-bind="click:function(){$root.currentPage(1)}"></div>
                     <div class="paging imgprev"  data-bind="click:function(){$root.currentPage($root.currentPage()-1)}"></div>
-                    <!-- ko foreach: $root.totalPagesArr-->
+                    <!-- ko foreach: $root.totalPagesArr -->
                         <div class="paging imgcolor" data-bind="
-                        text:$index()+1,
-                        click:function(){$root.currentPage($index()+1)},
+                        text:$data,
+                        click:function(){$root.currentPage($data)},
                         css:{
-                        'bold imgnone':$index()+1 == $root.currentPage(),
-                        imgcolor: $index()+1 != $root.currentPage()
+                        'bold imgnone':$data == $root.currentPage(),
+                        imgcolor: $data != $root.currentPage()
                         }"></div>
                     <!-- /ko -->
-                    <div class="paging imgnext" p="next"  data-bind="click:function(){$root.currentPage($root.currentPage()+1)}"></div>
-                    <div class="paging imglast" p="last"  data-bind="click:function(){$root.currentPage($root.totalPages)}"></div>
+                    <!-- ko if: $root.totalPages() > 5 -->
+                    <div class="additional_pagin_box">
+                        <input type="text" class="selectPage pag" data-bind="value:currentPage"/>
+                        <div class="pagingtext pag" >of</div>
+                        <div class="pagingcount pag" data-bind="text:totalPages"></div>
+                        <div class="pagingsubmit pag" ></div>
+                    </div>
+                    <!-- /ko -->
+
+                    <!-- ko if: $root.totalPages() <6 -->
+                    <div class="paging imgnext" data-bind="click:function(){$root.currentPage($root.currentPage()+1)}"></div>
+                    <!-- /ko -->
+
+                    <div class="paging imglast"  data-bind="click:function(){$root.currentPage($root.totalPages())}"></div>
                 </div>
-                <!--<input type="text" class="selectPage pag" style="display: none;"/>-->
-                <!--<div class="pagingtext pag" style="display: none;">of</div>-->
-                <!--<div class="pagingcount pag" style="display: none;"></div>-->
-                <!--<div class="pagingsubmit pag" style="display: none;"></div>-->
+
             </td>
         </tr>
     </table>
@@ -528,7 +667,7 @@
                     <div class="chertochka"></div>
                 </li>
                 <li>
-                    <a id="existAccount" href="">
+                    <a id="existAccount" href="/" data-bind="click:$root.userLogOut">
                         <div class="logout"></div>
                         Выход</a>
                 </li>
