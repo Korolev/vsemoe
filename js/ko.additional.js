@@ -17,6 +17,23 @@ ko.bindingHandlers['digitext'] = {
     }
 };
 
+ko.bindingHandlers['accountname'] = {
+  'update': function (element, valueAccessor, allBindings, viewModel, bindingContext ) {
+    var value = ko.utils.unwrapObservable(valueAccessor()),
+      acc = bindingContext.$root.accountsHash[value];
+    value = acc ? acc.description : "";
+    ko.utils.setTextContent(element, value);
+  }
+};
+
+ko.bindingHandlers['textdate'] = {
+    'update': function (element, valueAccessor) {
+        var value = ko.utils.unwrapObservable(valueAccessor()),
+          date = new Date(value*1000);
+        value = [date.getDate(),calendarMonthNamesLoc[date.getMonth()].substr(0,3),date.getFullYear()];
+        ko.utils.setTextContent(element, value.join(" "));
+    }
+};
 ko.bindingHandlers['shorttext'] = {
     'update': function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor()) + "";

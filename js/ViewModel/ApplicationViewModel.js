@@ -77,6 +77,50 @@ var ApplicationViewModel = function () {
   this.accountsHash = {};
 
   this.transactions = ko.observableArray();
+  this.transactionsSet = ko.observableArray();
+  this.transFiltered = [];
+
+//Paging
+  this.currentPage = ko.observable(1);
+  this.pageSize = 15;
+  this.totalPages = 1;
+
+  this.transactions.subscribe(function(val){
+    if(val.length){
+      self.transFiltered = [];
+      $.each(val,function(k,t){
+        if(t.hidden == "0" && t.template == "0" && !!t.finished){
+          self.transFiltered.push(t);
+        }
+      });
+      self.transFiltered.sort(function(a, b) {
+        return a.created > b.created ? -1 : 1;
+      });
+      var tLen = self.transFiltered.length;
+      self.totalPages = tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1;
+      self.transactionsSetGen()
+    }
+  });
+
+  this.currentPage.subscribe(function(val){
+    if(val > self.totalPages || val < 1){
+      self.currentPage(1);
+    }else{
+      self.transactionsSetGen();
+    }
+  });
+
+  this.transactionsSetGen = function(){
+    var res = [],
+      i = (self.currentPage()- 1) * self.pageSize,
+      j = self.currentPage() * self.pageSize;
+console.log(i,j);
+    for(;i<j;i+=1){
+      if(self.transFiltered[i])res.push(self.transFiltered[i]);
+    }
+    self.transactionsSet.removeAll();
+    self.transactionsSet(res);
+  };
 
   this.getGainAcc = function () {
     var res = [], sum = 0;
@@ -157,6 +201,10 @@ var ApplicationViewModel = function () {
           $.each(self.accounts(), function (k, acc) {
             acc.initChildren(self);
           });
+        });
+        ServerApi.getTransactionList({}, function (r) {
+          self.transactions.removeAll();
+          self.transactions.pushAll(r);
         });
       });
     }
