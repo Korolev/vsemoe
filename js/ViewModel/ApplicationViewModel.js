@@ -158,7 +158,6 @@ var ApplicationViewModel = function () {
             acc.initChildren(self);
           });
         });
-
       });
     }
   });
