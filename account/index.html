@@ -30,209 +30,270 @@
 <body class="inner">
 <div class="top"></div>
 <div class="wrap">
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    // (function (d, w, c) {
-    //     (w[c] = w[c] || []).push(function() {
-    //         try {
-    //             w.yaCounter22607524 = new Ya.Metrika({id:22607524,
-    //                     webvisor:true,
-    //                     clickmap:true,
-    //                     trackLinks:true,
-    //                     accurateTrackBounce:true});
-    //         } catch(e) { }
-    //     });
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        // (function (d, w, c) {
+        //     (w[c] = w[c] || []).push(function() {
+        //         try {
+        //             w.yaCounter22607524 = new Ya.Metrika({id:22607524,
+        //                     webvisor:true,
+        //                     clickmap:true,
+        //                     trackLinks:true,
+        //                     accurateTrackBounce:true});
+        //         } catch(e) { }
+        //     });
 
-    //     var n = d.getElementsByTagName("script")[0],
-    //         s = d.createElement("script"),
-    //         f = function () { n.parentNode.insertBefore(s, n); };
-    //     s.type = "text/javascript";
-    //     s.async = true;
-    //     s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+        //     var n = d.getElementsByTagName("script")[0],
+        //         s = d.createElement("script"),
+        //         f = function () { n.parentNode.insertBefore(s, n); };
+        //     s.type = "text/javascript";
+        //     s.async = true;
+        //     s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-    //     if (w.opera == "[object Opera]") {
-    //         d.addEventListener("DOMContentLoaded", f, false);
-    //     } else { f(); }
-    // })(document, window, "yandex_metrika_callbacks");
+        //     if (w.opera == "[object Opera]") {
+        //         d.addEventListener("DOMContentLoaded", f, false);
+        //     } else { f(); }
+        // })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+    <header>
+        <div class="logo fl">
+            <h1><a href="/" title="Всё Мое"></a></h1>
+        </div>
+    </header>
+    <div id="app_body" data-bind="template: pageTemplateName">
+    </div>
+    <div class="empty"></div>
+</div>
+<footer>
+    <div class="in">
+        <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
+        <!--<ul class="navi">
+            <li><a href="tour.html">Продукты</a></li>
+            <li><a href="http://media.vsemoe.org">Блог</a></li>
+            <li><a href="contacts.html">Контакты</a></li>
+            <li><a href="rules.html">Правила</a></li>
+            <li><a href="price.html">Реклама</a></li>
+        </ul>
+        <ul class="socials">
+            <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+            <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+            <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+        </ul>-->
+        <span class="copy">@ 2013 &laquo;Всё Моё&raquo; Все права защищены</span>
+    </div>
+</footer>
+
+<!-- jQuery library -->
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
+<script src="../js/lib/jquery-1.8.2.min.js"></script>
+<script src="../js/lib/sammy-latest.min.js"></script>
+<script src="../js/lib/knockout-latest.js"></script>
+<script src="../js/ko.additional.js"></script>
+<script src="../js/ServerApi.js"></script>
+<script src="../js/ViewModel/UserViewModel.js"></script>
+<script src="../js/ViewModel/AccountViewModel.js"></script>
+<script src="../js/ViewModel/ApplicationViewModel.js"></script>
+<!--<script src="/html_stage/js/jquery.cookie.js"></script>-->
+<!--<script src="../js/lib/jquery-ui.js"></script>-->
+<!--<script src="../js/lib/jquery.validate.min.js"></script>-->
+<!--<script src="../js/lib/jquery.form.js"></script>-->
+<!--<script src="../js/lib/easyXDM/Core.js"></script>-->
+<!--<script src="../js/lib/easyXDM/Rpc.js"></script>-->
+<!--<script src="../js/lib/easyXDM/easyXDM.debug.js"></script>-->
+<!--<script src="../js/lib/json2.js"></script>-->
+<!--<script type="text/javascript" src="../js/touchslider.js"></script>-->
+<!--<script src="../js/util.js"></script>-->
+<!--<script src="../js/main.js"></script>-->
+<!--<script src="../js/account.js"></script>-->
+<!--<script src="Scripts/jquery-ui-1.8.11.min.js" type="text/javascript"></script>-->
+
+<script>
+    var _gaq = [
+        ['_setAccount', 'UA-XXXXX-X'],
+        ['_trackPageview']
+    ];
+    (function (d, t) {
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s)
+    }(document, 'script'));
+
+    var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
+        "Апреля", "Мая", "Июня",
+        "Июля", "Августа", "Сентября",
+        "Октября", "Ноября", "Декабря"];
+    var calendarMonthNamesLoc = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
+    var date = new Date();
+    var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].toUpperCase();
+    //var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()] + ' ' + date.getFullYear();
+    $(".noticeDate").html(time);
+    //window.setTimeout(arguments.callee, 1000);
+
+    $(function () {
+        if (ServerApi.options.dev) {
+            $__app = new ApplicationViewModel();
+            ko.applyBindings($__app);
+        } else {
+            ko.applyBindings(new ApplicationViewModel());
+        }
+    });
 </script>
-<noscript>
-    <div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt=""/></div>
-</noscript>
-<!-- /Yandex.Metrika counter -->
-<header>
-    <div class="logo fl">
-        <h1><a href="index.html" title="Всё Мое"></a></h1>
+
+<script type="text/html" id="login-page-tpl">
+    <!------------loginDiv------------>
+    <div id="loginDiv" class="content">
+        <nav class="login-nav">
+            <ul class="fr">
+                <li></li>
+                <li><a href="http://vsemoe.reformal.ru">Поддержка</a></li>
+            </ul>
+        </nav>
+        <div class="hole"></div>
+        <div class="cup"></div>
+        <div class="form" id="formtab">
+            <ul class="hidden">
+                <li><a href="#login"></a></li>
+                <li><a href="#register"></a></li>
+                <li><a href="#restore"></a></li>
+                <li><a href="#congratulations"></a></li>
+                <li><a href="#changepass"></a></li>
+            </ul>
+            <!--&lt;!&ndash;Вход в личный кабинет&ndash;&gt;-->
+            <!--<div id="login"></div>-->
+            <!--&lt;!&ndash;Регистрация&ndash;&gt;-->
+            <!--<div id="register" class="hidden"></div>-->
+            <!--&lt;!&ndash;Восстановление пароля&ndash;&gt;-->
+            <!--<div id="restore" class="hidden"></div>-->
+            <!--<div id="congratulations" class="hidden"></div>-->
+            <!--&lt;!&ndash;Меняем пароль&ndash;&gt;-->
+            <!--<div id="changepass" class="hidden"></div>-->
+            <div data-bind="template: pageContentTemplateName"></div>
+        </div>
+        <div class="slash"></div>
     </div>
-</header>
-<!------------loginDiv------------>
-<div id="loginDiv" class="content">
-    <nav class="login-nav">
-        <ul class="fr">
-            <li></li>
-            <li><a href="http://vsemoe.reformal.ru">Поддержка</a></li>
-        </ul>
-    </nav>
-    <div class="hole"></div>
-    <div class="cup"></div>
-    <div class="form" id="formtab">
-        <ul class="hidden">
-            <li><a href="#login"></a></li>
-            <li><a href="#register"></a></li>
-            <li><a href="#restore"></a></li>
-            <li><a href="#congratulations"></a></li>
-            <li><a href="#changepass"></a></li>
-        </ul>
-        <!--Вход в личный кабинет-->
-        <div id="login">
-            <h1>Вход в личный кабинет</h1>
+</script>
 
-            <form action="/user/login" method="POST" class="login">
-                <div class="form_item">
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="email" class="login" name="user" placeholder="Электронная Почта"/>
+<script type="text/html" id="login-tpl">
+    <h1>Вход в личный кабинет</h1>
 
-                    <div class="resetBox hiddenImp"></div>
-                </div>
-                <div class="form_item">
-                    <a href="#restore" class="forgot hiddenToggle" title="Напомнить пароль">?</a>
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="password" name="password" placeholder="Пароль"/>
+    <form action="/user/login" method="POST" class="login">
+        <div class="form_item">
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="email" class="login" name="user" placeholder="Электронная Почта" data-bind="value: user.login"/>
+            <div class="resetBox hiddenImp"></div>
+        </div>
+        <div class="form_item">
+            <a href="#restore" class="forgot hiddenToggle" title="Напомнить пароль">?</a>
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="password" name="password" placeholder="Пароль" data-bind="value: user.password"/>
+            <div class="resetBoxPassword hiddenImp"></div>
+        </div>
 
-                    <div class="resetBoxPassword hiddenImp"></div>
-                </div>
+        <div class="allErrors"></div>
+        <div class="errortext hidden error">
+            <p>Логин и пароль не соответствуют друг другу</p>
+        </div>
+        <div class="form_item remember">
+            <input type="checkbox" id="remember" data-bind="checked: user.remember"/>
+            <label for="remember">Запомнить меня</label>
+        </div>
+        <div class="form_but">
+            <input type="button" value="Войти" data-bind="click: userLogin"/>
+        </div>
+    </form>
+    <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+</script>
+<script type="text/html" id="register-tpl">
+    <h1>Регистрация</h1>
 
+    <form class="register" action="/user/create" method="POST">
+        <div class="form_item">
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="email" class="register" name="user" placeholder="Электронная Почта"/>
+            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+        </div>
+        <div class="form_item">
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="password" name="password" id="password" placeholder="Пароль"/>
+            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+        </div>
+        <!-- <div class="form_item ">
+                <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка" />
+                <input type="password" name="repassword" placeholder="Потвердите Пароль" />
+                <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle" />
                 <div class="allErrors"></div>
                 <div class="errortext hidden error">
-                    <p>Логин и пароль не соответствуют друг другу</p>
+                    <p>Пользователь с таким логином уже существует</p>
                 </div>
-                <div class="form_item remember">
-                    <input type="checkbox" id="remember" checked="checked"/>
-                    <label for="remember">Запомнить меня</label>
-                </div>
-                <div class="form_but">
-                    <input type="submit" value="Войти"/>
-                </div>
-            </form>
-            <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+            </div>-->
+        <div class="form_but">
+            <input type="submit" value="Регистрироваться"/>
         </div>
-        <!--Регистрация-->
-        <div id="register" class="hidden">
-            <h1>Регистрация</h1>
+    </form>
+    <a href="#login" class="form_link">Уже зарегистрированы?</a>
+</script>
+<script type="text/html" id="restore-tpl">
+    <h1>Восстановление пароля</h1>
 
-            <form class="register" action="/user/create" method="POST">
-                <div class="form_item">
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="email" class="register" name="user" placeholder="Электронная Почта"/>
-                    <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
-                </div>
-                <div class="form_item">
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="password" name="password" id="password" placeholder="Пароль"/>
-                    <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
-                </div>
-                <!-- <div class="form_item ">
-                        <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка" />
-                        <input type="password" name="repassword" placeholder="Потвердите Пароль" />
-                        <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle" />
-                        <div class="allErrors"></div>
-                        <div class="errortext hidden error">
-                            <p>Пользователь с таким логином уже существует</p>
-                        </div>
-                    </div>-->
-                <div class="form_but">
-                    <input type="submit" value="Регистрироваться"/>
-                </div>
-            </form>
-            <a href="#login" class="form_link">Уже зарегистрированы?</a>
+    <form action="/user/lostpassword" method="POST" class="restore">
+        <div class="form_item">
+            <p>Для восстановления пароля укажите адрес электронной почты</p>
         </div>
-        <!--Восстановление пароля-->
-        <div id="restore" class="hidden">
-            <h1>Восстановление пароля</h1>
-
-            <form action="/user/lostpassword" method="POST" class="restore">
-                <div class="form_item">
-                    <p>Для восстановления пароля укажите адрес электронной почты</p>
-                </div>
-                <div class="form_item">
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="email" class="login" name="user" placeholder="Электронная Почта"/>
-                    <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
-                </div>
-                <div class="allErrors"></div>
-                <div class="errortext hidden error">
-                    <p>Пользователь с таким логином не найден</p>
-                </div>
-                <div class="form_item remember"></div>
-                <div class="form_but decor">
-                    <input type="submit" value="Восстановить"/>
-                </div>
-            </form>
-            <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+        <div class="form_item">
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="email" class="login" name="user" placeholder="Электронная Почта"/>
+            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
         </div>
-        <div id="congratulations" class="hidden">
-            <div class="form_item" style="height: 200px;">
-                <p>Пожалуйста, перейдите в указанный вами почтовый ящик для продолжения восстановления пароля.</p>
-            </div>
-            <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+        <div class="allErrors"></div>
+        <div class="errortext hidden error">
+            <p>Пользователь с таким логином не найден</p>
         </div>
-        <!--Меняем пароль-->
-        <div id="changepass" class="hidden">
-            <h1>Меняем пароль</h1>
-
-            <form action="/user/changepasswordtoken" method="POST" class="changepass">
-                <div class="form_item">
-                    <p>Для вашего аккаунта зарегистрированного на почту:<span name="user" class="email"></span></p>
-                    <input type="hidden" name="user" value=""/>
-                    <input type="hidden" name="token" value=""/>
-                </div>
-                <div class="form_item">
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="password" name="password" id="newpassword" placeholder="Пароль"/>
-                    <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
-                </div>
-                <div class="form_item ">
-                    <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-                    <input type="password" name="renewpassword" placeholder="Потвердите Пароль"/>
-                    <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
-                </div>
-                <div class="allErrors"></div>
-                <div class="form_but">
-                    <input type="submit" value="Изменить"/>
-                </div>
-            </form>
+        <div class="form_item remember"></div>
+        <div class="form_but decor">
+            <input type="submit" value="Восстановить"/>
         </div>
+    </form>
+    <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+</script>
+<script type="text/html" id="changepass-tpl">
+    <h1>Меняем пароль</h1>
+    <form action="/user/changepasswordtoken" method="POST" class="changepass">
+        <div class="form_item">
+            <p>Для вашего аккаунта зарегистрированного на почту:<span name="user" class="email"></span>
+            </p>
+            <input type="hidden" name="user" value=""/>
+            <input type="hidden" name="token" value=""/>
+        </div>
+        <div class="form_item">
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="password" name="password" id="newpassword" placeholder="Пароль"/>
+            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+        </div>
+        <div class="form_item ">
+            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
+            <input type="password" name="renewpassword" placeholder="Потвердите Пароль"/>
+            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+        </div>
+        <div class="allErrors"></div>
+        <div class="form_but">
+            <input type="submit" value="Изменить"/>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="congratulations-tpl">
+    <div class="form_item" style="height: 200px;">
+        <p>Пожалуйста, перейдите в указанный вами почтовый ящик для продолжения восстановления
+            пароля.</p>
     </div>
-    <div class="slash"></div>
-</div>
-<!--------accountDiv-------->
-<div id="accountDiv" class="content hidden">
-<nav class="login-nav">
-    <ul class="fr">
-        <li>
-            <a class="emailAccount" href="">testing@mail.ru</a>
-        </li>
-        <li>
-            <div class="chertochka"></div>
-        </li>
-        <li>
-            <a href="http://vsemoe.copiny.com">Поддержка</a>
-        </li>
-        <li>
-            <div class="chertochka"></div>
-        </li>
-        <li>
-            <a id="existAccount" href="">
-                <div class="logout"></div>
-                Выход</a>
-        </li>
-    </ul>
-</nav>
-<div class="topMenu">
-    <div id="topMenuBox1" class="topMenuBox selected">ОБЗОР</div>
-    <div id="topMenuBox2" class="topMenuBox">ВВОД</div>
-</div>
-<!--------форма Обзор-------->
-<div id="box1">
+    <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+</script>
+
+<script type="text/html" id="observe-tpl">
     <table class="contentTable">
         <tr>
             <td class="tdleftMenu">
@@ -240,7 +301,7 @@
                 <div class="leftMenu">
                     <div class="totalBox">
                         <span class="largeText">ОСТАТОК</span>
-                        <span class="largeValue"></span>
+                        <span class="largeValue" data-bind="digitext:totalGain()-totalConsumption()"></span>
                         <span class="largeComment">ДОХОДА</span>
                     </div>
                     <div class="totalPercent">
@@ -252,24 +313,22 @@
                         <div class="greenBox">
                             <span class="bottomText">ДОХОДЫ</span>
                         </div>
-                        <span class="greenResult"></span>
+                        <span class="greenResult" data-bind="digitext:totalGain"></span>
                     </div>
                     <div class="bottomBox">
                         <div class="orangeBox">
                             <span class="bottomText">РАСХОДЫ</span>
                         </div>
-                        <span class="orangeResult"></span>
+                        <span class="orangeResult" data-bind="digitext:totalConsumption"></span>
                     </div>
                     <div class="emptyBox">
                         <span class="categoryText">Доходы</span>
                     </div>
-                    <div i="10" g="0" t="0"></div>
-                    <div i="0" g="0" t="0"></div>
+                    <div data-bind="template:{name:'click-box-tpl',foreach:getGainAcc()}"></div>
                     <div class="emptyBox">
                         <span class="categoryText">Расходы</span>
                     </div>
-                    <div i="10" g="0" t="1"></div>
-                    <div i="0" g="0" t="1"></div>
+                    <div data-bind="template:{name:'click-box-tpl',foreach:getConsumptionAcc()}"></div>
                 </div>
             </td>
             <!--------rightMenu-------->
@@ -283,46 +342,62 @@
                     <div class="notice">
                         <div class="noticeTitle">ИТОГО</div>
                         <div class="noticeText">КАПИТАЛ = МОИ СРЕДСТВА - ДОЛГИ</div>
-                        <div class="noticeValue"></div>
+                        <div class="noticeValue" data-bind="digitext:totalActive()-totalPassive()"></div>
                                     <span class="noticePercent">
                                         <span class="percentValue"></span>
                                         <div class="trend"></div>
                                     </span>
 
-                        <div class="noticeSymbol">На</div>
+                        <div class="noticeSymbol">На <span data-bind="text:todayShorUpper"></span></div>
                         <div class="noticeDate"></div>
                     </div>
                     <!----activeBox---->
                     <div g="1" class="activeBox fl">
                         <div class="activeTop">
                             <span class="greenSymbol">Pуб</span>
-                            <span class="activeText"></span>
+                            <span class="activeText" data-bind="digitext:totalActive"></span>
                         </div>
                         <div class="titleBox">
                             <span class="generalText">МОИ СРЕДСТВА / (АКТИВЫ)</span>
                             <span class="generalValue">В</span>
                             <span class="generalValue">СУММА</span>
                         </div>
+                        <!-- ko foreach: getActiveAcc()-->
+                        <div class="walletBox">
+                            <div class="largeclickIcon "></div>
+                            <span class="normalText" data-bind="shorttext:description"></span>
+                            <span class="greenSymbol" data-bind="currency:currency"></span>
+                            <span class="greenValue" data-bind="digitext:sum"></span>
+                        </div>
+                        <!-- /ko -->
                     </div>
                     <!----passiveBox---->
                     <div g="2" class="passiveBox fr">
                         <div class="passiveTop">
                             <span class="orangeSymbol">Pуб</span>
-                            <span class="passiveText"></span>
+                            <span class="passiveText" data-bind="digitext:totalPassive"></span>
                         </div>
                         <div class="titleBox">
                             <span class="generalText">ДОЛГИ / (ПАССИВЫ)</span>
                             <span class="generalValue">В</span>
                             <span class="generalValue">СУММА</span>
                         </div>
+                        <!-- ko foreach: getPassiveAcc()-->
+                        <div class="walletBox">
+                            <div class="largeclickIcon "></div>
+                            <span class="normalText" data-bind="shorttext:description"></span>
+                            <span class="orangeSymbol" data-bind="currency:currency"></span>
+                            <span class="orangeValue" data-bind="digitext:sum"></span>
+                        </div>
+                        <!-- /ko -->
                     </div>
                 </div>
             </td>
         </tr>
     </table>
-</div>
-<!--------форма Ввод-------->
-<div id="box2" class="hidden">
+</script>
+
+<script type="text/html" id="insert-tpl">
     <table class="contentTable">
         <tr>
             <td class="tdleftMenu">
@@ -331,29 +406,29 @@
                 <div class="leftMenu">
                     <div class="allBox">
                         <span class="bigText">ИТОГ</span>
-                        <span class="largeValue"></span>
+                        <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
                         <span class="bigComment">КАПИТАЛА</span>
                     </div>
                     <div class="bottomBox">
                         <div class="grayBox">
                             <span class="bottomText">МОИ СРЕДСТВА</span>
                         </div>
-                        <span gr="1" class="grayResult"></span>
+                        <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
                     </div>
                     <div class="bottomBox">
                         <div class="grayBox">
                             <span class="bottomText">ДОЛГИ</span>
                         </div>
-                        <span gr="2" class="grayResult"></span>
+                        <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
                     </div>
                     <div class="emptyBox">
                         <span class="categoryText">МОИ СРЕДСТВА</span>
                     </div>
-                    <div g="1"></div>
+                    <div data-bind="template:{name:'click-box-tpl',foreach:getActiveAcc()}"></div>
                     <div class="emptyBox">
                         <span class="categoryText">ДОЛГИ</span>
                     </div>
-                    <div g="2"></div>
+                    <div data-bind="template:{name:'click-box-tpl',foreach:getPassiveAcc()}"></div>
                 </div>
             </td>
             <!--------rightMenu-------->
@@ -386,14 +461,15 @@
                                 <td align="left" class="thead5">Где или Что Сделано?</td>
                             </tr>
                             </tbody>
-                            <!--<tfoot>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tfoot>-->
+                            <!-- ko if:
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -418,70 +494,71 @@
             </td>
         </tr>
     </table>
-</div>
-</div>
-<div class="empty"></div>
-</div>
-<footer>
-    <div class="in">
-        <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
-        <!--<ul class="navi">
-            <li><a href="tour.html">Продукты</a></li>
-            <li><a href="http://media.vsemoe.org">Блог</a></li>
-            <li><a href="contacts.html">Контакты</a></li>
-            <li><a href="rules.html">Правила</a></li>
-            <li><a href="price.html">Реклама</a></li>
-        </ul>
-        <ul class="socials">
-            <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
-            <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
-            <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-        </ul>-->
-        <span class="copy">@ 2013 &laquo;Всё Моё&raquo; Все права защищены</span>
+</script>
+
+<script type="text/html" id="account-page-tpl">
+    <!--------accountDiv-------->
+    <div id="accountDiv" class="content">
+        <nav class="login-nav">
+            <ul class="fr">
+                <li>
+                    <a class="emailAccount" href="" data-bind="text:user.login">testing@mail.ru</a>
+                </li>
+                <li>
+                    <div class="chertochka"></div>
+                </li>
+                <li>
+                    <a href="http://vsemoe.copiny.com">Поддержка</a>
+                </li>
+                <li>
+                    <div class="chertochka"></div>
+                </li>
+                <li>
+                    <a id="existAccount" href="">
+                        <div class="logout"></div>
+                        Выход</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="topMenu">
+            <div id="topMenuBox1" class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
+            <div id="topMenuBox2" class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>
+        </div>
+        <!--------форма Обзор-------->
+        <!--<div id="box1"></div>-->
+        <!--------форма Ввод-------->
+        <!--<div id="box2" ></div>-->
+        <div data-bind="template: pageContentTemplateName"></div>
     </div>
-</footer>
+</script>
+<script type="text/html" id="click-box-tpl">
+    <div class="clickBox" data-bind="click:toggleExpand">
+        <div class="smallclickIcon"
+             data-bind="css:{
+                              iconSmallDown: !expand() && children().length,
+                              iconSmallLeft: expand() && children().length
+                            }">
+        </div>
+        <span class="baseText" data-bind="shorttext:description"></span>
+        <span data-bind="digitext: sum, css:{
+                greenValue: type()=='IN' || group() == 1,
+                orangeValue: type()=='OUT' || group() == 2
+            }">0</span>
+    </div>
+    <!-- ko if: children().length && expand()-->
+    <ul data-bind="foreach:children">
+        <li>
+            <span class="hiddenText" data-bind="shorttext:description"></span>
+            <span class="hiddenValue" data-bind="shorttext:sum">0</span>
+        </li>
+    </ul>
+    <!-- /ko -->
+</script>
+<script type="text/html" id="undefined-page-tpl">
 
-<!-- jQuery library -->
-<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
-<script src="../js/lib/jquery-1.8.2.min.js"></script>
-<!--<script src="/html_stage/js/jquery.cookie.js"></script>-->
-<script src="../js/lib/jquery-ui.js"></script>
-<script src="../js/lib/jquery.validate.min.js"></script>
-<script src="../js/lib/jquery.form.js"></script>
-<script src="../js/lib/easyXDM/Core.js"></script>
-<script src="../js/lib/easyXDM/Rpc.js"></script>
-<script src="../js/lib/easyXDM/easyXDM.debug.js"></script>
-<script src="../js/lib/json2.js"></script>
-<script src="../js/lib/jquery.placeholder.js"></script>
-<script src="../js/Index.js" type="text/javascript"></script>
-<script type="text/javascript" src="../js/touchslider.js"></script>
-<script src="../js/util.js"></script>
-<script src="../js/main.js"></script>
-<script src="../js/account.js"></script>
-<!--<script src="Scripts/jquery-ui-1.8.11.min.js" type="text/javascript"></script>-->
+</script>
+<script type="text/html" id="undefined-tpl">
 
-<script>
-    var _gaq = [
-        ['_setAccount', 'UA-XXXXX-X'],
-        ['_trackPageview']
-    ];
-    (function (d, t) {
-        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-        g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g, s)
-    }(document, 'script'));
-
-    var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
-        "Апреля", "Мая", "Июня",
-        "Июля", "Августа", "Сентября",
-        "Октября", "Ноября", "Декабря"];
-    var calendarMonthNamesLoc = ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
-    var date = new Date();
-    var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].toUpperCase();
-    //var time = date.getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()] + ' ' + date.getFullYear();
-    $(".noticeDate").html(time);
-    //window.setTimeout(arguments.callee, 1000);
 </script>
 </body>
 </html>
