@@ -35,7 +35,7 @@ var AccountViewModel = function(data){
       date = tr.created * 1000;
 
       if (self.group() == 0){
-        if((date|0) > currentmonth)res += amount;
+        if(date > currentmonth.getTime())res += amount;
       }else{
         res += amount;
       }
