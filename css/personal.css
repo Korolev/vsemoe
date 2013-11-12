@@ -56,6 +56,7 @@
     color: #819625;
     line-height: 24px;
     margin-left: 20px;
+    white-space: nowrap;
 }
 
 .greenValue {
@@ -63,6 +64,7 @@
     font-weight: bold;
     color: #819625;
     line-height: 30px;
+    white-space: nowrap;
 }
 /*оранжевые цифры*/
 .orangeResult {
@@ -74,6 +76,7 @@
     color: #FF6900;
     line-height: 24px;
     margin-left: 20px;
+    white-space: nowrap;
 }
 
 .orangeValue {
@@ -81,6 +84,7 @@
     font-weight: bold;
     color: #FF6900;
     line-height: 30px;
+    white-space: nowrap;
 }
 /*зеленый знак рубля*/
 .greenSymbol {
