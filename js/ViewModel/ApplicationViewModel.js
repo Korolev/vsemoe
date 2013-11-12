@@ -99,6 +99,14 @@ var ApplicationViewModel = function () {
         if (val.length) {
             self.transFiltered = [];
             $.each(val, function (k, t) {
+              //mk logic
+              if(self.accountsHash[t.from_id]){
+                self.accountsHash[t.from_id].transactions.push(t);
+              }
+              if(self.accountsHash[t.to_id]){
+                self.accountsHash[t.to_id].transactions.push(t);
+              }
+              //mk logic
                 if (t.hidden == "0" && t.template == "0" && !!t.finished) {
                     t.amount = parseFloat(t.amount).toFixed(2);
                     self.transFiltered.push(t);
@@ -113,6 +121,10 @@ var ApplicationViewModel = function () {
             self.totalPagesArr.removeAll();
             self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
             self.transactionsSetGen();
+          //mk
+          $.each(self.accounts(),function(k,acc){
+            acc.recalculateSum(self);
+          })
         }
     });
 
@@ -250,13 +262,16 @@ var ApplicationViewModel = function () {
                     accIds.push(a.id);
                 });
                 self.accounts.pushAll(res);
-                ServerApi.getAccountSum({account_id: accIds.join(',')}, function (r) {
-                    $.each(r, function (k, rObj) {
-                        self.accountsHash[rObj.account_id].sum(parseFloat(rObj.sum));
-                    });
-                    $.each(self.accounts(), function (k, acc) {
-                        acc.initChildren(self);
-                    });
+//                ServerApi.getAccountSum({account_id: accIds.join(',')}, function (r) {
+//                    $.each(r, function (k, rObj) {
+//                        self.accountsHash[rObj.account_id].sum(parseFloat(rObj.sum));
+//                    });
+//                    $.each(self.accounts(), function (k, acc) {
+//                        acc.initChildren(self);
+//                    });
+//                });
+                $.each(self.accounts(), function (k, acc) {
+                    acc.initChildren(self);
                 });
                 ServerApi.getTransactionList({}, function (r) {
                     self.transactions.removeAll();

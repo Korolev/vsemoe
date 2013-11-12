@@ -18,11 +18,52 @@ var AccountViewModel = function(data){
     this.sum = ko.observable(0);
 
     this.children = ko.observableArray([]);
-    this.transactions = ko.observableArray([]);
+    this.transactions = [];
 
     this.toggleExpand = function(){
       self.expand(!self.expand());
     };
+
+  this.recalculateSum = function (root) {
+    var res = 0,
+      amount = 0,
+      __now = new Date(),
+      date,
+      currentmonth = new Date(__now.getFullYear(),__now.getMonth());
+    $.each(self.transactions, function (k, tr) {
+      amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
+      date = tr.created * 1000;
+
+      if (self.group() == 0){
+        if((date|0) > currentmonth)res += amount;
+      }else{
+        res += amount;
+      }
+    });
+    if ((self.creditlimit() | 0) > 0) {
+      res = parseFloat(self.creditlimit()) - res;
+    }
+    if (self.group() == 0 && self.type() == 'IN') {
+      res *= -1;
+    }
+
+    if(self.parent().length > 2){
+      console.log(self.parent());
+      root.accountsHash[self.parent()].sum(root.accountsHash[self.parent()].sum()+res);
+    }
+
+    self.sum(res);
+  };
+
+  this.children.subscribe(function (val) {
+    if (val.length) {
+      var res = 0;
+      $.each(val, function (k, acc) {
+        res += acc.sum();
+      });
+      self.sum(res);
+    }
+  });
 
     this.initChildren = function(root){
         var res = [];

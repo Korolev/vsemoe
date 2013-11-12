@@ -66,7 +66,13 @@ ko.bindingHandlers['shorttext'] = {
 ko.bindingHandlers['currency'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var value = ko.utils.unwrapObservable(valueAccessor());
-        value = bindingContext.$root.currency[value].shortname;
+
+        try{
+            value = bindingContext.$root.currency[value].shortname;
+        }catch (e){
+            console.log(e,value);
+        }
+
         ko.utils.setTextContent(element, value);
     }
 };
