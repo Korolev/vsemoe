@@ -77,7 +77,7 @@ var ApplicationViewModel = function () {
     this.page = ko.observable();
     this.action = ko.observable();
 
-    this.currency = {};
+    this.currency = {"478":{shortname:"RUB"}};
     this.user = new UserViewModel();
 
 //Accounts
@@ -91,7 +91,7 @@ var ApplicationViewModel = function () {
 
 //Paging
     this.currentPage = ko.observable(1);
-    this.pageSize = 15;
+    this.pageSize = 14;
     this.totalPages = ko.observable(1);
     this.totalPagesArr = ko.observableArray([1]);
 

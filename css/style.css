@@ -3,7 +3,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	padding: 0;
 	border: 0;
 	font-size: 1em;
-	vertical-align: baseline;
+	vertical-align: middle;
 	font-family: "HelveticaNeue Light", sans-serif;
 }
 
@@ -757,8 +757,9 @@ ul, ol {
 	color: #ff6900;
 	padding: 0 0 26px 0;
 	white-space: nowrap;
-	font-family: "HelveticaNeue Light", sans-serif;
-	font-size: 26px;
+	/*font-family: "HelveticaNeue Light", sans-serif;*/
+	/*font-size: 26px;*/
+    font: 33px/1.5 "HelveticaNeue Light", sans-serif;
 	line-height: 36px;
     }
 

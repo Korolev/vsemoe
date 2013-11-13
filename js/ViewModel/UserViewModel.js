@@ -16,22 +16,18 @@ var UserViewModel = function () {
     this.passwordError = ko.observable(false);
     this.errorText = ko.observable("Логин и пароль не соответствуют друг другу");
 
-    this.hasErrors = ko.computed(function(){
+    this.hasErrors = ko.computed(function () {
         return this.loginError() || this.passwordError();
-    },this);
+    }, this);
 
-    this.login.subscribe(function(val){
-        if(val){
-            if(self.timeId)clearTimeout(self.timeId);
-            self.timeId = setTimeout(function(){
-                self.loginError(!validateEmail(val));
-                self.errorText("Пожалуйста, введите корректный Email");
-            },800);
+    this.loginValidate = function () {
+        if(self.login().length){
+            self.loginError(!validateEmail(self.login()));
+            self.errorText("Пожалуйста, введите корректный Email");
         }else{
             self.loginError(false);
         }
-
-    });
+    };
 
     this.token = ko.observable();
 

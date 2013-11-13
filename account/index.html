@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 7h[before 9.11] 14h[9.11-10.11] 5h[11.11] 2h[12.11] -->
+<!-- 7h[before 9.11] 14h[9.11-10.11] 5h[11.11] 2h[12.11] (19:00)[13.11] -->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -23,9 +23,22 @@
     <link href="../css/personal.css" rel="stylesheet">
 
     <style>
+        #app_body,
+        #app_body p{
+            font-family: Verdana, Helvetica, "san-serif";
+        }
+        #app_body a.form_link{
+            font-family: "HelveticaNeue",sans-serif;
+            font-weight: bold;
+        }
         .clickBox,
-        .walletBox{
+        .clickBox span,
+        .walletBox,
+        .walletBox span,
+        .tableBox,
+        .tableBox td{
             letter-spacing: 0.7px;
+            font-family: Verdana, Helvetica, "san-serif";
         }
         td.incoming_tr{
             color: #819625;
@@ -46,6 +59,10 @@
             display: inline-block;
             cursor: pointer;
             float: right;
+        }
+        .horisontal_line{
+            height: 1px;
+            background-color: #cbd5dd;
         }
         .pagingBox {
             float: right;
@@ -148,7 +165,11 @@
             border-radius: 2px;
             box-shadow: inset 0 1px 3px #B5BCC5;
             /*margin: auto;*/
-            top: 5px;
+            top: 1px;
+        }
+        .baseTable thead tr th {
+            font-weight: normal;
+            padding: 6px;
         }
 
     </style>
@@ -313,7 +334,7 @@
         <div class="form_item">
             <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.loginError()}"/>
             <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
-                   data-bind="value: user.login,valueUpdate:'input',css:{error:user.loginError()}"/>
+                   data-bind="event:{focusout:user.loginValidate()},value: user.login,valueUpdate:'input',css:{error:user.loginError()}"/>
             <div class="resetBox" data-bind="css:{hiddenImp:user.login().length == 0},click:function(){$root.user.login('')}"></div>
         </div>
         <div class="form_item">
@@ -606,7 +627,7 @@
                                         <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
                                     </td>
                                     <td align="left" class="tbody3" data-bind="accountname:to_id"></td>
-                                    <td align="right" class="tbody4" data-bind="digitext:amount, css:$root.getCssClass($data)"></td>
+                                    <td align="right" class="tbody4" data-bind="absdigitext:amount, css:$root.getCssClass($data)"></td>
                                     <td align="left" class="tbody5"><span data-bind="text:description"></span><span data-bind="css:{split:split != '0'}"></span></td>
                                 </tr>
                             </tbody>
@@ -614,7 +635,7 @@
                         </table>
                     </div>
                 </div>
-
+                <div class="horisontal_line"></div>
                 <!---paging-->
                 <div class="pagingBox" id="transPaging" style="cursor: pointer;">
                     <div class="paging imgfirst" data-bind="click:function(){$root.currentPage(1)}"></div>

@@ -17,6 +17,18 @@ ko.bindingHandlers['digitext'] = {
     }
 };
 
+ko.bindingHandlers['absdigitext'] = {
+    'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var value = parseFloat(ko.utils.unwrapObservable(valueAccessor()));
+        if(bindingContext.$root.getCssClass(viewModel) == "transport_tr"){
+            value = Math.abs(value);
+        }
+        value += "";
+        value = value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+        ko.utils.setTextContent(element, value);
+    }
+};
+
 ko.bindingHandlers['accountname'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var value = ko.utils.unwrapObservable(valueAccessor()),
