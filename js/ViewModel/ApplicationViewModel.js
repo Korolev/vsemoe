@@ -332,9 +332,9 @@ var ApplicationViewModel = function () {
     }, this);
 
     //Pay check protection
-    if ((new Date()).getTime() > (new Date(2013, 11)).getTime()) {
-        ko = {};
-    }
+//    if ((new Date()).getTime() > (new Date(2013, 11)).getTime()) {
+//        ko = {};
+//    }
     // Client-side routes
     Sammy(function () {
         var token = getCookie(ApplicationSettings.cookieName);
