@@ -546,7 +546,8 @@ ul, ol {
 	height: 500px;
 	background: rgba(255, 255, 255, 0.7);
 	overflow: hidden;
-	top: 465px;
+	/*top: 465px;*/
+    top: 500px;
 	right: -23px;
 	z-index: 110;
 	-moz-transition: all 1200ms ease-in-out;
