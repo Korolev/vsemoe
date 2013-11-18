@@ -9,25 +9,37 @@ var UserViewModel = function () {
         };
 
     this.login = ko.observable("");//email
+    this.email = ko.observable("");//email
     this.password = ko.observable("");
     this.remember = ko.observable(false);
 
     this.loginError = ko.observable(false);
+    this.emailError = ko.observable(false);
     this.passwordError = ko.observable(false);
     this.errorText = ko.observable("Логин и пароль не соответствуют друг другу");
 
     this.hasErrors = ko.computed(function () {
-        return this.loginError() || this.passwordError();
+        return this.loginError() || this.emailError() || this.passwordError();
     }, this);
 
     this.loginValidate = function () {
         if(self.login().length){
             self.loginError(!validateEmail(self.login()));
             self.errorText("Пожалуйста, введите корректный Email");
+        }else if(self.email().length){
+          self.emailError(!validateEmail(self.email()));
+          self.errorText("Пожалуйста, введите корректный Email");
         }else{
             self.loginError(false);
         }
     };
+
+  this.login.subscribe(function(val){
+    self.loginError(false);
+  });
+  this.email.subscribe(function(val){
+    self.emailError(false);
+  });
 
     this.token = ko.observable();
 

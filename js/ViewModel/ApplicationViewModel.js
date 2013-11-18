@@ -178,6 +178,7 @@ var ApplicationViewModel = function () {
         self.totalGain(sum);
         return res;
     };
+
     this.getConsumptionAcc = function () {
         var res = [], sum = 0;
         $.each(self.accounts(), function (k, acc) {
@@ -189,6 +190,7 @@ var ApplicationViewModel = function () {
         self.totalConsumption(sum);
         return res;
     };
+
     this.getActiveAcc = function () {
         var res = [], sum = 0;
         $.each(self.accounts(), function (k, acc) {
@@ -228,11 +230,47 @@ var ApplicationViewModel = function () {
         return cssClass[res];
     };
 
+  this.userChangepass = function(){
+//TODO
+  };
+
+  this.userRestore = function(){
+    var user = self.user;
+//    ServerApi.existUser({user:user.email()},function(r){
+//      console.log(r);
+//    });
+    ServerApi.lostpasswordUser({user:user.email()},function(r){
+      if(r){
+        self.action("congratulations");
+        user.email("");
+      }else{
+        user.errorText("Пользователь с таким логином не найден");
+        user.emailError(true);
+      }
+    })
+  };
+
+  this.userRegister = function () {
+    var user = self.user;
+    ServerApi.createUser({user:user.email(),password:user.password()},function(r){
+      console.log("reg",r);
+      if(r){
+        //todo
+        user.login(user.email());
+        self.userLogin();
+      }else{
+        user.errorText(user.email()+" пользователь существует.Выберите другой логин.");
+        user.emailError(true);
+      }
+    });
+  };
+
     this.userLogin = function () {
         var user = self.user;
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
             user.token(r.token);
             location.hash = "observe";
+            user.password("");
         })
     };
     this.userLogOut = function () {
@@ -323,7 +361,6 @@ var ApplicationViewModel = function () {
         });
         this.get('/account/', function () {
             var sammy = this;
-            console.log("token", token);
             if (token) {
                 ServerApi.checkToken({token: token}, function (r) {
                     if (r) {

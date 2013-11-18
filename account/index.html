@@ -23,6 +23,9 @@
     <link href="../css/personal.css" rel="stylesheet">
 
     <style>
+        .restore p{
+            line-height: 20px;
+        }
         #app_body,
         #app_body p{
             font-family: Verdana, Helvetica, "san-serif";
@@ -382,14 +385,20 @@
 
     <form class="register" action="/user/create" method="POST">
         <div class="form_item">
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="email" class="register" name="user" placeholder="Электронная Почта"/>
-            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.emailError()}"/>
+            <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
+                   data-bind="event:{focusout:user.loginValidate()},value: user.email,valueUpdate:'input',css:{error:user.emailError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.email().length == 0},click:function(){$root.user.email('')}"></div>
         </div>
         <div class="form_item">
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="password" name="password" id="password" placeholder="Пароль"/>
-            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <input type="password" tabindex="2" name="password" placeholder="Пароль"
+                   data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
+        </div>
+
+        <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
+            <p class="error" data-bind="text:user.errorText"></p>
         </div>
         <!-- <div class="form_item ">
                 <img src="images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка" />
@@ -401,7 +410,7 @@
                 </div>
             </div>-->
         <div class="form_but">
-            <input type="submit" value="Регистрироваться"/>
+            <input type="button" data-bind="click:userRegister" value="Регистрироваться"/>
         </div>
     </form>
     <a href="#login" class="form_link">Уже зарегистрированы?</a>
@@ -414,17 +423,16 @@
             <p>Для восстановления пароля укажите адрес электронной почты</p>
         </div>
         <div class="form_item">
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="email" class="login" name="user" placeholder="Электронная Почта"/>
-            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.emailError()}"/>
+            <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
+                   data-bind="event:{focusout:user.loginValidate()},value: user.email,valueUpdate:'input',css:{error:user.emailError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.email().length == 0},click:function(){$root.user.email('')}"></div>
         </div>
-        <div class="allErrors"></div>
-        <div class="errortext hidden error">
-            <p>Пользователь с таким логином не найден</p>
+        <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
+            <p class="error" data-bind="text:user.errorText"></p>
         </div>
-        <div class="form_item remember"></div>
         <div class="form_but decor">
-            <input type="submit" value="Восстановить"/>
+            <input type="button" data-bind="click:userRestore" value="Восстановить"/>
         </div>
     </form>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
@@ -450,7 +458,7 @@
         </div>
         <div class="allErrors"></div>
         <div class="form_but">
-            <input type="submit" value="Изменить"/>
+            <input type="button" data-bind="userChangepass" value="Изменить"/>
         </div>
     </form>
 </script>

@@ -38,7 +38,7 @@ var ServerApi = {
                     success: function(r){
                         console.log(r);
                         if(r.status == 1){
-                            callback(r.data)
+                            callback(r.data || r.text);
                         }else{
                             callback(false);
                             console.info(r);
@@ -59,29 +59,27 @@ var ServerApi = {
     loginUser: function (dataObj, callback) {
         this.utils().post("/user/login", dataObj, callback);
     },
-    createUser: function (user, password, callback) {
-        var data = this.utils().makeObj("user, password", arguments);
-        this.utils().post("/user/login", data, callback);
+    existUser: function (dataObj, callback) {
+        this.utils().post("/user/exist/", dataObj, callback);
+    },
+    createUser: function (dataObj, callback) {
+        this.utils().post("/user/create", dataObj, callback);
     },
     confirmUser: function (token, callback) {
         this.utils().post("/user/confirm", { token: token}, callback);
     },
-    logoutUser: function (token, callback) {
-        this.utils().post("/user/logout", { token: token}, callback);
+    logoutUser: function (dataObj, callback) {
+        this.utils().post("/user/logout", dataObj, callback);
     },
-    changepasswordUser: function (user, password, newpassword, callback) {
+    changepasswordUser: function (dataObj, callback) {
         //TODO: what about token ?
-        var data = this.utils().makeObj("user, password, newpassword", arguments);
-        this.utils().post("/user/logout", data, callback);
+        this.utils().post("/user/logout", dataObj, callback);
     },
-    lostpasswordUser: function (user, callback) {
-        this.utils().post("/user/lostpassword", { user: user}, callback);
+    lostpasswordUser: function (dataObj, callback) {
+        this.utils().post("/user/lostpassword", dataObj, callback);
     },
-    existUser: function (user, callback) {
-        this.utils().post("/user/exist/", { user: user}, callback);
-    },
-    changepasswordemailUser: function (token, callback) {
-        this.utils().post("/user/changepasswordemail", { token: token}, callback);
+    changepasswordemailUser: function (dataObj, callback) {
+        this.utils().post("/user/changepasswordemail", dataObj, callback);
     },
 //Token
     checkToken: function (dataObj, callback) {
