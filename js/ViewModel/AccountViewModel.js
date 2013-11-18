@@ -42,6 +42,7 @@ var AccountViewModel = function(data){
     });
     if ((self.creditlimit() | 0) > 0) {
       res = parseFloat(self.creditlimit()) - res;
+      res = 0;//TODO
     }
     if (self.group() == 0 && self.type() == 'IN') {
       res *= -1;
