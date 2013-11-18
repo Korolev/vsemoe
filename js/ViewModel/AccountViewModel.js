@@ -21,7 +21,12 @@ var AccountViewModel = function(data){
     this.transactions = [];
 
     this.toggleExpand = function(){
-      self.expand(!self.expand());
+      var res = !self.expand();
+      self.expand(res);
+      ServerApi.updateAccount("expand",{account_id:self.id,value:res?1:0},function(r){
+        //TODO
+        console.log(r);
+      });
     };
 
   this.recalculateSum = function (root) {

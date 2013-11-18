@@ -253,10 +253,10 @@ var ApplicationViewModel = function () {
   this.userRegister = function () {
     var user = self.user;
     ServerApi.createUser({user:user.email(),password:user.password()},function(r){
-      console.log("reg",r);
       if(r){
-        //todo
+        //TODO make confirm email
         user.login(user.email());
+        user.email("");
         self.userLogin();
       }else{
         user.errorText(user.email()+" пользователь существует.Выберите другой логин.");
