@@ -1,6 +1,6 @@
 var ServerApi = {
     options: {
-        dev: false,
+        dev: true,
         lang: "ru",
         token: "",
         serverUrl: {

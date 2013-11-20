@@ -8,11 +8,29 @@ var UserViewModel = function () {
             return re.test(email);
         };
 
+    this.errorMessages = {
+        password: {
+            required: "Пожалуйста, введите пароль"
+        },
+        newpassword: {
+            required: "Пожалуйста, введите пароль"
+        },
+        renewpassword: {
+            required: "Пожалуйста, введите пароль",
+            equalTo: "Введеные вами пароли не совпадают"
+        },
+        user: {
+            email: "Пожалуйста, введите корректный Email",
+            required: "Пожалуйста, введите логин"
+        },
+        passed: "Email и пароль не соотвествуют друг другу"
+    };
+
     this.login = ko.observable("");//email
     this.email = ko.observable("");//email
     this.password = ko.observable("");
     this.repassword = ko.observable("");
-    this.remember = ko.observable(false);
+    this.remember = ko.observable(true);
 
     this.loginError = ko.observable(false);
     this.emailError = ko.observable(false);

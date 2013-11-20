@@ -74,7 +74,7 @@ function slider() {
     var selectElement = $('.elements div:not(.hidden)');
     var num = parseInt(selectElement.attr('data-num'));
     num = num + 1;
-    if (num > 3) { num = 1; }
+    if (num > 4) { num = 1; }
     $('.elements .phone').addClass('hidden');
     $('.elements .phone[data-num=' + num + ']').removeClass('hidden');
 

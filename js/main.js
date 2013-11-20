@@ -187,6 +187,7 @@ $(function () {
     $(".resetBoxPassword").on("click", function () {
         $("input[name='password']").val('');
         $(".resetBoxPassword").addClass("hiddenImp");
+        $(".resetBoxPassword").addClass("hiddenImp");
         $("div a.hiddenToggle").removeClass("hiddenImp");
     })
 

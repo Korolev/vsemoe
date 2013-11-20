@@ -309,6 +309,10 @@
         } else {
             ko.applyBindings(new ApplicationViewModel());
         }
+
+        $(".autocompleteFix").each(function(){
+           $(this).trigger('change');
+        });
     });
 </script>
 
@@ -352,14 +356,14 @@
     <form action="/user/login" method="POST" class="login">
         <div class="form_item">
             <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.loginError()}"/>
-            <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
+            <input autofocus="true" type="email" tabindex="1" class="login autocompleteFix" name="user" placeholder="Электронная Почта"
                    data-bind="event:{focusout:user.loginValidate()},value: user.login,valueUpdate:'input',css:{error:user.loginError()}"/>
             <div class="resetBox" data-bind="css:{hiddenImp:user.login().length == 0},click:function(){$root.user.login('')}"></div>
         </div>
         <div class="form_item">
             <a href="#restore" class="forgot hiddenToggle" title="Напомнить пароль" data-bind="css:{hiddenImp:user.password() != ''}">?</a>
             <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
-            <input type="password" tabindex="2" name="password" placeholder="Пароль"
+            <input type="password" tabindex="2" name="password" placeholder="Пароль" class="autocompleteFix"
                    data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
             <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
         </div>

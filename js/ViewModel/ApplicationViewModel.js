@@ -268,15 +268,27 @@ var ApplicationViewModel = function () {
     this.userLogin = function () {
         var user = self.user;
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
-            user.token(r.token);
-            location.hash = "observe";
-            user.password("");
+            console.log(r);
+            if(r){
+                user.token(r.token);
+                location.hash = "observe";
+                user.password("");
+            }else{
+                user.loginError(true);
+                user.passwordError(true);
+                user.errorText(user.errorMessages.passed);
+            }
+
         })
     };
     this.userLogOut = function () {
         console.log("logout");
         var user = self.user;
         user.token("");
+        user.email("");
+        user.login("");
+        user.password("");
+        user.repassword("");
         setCookie(ApplicationSettings.cookieName, "", {expires: new Date(1999)});
         location.hash = "#login";
     };
