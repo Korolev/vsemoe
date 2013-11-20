@@ -11,6 +11,7 @@ var UserViewModel = function () {
     this.login = ko.observable("");//email
     this.email = ko.observable("");//email
     this.password = ko.observable("");
+    this.repassword = ko.observable("");
     this.remember = ko.observable(false);
 
     this.loginError = ko.observable(false);
@@ -33,6 +34,10 @@ var UserViewModel = function () {
             self.loginError(false);
         }
     };
+
+  this.repasswordValidate = function(){
+
+  };
 
   this.login.subscribe(function(val){
     self.loginError(false);

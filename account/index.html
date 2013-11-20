@@ -380,6 +380,7 @@
     </form>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
 </script>
+
 <script type="text/html" id="register-tpl">
     <h1>Регистрация</h1>
 
@@ -415,6 +416,7 @@
     </form>
     <a href="#login" class="form_link">Уже зарегистрированы?</a>
 </script>
+
 <script type="text/html" id="restore-tpl">
     <h1>Восстановление пароля</h1>
 
@@ -437,31 +439,38 @@
     </form>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
 </script>
+
 <script type="text/html" id="changepass-tpl">
     <h1>Меняем пароль</h1>
     <form action="/user/changepasswordtoken" method="POST" class="changepass">
         <div class="form_item">
-            <p>Для вашего аккаунта зарегистрированного на почту:<span name="user" class="email"></span>
+            <p>Для вашего аккаунта зарегистрированного на почту:
+                <span name="user" class="email" data-bind="text:user.login"></span>
             </p>
-            <input type="hidden" name="user" value=""/>
-            <input type="hidden" name="token" value=""/>
         </div>
         <div class="form_item">
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="password" name="password" id="newpassword" placeholder="Пароль"/>
-            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <input type="password" tabindex="2" name="password" placeholder="Пароль"
+                   data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
         </div>
-        <div class="form_item ">
-            <img src="/images/alert.png" class="hidden error" alt="Ошибка" title="Ошибка"/>
-            <input type="password" name="renewpassword" placeholder="Потвердите Пароль"/>
-            <input type="reset" value="" title="Очистить" class="hiddenImp hiddenToggle"/>
+
+        <div class="form_item">
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <input type="password" tabindex="2" name="password" placeholder="Повторите Пароль"
+                   data-bind="event:{focusout:user.repasswordValidate()},value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
+            <div class="resetBox" data-bind="css:{hiddenImp:user.repassword().length == 0},click:function(){$root.user.repassword('')}"></div>
         </div>
-        <div class="allErrors"></div>
+
+        <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
+            <p class="error" data-bind="text:user.errorText"></p>
+        </div>
         <div class="form_but">
-            <input type="button" data-bind="userChangepass" value="Изменить"/>
+            <input type="button" data-bind="click:userChangepass" value="Изменить"/>
         </div>
     </form>
 </script>
+
 <script type="text/html" id="congratulations-tpl">
     <div class="form_item" style="height: 200px;">
         <p>Пожалуйста, перейдите в указанный вами почтовый ящик для продолжения восстановления
