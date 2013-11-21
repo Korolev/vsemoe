@@ -53,7 +53,7 @@ var UserViewModel = function () {
         }
     };
     
-    this.passwor.subscribe(function(val){
+    this.password.subscribe(function(val){
         self.passwordError(false);
     });
 
