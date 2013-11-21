@@ -719,9 +719,9 @@ ul, ol {
     color: #989898;
     font-family: "HelveticaNeue Light", sans-serif;
     font-size: 12px;
-    font-style: normal;
+    /*font-style: normal;*/
     line-height: 1;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.7px;
 }
 
 .description h1 {
