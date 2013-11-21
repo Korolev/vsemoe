@@ -52,6 +52,10 @@ var UserViewModel = function () {
             self.loginError(false);
         }
     };
+    
+    this.passwor.subscribe(function(val){
+        self.passwordError(false);
+    });
 
   this.repasswordValidate = function(){
 
