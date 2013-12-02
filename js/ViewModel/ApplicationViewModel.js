@@ -64,9 +64,40 @@ var ApplicationViewModel = function () {
             "changepass": "login",
             "observe": "account",
             "insert": "account"
+        },
+        failsCount = 0,
+        modal = {
+            register : {
+                text:"Хотите заново зарегистрироваться?",
+                buttons : {
+                    okLabel:"Да",
+                    okFunc:function(){
+                        location.hash = 'register';
+                        self.modalClose();
+                        self.user.clearError();
+                    }
+                }
+            },
+            restore: {
+                text:"Хотите восстановить пароль?",
+                buttons : {
+                    okLabel:"Да",
+                    okFunc:function(){
+                        location.hash = 'restore';
+                        self.modalClose();
+                        self.user.clearError();
+                    }
+                }
+            }
         };
 
     this.todayShorUpper = (new Date()).getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].substr(0, 3).toUpperCase();
+
+    this.modalWindow = ko.observable();
+    this.modalCancelLabel = "Отмена";
+    this.modalClose = function(){
+        self.modalWindow(null);
+    }
 
     this.totalPassive = ko.observable(0);
     this.totalActive = ko.observable(0);
@@ -78,6 +109,7 @@ var ApplicationViewModel = function () {
     this.action = ko.observable();
 
     this.currency = {"478":{shortname:"RUB"}};
+    this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel();
 
 //Accounts
@@ -277,6 +309,10 @@ var ApplicationViewModel = function () {
                 user.loginError(true);
                 user.passwordError(true);
                 user.errorText(user.errorMessages.passed);
+
+                failsCount += 1;
+                if(failsCount == 4) self.modalWindow(modal.restore);
+                if(failsCount == 6) self.modalWindow(modal.register);
             }
 
         })
@@ -290,7 +326,7 @@ var ApplicationViewModel = function () {
         user.password("");
         user.repassword("");
         setCookie(ApplicationSettings.cookieName, "", {expires: new Date(1999)});
-        location.hash = "#login";
+        location.hash = "login";
     };
 
     this.user.token.subscribe(function (val) {

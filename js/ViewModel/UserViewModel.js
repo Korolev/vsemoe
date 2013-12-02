@@ -41,32 +41,38 @@ var UserViewModel = function () {
         return this.loginError() || this.emailError() || this.passwordError();
     }, this);
 
+    this.clearError = function () {
+        self.loginError(false);
+        self.emailError(false);
+        self.passwordError(false);
+    };
+
     this.loginValidate = function () {
-        if(self.login().length){
+        if (self.login().length) {
             self.loginError(!validateEmail(self.login()));
             self.errorText("Пожалуйста, введите корректный Email");
-        }else if(self.email().length){
-          self.emailError(!validateEmail(self.email()));
-          self.errorText("Пожалуйста, введите корректный Email");
-        }else{
+        } else if (self.email().length) {
+            self.emailError(!validateEmail(self.email()));
+            self.errorText("Пожалуйста, введите корректный Email");
+        } else {
             self.loginError(false);
         }
     };
-    
-    this.password.subscribe(function(val){
+
+    this.password.subscribe(function (val) {
         self.passwordError(false);
     });
 
-  this.repasswordValidate = function(){
+    this.repasswordValidate = function () {
 
-  };
+    };
 
-  this.login.subscribe(function(val){
-    self.loginError(false);
-  });
-  this.email.subscribe(function(val){
-    self.emailError(false);
-  });
+    this.login.subscribe(function (val) {
+        self.loginError(false);
+    });
+    this.email.subscribe(function (val) {
+        self.emailError(false);
+    });
 
     this.token = ko.observable();
 

@@ -331,7 +331,7 @@ footer .copy {
 .titleBox {
     width: 290px;
     min-height: 24px;
-    padding: 0 20px 0 12px;
+    padding: 3px 20px 0 12px;
     color: #d6d4d0;
     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFf6f4f2,EndColorStr=#FFe6e4e2)!important;
     background-image: -moz-linear-gradient(top,#f6f4f2 0,#e6e4e2 100%);

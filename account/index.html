@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2h[18.11] -->
+<!-- 2h[18.11] 3h[2.12]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -7,193 +7,298 @@
 <!--[if IE 8]>
 <html class="no-js lt-ie9"> <![endif]-->
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <title>Всё Моё &mdash; Сервис управления личными финансами</title>
-    <meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами - VseMoe.RU">
-    <meta name="description"
-          content="Всё Моё &mdash; Сервис управления личными финансами и и семейным бюджетом - VseMoe.RU">
-    <link rel="shortcut icon" href="favicon.ico">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<title>Всё Моё &mdash; Сервис управления личными финансами</title>
+<meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами - VseMoe.RU">
+<meta name="description"
+      content="Всё Моё &mdash; Сервис управления личными финансами и и семейным бюджетом - VseMoe.RU">
+<link rel="shortcut icon" href="favicon.ico">
 
-    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
-    <link href="../css/style.css" rel="stylesheet" type="text/css">
-    <link href="../css/login.css" rel="stylesheet" type="text/css">
-    <link href="../css/personal.css" rel="stylesheet">
+<link href="../css/fonts.css" rel="stylesheet" type="text/css">
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<link href="../css/login.css" rel="stylesheet" type="text/css">
+<link href="../css/personal.css" rel="stylesheet">
 
-    <style>
-        p{
-            line-height: 20px;
-        }
-        #app_body,
-        #app_body p{
-            font-family: Verdana, Helvetica, "san-serif";
-        }
-        #app_body a.form_link{
-            font-family: "HelveticaNeue",sans-serif;
-            /*font-weight: bold;*/
-        }
-        .clickBox,
-        .clickBox span,
-        .walletBox,
-        .walletBox span,
-        .tableBox,
-        .tableBox td,
-        .bottomText,
-        .notice,
-        .notice div,
-        .notice span,
-        .categoryText,
-        ul li span,
-        .baseTable thead tr th,
-        .passiveTop span,
-        .activeTop span,
-        .orangeResult,
-        .greenResult,
-        .largeText,
-        .largeComment,
-        .totalMenu,
-        .bigText,
-        .bigComment,
-        #app_body a.form_link{
-            letter-spacing: 0.7px;
-        }
-        td.incoming_tr{
-            color: #819625;
-        }
-        td.transport_tr{
-            color: #187585;
-        }
-        .split {
-            position: relative;
-            width: 22px;
-            height: 17px;
-            top:6px;
-            margin: 0 0 0 8px;
-            vertical-align: middle;
-            background-image: url("../images/split.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            display: inline-block;
-            cursor: pointer;
-            float: right;
-        }
-        .horisontal_line{
-            height: 1px;
-            background-color: #cbd5dd;
-        }
-        .pagingBox {
-            float: right;
-            margin: 25px 20px 0px;
-            font-family: Arial;
-            height: 22px;
-        }
-        .paging {
-            float: left;
-            margin-left: 3px;
-        }
-        .imgnone {
-            width: 26px;
-            line-height: 19px;
-            height: 19px;
-            text-align: center;
-            color: #252525;
-        }
-        .imgcolor {
-            width: 26px;
-            line-height: 19px;
-            height: 19px;
-            background-color: #f0f4f4;
-            box-shadow: 0 0 1px #f0f4f4;
-            border-radius: 2px;
-            text-align: center;
-            color: #187585;
-        }
-        .imgfirst {
-            background-image: url("../images/imgfirst.png");
-            width: 22px;
-            height: 19px;
-        }
-        .imgprev {
-            background-image: url("../images/imgprev.png");
-            width: 22px;
-            height: 19px;
-        }
-        .imgnext {
-            background-image: url("../images/imgnext.png");
-            width: 22px;
-            height: 19px;
-        }
-        .imglast {
-            background-image: url("../images/imglast.png");
-            width: 22px;
-            height: 19px;
-        }
-        .additional_pagin_box{
-            width: 110px;
-            height: 19px;
-            position: relative;
-            float: left;
-            margin-left: 3px;
-        }
-        .pagingBox input[type='text'] {
-            width: 30px;
-            height: 19px;
-            text-align: center;
-            border-radius: 2px;
-            border: 1px solid #d6e2e2;
-            box-shadow: none;
-            font-size: 12px;
-            color: #252525;
-            vertical-align: middle;
-            padding: 0;
-            float: left;
-        }
-        .pagingcount {
-            width: 30px;
-            line-height: 19px;
-            height: 19px;
-            text-align: center;
-            border-radius: 2px;
-            border: 1px solid #d6e2e2;
-            float: left;
-        }
-        .pagingtext {
-            line-height: 19px;
-            height: 19px;
-            width: 20px;
-            text-align: center;
-            float: left;
-        }
-        .pagingsubmit {
-            background-image: url("../images/imgsubmit.png");
-            width: 22px;
-            height: 22px;
-            text-align: center;
-            float: left;
-            margin-left: 4px;
-            top:-1px;
-        }
+<style>
+p {
+    line-height: 20px;
+}
 
-        .checkbox {
-            width: 12px;
-            height: 12px;
-            background-color: #FFFFFF;
-            border: 1px solid #B5BCC5;
-            border-radius: 2px;
-            box-shadow: inset 0 1px 3px #B5BCC5;
-            /*margin: auto;*/
-            top: 1px;
-        }
-        .baseTable thead tr th {
-            font-weight: normal;
-            padding: 6px;
-        }
+#app_body,
+#app_body p {
+    font-family: Verdana, Helvetica, "san-serif";
+}
 
-    </style>
+#app_body a.form_link {
+    font-family: "HelveticaNeue", sans-serif;
+    /*font-weight: bold;*/
+}
 
-    <script src="../js/lib/modernizr-2.6.2.min.js"></script>
+.clickBox,
+.clickBox span,
+.walletBox,
+.walletBox span,
+.tableBox,
+.tableBox td,
+.bottomText,
+.notice,
+.notice div,
+.notice span,
+.categoryText,
+ul li span,
+.baseTable thead tr th,
+.passiveTop span,
+.activeTop span,
+.orangeResult,
+.greenResult,
+.largeText,
+.largeComment,
+.totalMenu,
+.bigText,
+.bigComment,
+#app_body a.form_link {
+    letter-spacing: 0.08rem;
+}
+
+td.incoming_tr {
+    color: #819625;
+}
+
+td.transport_tr {
+    color: #187585;
+}
+
+.split {
+    position: relative;
+    width: 22px;
+    height: 17px;
+    top: 6px;
+    margin: 0 0 0 8px;
+    vertical-align: middle;
+    background-image: url("../images/split.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    cursor: pointer;
+    float: right;
+}
+
+.horisontal_line {
+    height: 1px;
+    background-color: #cbd5dd;
+}
+
+.pagingBox {
+    float: right;
+    margin: 25px 20px 0px;
+    font-family: Arial;
+    height: 22px;
+}
+
+.paging {
+    float: left;
+    margin-left: 3px;
+}
+
+.imgnone {
+    width: 26px;
+    line-height: 19px;
+    height: 19px;
+    text-align: center;
+    color: #252525;
+}
+
+.imgcolor {
+    width: 26px;
+    line-height: 19px;
+    height: 19px;
+    background-color: #f0f4f4;
+    box-shadow: 0 0 1px #f0f4f4;
+    border-radius: 2px;
+    text-align: center;
+    color: #187585;
+}
+
+.imgfirst {
+    background-image: url("../images/imgfirst.png");
+    width: 22px;
+    height: 19px;
+}
+
+.imgprev {
+    background-image: url("../images/imgprev.png");
+    width: 22px;
+    height: 19px;
+}
+
+.imgnext {
+    background-image: url("../images/imgnext.png");
+    width: 22px;
+    height: 19px;
+}
+
+.imglast {
+    background-image: url("../images/imglast.png");
+    width: 22px;
+    height: 19px;
+}
+
+.additional_pagin_box {
+    width: 110px;
+    height: 19px;
+    position: relative;
+    float: left;
+    margin-left: 3px;
+}
+
+.pagingBox input[type='text'] {
+    width: 30px;
+    height: 19px;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid #d6e2e2;
+    box-shadow: none;
+    font-size: 12px;
+    color: #252525;
+    vertical-align: middle;
+    padding: 0;
+    float: left;
+}
+
+.pagingcount {
+    width: 30px;
+    line-height: 19px;
+    height: 19px;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid #d6e2e2;
+    float: left;
+}
+
+.pagingtext {
+    line-height: 19px;
+    height: 19px;
+    width: 20px;
+    text-align: center;
+    float: left;
+}
+
+.pagingsubmit {
+    background-image: url("../images/imgsubmit.png");
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    float: left;
+    margin-left: 4px;
+    top: -1px;
+}
+
+.checkbox {
+    width: 12px;
+    height: 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #B5BCC5;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 3px #B5BCC5;
+    /*margin: auto;*/
+    top: 1px;
+}
+
+.baseTable thead tr th {
+    font-weight: normal;
+    padding: 6px;
+}
+
+.clickBox span,
+.walletBox span,
+.notice .noticeTitle,
+.HelveticaNeueBold,
+.emptyBox .categoryText,
+.totalBox .largeText,
+.bottomBox > span,
+.tbody4 {
+    font-family: "HelveticaNeue Bold", sans-serif;
+}
+
+.titleBox span {
+    line-height: 24px;
+}
+
+.modalHolder {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    top: 0px;
+    left: 0px;
+    z-index: 10001;
+}
+
+.modalWindow {
+    width: 400px;
+    margin-left: -200px;
+    /*height: 250px;*/
+    margin-top: -120px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #fcfcfc;
+    border: 1px solid #b2e3e7;
+    border-radius: 10px;
+}
+
+.modalMessage {
+    padding: 30px;
+    font-size: 20px;
+    color: #222;
+}
+
+.modalButtons{
+    text-align: center;
+    padding: 40px 25px 25px;
+}
+.modalButtons input{
+    margin: 0px 20px;
+    color: #555;
+    /*FAFF00 FFC00A*/
+    background-image: -moz-linear-gradient(top,#FAFF00 0,#FFC00A 100%);
+    background-image: -ms-linear-gradient(top,#FAFF00 0,#FFC00A 100%)!important;
+    background-image: -o-linear-gradient(top,#FAFF00 0,#FFC00A 100%);
+    background-image: -webkit-linear-gradient(top,#FAFF00 0,#FFC00A 100%);
+    background-image: linear-gradient(to bottom,#FAFF00 0,#FFC00A 100%)!important;
+    background-color: #fa9f00;
+    border-top: 1px solid #faaf00;
+    border-bottom: 1px solid #ec9f00;
+    border-left: 1px solid #faaf00;
+    border-right: 1px solid #faaf00;
+}
+@-moz-document url-prefix(){
+    .modalButtons input{
+        padding-top:3px;
+    }
+}
+.modalButtons input.cancel{
+    margin: 0 10px;
+    /*f9 - >e1*/
+    background-image: -moz-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%);
+    background-image: -ms-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%)!important;
+    background-image: -o-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%);
+    background-image: -webkit-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%);
+    background-image: linear-gradient(to bottom,#f9f9f9 0,#e1e1e1 100%)!important;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+
+</style>
+
+<script src="../js/lib/modernizr-2.6.2.min.js"></script>
 </head>
 <body class="inner">
 <div class="top"></div>
@@ -235,6 +340,19 @@
     <div id="app_body" data-bind="template: pageTemplateName">
     </div>
     <div class="empty"></div>
+    <!-- ko if:modalWindow -->
+    <div class="modalHolder" data-bind="click: $root.modalClose">
+        <div class="modalWindow">
+            <div class="modalMessage" data-bind="text: $root.modalWindow().text"></div>
+            <div class="modalButtons">
+                <input type="button" class="cancel" data-bind="click: $root.modalClose, value: $root.modalCancelLabel"/>
+                <input type="button" data-bind="
+                value: $root.modalWindow().buttons.okLabel,
+                click:  $root.modalWindow().buttons.okFunc"/>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
 </div>
 <footer>
     <div class="in">
@@ -254,7 +372,6 @@
         <span class="copy">@ 2013 &laquo;Всё Моё&raquo; Все права защищены</span>
     </div>
 </footer>
-
 <!-- jQuery library -->
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
@@ -310,8 +427,8 @@
             ko.applyBindings(new ApplicationViewModel());
         }
 
-        $(".autocompleteFix").each(function(){
-           $(this).trigger('change');
+        $(".autocompleteFix").each(function () {
+            $(this).trigger('change');
         });
     });
 </script>
@@ -353,26 +470,34 @@
 <script type="text/html" id="login-tpl">
     <h1>Вход в личный кабинет</h1>
 
-    <form action="/user/login" method="POST" class="login">
+    <div class="login">
         <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.loginError()}"/>
-            <input autofocus="true" type="email" tabindex="1" class="login autocompleteFix" name="user" placeholder="Электронная Почта"
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.loginError()}"/>
+            <input autofocus="true" type="email" tabindex="1" class="login autocompleteFix" name="user"
+                   placeholder="Электронная Почта"
                    data-bind="event:{focusout:user.loginValidate()},value: user.login,valueUpdate:'input',css:{error:user.loginError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.login().length == 0},click:function(){$root.user.login('')}"></div>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.login().length == 0},click:function(){$root.user.login('')}"></div>
         </div>
         <div class="form_item">
-            <a href="#restore" class="forgot hiddenToggle" title="Напомнить пароль" data-bind="css:{hiddenImp:user.password() != ''}">?</a>
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <a href="#restore" class="forgot hiddenToggle" title="Напомнить или изменить пароль"
+               data-bind="css:{hiddenImp:user.password() != ''}">?</a>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.passwordError()}"/>
             <input type="password" tabindex="2" name="password" placeholder="Пароль" class="autocompleteFix"
                    data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
         </div>
 
         <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
             <p class="error" data-bind="text:user.errorText"></p>
         </div>
-        <div class="errortext hidden error" >
-            <p class="error" >"Логин и пароль не соответствуют друг другу"</p>
+        <div class="errortext hidden error">
+            <p class="error">"Логин и пароль не соответствуют друг другу"</p>
         </div>
         <div class="form_item remember">
             <input type="checkbox" id="remember" data-bind="checked: user.remember"/>
@@ -381,25 +506,31 @@
         <div class="form_but">
             <input type="button" value="Войти" data-bind="click: userLogin"/>
         </div>
-    </form>
+    </div>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
 </script>
 
 <script type="text/html" id="register-tpl">
     <h1>Регистрация</h1>
 
-    <form class="register" action="/user/create" method="POST">
+    <div class="register">
         <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.emailError()}"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.emailError()}"/>
             <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
                    data-bind="event:{focusout:user.loginValidate()},value: user.email,valueUpdate:'input',css:{error:user.emailError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.email().length == 0},click:function(){$root.user.email('')}"></div>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.email().length == 0},click:function(){$root.user.email('')}"></div>
         </div>
         <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.passwordError()}"/>
             <input type="password" tabindex="2" name="password" placeholder="Пароль"
                    data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
         </div>
 
         <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
@@ -417,22 +548,25 @@
         <div class="form_but">
             <input type="button" data-bind="click:userRegister" value="Регистрироваться"/>
         </div>
-    </form>
+    </div>
     <a href="#login" class="form_link">Уже зарегистрированы?</a>
 </script>
 
 <script type="text/html" id="restore-tpl">
     <h1>Восстановление пароля</h1>
 
-    <form action="/user/lostpassword" method="POST" class="restore">
+    <div class="restore">
         <div class="form_item">
             <p>Для восстановления пароля укажите адрес электронной почты</p>
         </div>
         <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.emailError()}"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.loginError()}"/>
             <input autofocus="true" type="email" tabindex="1" class="login" name="user" placeholder="Электронная Почта"
-                   data-bind="event:{focusout:user.loginValidate()},value: user.email,valueUpdate:'input',css:{error:user.emailError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.email().length == 0},click:function(){$root.user.email('')}"></div>
+                   data-bind="event:{focusout:user.loginValidate()},value: user.login,valueUpdate:'input',css:{error:user.loginError()}"/>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.login().length == 0},click:function(){$root.user.login('')}"></div>
         </div>
         <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
             <p class="error" data-bind="text:user.errorText"></p>
@@ -440,30 +574,36 @@
         <div class="form_but decor">
             <input type="button" data-bind="click:userRestore" value="Восстановить"/>
         </div>
-    </form>
+    </div>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
 </script>
 
 <script type="text/html" id="changepass-tpl">
     <h1>Меняем пароль</h1>
-    <form action="/user/changepasswordtoken" method="POST" class="changepass">
+    <div class="changepass">
         <div class="form_item">
             <p>Для вашего аккаунта зарегистрированного на почту:
                 <span name="user" class="email" data-bind="text:user.login"></span>
             </p>
         </div>
         <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.passwordError()}"/>
             <input type="password" tabindex="2" name="password" placeholder="Пароль"
                    data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
         </div>
 
         <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка" data-bind="css:{hidden:!user.passwordError()}"/>
+            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
+                 data-bind="css:{hidden:!user.passwordError()}"/>
             <input type="password" tabindex="2" name="password" placeholder="Повторите Пароль"
                    data-bind="event:{focusout:user.repasswordValidate()},value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
-            <div class="resetBox" data-bind="css:{hiddenImp:user.repassword().length == 0},click:function(){$root.user.repassword('')}"></div>
+
+            <div class="resetBox"
+                 data-bind="css:{hiddenImp:user.repassword().length == 0},click:function(){$root.user.repassword('')}"></div>
         </div>
 
         <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
@@ -472,7 +612,7 @@
         <div class="form_but">
             <input type="button" data-bind="click:userChangepass" value="Изменить"/>
         </div>
-    </form>
+    </div>
 </script>
 
 <script type="text/html" id="congratulations-tpl">
@@ -544,7 +684,7 @@
                     <!----activeBox---->
                     <div g="1" class="activeBox fl">
                         <div class="activeTop">
-                            <span class="greenSymbol">Pуб</span>
+                            <span class="greenSymbol HelveticaNeueBold" data-bind="currency:baseCurrencyId">Pуб</span>
                             <span class="activeText" data-bind="digitext:totalActive"></span>
                         </div>
                         <div class="titleBox">
@@ -564,7 +704,7 @@
                     <!----passiveBox---->
                     <div g="2" class="passiveBox fr">
                         <div class="passiveTop">
-                            <span class="orangeSymbol">Pуб</span>
+                            <span class="orangeSymbol HelveticaNeueBold" data-bind="currency:baseCurrencyId">Pуб</span>
                             <span class="passiveText" data-bind="digitext:totalPassive"></span>
                         </div>
                         <div class="titleBox">
@@ -653,20 +793,22 @@
                             </tbody>
                             <!-- ko if: transactions -->
                             <tbody data-bind="foreach:transactionsSet">
-                                <tr data-bind="css:{tr_newday:newday == 1}">
-                                    <td width="24" data-bind="if:created">
-                                        <div class="checkbox"></div>
-                                    </td>
-                                    <td align="left" class="tbody1" data-bind="textdate:created"></td>
-                                    <td align="left" class="tbody2">
-                                        <span data-bind="accountname:from_id"></span>
-                                        <span>&nbsp;</span>
-                                        <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
-                                    </td>
-                                    <td align="left" class="tbody3" data-bind="accountname:to_id"></td>
-                                    <td align="right" class="tbody4" data-bind="absdigitext:amount, css:$root.getCssClass($data)"></td>
-                                    <td align="left" class="tbody5"><span data-bind="text:description"></span><span data-bind="css:{split:split != '0'}"></span></td>
-                                </tr>
+                            <tr data-bind="css:{tr_newday:newday == 1}">
+                                <td width="24" data-bind="if:created">
+                                    <div class="checkbox"></div>
+                                </td>
+                                <td align="left" class="tbody1" data-bind="textdate:created"></td>
+                                <td align="left" class="tbody2">
+                                    <span data-bind="accountname:from_id"></span>
+                                    <span>&nbsp;</span>
+                                    <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
+                                </td>
+                                <td align="left" class="tbody3" data-bind="accountname:to_id"></td>
+                                <td align="right" class="tbody4"
+                                    data-bind="absdigitext:amount, css:$root.getCssClass($data)"></td>
+                                <td align="left" class="tbody5"><span data-bind="text:description"></span><span
+                                        data-bind="css:{split:split != '0'}"></span></td>
+                            </tr>
                             </tbody>
                             <!-- /ko -->
                         </table>
@@ -676,9 +818,10 @@
                 <!---paging-->
                 <div class="pagingBox" id="transPaging" style="cursor: pointer;">
                     <div class="paging imgfirst" data-bind="click:function(){$root.currentPage(1)}"></div>
-                    <div class="paging imgprev"  data-bind="click:function(){$root.currentPage($root.currentPage()-1)}"></div>
+                    <div class="paging imgprev"
+                         data-bind="click:function(){$root.currentPage($root.currentPage()-1)}"></div>
                     <!-- ko foreach: $root.totalPagesArr -->
-                        <div class="paging imgcolor" data-bind="
+                    <div class="paging imgcolor" data-bind="
                         text:$data,
                         click:function(){$root.currentPage($data)},
                         css:{
@@ -689,17 +832,20 @@
                     <!-- ko if: $root.totalPages() > 5 -->
                     <div class="additional_pagin_box">
                         <input type="text" class="selectPage pag" data-bind="value:currentPage"/>
-                        <div class="pagingtext pag" >of</div>
+
+                        <div class="pagingtext pag">of</div>
                         <div class="pagingcount pag" data-bind="text:totalPages"></div>
-                        <div class="pagingsubmit pag" ></div>
+                        <div class="pagingsubmit pag"></div>
                     </div>
                     <!-- /ko -->
 
                     <!-- ko if: $root.totalPages() <6 -->
-                    <div class="paging imgnext" data-bind="click:function(){$root.currentPage($root.currentPage()+1)}"></div>
+                    <div class="paging imgnext"
+                         data-bind="click:function(){$root.currentPage($root.currentPage()+1)}"></div>
                     <!-- /ko -->
 
-                    <div class="paging imglast"  data-bind="click:function(){$root.currentPage($root.totalPages())}"></div>
+                    <div class="paging imglast"
+                         data-bind="click:function(){$root.currentPage($root.totalPages())}"></div>
                 </div>
 
             </td>
@@ -732,8 +878,12 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div id="topMenuBox1" class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
-            <div id="topMenuBox2" class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>
+            <div id="topMenuBox1" class="topMenuBox"
+                 data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР
+            </div>
+            <div id="topMenuBox2" class="topMenuBox"
+                 data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД
+            </div>
         </div>
         <!--------форма Обзор-------->
         <!--<div id="box1"></div>-->
