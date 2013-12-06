@@ -103,12 +103,27 @@
                 </tbody>
                 <tbody data-bind="if: serverSumm">
                     <tr>
-                        <td><b>Итого(Server):</b></td>
+                        <td><b>Итого(Server [sum]):</b></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td><b data-bind="text:serverSumm"></b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>    
+                </tbody>
+                <tbody data-bind="if: serverSummMobile">
+                    <tr>
+                        <td><b>Итого(Server [summobile]):</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b data-bind="text:serverSummMobile"></b></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -167,6 +182,7 @@
             this.token = ko.observable("");
             this.summ = ko.observable();
             this.serverSumm = ko.observable();
+            this.serverSummMobile = ko.observable();
             
             this.currency = {0:"currency_id = 0"};
             this.accountNames = {0:"account_id = 0"};
@@ -265,6 +281,10 @@
                     
                     createRequest("/account/sum",{account_id : val.account_id},function(response){
                         self.serverSumm(response.status == 1 ? response.data[0].sum+" " : null);
+                    });
+
+                    createRequest("/account/summobile",{account_id : val.account_id},function(response){
+                        self.serverSummMobile(response.status == 1 ? response.data[0].sum+" " : null);
                     });
                     
                     self.transactionsOut.removeAll();
