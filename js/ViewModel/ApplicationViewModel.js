@@ -9,7 +9,20 @@ var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
         "Апреля", "Мая", "Июня",
         "Июля", "Августа", "Сентября",
         "Октября", "Ноября", "Декабря"],
-    dayOfWeeks = [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+    dayOfWeeks = [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+    tableFilters = [
+        { label : "1 день", short: "1д", selected: true},
+        { label : "1 неделя", short: "1н", selected: true},
+        { label : "2 недели", short: "2н", selected: false},
+        { label : "1 месяц", short: "1м", selected: true},
+        { label : "3 месяца", short: "3м", selected: false},
+        { label : "6 месяцев", short: "6м", selected: true},
+        { label : "9 месяцев", short: "9м", selected: false},
+        { label : "1 год", short: "1г", selected: false},
+        { label : "2 года", short: "2г", selected: false},
+        { label : "5 лет", short: "5л", selected: false},
+        { label : "Все", short: "Все", selected: true, hidden: true}
+    ];
 
 
 function getCookie(name) {
@@ -46,6 +59,16 @@ function setCookie(name, value, options) {
     document.cookie = updatedCookie;
 }
 
+var FilterViewModel = function(data, app){
+  var self = this;
+    this.label = data.label || '';
+    this.short = data.short || '';
+    this.selected = ko.observable(data.selected);
+
+    this.selectRange = function(){
+        app.selectedFilter(self);
+    }
+};
 
 var ApplicationViewModel = function () {
     var self = this,
@@ -93,11 +116,25 @@ var ApplicationViewModel = function () {
 
     this.todayShorUpper = (new Date()).getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].substr(0, 3).toUpperCase();
 
+//Filters
+    this.tableFilters = ko.observableArray(function(arr){
+        var res = [];
+        ko.utils.arrayForEach(arr,function(data){
+            res.push(new FilterViewModel(data, self));
+        });
+        return res;
+    }(tableFilters));
+    this.selectedFilter = ko.observable();
+    this.showItemConfig = function(){
+        console.log(arguments);
+    };
+
+//Modals
     this.modalWindow = ko.observable();
     this.modalCancelLabel = "Отмена";
     this.modalClose = function(){
         self.modalWindow(null);
-    }
+    };
 
     this.totalPassive = ko.observable(0);
     this.totalActive = ko.observable(0);

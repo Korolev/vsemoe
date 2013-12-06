@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2h[18.11] 3h[2.12]-->
+<!-- 2h[18.11] 3h[2.12] 2h[3.12]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -20,283 +20,9 @@
 <link href="../css/fonts.css" rel="stylesheet" type="text/css">
 <link href="../css/style.css" rel="stylesheet" type="text/css">
 <link href="../css/login.css" rel="stylesheet" type="text/css">
-<link href="../css/personal.css" rel="stylesheet">
+<link href="../css/personal.css" rel="stylesheet" type="text/css">
+<link href="../css/account.css" rel="stylesheet" type="text/css">
 
-<style>
-p {
-    line-height: 20px;
-}
-
-#app_body,
-#app_body p {
-    font-family: Verdana, Helvetica, "san-serif";
-}
-
-#app_body a.form_link {
-    font-family: "HelveticaNeue", sans-serif;
-    /*font-weight: bold;*/
-}
-
-.clickBox,
-.clickBox span,
-.walletBox,
-.walletBox span,
-.tableBox,
-.tableBox td,
-.bottomText,
-.notice,
-.notice div,
-.notice span,
-.categoryText,
-ul li span,
-.baseTable thead tr th,
-.passiveTop span,
-.activeTop span,
-.orangeResult,
-.greenResult,
-.largeText,
-.largeComment,
-.totalMenu,
-.bigText,
-.bigComment,
-#app_body a.form_link {
-    letter-spacing: 0.07rem;
-}
-
-td.incoming_tr {
-    color: #819625;
-}
-
-td.transport_tr {
-    color: #187585;
-}
-
-.split {
-    position: relative;
-    width: 22px;
-    height: 17px;
-    top: 6px;
-    margin: 0 0 0 8px;
-    vertical-align: middle;
-    background-image: url("../images/split.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    display: inline-block;
-    cursor: pointer;
-    float: right;
-}
-
-.horisontal_line {
-    height: 1px;
-    background-color: #cbd5dd;
-}
-
-.pagingBox {
-    float: right;
-    margin: 25px 20px 0px;
-    font-family: Arial;
-    height: 22px;
-}
-
-.paging {
-    float: left;
-    margin-left: 3px;
-}
-
-.imgnone {
-    width: 26px;
-    line-height: 19px;
-    height: 19px;
-    text-align: center;
-    color: #252525;
-}
-
-.imgcolor {
-    width: 26px;
-    line-height: 19px;
-    height: 19px;
-    background-color: #f0f4f4;
-    box-shadow: 0 0 1px #f0f4f4;
-    border-radius: 2px;
-    text-align: center;
-    color: #187585;
-}
-
-.imgfirst {
-    background-image: url("../images/imgfirst.png");
-    width: 22px;
-    height: 19px;
-}
-
-.imgprev {
-    background-image: url("../images/imgprev.png");
-    width: 22px;
-    height: 19px;
-}
-
-.imgnext {
-    background-image: url("../images/imgnext.png");
-    width: 22px;
-    height: 19px;
-}
-
-.imglast {
-    background-image: url("../images/imglast.png");
-    width: 22px;
-    height: 19px;
-}
-
-.additional_pagin_box {
-    width: 110px;
-    height: 19px;
-    position: relative;
-    float: left;
-    margin-left: 3px;
-}
-
-.pagingBox input[type='text'] {
-    width: 30px;
-    height: 19px;
-    text-align: center;
-    border-radius: 2px;
-    border: 1px solid #d6e2e2;
-    box-shadow: none;
-    font-size: 12px;
-    color: #252525;
-    vertical-align: middle;
-    padding: 0;
-    float: left;
-}
-
-.pagingcount {
-    width: 30px;
-    line-height: 19px;
-    height: 19px;
-    text-align: center;
-    border-radius: 2px;
-    border: 1px solid #d6e2e2;
-    float: left;
-}
-
-.pagingtext {
-    line-height: 19px;
-    height: 19px;
-    width: 20px;
-    text-align: center;
-    float: left;
-}
-
-.pagingsubmit {
-    background-image: url("../images/imgsubmit.png");
-    width: 22px;
-    height: 22px;
-    text-align: center;
-    float: left;
-    margin-left: 4px;
-    top: -1px;
-}
-
-.checkbox {
-    width: 12px;
-    height: 12px;
-    background-color: #FFFFFF;
-    border: 1px solid #B5BCC5;
-    border-radius: 2px;
-    box-shadow: inset 0 1px 3px #B5BCC5;
-    /*margin: auto;*/
-    top: 1px;
-}
-
-.baseTable thead tr th {
-    font-weight: normal;
-    padding: 6px;
-}
-
-.clickBox span,
-.walletBox span,
-.notice .noticeTitle,
-.HelveticaNeueBold,
-.emptyBox .categoryText,
-.totalBox .largeText,
-.bottomBox > span,
-.tbody4 {
-    font-family: "HelveticaNeue Bold", sans-serif;
-}
-
-.titleBox span {
-    line-height: 24px;
-}
-
-.modalHolder {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-    top: 0px;
-    left: 0px;
-    z-index: 10001;
-}
-
-.modalWindow {
-    width: 400px;
-    margin-left: -200px;
-    /*height: 250px;*/
-    margin-top: -120px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: #fcfcfc;
-    border: 1px solid #b2e3e7;
-    border-radius: 10px;
-}
-
-.modalMessage {
-    padding: 30px;
-    font-size: 20px;
-    color: #222;
-}
-
-.modalButtons{
-    text-align: center;
-    padding: 40px 25px 25px;
-}
-.modalButtons input{
-    margin: 0px 20px;
-    color: #555;
-    /*FAFF00 FFC00A*/
-    background-image: -moz-linear-gradient(top,#FAFF00 0,#FFC00A 100%);
-    background-image: -ms-linear-gradient(top,#FAFF00 0,#FFC00A 100%)!important;
-    background-image: -o-linear-gradient(top,#FAFF00 0,#FFC00A 100%);
-    background-image: -webkit-linear-gradient(top,#FAFF00 0,#FFC00A 100%);
-    background-image: linear-gradient(to bottom,#FAFF00 0,#FFC00A 100%)!important;
-    background-color: #fa9f00;
-    border-top: 1px solid #faaf00;
-    border-bottom: 1px solid #ec9f00;
-    border-left: 1px solid #faaf00;
-    border-right: 1px solid #faaf00;
-}
-@-moz-document url-prefix(){
-    .modalButtons input{
-        padding-top:3px;
-    }
-}
-.modalButtons input.cancel{
-    margin: 0 10px;
-    /*f9 - >e1*/
-    background-image: -moz-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%);
-    background-image: -ms-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%)!important;
-    background-image: -o-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%);
-    background-image: -webkit-linear-gradient(top,#f9f9f9 0,#e1e1e1 100%);
-    background-image: linear-gradient(to bottom,#f9f9f9 0,#e1e1e1 100%)!important;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-}
-
-
-</style>
 
 <script src="../js/lib/modernizr-2.6.2.min.js"></script>
 </head>
@@ -420,7 +146,7 @@ td.transport_tr {
     //window.setTimeout(arguments.callee, 1000);
 
     $(function () {
-        if (ServerApi.options.dev) {
+        if (ServerApi.options.dev || true) {
             $__app = new ApplicationViewModel();
             ko.applyBindings($__app);
         } else {
@@ -764,7 +490,29 @@ td.transport_tr {
             <!--------rightMenu-------->
             <td class="tdrightMenu">
                 <div class="rightMenu">
-                    <div class="inputText">Ввод платежей...</div>
+                    <div class="inputText floatHeader">Ввод платежей...</div>
+                    <div class="tableFilters">
+                        <div class="filterItem" data-bind="foreach:tableFilters">
+                            <!-- ko if : selected -->
+                            <div class="rangePicker" data-bind="text:short,
+                            click: selectRange,
+                            css : { 'checked' : $data == $root.selectedFilter()}"></div>
+                            <!-- /ko -->
+                        </div>
+                        <div class="filterItem">
+                            <div class="filterItemConfig" data-bind="click:showItemConfig"></div>
+                            <div class="itemDropDown">
+                                <div class="dropDownTitle">Периоды</div>
+                                <div data-bind="foreach:tableFilters">
+                                    <div><span data-bind="text:label"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filterItem">
+
+                        </div>
+                    </div>
+                    <div class="clear"></div>
                     <div class="tableBox">
                         <table class="baseTable">
                             <thead>
