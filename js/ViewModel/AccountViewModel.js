@@ -13,7 +13,7 @@ var AccountViewModel = function(data){
     this.parent = ko.observable(data.parent || "");
     this.importance = ko.observable(data.importance || "");
     this.creditlimit = ko.observable(data.creditlimit || "");
-    this.expand = ko.observable(!!data.expand);
+    this.expand = ko.observable(data.expand|0);
 
     this.sum = ko.observable(0);
 

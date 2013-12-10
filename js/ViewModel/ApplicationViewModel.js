@@ -11,64 +11,19 @@ var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
         "Октября", "Ноября", "Декабря"],
     dayOfWeeks = [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
     tableFilters = [
-        { label : "1 день", short: "1д", selected: true},
-        { label : "1 неделя", short: "1н", selected: true},
-        { label : "2 недели", short: "2н", selected: false},
-        { label : "1 месяц", short: "1м", selected: true},
-        { label : "3 месяца", short: "3м", selected: false},
-        { label : "6 месяцев", short: "6м", selected: true},
-        { label : "9 месяцев", short: "9м", selected: false},
-        { label : "1 год", short: "1г", selected: false},
-        { label : "2 года", short: "2г", selected: false},
-        { label : "5 лет", short: "5л", selected: false},
-        { label : "Все", short: "Все", selected: true, hidden: true}
+        { label : "1 день", short: "1д", selected: true, value:"1439 m"},
+        { label : "1 неделя", short: "1н", selected: true, value:"1 w"},
+        { label : "2 недели", short: "2н", selected: false, value:"2 w"},
+        { label : "1 месяц", short: "1м", selected: true, value:"1 M"},
+        { label : "3 месяца", short: "3м", selected: false, value:"3 M"},
+        { label : "6 месяцев", short: "6м", selected: true, value:"6 M"},
+        { label : "9 месяцев", short: "9м", selected: false, value:"9 M"},
+        { label : "1 год", short: "1г", selected: false, value:"1 y"},
+        { label : "2 года", short: "2г", selected: false, value:"2 y"},
+        { label : "5 лет", short: "5л", selected: false, value:"5 y"},
+        { label : "Все", short: "Все", selected: true, value:"all", hidden: true}
     ];
 
-
-function getCookie(name) {
-    var matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-function setCookie(name, value, options) {
-    options = options || {};
-
-    var expires = options.expires;
-
-    if (typeof expires == "number" && expires) {
-        var d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
-    }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
-    }
-
-    value = encodeURIComponent(value);
-
-    var updatedCookie = name + "=" + value;
-
-    for (var propName in options) {
-        updatedCookie += "; " + propName;
-        var propValue = options[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
-        }
-    }
-    document.cookie = updatedCookie;
-}
-
-var FilterViewModel = function(data, app){
-  var self = this;
-    this.label = data.label || '';
-    this.short = data.short || '';
-    this.selected = ko.observable(data.selected);
-
-    this.selectRange = function(){
-        app.selectedFilter(self);
-    }
-};
 
 var ApplicationViewModel = function () {
     var self = this,
@@ -124,10 +79,21 @@ var ApplicationViewModel = function () {
         });
         return res;
     }(tableFilters));
-    this.selectedFilter = ko.observable();
-    this.showItemConfig = function(){
-        console.log(arguments);
-    };
+    this.selectedFilter = ko.observable(this.tableFilters()[0]);
+    this.showFilterConfig = ko.observable(false);
+    this.timeFilterFrom = ko.observable(new moment().startOf('day'));
+    this.timeFilterTo = ko.observable(new moment().endOf('day'));
+
+    this.selectedFilter.subscribe(function(val){
+        console.log(val);
+        var sub = val.value.split(' ');
+        if(sub.length > 1){
+            self.timeFilterFrom(self.timeFilterTo().clone().subtract(sub[1],sub[0]).startOf('day'));
+        }else{
+            self.timeFilterFrom(new moment().startOf('day'));
+            self.timeFilterTo(new moment().endOf('day'));
+        }
+    });
 
 //Modals
     this.modalWindow = ko.observable();
@@ -337,7 +303,6 @@ var ApplicationViewModel = function () {
     this.userLogin = function () {
         var user = self.user;
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
-            console.log(r);
             if(r){
                 user.token(r.token);
                 location.hash = "observe";

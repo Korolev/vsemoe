@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2h[18.11] 3h[2.12] 2h[3.12]-->
+<!-- 2h[18.11] 3h[2.12] 2h[3.12] 3.5h [9.12] 12-[10.12]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -22,6 +22,7 @@
 <link href="../css/login.css" rel="stylesheet" type="text/css">
 <link href="../css/personal.css" rel="stylesheet" type="text/css">
 <link href="../css/account.css" rel="stylesheet" type="text/css">
+<link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
 
 
 <script src="../js/lib/modernizr-2.6.2.min.js"></script>
@@ -67,7 +68,7 @@
     </div>
     <div class="empty"></div>
     <!-- ko if:modalWindow -->
-    <div class="modalHolder" data-bind="click: $root.modalClose">
+    <div class="hidden" data-bind="click: $root.modalClose, css:{modalHolder:$root.modalWindow, hidden:false}">
         <div class="modalWindow">
             <div class="modalMessage" data-bind="text: $root.modalWindow().text"></div>
             <div class="modalButtons">
@@ -103,11 +104,13 @@
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
 <script src="../js/lib/jquery-1.8.2.min.js"></script>
 <script src="../js/lib/sammy-latest.min.js"></script>
+<script src="../js/lib/moment.min.js"></script>
 <script src="../js/lib/knockout-latest.js"></script>
 <script src="../js/ko.additional.js"></script>
 <script src="../js/ServerApi.js"></script>
 <script src="../js/ViewModel/UserViewModel.js"></script>
 <script src="../js/ViewModel/AccountViewModel.js"></script>
+<script src="../js/ViewModel/FilterViewModel.js"></script>
 <script src="../js/ViewModel/ApplicationViewModel.js"></script>
 <!--<script src="/html_stage/js/jquery.cookie.js"></script>-->
 <!--<script src="../js/lib/jquery-ui.js"></script>-->
@@ -500,16 +503,20 @@
                             <!-- /ko -->
                         </div>
                         <div class="filterItem">
-                            <div class="filterItemConfig" data-bind="click:showItemConfig"></div>
-                            <div class="itemDropDown">
-                                <div class="dropDownTitle">Периоды</div>
+                            <div class="filterItemConfig" data-bind="click:function(){$root.showFilterConfig(!$root.showFilterConfig())}"></div>
+                            <div class="itemDropDown" data-bind="css:{'fadeOutUp animated hidden':!showFilterConfig(),'fadeInDown animated':showFilterConfig()}">
+                                <div class="dropDownTitle" data-bind="click:function(){$root.showFilterConfig(false);}">Периоды</div>
                                 <div data-bind="foreach:tableFilters">
-                                    <div><span data-bind="text:label"></span></div>
+                                    <div data-bind="visible: !hidden"><span class="fakecheckbox" data-bind="text:label,
+                                    css:{checked:selected},
+                                    click:toggleSelected"></span></div>
                                 </div>
                             </div>
                         </div>
                         <div class="filterItem">
-
+                            <div class="dateInput dateFrom" data-bind="date:{value:timeFilterFrom,format:'DD MMM YY'}"></div>
+                            -
+                            <div class="dateInput dateTo" data-bind="date:{value:timeFilterTo,format:'DD MMM YY'}"></div>
                         </div>
                     </div>
                     <div class="clear"></div>
