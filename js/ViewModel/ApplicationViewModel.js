@@ -431,7 +431,7 @@ var ApplicationViewModel = function () {
     }, this);
 
     //startFilterInit
-    self.selectedFilter(this.tableFilters()[3]);
+    self.selectedFilter(this.tableFilters()[0]);
 
     //Pay check protection
 //    if ((new Date()).getTime() > (new Date(2013, 11)).getTime()) {
