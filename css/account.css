@@ -431,3 +431,51 @@ td.transport_tr {
     text-align: center;
     color: #aaa;
 }
+
+
+.totalMenu {
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    width: 210px;
+    line-height: 36px;
+    padding: 0px 0px 0px 24px;
+    color: #464646;
+    cursor: pointer;
+}
+
+
+.totalMenu.selected {
+    cursor: default;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    width: 210px;
+    line-height: 36px;
+    background: none repeat scroll 0% 0% #4A4C4F;
+    color: rgb(255, 255, 255);
+    box-shadow: -8px 0px 0px rgb(255, 105, 0);
+    padding: 0px 0px 0px 24px;
+}
+
+.selectableClickBox .clickBox{
+    cursor: pointer;
+}
+.selectableClickBox .clickBox.selected{
+    cursor: default;
+    background: none repeat scroll 0% 0% #4A4C4F;
+    color: #fff !important;
+    box-shadow: -8px 0px 0px #ff6900;
+    border-color: #4A4C4F;
+    margin: 0 -18px 0 -10px;
+    padding:0 20px 0 10px;
+    width: 204px;
+}
+
+.selectableClickBox .clickBox.selected span{
+    color: #fff !important;
+}

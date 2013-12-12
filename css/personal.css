@@ -458,19 +458,6 @@ footer .copy {
     line-height: 28px;
 }
 
-.totalMenu {
-    font-size: 16px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    left: 8px;
-    width: 210px;
-    line-height: 36px;
-    background: none repeat scroll 0% 0% rgb(74, 76, 79);
-    color: rgb(255, 255, 255);
-    box-shadow: -8px 0px 0px rgb(255, 105, 0);
-    padding: 0px 0px 0px 24px;
-}
 
 .allBox {
     font-size: 16px;

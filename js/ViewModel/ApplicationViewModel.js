@@ -128,7 +128,7 @@ var ApplicationViewModel = function () {
 
     this.addAccIdToFilter = function(acc){
         if(self.action()=='insert' && acc){
-            self.selectedFilter().accountId = acc.id;
+            self.selectedFilter().accountId(acc.id);
             self.selectedFilter.valueHasMutated();
         }
     };
