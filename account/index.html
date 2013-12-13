@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2h[18.11] 3h[2.12] 2h[3.12]-->
+<!-- 2h[18.11] 3h[2.12] 2h[3.12] 4h [9.12] 1h[10.12] 4h [11.12] 2h+22:00-[12.12]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -22,6 +22,8 @@
 <link href="../css/login.css" rel="stylesheet" type="text/css">
 <link href="../css/personal.css" rel="stylesheet" type="text/css">
 <link href="../css/account.css" rel="stylesheet" type="text/css">
+<link href="../css/pickmeup.css" rel="stylesheet" type="text/css">
+<link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
 
 
 <script src="../js/lib/modernizr-2.6.2.min.js"></script>
@@ -67,7 +69,7 @@
     </div>
     <div class="empty"></div>
     <!-- ko if:modalWindow -->
-    <div class="modalHolder" data-bind="click: $root.modalClose">
+    <div class="hidden" data-bind="click: $root.modalClose, css:{modalHolder:$root.modalWindow, hidden:false}">
         <div class="modalWindow">
             <div class="modalMessage" data-bind="text: $root.modalWindow().text"></div>
             <div class="modalButtons">
@@ -103,11 +105,14 @@
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
 <script src="../js/lib/jquery-1.8.2.min.js"></script>
 <script src="../js/lib/sammy-latest.min.js"></script>
+<script src="../js/lib/moment.min.js"></script>
+<script src="../js/jquery.pickmeup.min.js"></script>
 <script src="../js/lib/knockout-latest.js"></script>
 <script src="../js/ko.additional.js"></script>
 <script src="../js/ServerApi.js"></script>
 <script src="../js/ViewModel/UserViewModel.js"></script>
 <script src="../js/ViewModel/AccountViewModel.js"></script>
+<script src="../js/ViewModel/FilterViewModel.js"></script>
 <script src="../js/ViewModel/ApplicationViewModel.js"></script>
 <!--<script src="/html_stage/js/jquery.cookie.js"></script>-->
 <!--<script src="../js/lib/jquery-ui.js"></script>-->
@@ -393,7 +398,7 @@
                     <div class="rightTop">
                         <div class="rightTopText">БАЛАНС</div>
                     </div>
-                    <div class="titleText">У вас есть...</div>
+                    <div class="titleText" data-bind="text:$root.header"></div>
                     <!----favorites---->
                     <div class="notice">
                         <div class="noticeTitle">ИТОГО</div>
@@ -456,41 +461,13 @@
 <script type="text/html" id="insert-tpl">
     <table class="contentTable">
         <tr>
-            <td class="tdleftMenu">
-                <!--------leftMenu-------->
-                <div class="totalMenu">Все платежи</div>
-                <div class="leftMenu">
-                    <div class="allBox">
-                        <span class="bigText">ИТОГ</span>
-                        <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
-                        <span class="bigComment">КАПИТАЛА</span>
-                    </div>
-                    <div class="bottomBox">
-                        <div class="grayBox">
-                            <span class="bottomText">МОИ СРЕДСТВА</span>
-                        </div>
-                        <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
-                    </div>
-                    <div class="bottomBox">
-                        <div class="grayBox">
-                            <span class="bottomText">ДОЛГИ</span>
-                        </div>
-                        <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
-                    </div>
-                    <div class="emptyBox">
-                        <span class="categoryText">МОИ СРЕДСТВА</span>
-                    </div>
-                    <div data-bind="template:{name:'click-box-tpl',foreach:getActiveAcc()}"></div>
-                    <div class="emptyBox">
-                        <span class="categoryText">ДОЛГИ</span>
-                    </div>
-                    <div data-bind="template:{name:'click-box-tpl',foreach:getPassiveAcc()}"></div>
-                </div>
+            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'">
+
             </td>
             <!--------rightMenu-------->
             <td class="tdrightMenu">
                 <div class="rightMenu">
-                    <div class="inputText floatHeader">Ввод платежей...</div>
+                    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
                     <div class="tableFilters">
                         <div class="filterItem" data-bind="foreach:tableFilters">
                             <!-- ko if : selected -->
@@ -500,16 +477,20 @@
                             <!-- /ko -->
                         </div>
                         <div class="filterItem">
-                            <div class="filterItemConfig" data-bind="click:showItemConfig"></div>
-                            <div class="itemDropDown">
-                                <div class="dropDownTitle">Периоды</div>
+                            <div class="filterItemConfig" data-bind="click:function(){$root.showFilterConfig(!$root.showFilterConfig())}"></div>
+                            <div class="itemDropDown animated" data-bind="css:{'hidden':!showFilterConfig(),'fadeInDown':showFilterConfig()}">
+                                <div class="dropDownTitle" data-bind="click:function(){$root.showFilterConfig(false);}">Периоды</div>
                                 <div data-bind="foreach:tableFilters">
-                                    <div><span data-bind="text:label"></span></div>
+                                    <div data-bind="visible: !hidden"><span class="fakecheckbox" data-bind="text:label,
+                                    css:{checked:selected},
+                                    click:toggleSelected"></span></div>
                                 </div>
                             </div>
                         </div>
                         <div class="filterItem">
-
+                            <div class="dateInput dateFrom" data-bind="datepick:{value:timeFilterFrom,format:'DD MMM YY'}"></div>
+                            -
+                            <div class="dateInput dateTo" data-bind="datepick:{value:timeFilterTo,format:'DD MMM YY'}"></div>
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -530,7 +511,7 @@
                             <tbody>
                             <tr row="1">
                                 <td width="24">
-                                    <div class="checkbox"></div>
+                                    <!--<div class="checkbox"></div>-->
                                 </td>
                                 <td align="left" class="thead1">00.00.00</td>
                                 <td align="left" class="thead2">Средства</td>
@@ -564,7 +545,7 @@
                 </div>
                 <div class="horisontal_line"></div>
                 <!---paging-->
-                <div class="pagingBox" id="transPaging" style="cursor: pointer;">
+                <div class="pagingBox" id="transPaging" style="cursor: pointer;" data-bind="if:$root.totalPagesArr().length > 1">
                     <div class="paging imgfirst" data-bind="click:function(){$root.currentPage(1)}"></div>
                     <div class="paging imgprev"
                          data-bind="click:function(){$root.currentPage($root.currentPage()-1)}"></div>
@@ -601,6 +582,56 @@
     </table>
 </script>
 
+<script type="text/html" id="categories-tpl">
+    <table class="contentTable">
+        <tr>
+            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'"></td>
+            <!--------rightMenu-------->
+            <td class="tdrightMenu">
+                <div class="rightMenu">
+                    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
+                    <div class="clear"></div>
+                    
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</script>
+
+<script type="text/html" id="left-menu-insert-tpl">
+    <!--------leftMenu-------->
+    <div class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
+                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи</div>
+    <div class="leftMenu">
+        <div class="allBox">
+            <span class="bigText">ИТОГ</span>
+            <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
+            <span class="bigComment">КАПИТАЛА</span>
+        </div>
+        <div class="bottomBox">
+            <div class="grayBox">
+                <span class="bottomText">МОИ СРЕДСТВА</span>
+            </div>
+            <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
+        </div>
+        <div class="bottomBox">
+            <div class="grayBox">
+                <span class="bottomText">ДОЛГИ</span>
+            </div>
+            <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
+        </div>
+        <div class="emptyBox">
+            <span class="categoryText">МОИ СРЕДСТВА</span>
+        </div>
+        <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getActiveAcc()}"></div>
+        <div class="emptyBox">
+            <span class="categoryText">ДОЛГИ</span>
+        </div>
+        <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getPassiveAcc()}"></div>
+    </div>
+</script>
+
 <script type="text/html" id="account-page-tpl">
     <!--------accountDiv-------->
     <div id="accountDiv" class="content">
@@ -626,12 +657,10 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div id="topMenuBox1" class="topMenuBox"
-                 data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР
-            </div>
-            <div id="topMenuBox2" class="topMenuBox"
-                 data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД
-            </div>
+            <div class="topMenuBox shortMenuItem" style="cursor: default" data-bind="">+</div>
+            <div class="topMenuBox shortMenuItem lastItem" data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K</div>
+            <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
+            <div class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>
         </div>
         <!--------форма Обзор-------->
         <!--<div id="box1"></div>-->
@@ -641,7 +670,9 @@
     </div>
 </script>
 <script type="text/html" id="click-box-tpl">
-    <div class="clickBox" data-bind="click:toggleExpand">
+    <div class="clickBox" data-bind="
+    click:function(){$data.toggleExpand();$root.addAccIdToFilter($data);},
+    css:{selected:$root.accountId() == $data.id}">
         <div class="smallclickIcon"
              data-bind="css:{
                               iconSmallDown: !expand() && children().length,
@@ -656,7 +687,7 @@
     </div>
     <!-- ko if: children().length && expand()-->
     <ul data-bind="foreach:children">
-        <li>
+        <li data-bind="click:function(){$root.addAccIdToFilter($data);}">
             <span class="hiddenText" data-bind="shorttext:description"></span>
             <span class="hiddenValue" data-bind="shorttext:sum">0</span>
         </li>

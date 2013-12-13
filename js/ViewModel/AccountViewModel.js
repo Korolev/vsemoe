@@ -2,7 +2,7 @@
  * Created by Lenovo on 09.11.13.
  */
 
-var AccountViewModel = function(data){
+var AccountViewModel = function(data,app){
     var self = this;
 
     this.id = data.account_id;
@@ -11,22 +11,24 @@ var AccountViewModel = function(data){
     this.group = ko.observable(data.group || "");
     this.type = ko.observable(data.type || "");
     this.parent = ko.observable(data.parent || "");
-    this.importance = ko.observable(data.importance || "");
+    this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
-    this.expand = ko.observable(!!data.expand);
+    this.expand = ko.observable(data.expand|0);
 
     this.sum = ko.observable(0);
 
     this.children = ko.observableArray([]);
     this.transactions = [];
 
-    this.toggleExpand = function(){
-      var res = !self.expand();
-      self.expand(res);
-      ServerApi.updateAccount("expand",{account_id:self.id,value:res?1:0},function(r){
-        //TODO
-        console.log(r);
-      });
+    this.toggleExpand = function () {
+        var res = !self.expand();
+//mb app.action() === 'observe' ?
+        if (self.children().length) {
+            self.expand(res);
+            ServerApi.updateAccount("expand", {account_id: self.id, value: res ? 1 : 0}, function (r) {
+
+            });
+        }
     };
 
   this.recalculateSum = function (root) {

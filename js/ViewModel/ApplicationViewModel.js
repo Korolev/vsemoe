@@ -4,71 +4,26 @@
 var ApplicationSettings = {
     cookieName: "vse_cookie_token"
 };
-
+//TODO move all date manipulation to Moment.js
 var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
         "Апреля", "Мая", "Июня",
         "Июля", "Августа", "Сентября",
         "Октября", "Ноября", "Декабря"],
     dayOfWeeks = [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
     tableFilters = [
-        { label : "1 день", short: "1д", selected: true},
-        { label : "1 неделя", short: "1н", selected: true},
-        { label : "2 недели", short: "2н", selected: false},
-        { label : "1 месяц", short: "1м", selected: true},
-        { label : "3 месяца", short: "3м", selected: false},
-        { label : "6 месяцев", short: "6м", selected: true},
-        { label : "9 месяцев", short: "9м", selected: false},
-        { label : "1 год", short: "1г", selected: false},
-        { label : "2 года", short: "2г", selected: false},
-        { label : "5 лет", short: "5л", selected: false},
-        { label : "Все", short: "Все", selected: true, hidden: true}
+        { label: "1 день", short: "1д", selected: true, value: "1439 m"},
+        { label: "1 неделя", short: "1н", selected: true, value: "1 w"},
+        { label: "2 недели", short: "2н", selected: false, value: "2 w"},
+        { label: "1 месяц", short: "1м", selected: true, value: "1 M"},
+        { label: "3 месяца", short: "3м", selected: false, value: "3 M"},
+        { label: "6 месяцев", short: "6м", selected: true, value: "6 M"},
+        { label: "9 месяцев", short: "9м", selected: false, value: "9 M"},
+        { label: "1 год", short: "1г", selected: false, value: "1 y"},
+        { label: "2 года", short: "2г", selected: false, value: "2 y"},
+        { label: "5 лет", short: "5л", selected: false, value: "5 y"},
+        { label: "Все", short: "Все", selected: true, value: "all", hidden: true}
     ];
 
-
-function getCookie(name) {
-    var matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-function setCookie(name, value, options) {
-    options = options || {};
-
-    var expires = options.expires;
-
-    if (typeof expires == "number" && expires) {
-        var d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
-    }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
-    }
-
-    value = encodeURIComponent(value);
-
-    var updatedCookie = name + "=" + value;
-
-    for (var propName in options) {
-        updatedCookie += "; " + propName;
-        var propValue = options[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
-        }
-    }
-    document.cookie = updatedCookie;
-}
-
-var FilterViewModel = function(data, app){
-  var self = this;
-    this.label = data.label || '';
-    this.short = data.short || '';
-    this.selected = ko.observable(data.selected);
-
-    this.selectRange = function(){
-        app.selectedFilter(self);
-    }
-};
 
 var ApplicationViewModel = function () {
     var self = this,
@@ -86,15 +41,26 @@ var ApplicationViewModel = function () {
             "congratulations": "login",
             "changepass": "login",
             "observe": "account",
-            "insert": "account"
+            "insert": "account",
+            "categories": "account"
+        },
+        actionHeader = {
+            "login": "",
+            "register": "",
+            "restore": "",
+            "congratulations": "",
+            "changepass": "",
+            "observe": "У вас есть...",
+            "insert": "Ввод платежей...",
+            "categories":"Категории бюджета..."
         },
         failsCount = 0,
         modal = {
-            register : {
-                text:"Хотите заново зарегистрироваться?",
-                buttons : {
-                    okLabel:"Да",
-                    okFunc:function(){
+            register: {
+                text: "Хотите заново зарегистрироваться?",
+                buttons: {
+                    okLabel: "Да",
+                    okFunc: function () {
                         location.hash = 'register';
                         self.modalClose();
                         self.user.clearError();
@@ -102,10 +68,10 @@ var ApplicationViewModel = function () {
                 }
             },
             restore: {
-                text:"Хотите восстановить пароль?",
-                buttons : {
-                    okLabel:"Да",
-                    okFunc:function(){
+                text: "Хотите восстановить пароль?",
+                buttons: {
+                    okLabel: "Да",
+                    okFunc: function () {
                         location.hash = 'restore';
                         self.modalClose();
                         self.user.clearError();
@@ -115,24 +81,25 @@ var ApplicationViewModel = function () {
         };
 
     this.todayShorUpper = (new Date()).getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].substr(0, 3).toUpperCase();
-
+    this.header = ko.observable('');
 //Filters
-    this.tableFilters = ko.observableArray(function(arr){
+    this.tableFilters = ko.observableArray(function (arr) {
         var res = [];
-        ko.utils.arrayForEach(arr,function(data){
+        ko.utils.arrayForEach(arr, function (data) {
             res.push(new FilterViewModel(data, self));
         });
         return res;
     }(tableFilters));
     this.selectedFilter = ko.observable();
-    this.showItemConfig = function(){
-        console.log(arguments);
-    };
+    this.accountId = ko.observable('');
+    this.showFilterConfig = ko.observable(false);
+    this.timeFilterTo = ko.observable(new moment().endOf('day'));
+    this.timeFilterFrom = ko.observable(new moment().startOf('day'));
 
 //Modals
     this.modalWindow = ko.observable();
     this.modalCancelLabel = "Отмена";
-    this.modalClose = function(){
+    this.modalClose = function () {
         self.modalWindow(null);
     };
 
@@ -145,7 +112,7 @@ var ApplicationViewModel = function () {
     this.page = ko.observable();
     this.action = ko.observable();
 
-    this.currency = {"478":{shortname:"RUB"}};
+    this.currency = {"478": {shortname: "RUB"}};
     this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel();
 
@@ -156,44 +123,103 @@ var ApplicationViewModel = function () {
 
     this.transactions = ko.observableArray();
     this.transactionsSet = ko.observableArray();
-    this.transFiltered = [];
+    this.transFiltered = ko.observableArray();
 
 //Paging
     this.currentPage = ko.observable(1);
     this.pageSize = 14;
     this.totalPages = ko.observable(1);
     this.totalPagesArr = ko.observableArray([1]);
+    this.lang = ko.observable('ru');
+
+    this.lang.subscribe(function (val) {
+        moment.lang(val + '');
+        self.timeFilterFrom.valueHasMutated();
+        self.timeFilterTo.valueHasMutated();
+    });
+
+    this.addAccIdToFilter = function(acc){
+        if(self.action()=='insert' && acc){
+            self.accountId(acc.id);
+            self.selectedFilter.valueHasMutated();
+        }
+    };
+
+    this.transactionFilteredGen = function () {
+        var transFiltered = [],
+            _transFiltered = [];
+        //mk logic
+        $.each(self.transactions(), function (k, t) {
+            if (t.hidden == "0" && t.template == "0" && !!t.finished) {
+                t.amount = parseFloat(t.amount).toFixed(2);
+                transFiltered.push(t);
+            }
+        });
+
+        transFiltered.sort(function (a, b) {
+            return a.created > b.created ? -1 : 1;
+        });
+
+        if(self.selectedFilter()){
+            for(var i = 0;i<transFiltered.length;i++){
+                if(self.selectedFilter().test(transFiltered[i], self.timeFilterFrom(), self.timeFilterTo())){
+                    _transFiltered.push(transFiltered[i]);
+                }
+            }
+            self.transFiltered(_transFiltered);
+        }else{
+            self.transFiltered(transFiltered);
+        }
+
+        var tLen = self.transFiltered().length;
+        self.totalPages(tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1);
+        self.totalPagesArr.removeAll();
+        self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
+        self.transactionsSetGen();
+    };
+
+    this.transactionsSetGen = function () {
+        var res = [],
+            i = (self.currentPage() - 1) * self.pageSize,
+            j = self.currentPage() * self.pageSize,
+            dayOfWeek = -1,
+            calcDay,
+            transFiltered = self.transFiltered();
+        for (; i < j; i += 1) {
+            var tr = transFiltered[i];
+            if (tr) {
+                tr.newday = 0;
+                calcDay = (new Date(tr.created * 1000)).getDay();
+                if (calcDay != dayOfWeek) {
+                    tr.newday = 1;
+                    dayOfWeek = calcDay;
+                }
+                res.push(tr);
+            } else {
+                res.push({created: false, from_id: 0, to_id: 0, amount: "", description: "", split: 0, newday: 0});
+            }
+        }
+        self.transactionsSet.removeAll();
+        self.transactionsSet(res);
+    };
 
     this.transactions.subscribe(function (val) {
         if (val.length) {
-            self.transFiltered = [];
             $.each(val, function (k, t) {
-              //mk logic
-              if(self.accountsHash[t.from_id]){
-                self.accountsHash[t.from_id].transactions.push(t);
-              }
-              if(self.accountsHash[t.to_id]){
-                self.accountsHash[t.to_id].transactions.push(t);
-              }
-              //mk logic
-                if (t.hidden == "0" && t.template == "0" && !!t.finished) {
-                    t.amount = parseFloat(t.amount).toFixed(2);
-                    self.transFiltered.push(t);
+                //mk logic
+                if (self.accountsHash[t.from_id]) {
+                    self.accountsHash[t.from_id].transactions.push(t);
+                }
+                if (self.accountsHash[t.to_id]) {
+                    self.accountsHash[t.to_id].transactions.push(t);
                 }
             });
-            self.transFiltered.sort(function (a, b) {
-                return a.created > b.created ? -1 : 1;
-            });
-            var tLen = self.transFiltered.length,
-                pagesNums = [];
-            self.totalPages(tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1);
-            self.totalPagesArr.removeAll();
-            self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
-            self.transactionsSetGen();
-          //mk
-          $.each(self.accounts(),function(k,acc){
-            acc.recalculateSum(self);
-          })
+
+            self.transactionFilteredGen();
+            //mk
+            $.each(self.accounts(), function (k, acc) {
+                acc.recalculateSum(self);
+            })
         }
     });
 
@@ -212,29 +238,30 @@ var ApplicationViewModel = function () {
         }
     });
 
-    this.transactionsSetGen = function () {
-        var res = [],
-            i = (self.currentPage() - 1) * self.pageSize,
-            j = self.currentPage() * self.pageSize,
-            dayOfWeek = -1,
-            calcDay;
-        for (; i < j; i += 1) {
-            var tr = self.transFiltered[i];
-            if (tr) {
-                tr.newday = 0;
-                calcDay = (new Date(tr.created * 1000)).getDay();
-                if (calcDay != dayOfWeek) {
-                    tr.newday = 1;
-                    dayOfWeek = calcDay;
-                }
-                res.push(tr);
-            } else {
-                res.push({created: false, from_id: 0, to_id: 0, amount: "", description: "", split: 0, newday: 0});
+    this.selectedFilter.subscribe(function (val) {
+        var sub,
+            endDate = new moment().endOf('day');
+        if (val && val.type) {
+            switch (val.type) {
+                case 'period':
+                    sub = val && val.value ? val.value.split(' ') : [];
+                    if (sub.length > 1) {
+                        self.timeFilterTo(endDate);
+                        self.timeFilterFrom(self.timeFilterTo().clone().subtract(sub[1], sub[0]).startOf('day'));
+                    } else if (val) {
+                        self.timeFilterFrom(new moment().startOf('day'));
+                        self.timeFilterTo(endDate);
+                    }
+                    break;
+                case 'interval':
+                    break;
+                case 'category':
+                    break;
             }
         }
-        self.transactionsSet.removeAll();
-        self.transactionsSet(res);
-    };
+
+        self.transactionFilteredGen();
+    });
 
     this.getGainAcc = function () {
         var res = [], sum = 0;
@@ -299,57 +326,56 @@ var ApplicationViewModel = function () {
         return cssClass[res];
     };
 
-  this.userChangepass = function(){
+    this.userChangepass = function () {
 //TODO
-  };
+    };
 
-  this.userRestore = function(){
-    var user = self.user;
+    this.userRestore = function () {
+        var user = self.user;
 //    ServerApi.existUser({user:user.email()},function(r){
 //      console.log(r);
 //    });
-    ServerApi.lostpasswordUser({user:user.email()},function(r){
-      if(r){
-        self.action("congratulations");
-        user.email("");
-      }else{
-        user.errorText("Пользователь с таким логином не найден");
-        user.emailError(true);
-      }
-    })
-  };
+        ServerApi.lostpasswordUser({user: user.email()}, function (r) {
+            if (r) {
+                self.action("congratulations");
+                user.email("");
+            } else {
+                user.errorText("Пользователь с таким логином не найден");
+                user.emailError(true);
+            }
+        })
+    };
 
-  this.userRegister = function () {
-    var user = self.user;
-    ServerApi.createUser({user:user.email(),password:user.password()},function(r){
-      if(r){
-        //TODO make confirm email
-        user.login(user.email());
-        user.email("");
-        self.userLogin();
-      }else{
-        user.errorText(user.email()+" пользователь существует.Выберите другой логин.");
-        user.emailError(true);
-      }
-    });
-  };
+    this.userRegister = function () {
+        var user = self.user;
+        ServerApi.createUser({user: user.email(), password: user.password()}, function (r) {
+            if (r) {
+                //TODO make confirm email
+                user.login(user.email());
+                user.email("");
+                self.userLogin();
+            } else {
+                user.errorText(user.email() + " пользователь существует.Выберите другой логин.");
+                user.emailError(true);
+            }
+        });
+    };
 
     this.userLogin = function () {
         var user = self.user;
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
-            console.log(r);
-            if(r){
+            if (r) {
                 user.token(r.token);
                 location.hash = "observe";
                 user.password("");
-            }else{
+            } else {
                 user.loginError(true);
                 user.passwordError(true);
                 user.errorText(user.errorMessages.passed);
 
                 failsCount += 1;
-                if(failsCount == 4) self.modalWindow(modal.restore);
-                if(failsCount == 6) self.modalWindow(modal.register);
+                if (failsCount == 4) self.modalWindow(modal.restore);
+                if (failsCount == 6) self.modalWindow(modal.register);
             }
 
         })
@@ -379,7 +405,7 @@ var ApplicationViewModel = function () {
                 var res = [],
                     accIds = [];
                 $.each(r, function (k, acc) {
-                    var a = new AccountViewModel(acc);
+                    var a = new AccountViewModel(acc, self);
                     res.push(a);
                     self.accountsHash[a.id] = a;
                     accIds.push(a.id);
@@ -406,6 +432,7 @@ var ApplicationViewModel = function () {
 
     this.action.subscribe(function (val) {
         if (actionMap[val])self.page(actionMap[val]);
+        self.header(actionHeader[val] || '');
     });
 
     this.pageTemplateName = ko.computed(function () {
@@ -415,6 +442,9 @@ var ApplicationViewModel = function () {
     this.pageContentTemplateName = ko.computed(function () {
         return self.action() + "-tpl";
     }, this);
+
+    //startFilterInit
+    self.selectedFilter(this.tableFilters()[0]);
 
     //Pay check protection
 //    if ((new Date()).getTime() > (new Date(2013, 11)).getTime()) {
@@ -426,9 +456,9 @@ var ApplicationViewModel = function () {
         this.get('#:action', function () {
             var a = this.params.action;
             if (!self.user.token() && !token) {
-                if(actionMap[a] == 'login'){
+                if (actionMap[a] == 'login') {
                     self.action(a);
-                }else{
+                } else {
                     location.hash = "login";
                 }
             } else if (!self.user.token() && token) {
