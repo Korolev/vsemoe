@@ -92,10 +92,10 @@ ko.bindingHandlers['absdigitext'] = {
 
         if(!isNaN(value) && bindingContext.$root.getCssClass(viewModel) == "transport_tr"){
             value = Math.abs(value);
-        }else{
-            value = '';
         }
-        value += '';
+
+        value = isNaN(value) ? '' : value + '';
+
         value = value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
         ko.utils.setTextContent(element, value);
     }
@@ -212,7 +212,7 @@ ko.bindingHandlers['datepick'] = {
             change: function(s,d){
                 value.value(new moment(d));
                 console.log(value.value().format());
-                bindingContext.$root.selectedFilter(new FilterViewModel({type:'interval'}));
+                bindingContext.$root.selectedFilter(new FilterViewModel({type:'interval'},bindingContext.$root));
                 datePicker.addClass('hidden').removeClass('fadeInDown');
             }
         });

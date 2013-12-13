@@ -41,7 +41,18 @@ var ApplicationViewModel = function () {
             "congratulations": "login",
             "changepass": "login",
             "observe": "account",
-            "insert": "account"
+            "insert": "account",
+            "categories": "account"
+        },
+        actionHeader = {
+            "login": "",
+            "register": "",
+            "restore": "",
+            "congratulations": "",
+            "changepass": "",
+            "observe": "У вас есть...",
+            "insert": "Ввод платежей...",
+            "categories":"Категории бюджета..."
         },
         failsCount = 0,
         modal = {
@@ -70,7 +81,7 @@ var ApplicationViewModel = function () {
         };
 
     this.todayShorUpper = (new Date()).getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].substr(0, 3).toUpperCase();
-
+    this.header = ko.observable('');
 //Filters
     this.tableFilters = ko.observableArray(function (arr) {
         var res = [];
@@ -80,6 +91,7 @@ var ApplicationViewModel = function () {
         return res;
     }(tableFilters));
     this.selectedFilter = ko.observable();
+    this.accountId = ko.observable('');
     this.showFilterConfig = ko.observable(false);
     this.timeFilterTo = ko.observable(new moment().endOf('day'));
     this.timeFilterFrom = ko.observable(new moment().startOf('day'));
@@ -128,7 +140,7 @@ var ApplicationViewModel = function () {
 
     this.addAccIdToFilter = function(acc){
         if(self.action()=='insert' && acc){
-            self.selectedFilter().accountId(acc.id);
+            self.accountId(acc.id);
             self.selectedFilter.valueHasMutated();
         }
     };
@@ -420,6 +432,7 @@ var ApplicationViewModel = function () {
 
     this.action.subscribe(function (val) {
         if (actionMap[val])self.page(actionMap[val]);
+        self.header(actionHeader[val] || '');
     });
 
     this.pageTemplateName = ko.computed(function () {

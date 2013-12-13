@@ -11,7 +11,6 @@ var FilterViewModel = function (data, app) {
     this.selected = ko.observable(data.selected);
     this.hidden = !!data.hidden;
     this.value = data.value;
-    this.accountId = ko.observable('');
 
     this.selectRange = function () {
         app.selectedFilter(self);
@@ -23,7 +22,7 @@ var FilterViewModel = function (data, app) {
 
     this.test = function (transaction, start, end) {
         var res = false,
-            aid = self.accountId();
+            aid = app.accountId();
         try {
             res = !!aid ?
                 transaction.from_id == aid || transaction.to_id == aid

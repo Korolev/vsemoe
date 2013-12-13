@@ -207,7 +207,7 @@ footer .copy {
     background-image: linear-gradient(to bottom,#ffffff 0,#f8f8f8 100%)!important;
     background-color: #f8f8f8;
     border-bottom: 4px solid #f4f4f4;
-    padding: 0 0 0 260px;
+    padding: 0 0 0 20px;
 }
 
 .topMenuBox {
@@ -226,6 +226,21 @@ footer .copy {
         box-shadow: inset 0px 2px 4px #ddd;
         color: #2a3e55;
     }
+
+    .topMenuBox.shortMenuItem {
+        font-size: 18px;
+        font-weight: bold;
+        padding: 0;
+        height: 44px;
+        width: 45px;
+        line-height: 44px;
+        text-align: center;
+    }
+
+    .topMenuBox.shortMenuItem.lastItem{
+        margin-right: 150px;
+    }
+
 /*----------------------------------------content----------------------------------------*/
 .content {
     position: relative;

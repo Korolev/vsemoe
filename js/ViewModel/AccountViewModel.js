@@ -11,7 +11,7 @@ var AccountViewModel = function(data,app){
     this.group = ko.observable(data.group || "");
     this.type = ko.observable(data.type || "");
     this.parent = ko.observable(data.parent || "");
-    this.importance = ko.observable(data.importance || "");
+    this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand|0);
 

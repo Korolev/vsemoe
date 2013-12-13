@@ -398,7 +398,7 @@
                     <div class="rightTop">
                         <div class="rightTopText">БАЛАНС</div>
                     </div>
-                    <div class="titleText">У вас есть...</div>
+                    <div class="titleText" data-bind="text:$root.header"></div>
                     <!----favorites---->
                     <div class="notice">
                         <div class="noticeTitle">ИТОГО</div>
@@ -461,42 +461,13 @@
 <script type="text/html" id="insert-tpl">
     <table class="contentTable">
         <tr>
-            <td class="tdleftMenu">
-                <!--------leftMenu-------->
-                <div class="totalMenu" data-bind="css:{selected:$root.selectedFilter().accountId() == ''},
-                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи</div>
-                <div class="leftMenu">
-                    <div class="allBox">
-                        <span class="bigText">ИТОГ</span>
-                        <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
-                        <span class="bigComment">КАПИТАЛА</span>
-                    </div>
-                    <div class="bottomBox">
-                        <div class="grayBox">
-                            <span class="bottomText">МОИ СРЕДСТВА</span>
-                        </div>
-                        <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
-                    </div>
-                    <div class="bottomBox">
-                        <div class="grayBox">
-                            <span class="bottomText">ДОЛГИ</span>
-                        </div>
-                        <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
-                    </div>
-                    <div class="emptyBox">
-                        <span class="categoryText">МОИ СРЕДСТВА</span>
-                    </div>
-                    <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getActiveAcc()}"></div>
-                    <div class="emptyBox">
-                        <span class="categoryText">ДОЛГИ</span>
-                    </div>
-                    <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getPassiveAcc()}"></div>
-                </div>
+            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'">
+
             </td>
             <!--------rightMenu-------->
             <td class="tdrightMenu">
                 <div class="rightMenu">
-                    <div class="inputText floatHeader">Ввод платежей...</div>
+                    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
                     <div class="tableFilters">
                         <div class="filterItem" data-bind="foreach:tableFilters">
                             <!-- ko if : selected -->
@@ -540,7 +511,7 @@
                             <tbody>
                             <tr row="1">
                                 <td width="24">
-                                    <div class="checkbox"></div>
+                                    <!--<div class="checkbox"></div>-->
                                 </td>
                                 <td align="left" class="thead1">00.00.00</td>
                                 <td align="left" class="thead2">Средства</td>
@@ -611,6 +582,56 @@
     </table>
 </script>
 
+<script type="text/html" id="categories-tpl">
+    <table class="contentTable">
+        <tr>
+            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'"></td>
+            <!--------rightMenu-------->
+            <td class="tdrightMenu">
+                <div class="rightMenu">
+                    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
+                    <div class="clear"></div>
+                    
+                </div>
+
+            </td>
+        </tr>
+    </table>
+</script>
+
+<script type="text/html" id="left-menu-insert-tpl">
+    <!--------leftMenu-------->
+    <div class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
+                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи</div>
+    <div class="leftMenu">
+        <div class="allBox">
+            <span class="bigText">ИТОГ</span>
+            <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
+            <span class="bigComment">КАПИТАЛА</span>
+        </div>
+        <div class="bottomBox">
+            <div class="grayBox">
+                <span class="bottomText">МОИ СРЕДСТВА</span>
+            </div>
+            <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
+        </div>
+        <div class="bottomBox">
+            <div class="grayBox">
+                <span class="bottomText">ДОЛГИ</span>
+            </div>
+            <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
+        </div>
+        <div class="emptyBox">
+            <span class="categoryText">МОИ СРЕДСТВА</span>
+        </div>
+        <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getActiveAcc()}"></div>
+        <div class="emptyBox">
+            <span class="categoryText">ДОЛГИ</span>
+        </div>
+        <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getPassiveAcc()}"></div>
+    </div>
+</script>
+
 <script type="text/html" id="account-page-tpl">
     <!--------accountDiv-------->
     <div id="accountDiv" class="content">
@@ -636,12 +657,10 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div id="topMenuBox1" class="topMenuBox"
-                 data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР
-            </div>
-            <div id="topMenuBox2" class="topMenuBox"
-                 data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД
-            </div>
+            <div class="topMenuBox shortMenuItem" style="cursor: default" data-bind="">+</div>
+            <div class="topMenuBox shortMenuItem lastItem" data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K</div>
+            <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
+            <div class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>
         </div>
         <!--------форма Обзор-------->
         <!--<div id="box1"></div>-->
@@ -653,7 +672,7 @@
 <script type="text/html" id="click-box-tpl">
     <div class="clickBox" data-bind="
     click:function(){$data.toggleExpand();$root.addAccIdToFilter($data);},
-    css:{selected:$root.selectedFilter().accountId() == $data.id}">
+    css:{selected:$root.accountId() == $data.id}">
         <div class="smallclickIcon"
              data-bind="css:{
                               iconSmallDown: !expand() && children().length,
