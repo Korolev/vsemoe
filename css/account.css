@@ -515,10 +515,11 @@ td.transport_tr {
     display: inline-block;
     padding: 0;
     margin: 0;
-    height: 40px;
+    height: 38px;
+    padding-top: 4px;
     width: 130px;
     margin-right: 2px;
-    text-align: center;
+    /*text-align: center;*/
     cursor: pointer;
 }
 
@@ -530,7 +531,7 @@ td.transport_tr {
 
 
 .vse-tabs-tab span{
-    padding: 0 2px;
+    padding: 0 2px 0 25px;
     font-size: 24px;
     text-align: center;
     font-family: "HelveticaNeue Bold",sans-serif;
