@@ -583,7 +583,6 @@ td.transport_tr {
 .flexlist i.next{
     right: 70px;
     background-position: 0px -63px;
-    display: block;
 }
 .flexlist i.edit{
     right: 35px;
@@ -594,6 +593,10 @@ td.transport_tr {
     right: 10px;
     background-position: 0px -34px;
 
+}
+
+.flexlist .has_child i.next{
+    display: block;
 }
 
 .flexlist > div:hover i.edit,
