@@ -2,11 +2,11 @@
  * Created by Lenovo on 09.11.13.
  */
 moment.lang('ru', {
-    months : [
+    months: [
         'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
         'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
     ],
-    monthsShort : [
+    monthsShort: [
         'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл',
         'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'
     ]
@@ -21,16 +21,16 @@ var datePickerLocale = {
 };
 
 
-$(document).on('click',function(e){
+$(document).on('click', function (e) {
     var target = e.target;
-    while(target != document){
+    while (target != document) {
         var attrClass = target.getAttribute('class');
-        if(attrClass && (attrClass.split(' '))[0] == 'dateInput'){
+        if (attrClass && (attrClass.split(' '))[0] == 'dateInput') {
             break;
         }
         target = target.parentNode;
     }
-    $('.dateInput').not(target).each(function(k,el){
+    $('.dateInput').not(target).each(function (k, el) {
         $(el).find('.itemDropDown').removeClass('fadeInDon').addClass('hidden');
     });
 });
@@ -90,7 +90,7 @@ ko.bindingHandlers['absdigitext'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var value = parseFloat(ko.utils.unwrapObservable(valueAccessor()));
 
-        if(!isNaN(value) && bindingContext.$root.getCssClass(viewModel) == "transport_tr"){
+        if (!isNaN(value) && bindingContext.$root.getCssClass(viewModel) == "transport_tr") {
             value = Math.abs(value);
         }
 
@@ -121,10 +121,10 @@ ko.bindingHandlers['currency'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var value = ko.utils.unwrapObservable(valueAccessor());
 
-        try{
+        try {
             value = bindingContext.$root.currency[value].shortname;
-        }catch (e){
-            console.log(e,value);
+        } catch (e) {
+            console.log(e, value);
         }
 
         ko.utils.setTextContent(element, value);
@@ -147,17 +147,17 @@ ko.bindingHandlers['textdate'] = {
         var value = ko.utils.unwrapObservable(valueAccessor()),
             date = new Date(),
             trdate = new Date(value * 1000),
-            trnow = new Date(+trdate.getFullYear(), parseInt(trdate.getMonth(),10), parseInt(trdate.getDate(),10)),
-            now = new Date(+date.getFullYear(), parseInt(date.getMonth(),10), parseInt(date.getDate(),10)),
-            now_1 = new Date(+date.getFullYear(), parseInt(date.getMonth(),10), parseInt(date.getDate(),10) - 1),
-            now_2 = new Date(+date.getFullYear(), parseInt(date.getMonth(),10), parseInt(date.getDate(),10) - 2),
+            trnow = new Date(+trdate.getFullYear(), parseInt(trdate.getMonth(), 10), parseInt(trdate.getDate(), 10)),
+            now = new Date(+date.getFullYear(), parseInt(date.getMonth(), 10), parseInt(date.getDate(), 10)),
+            now_1 = new Date(+date.getFullYear(), parseInt(date.getMonth(), 10), parseInt(date.getDate(), 10) - 1),
+            now_2 = new Date(+date.getFullYear(), parseInt(date.getMonth(), 10), parseInt(date.getDate(), 10) - 2),
             dayOfWeek = trdate.getDay();
 
         if (trnow.getTime() == now.getTime()) {
             value = [
-                (trdate.getHours()+"").length == 1?"0"+trdate.getHours():trdate.getHours(),
+                (trdate.getHours() + "").length == 1 ? "0" + trdate.getHours() : trdate.getHours(),
                 ":",
-                (trdate.getMinutes()+"").length == 1 ?"0"+trdate.getMinutes():trdate.getMinutes()].join("");
+                (trdate.getMinutes() + "").length == 1 ? "0" + trdate.getMinutes() : trdate.getMinutes()].join("");
         } else if (trnow.getTime() == now_1.getTime()) {
             value = "Вчера"
         } else if (trnow.getTime() == now_2.getTime()) {
@@ -176,9 +176,9 @@ ko.bindingHandlers['date'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         //TODO appen datePicker here
         var value = ko.utils.unwrapObservable(valueAccessor());
-        value = moment.isMoment(value)?
+        value = moment.isMoment(value) ?
             value.format()
-            :ko.utils.unwrapObservable(value.value).format(value.format);
+            : ko.utils.unwrapObservable(value.value).format(value.format);
 
         ko.utils.setTextContent(element, value);
     }
@@ -192,33 +192,33 @@ ko.bindingHandlers['datepick'] = {
             datePicker;
 
 
-        date = moment.isMoment(value)?
+        date = moment.isMoment(value) ?
             value.format()
-            :ko.utils.unwrapObservable(value.value).format(value.format);
+            : ko.utils.unwrapObservable(value.value).format(value.format);
 
         textHolder = $('<div/>', {class: 'dateval'}).appendTo(element).text(date);
         datePicker = $('<div/>', {class: 'hidden animated itemDropDown'}).appendTo(element);
 
-        textHolder.on('click',function(e){
-           var hidden = datePicker.hasClass('hidden');
+        textHolder.on('click', function (e) {
+            var hidden = datePicker.hasClass('hidden');
             datePicker.removeClass(hidden ? 'hidden' : 'fadeInDown')
                 .addClass(hidden ? 'fadeInDown' : 'hidden');
         });
 
         datePicker.pickmeup({
-            flat:true,
+            flat: true,
             locale: datePickerLocale,
             date: moment.isMoment(value) ? value : ko.utils.unwrapObservable(value.value),
-            change: function(s,d){
+            change: function (s, d) {
                 value.value(new moment(d));
                 console.log(value.value().format());
-                bindingContext.$root.selectedFilter(new FilterViewModel({type:'interval'},bindingContext.$root));
+                bindingContext.$root.selectedFilter(new FilterViewModel({type: 'interval'}, bindingContext.$root));
                 datePicker.addClass('hidden').removeClass('fadeInDown');
             }
         });
 
         $element.data('textHolder', textHolder);
-        $element.data('datePicker',  datePicker);
+        $element.data('datePicker', datePicker);
     },
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var $element = $(element),
@@ -228,11 +228,63 @@ ko.bindingHandlers['datepick'] = {
             datePicker = $element.data('datePicker');
 
 
-        date = moment.isMoment(value)?
+        date = moment.isMoment(value) ?
             value.format()
-            :ko.utils.unwrapObservable(value.value).format(value.format);
+            : ko.utils.unwrapObservable(value.value).format(value.format);
 
         datePicker && datePicker.pickmeup('set_date', moment.isMoment(value) ? value : ko.utils.unwrapObservable(value.value));
         textHolder && textHolder.text(date);
+    }
+};
+
+ko.bindingHandlers['tabs'] = {
+    'init': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var each = function (arr, func) {
+                try {
+                    for (var i = 0; i < arr.length; i++) {
+                        func(arr[i], i);
+                    }
+                } catch (e) {
+                    console && console.log(e);
+                }
+            },
+            $element = $(element),
+            tabClass = $element.attr('class') + '-',
+            $ul = $($element.children()[0]),
+            $tabs = (function (elArr) {
+                var res = [];
+                each(elArr, function (e) {
+                    var $el = $(e);
+                    $el.addClass(tabClass + 'tab');
+                    $el.data('href', $el.children()[0].href.split('#')[1]);
+                    $el.find('span').unwrap();
+                    res.push($el);
+                });
+                return $(res);
+            }($ul.find('li'))),
+            selectTab = function ($el) {
+                var selected = tabClass + 'selected',
+                    divId = '#' + $el.data('href');
+
+                each($tabs, function (e) {
+                    e.removeClass(selected);
+                });
+                $el.addClass(selected);
+
+                each($element.children(), function (el, i) {
+                    $(el).addClass(i > 0 ? 'hidden' : '');
+                });
+                $(divId).removeClass('hidden');
+            };
+
+        $ul.addClass(tabClass + 'tabs');
+
+        each($tabs, function (el) {
+            $(el).on('click', function (event) {
+                selectTab($(this));
+            });
+        });
+
+        selectTab($tabs[0]);
     }
 };

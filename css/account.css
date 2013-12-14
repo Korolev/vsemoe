@@ -2,6 +2,14 @@ p {
     line-height: 20px;
 }
 
+.vseGreen{
+    color: #819625;
+}
+
+.vseOrange{
+    color: #ff6900;
+}
+
 #app_body,
 #app_body p {
     font-family: Verdana, Helvetica, "san-serif";
@@ -478,4 +486,79 @@ td.transport_tr {
 
 .selectableClickBox .clickBox.selected span{
     color: #fff !important;
+}
+
+.tdrightMenu.categories{
+    background-color: #EAE9E5;
+    padding: 0 0 0 0;
+}
+.tdrightMenu.categories .inputText{
+    margin-left: 46px;
+}
+/* = TABS = */
+.vse-tabs{
+
+}
+
+.vse-tabs > div{
+    background-color: #fff;
+    min-height: 500px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.vse-tabs-tabs{
+    width: auto !important;
+    padding-left: 46px;
+}
+.vse-tabs-tab{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    width: 130px;
+    margin-right: 2px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.vse-tabs-tab.vse-tabs-selected{
+    cursor: default;
+    background-color: #fff;
+}
+
+
+.vse-tabs-tab span{
+    padding: 0 2px;
+    font-size: 24px;
+    text-align: center;
+    font-family: "HelveticaNeue Bold",sans-serif;
+
+}
+
+.vse-tabs-tab span + span{
+    padding: 0;
+    line-height: 40px;
+    font-size: 16px;
+    font-family: "HelveticaNeue Light",sans-serif;
+
+}
+
+/* = Flexlist = */
+.vse-tabs div.flexlist{
+    border-top:1px solid #bbb;
+    padding: 0 46px;
+}
+
+.flexlist{
+    height: 546px;
+    overflow-y: scroll;
+}
+.flexlist div{
+    height: 38px;
+    border-bottom: 1px solid #ccc;
+    line-height: 35px;
+    padding-left: 30px;
+    cursor: pointer;
 }
