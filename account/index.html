@@ -601,9 +601,11 @@
                             </a></li>
                         </ul>
                         <div id="tabs-1">
+                            <div class="flexlisttitle"></div>
                             <div class="flexlist" data-bind="template:{name:'catlist-box-tpl',foreach:getConsumptionAcc()}"></div>
                         </div>
                         <div id="tabs-2">
+                            <div class="flexlisttitle"></div>
                             <div class="flexlist" data-bind="template:{name:'catlist-box-tpl',foreach:getActiveAcc()}"></div>
                         </div>
                     </div>
@@ -710,7 +712,12 @@
     <!-- /ko -->
 </script>
 <script type="text/html" id="catlist-box-tpl">
-    <div data-bind="text:description"></div>
+    <div>
+        <div class="catlistItem" data-bind="text:description, css:{has_child: children().length}"></div>
+        <i class="icon next"></i>
+        <i class="icon edit"></i>
+        <i class="icon del"></i>
+    </div>
 </script>
 <script type="text/html" id="undefined-page-tpl">
 

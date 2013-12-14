@@ -503,7 +503,6 @@ td.transport_tr {
 .vse-tabs > div{
     background-color: #fff;
     min-height: 500px;
-    padding-top: 40px;
     padding-bottom: 40px;
 }
 
@@ -552,14 +551,52 @@ td.transport_tr {
     padding: 0 46px;
 }
 
+.flexlisttitle{
+    height: 40px;
+    line-height: 40px;
+}
+
 .flexlist{
     height: 546px;
     overflow-y: scroll;
 }
-.flexlist div{
+.flexlist > div{
+    cursor: pointer;
+    position: relative;
+}
+.flexlist div.catlistItem{
     height: 38px;
     border-bottom: 1px solid #ccc;
     line-height: 40px;
     padding-left: 20px;
-    cursor: pointer;
+}
+
+.flexlist i.icon{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 9px;
+    background-image: url(/img/edit_del_next.png);
+    display: none;
+}
+
+.flexlist i.next{
+    right: 70px;
+    background-position: 0px -63px;
+    display: block;
+}
+.flexlist i.edit{
+    right: 35px;
+    background-position: 0px -3px;
+
+}
+.flexlist i.del{
+    right: 10px;
+    background-position: 0px -34px;
+
+}
+
+.flexlist > div:hover i.edit,
+.flexlist > div:hover i.del{
+    display: block;
 }
