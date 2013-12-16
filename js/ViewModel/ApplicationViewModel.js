@@ -27,6 +27,17 @@ var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
 
 var ApplicationViewModel = function () {
     var self = this,
+        each = function (arr, callback) {
+            var i = 0;
+            try {
+                while (i < arr.length) {
+                    callback(i, arr[i]);
+                    i++;
+                }
+            } catch (e) {
+                console && console.log(e);
+            }
+        },
         range = function (from, to) {
             var arr = [];
             for (; from <= to; from += 1) {
@@ -52,7 +63,7 @@ var ApplicationViewModel = function () {
             "changepass": "",
             "observe": "У вас есть...",
             "insert": "Ввод платежей...",
-            "categories":"Категории бюджета..."
+            "categories": "Категории бюджета..."
         },
         failsCount = 0,
         modal = {
@@ -112,13 +123,29 @@ var ApplicationViewModel = function () {
     this.page = ko.observable();
     this.action = ko.observable();
 
+    this.currencyArr = [];
     this.currency = {"478": {shortname: "RUB"}};
     this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel();
 
 //Accounts
 //baseTypeAccount: ["IN", "OUT", "CASH", "BANK", "CARD", "LOAN", "ELECTRON", "OTHER"],
-    this.accounts = ko.observableArray();
+//group 0 - ALL; 1 - Active; 2 - Passive;
+    this.accounts = ko.observableArray([]);
+    this.accountsViewListParent = ko.observable(0);
+    this.accountsViewListGroup = ko.observable(0);
+    this.accountsViewListType = ko.observable('OUT');
+    this.accountsViewList = ko.computed(function () {
+        var res = [];
+        each(self.accounts(), function (i, acc) {
+            if (acc.parent() == self.accountsViewListParent()
+                && acc.group() == self.accountsViewListGroup()
+                && acc.type() == self.accountsViewListType()) {
+                res.push(acc);
+            }
+        });
+        return res;
+    }, this);
     this.accountsHash = {};
 
     this.transactions = ko.observableArray();
@@ -138,18 +165,27 @@ var ApplicationViewModel = function () {
         self.timeFilterTo.valueHasMutated();
     });
 
-    this.addAccIdToFilter = function(acc){
-        if(self.action()=='insert' && acc){
+    this.addAccIdToFilter = function (acc) {
+        if (self.action() == 'insert' && acc) {
             self.accountId(acc.id);
             self.selectedFilter.valueHasMutated();
         }
+    };
+
+    this.accountLvlUp = function () {
+        var p = self.accountsViewListParent;
+        p(self.accountsHash[p()].parent());
+    };
+
+    this.addNewAccount = function(){
+        
     };
 
     this.transactionFilteredGen = function () {
         var transFiltered = [],
             _transFiltered = [];
         //mk logic
-        $.each(self.transactions(), function (k, t) {
+        each(self.transactions(), function (k, t) {
             if (t.hidden == "0" && t.template == "0" && !!t.finished) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
@@ -160,14 +196,14 @@ var ApplicationViewModel = function () {
             return a.created > b.created ? -1 : 1;
         });
 
-        if(self.selectedFilter()){
-            for(var i = 0;i<transFiltered.length;i++){
-                if(self.selectedFilter().test(transFiltered[i], self.timeFilterFrom(), self.timeFilterTo())){
+        if (self.selectedFilter()) {
+            for (var i = 0; i < transFiltered.length; i++) {
+                if (self.selectedFilter().test(transFiltered[i], self.timeFilterFrom(), self.timeFilterTo())) {
                     _transFiltered.push(transFiltered[i]);
                 }
             }
             self.transFiltered(_transFiltered);
-        }else{
+        } else {
             self.transFiltered(transFiltered);
         }
 
@@ -205,7 +241,7 @@ var ApplicationViewModel = function () {
 
     this.transactions.subscribe(function (val) {
         if (val.length) {
-            $.each(val, function (k, t) {
+            each(val, function (k, t) {
                 //mk logic
                 if (self.accountsHash[t.from_id]) {
                     self.accountsHash[t.from_id].transactions.push(t);
@@ -217,7 +253,7 @@ var ApplicationViewModel = function () {
 
             self.transactionFilteredGen();
             //mk
-            $.each(self.accounts(), function (k, acc) {
+            each(self.accounts(), function (k, acc) {
                 acc.recalculateSum(self);
             })
         }
@@ -265,7 +301,7 @@ var ApplicationViewModel = function () {
 
     this.getGainAcc = function () {
         var res = [], sum = 0;
-        $.each(self.accounts(), function (k, acc) {
+        each(self.accounts(), function (k, acc) {
             if (acc.type() == "IN" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.sum();
@@ -277,7 +313,7 @@ var ApplicationViewModel = function () {
 
     this.getConsumptionAcc = function () {
         var res = [], sum = 0;
-        $.each(self.accounts(), function (k, acc) {
+        each(self.accounts(), function (k, acc) {
             if (acc.type() == "OUT" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.sum();
@@ -289,7 +325,7 @@ var ApplicationViewModel = function () {
 
     this.getActiveAcc = function () {
         var res = [], sum = 0;
-        $.each(self.accounts(), function (k, acc) {
+        each(self.accounts(), function (k, acc) {
             if (acc.group() == 1 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.sum();
@@ -301,7 +337,7 @@ var ApplicationViewModel = function () {
 
     this.getPassiveAcc = function () {
         var res = [], sum = 0;
-        $.each(self.accounts(), function (k, acc) {
+        each(self.accounts(), function (k, acc) {
             if (acc.group() == 2 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.sum();
@@ -395,8 +431,9 @@ var ApplicationViewModel = function () {
     this.user.token.subscribe(function (val) {
         if (val) {
             ServerApi.getCurrencyList({}, function (r) {
-                $.each(r, function (k, v) {
+                each(r, function (k, v) {
                     self.currency[v.currency_id] = v;
+                    self.currencyArr.push(v);
                 });
             });
             ServerApi.getAccountList({}, function (r) {
@@ -404,7 +441,7 @@ var ApplicationViewModel = function () {
                 self.accountsHash = {};
                 var res = [],
                     accIds = [];
-                $.each(r, function (k, acc) {
+                each(r, function (k, acc) {
                     var a = new AccountViewModel(acc, self);
                     res.push(a);
                     self.accountsHash[a.id] = a;
@@ -419,7 +456,7 @@ var ApplicationViewModel = function () {
 //                        acc.initChildren(self);
 //                    });
 //                });
-                $.each(self.accounts(), function (k, acc) {
+                each(self.accounts(), function (k, acc) {
                     acc.initChildren(self);
                 });
                 ServerApi.getTransactionList({}, function (r) {

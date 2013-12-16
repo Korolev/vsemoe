@@ -548,17 +548,49 @@ td.transport_tr {
 /* = Flexlist = */
 .vse-tabs div.flexlist{
     border-top:1px solid #bbb;
-    padding: 0 46px;
+    padding: 3px 46px;
 }
 
 .flexlisttitle{
     height: 40px;
     line-height: 40px;
+    position: relative;
+}
+
+.flexlisttitle .currentParrent{
+    font-weight: bold;
+}
+
+.flexlisttitle .currentParrent span{
+    font-family: "HelveticaNeue Bold",sans-serif;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 60px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.flexlisttitle .currentParrent span:before{
+    content: '←';
+    font-size: 18px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 6px;
+}
+
+.flexlisttitle .button{
+    position: absolute;
+    height: 30px;
+    top:5px;
+    right: 46px;
 }
 
 .flexlist{
     height: 546px;
     overflow-y: scroll;
+    font-size: 14px;
 }
 .flexlist > div{
     cursor: pointer;
@@ -578,6 +610,7 @@ td.transport_tr {
     top: 9px;
     background-image: url(/img/edit_del_next.png);
     display: none;
+    cursor: pointer;
 }
 
 .flexlist i.next{
@@ -602,4 +635,44 @@ td.transport_tr {
 .flexlist > div:hover i.edit,
 .flexlist > div:hover i.del{
     display: block;
+}
+
+.acc_edit_holder{
+    background-color: #fefefe;
+    border: 1px solid #888;
+    padding: 10px;
+    position: relative;
+    cursor: default;
+    top:-1px
+}
+
+.acc_edit_holder .acc_edit_row{
+    height: 38px;
+    line-height: 38px;
+}
+
+.acc_edit_row input[type="text"]{
+    height: 33px;
+    color: #888;
+    width: 300px;
+}
+
+.acc_edit_holder .acc_edit_row label{
+    display: inline-block;
+    width: 100px;
+    padding-left: 8px;
+}
+.acc_edit_holder .acc_edit_row label.long{
+    min-width: 200px;
+    width: auto;
+}
+
+.acc_edit_close{
+    position: absolute;
+    top:0px;
+    right: 0px;
+    z-index: 100;
+}
+.acc_edit_close i{
+    display: block !important;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 2h[18.11] 3h[2.12] 2h[3.12] 4h [9.12] 1h[10.12] 4h [11.12] 4h[12.12] *[13.13] 11:00-13:30[14.12]-->
+<!-- 2h[18.11] 3h[2.12] 2h[3.12] 4h [9.12] 1h[10.12] 4h [11.12] 4h[12.12] *[13.13] 5h[14.12] 2h[16.12]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -7,26 +7,26 @@
 <!--[if IE 8]>
 <html class="no-js lt-ie9"> <![endif]-->
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width">
-<title>Всё Моё &mdash; Сервис управления личными финансами</title>
-<meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами - VseMoe.RU">
-<meta name="description"
-      content="Всё Моё &mdash; Сервис управления личными финансами и и семейным бюджетом - VseMoe.RU">
-<link rel="shortcut icon" href="favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <title>Всё Моё &mdash; Сервис управления личными финансами</title>
+    <meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами - VseMoe.RU">
+    <meta name="description"
+          content="Всё Моё &mdash; Сервис управления личными финансами и и семейным бюджетом - VseMoe.RU">
+    <link rel="shortcut icon" href="favicon.ico">
 
-<link href="../css/fonts.css" rel="stylesheet" type="text/css">
-<link href="../css/style.css" rel="stylesheet" type="text/css">
-<link href="../css/login.css" rel="stylesheet" type="text/css">
-<link href="../css/personal.css" rel="stylesheet" type="text/css">
-<link href="../css/account.css" rel="stylesheet" type="text/css">
-<link href="../css/pickmeup.css" rel="stylesheet" type="text/css">
-<link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
+    <link href="../css/fonts.css" rel="stylesheet" type="text/css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/login.css" rel="stylesheet" type="text/css">
+    <link href="../css/personal.css" rel="stylesheet" type="text/css">
+    <link href="../css/account.css" rel="stylesheet" type="text/css">
+    <link href="../css/pickmeup.css" rel="stylesheet" type="text/css">
+    <link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
 
 
-<script src="../js/lib/modernizr-2.6.2.min.js"></script>
+    <script src="../js/lib/modernizr-2.6.2.min.js"></script>
 </head>
 <body class="inner">
 <div class="top"></div>
@@ -475,9 +475,13 @@
                             <!-- /ko -->
                         </div>
                         <div class="filterItem">
-                            <div class="filterItemConfig" data-bind="click:function(){$root.showFilterConfig(!$root.showFilterConfig())}"></div>
-                            <div class="itemDropDown animated" data-bind="css:{'hidden':!showFilterConfig(),'fadeInDown':showFilterConfig()}">
-                                <div class="dropDownTitle" data-bind="click:function(){$root.showFilterConfig(false);}">Периоды</div>
+                            <div class="filterItemConfig"
+                                 data-bind="click:function(){$root.showFilterConfig(!$root.showFilterConfig())}"></div>
+                            <div class="itemDropDown animated"
+                                 data-bind="css:{'hidden':!showFilterConfig(),'fadeInDown':showFilterConfig()}">
+                                <div class="dropDownTitle" data-bind="click:function(){$root.showFilterConfig(false);}">
+                                    Периоды
+                                </div>
                                 <div data-bind="foreach:tableFilters">
                                     <div data-bind="visible: !hidden"><span class="fakecheckbox" data-bind="text:label,
                                     css:{checked:selected},
@@ -486,9 +490,11 @@
                             </div>
                         </div>
                         <div class="filterItem">
-                            <div class="dateInput dateFrom" data-bind="datepick:{value:timeFilterFrom,format:'DD MMM YY'}"></div>
+                            <div class="dateInput dateFrom"
+                                 data-bind="datepick:{value:timeFilterFrom,format:'DD MMM YY'}"></div>
                             -
-                            <div class="dateInput dateTo" data-bind="datepick:{value:timeFilterTo,format:'DD MMM YY'}"></div>
+                            <div class="dateInput dateTo"
+                                 data-bind="datepick:{value:timeFilterTo,format:'DD MMM YY'}"></div>
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -543,7 +549,8 @@
                 </div>
                 <div class="horisontal_line"></div>
                 <!---paging-->
-                <div class="pagingBox" id="transPaging" style="cursor: pointer;" data-bind="if:$root.totalPagesArr().length > 1">
+                <div class="pagingBox" id="transPaging" style="cursor: pointer;"
+                     data-bind="if:$root.totalPagesArr().length > 1">
                     <div class="paging imgfirst" data-bind="click:function(){$root.currentPage(1)}"></div>
                     <div class="paging imgprev"
                          data-bind="click:function(){$root.currentPage($root.currentPage()-1)}"></div>
@@ -589,7 +596,20 @@
                 <div class="rightMenu">
                     <div class="inputText floatHeader" data-bind="text:$root.header"></div>
                     <div class="clear"></div>
-                    <div class="vse-tabs" data-bind="tabs:{options:{}}">
+                    <div class="vse-tabs" data-bind="tabs:{options:{
+                        callback:{
+                            'tabs-1': function(){
+                                 this.accountsViewListParent(0);
+                                 this.accountsViewListGroup(0);
+                                 this.accountsViewListType('OUT');
+                            },
+                            'tabs-2': function(){
+                                 this.accountsViewListParent(0);
+                                 this.accountsViewListGroup(0);
+                                 this.accountsViewListType('IN');
+                            },
+                        }
+                    }}">
                         <ul>
                             <li><a href="#tabs-1">
                                 <span class="vseOrange">&ndash;</span>
@@ -601,12 +621,14 @@
                             </a></li>
                         </ul>
                         <div id="tabs-1">
-                            <div class="flexlisttitle"></div>
-                            <div class="flexlist" data-bind="template:{name:'catlist-box-tpl',foreach:getConsumptionAcc()}"></div>
+                            <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
+                            <div class="flexlist"
+                                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
                         </div>
                         <div id="tabs-2">
-                            <div class="flexlisttitle"></div>
-                            <div class="flexlist" data-bind="template:{name:'catlist-box-tpl',foreach:getActiveAcc()}"></div>
+                            <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
+                            <div class="flexlist"
+                                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
                         </div>
                     </div>
                 </div>
@@ -619,7 +641,8 @@
 <script type="text/html" id="left-menu-insert-tpl">
     <!--------leftMenu-------->
     <div class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
-                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи</div>
+                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи
+    </div>
     <div class="leftMenu">
         <div class="allBox">
             <span class="bigText">ИТОГ</span>
@@ -675,7 +698,9 @@
         </nav>
         <div class="topMenu">
             <div class="topMenuBox shortMenuItem" style="cursor: default" data-bind="">+</div>
-            <div class="topMenuBox shortMenuItem lastItem" data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K</div>
+            <div class="topMenuBox shortMenuItem lastItem"
+                 data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K
+            </div>
             <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
             <div class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>
         </div>
@@ -712,18 +737,47 @@
     <!-- /ko -->
 </script>
 <script type="text/html" id="catlist-box-tpl">
-    <div data-bind="css:{has_child: children().length}">
-        <div class="catlistItem" data-bind="text:description"></div>
-        <i class="icon next"></i>
-        <i class="icon edit"></i>
-        <i class="icon del"></i>
+    <div data-bind="css:{has_child: children().length, hidden: editMode}">
+        <div class="catlistItem" data-bind="text:description, click:setParentAccount"></div>
+        <i class="icon next" data-bind="click:setParentAccount"></i>
+        <i class="icon edit" data-bind="click:editAccount"></i>
+        <i class="icon del" data-bind="click:removeAccount"></i>
+    </div>
+    <div data-bind="css:{hidden: !editMode(),'animated flipInX': editMode}">
+        <div class="acc_edit_holder">
+            <div class="acc_edit_close"><i class="icon del" data-bind="click:function(){ $data.editMode(false);}"></i></div>
+            <div class="acc_edit_row">
+                <label>Название</label>
+                <input type="text" data-bind="value:description">
+            </div>
+            <div class="acc_edit_row">
+                <label>Добавить в</label>
+            </div>
+            <div class="acc_edit_row">
+                <label>Валюта</label>
+                <select data-bind="options:$root.currencyArr,
+                optionsText:function(item){return item.description+' ('+item.shortname+')'},
+                optionsValue:'currency_id',
+                value:$data.currency,
+                optionsCaption:'---'"></select>
+            </div>
+            <div class="acc_edit_row">
+                <label class="long">Разместить вверху списка</label>
+            </div>
+        </div>
     </div>
 </script>
+<script type="text/html" id="flexlist-title">
+    <div class="currentParrent" data-bind="if:$root.accountsViewListParent() != 0">
+        <span data-bind="click:accountLvlUp,accountname:$root.accountsViewListParent"></span>
+    </div>
+    <input class="cancel button" type="button" value="Добваить" data-bind="click:addNewAccount"/>
+</script>
 <script type="text/html" id="undefined-page-tpl">
-
+    <h1>Error 404 - Page not found.</h1>
 </script>
 <script type="text/html" id="undefined-tpl">
-
+    <h1>Template not found.</h1>
 </script>
 </body>
 </html>

@@ -23,16 +23,21 @@ var datePickerLocale = {
 
 $(document).on('click', function (e) {
     var target = e.target;
-    while (target != document) {
-        var attrClass = target.getAttribute('class');
-        if (attrClass && (attrClass.split(' '))[0] == 'dateInput') {
-            break;
+    try {
+        while (target != document) {
+            var attrClass = target.getAttribute('class');
+            if (attrClass && (attrClass.split(' '))[0] == 'dateInput') {
+                break;
+            }
+            target = target.parentNode;
         }
-        target = target.parentNode;
+        $('.dateInput').not(target).each(function (k, el) {
+            $(el).find('.itemDropDown').removeClass('fadeInDon').addClass('hidden');
+        });
+    } catch (e) {
+        console && console.log(e);
     }
-    $('.dateInput').not(target).each(function (k, el) {
-        $(el).find('.itemDropDown').removeClass('fadeInDon').addClass('hidden');
-    });
+
 });
 
 function getCookie(name) {
@@ -248,6 +253,7 @@ ko.bindingHandlers['tabs'] = {
                     console && console.log(e);
                 }
             },
+            options = allBindings().tabs.options,
             $element = $(element),
             tabClass = $element.attr('class') + '-',
             $ul = $($element.children()[0]),
@@ -264,7 +270,8 @@ ko.bindingHandlers['tabs'] = {
             }($ul.find('li'))),
             selectTab = function ($el) {
                 var selected = tabClass + 'selected',
-                    divId = '#' + $el.data('href');
+                    href = $el.data('href'),
+                    divId = '#' + href;
 
                 each($tabs, function (e) {
                     e.removeClass(selected);
@@ -275,6 +282,13 @@ ko.bindingHandlers['tabs'] = {
                     $(el).addClass(i > 0 ? 'hidden' : '');
                 });
                 $(divId).removeClass('hidden');
+                if (options.callback[href]) {
+                    try {
+                        options.callback[href].apply(bindingContext.$root);
+                    } catch (e) {
+                        console && console.log(e);
+                    }
+                }
             };
 
         $ul.addClass(tabClass + 'tabs');
