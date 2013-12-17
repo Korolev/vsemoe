@@ -178,7 +178,21 @@ var ApplicationViewModel = function () {
     };
 
     this.addNewAccount = function(){
+        var parent = self.accountsViewListParent(),
+            accConf = {
+                account_id:'',
+                currency_id:self.baseCurrencyId(),
+                parent: parent,
+                group: self.accountsViewListGroup(),
+                type: self.accountsViewListType(),
+                editMode: true
+            },acc = new AccountViewModel(accConf,self);
 
+        self.accounts.unshift(acc);
+        if(parent > 0){
+            console.log('PARENT!!');
+            self.accountsHash[parent].children.push(acc);
+        }
     };
 
     this.transactionFilteredGen = function () {

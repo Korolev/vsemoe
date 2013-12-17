@@ -749,13 +749,14 @@
             <div class="acc_edit_row">
                 <label>Название</label>
                 <input type="text" data-bind="value:description">
+                <span data-bind="text:$data.id"></span>
             </div>
             <div class="acc_edit_row">
                 <label>Добавить в</label>
                 <select data-bind="options:$root.accounts,
                 optionsText:'description',
                 optionsValue:'id',
-                value:$data.parent(),
+                value:$data.newParent,
                 optionsCaption:'Корневой раздел'"></select>
             </div>
             <div class="acc_edit_row">
@@ -776,7 +777,7 @@
     <div class="currentParrent" data-bind="if:$root.accountsViewListParent() != 0">
         <span data-bind="click:accountLvlUp,accountname:$root.accountsViewListParent"></span>
     </div>
-    <input class="cancel button" type="button" value="Добавить" data-bind="click:addNewAccount"/>
+    <input class="vse-cancel button" type="button" value="Добавить" data-bind="click:addNewAccount"/>
 </script>
 <script type="text/html" id="undefined-page-tpl">
     <!--<h1>Error 404 - Page not found.</h1>-->

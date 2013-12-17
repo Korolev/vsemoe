@@ -272,7 +272,8 @@ td.transport_tr {
     }
 }
 
-.modalButtons input.cancel {
+.modalButtons input.cancel ,
+input.vse-cancel{
     margin: 0 10px;
     background-image: -moz-linear-gradient(top, #f9f9f9 0, #e1e1e1 100%);
     background-image: -ms-linear-gradient(top, #f9f9f9 0, #e1e1e1 100%) !important;
@@ -585,6 +586,8 @@ td.transport_tr {
     height: 30px;
     top:5px;
     right: 46px;
+    color: #888;
+    font-weight: normal;
 }
 
 .flexlist{

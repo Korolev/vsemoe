@@ -22,11 +22,12 @@ var AccountViewModel = function (data, app) {
     this.group = ko.observable(data.group || "");
     this.type = ko.observable(data.type || "");
     this.parent = ko.observable(data.parent || "");
+    this.newParent = ko.observable(data.parent || "");
     this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand | 0);
 
-    this.editMode = ko.observable(false);
+    this.editMode = ko.observable(!!data.editMode);
 
     this.sum = ko.observable(0);
 
@@ -34,13 +35,13 @@ var AccountViewModel = function (data, app) {
     this.transactions = [];
 
     this.editAccount = function () {
-        each(app.accounts(),function(i,acc){
-           acc.editMode(false);
+        each(app.accounts(), function (i, acc) {
+            acc.editMode(false);
         });
         self.editMode(true);
     };
 
-    this.setParentAccount = function (acc,event) {
+    this.setParentAccount = function (acc, event) {
         app.accountsViewListParent(acc.id);
     };
 
@@ -92,7 +93,7 @@ var AccountViewModel = function (data, app) {
             res *= -1;
         }
 
-        if (self.parent().length > 2) {
+        if (self.parent() && self.parent().length > 2) {
             root.accountsHash[self.parent()].sum(root.accountsHash[self.parent()].sum() + res);
         }
 
@@ -108,6 +109,50 @@ var AccountViewModel = function (data, app) {
             self.sum(res);
         }
     });
+
+    this.editMode.subscribe(function (edit) {
+        if (!edit) {
+            var val = self.newParent();
+            if (val && val != self.id && val != self.parent()) {
+                app.accountsHash[val].children.push(self);
+                if (self.parent() > 0) {
+                    console.log(self.parent());
+                    app.accountsHash[self.parent()].children.remove(self);
+                }
+                self.parent(val);
+                self.save();
+            }else if(val && !self.id && val == self.parent()){
+                self.save();
+            }
+        }
+    });
+
+    self.newParent.subscribe(function (val) {
+        if (val == self.id) {
+            self.newParent(self.parent());
+        }
+    });
+
+    this.save = function () {
+        console.log("SAVE!!!");
+        if(self.id){
+
+        }else{
+            ServerApi.createAccount({
+                description: self.description(),
+                currency_id: self.currency(),
+                parent: self.parent(),
+                type: self.type(),
+                group: self.group(),
+                expand: self.expand()
+            },function(r){
+                if(r.account_id){
+                    self.id = r.account_id;
+                    app.accountsHash[self.id] = self;
+                }
+            })
+        }
+    };
 
     this.initChildren = function (root) {
         var res = [];
