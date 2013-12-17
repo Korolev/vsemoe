@@ -657,6 +657,10 @@ td.transport_tr {
     width: 300px;
 }
 
+.acc_edit_holder select{
+    width: 300px;
+}
+
 .acc_edit_holder .acc_edit_row label{
     display: inline-block;
     width: 100px;

@@ -145,7 +145,7 @@ var ApplicationViewModel = function () {
             }
         });
         return res;
-    }, this);
+    }, this).extend({throttle : 1});
     this.accountsHash = {};
 
     this.transactions = ko.observableArray();
@@ -178,7 +178,7 @@ var ApplicationViewModel = function () {
     };
 
     this.addNewAccount = function(){
-        
+
     };
 
     this.transactionFilteredGen = function () {
