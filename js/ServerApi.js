@@ -128,7 +128,11 @@ var ServerApi = {
         this.utils().post("/account/create", dataObj, callback);
     },
     updateAccount: function (param, dataObj, callback) {
-        this.utils().post("/account/update/" + param, dataObj, callback);
+        if(param){
+            this.utils().post("/account/update/" + param, dataObj, callback);
+        }else{
+            this.utils().post("/account/update/", dataObj, callback);
+        }
     },
     deleteAccount: function (dataObj, callback) {
         this.utils().post("/account/delete", dataObj, callback);

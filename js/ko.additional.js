@@ -302,3 +302,23 @@ ko.bindingHandlers['tabs'] = {
         selectTab($tabs[0]);
     }
 };
+
+ko.bindingHandlers['treemenu'] = {
+    'init': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+//        var each = function (arr, func) {
+//                try {
+//                    for (var i = 0; i < arr.length; i++) {
+//                        func(arr[i], i);
+//                    }
+//                } catch (e) {
+//                    console && console.log(e);
+//                }
+//            },
+//            data = allBindings().treemenu.data(),
+//            selected = allBindings().treemenu.value(),
+//            $element = $(element);
+//
+//        console.log(data);
+//        console.log(selected);
+    }
+};

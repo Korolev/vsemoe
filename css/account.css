@@ -47,7 +47,8 @@ ul li span,
 .totalMenu,
 .bigText,
 .bigComment,
-#app_body a.form_link {
+#app_body a.form_link,
+.vse-tabs{
     letter-spacing: 0.07rem;
 }
 
@@ -574,7 +575,7 @@ input.vse-cancel{
 
 .flexlisttitle .currentParrent span:before{
     content: '←';
-    font-size: 18px;
+    font-size: 16px;
     display: inline-block;
     height: 40px;
     line-height: 40px;
@@ -584,10 +585,17 @@ input.vse-cancel{
 .flexlisttitle .button{
     position: absolute;
     height: 30px;
+    background-image: none !important;
+    -o-animation: important;
+    animation: important;
+    box-shadow: none;
+    background-color: #fff;
     top:5px;
     right: 46px;
-    color: #888;
     font-weight: normal;
+    border: 1px solid #B5BCC5;
+    border-radius: 3px;
+    color: #000000;
 }
 
 .flexlist{
@@ -682,4 +690,8 @@ input.vse-cancel{
 }
 .acc_edit_close i{
     display: block !important;
+}
+
+.treemenu{
+
 }

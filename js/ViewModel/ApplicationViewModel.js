@@ -88,6 +88,15 @@ var ApplicationViewModel = function () {
                         self.user.clearError();
                     }
                 }
+            },
+            removeCat: {
+                text: "Хотите улалить категорию?",
+                buttons: {
+                    okLabel: "Да",
+                    okFunc: function () {
+
+                    }
+                }
             }
         };
 
@@ -113,6 +122,13 @@ var ApplicationViewModel = function () {
     this.modalClose = function () {
         self.modalWindow(null);
     };
+    this.showModal = function(name,callback){
+        modal[name].buttons.okFunc = function(){
+            callback();
+            self.modalClose();
+        };
+        self.modalWindow(modal[name]);
+    };
 
     this.totalPassive = ko.observable(0);
     this.totalActive = ko.observable(0);
@@ -136,7 +152,22 @@ var ApplicationViewModel = function () {
     this.accountsViewListGroup = ko.observable(0);
     this.accountsViewListType = ko.observable('OUT');
     this.accountsViewList = ko.computed(function () {
-        var res = [];
+        var res = [],
+            acs = self.accounts(),
+            len = acs.length,
+            i = 0,
+            parent = self.accountsViewListParent(),
+            group = self.accountsViewListGroup(),
+            type = self.accountsViewListType();
+
+        while(i<len){
+            if (acs[i].parent() == parent
+                && acs[i].group() == group
+                && acs[i].type() == type) {
+                res.push(acs[i]);
+            }
+            i++;
+        }
         each(self.accounts(), function (i, acc) {
             if (acc.parent() == self.accountsViewListParent()
                 && acc.group() == self.accountsViewListGroup()
@@ -145,7 +176,7 @@ var ApplicationViewModel = function () {
             }
         });
         return res;
-    }, this).extend({throttle : 1});
+    }, this).extend({throttle : 50});
     this.accountsHash = {};
 
     this.transactions = ko.observableArray();

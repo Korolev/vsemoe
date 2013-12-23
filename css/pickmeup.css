@@ -124,7 +124,8 @@
 
 .pickmeup .pmu-instance:first-child .pmu-prev,
 .pickmeup .pmu-instance:last-child .pmu-next {
-    display: block;
+    display: inline-block;
+    color: transparent;
 }
 
 .pickmeup .pmu-instance:first-child .pmu-month,
@@ -142,8 +143,32 @@
 }
 
 .pmu-next{
-    font-size: 11px;
 }
+
 .pmu-prev{
-    font-size: 14px;
 }
+
+.pmu-prev:before{
+    content: '';
+    border-top: 5px solid rgba(0, 0, 0, 0);
+    border-right: 10px solid #888;
+    border-bottom: 5px solid rgba(0, 0, 0, 0);
+    height: 0;
+    left: 1px;
+    position: absolute;
+    top: 35%;
+    width: 0;
+}
+
+.pmu-next:before{
+    content: '';
+    border-top: 5px solid rgba(0, 0, 0, 0);
+    border-left: 10px solid #888;
+    border-bottom: 5px solid rgba(0, 0, 0, 0);
+    height: 0;
+    left: 1px;
+    position: absolute;
+    top: 35%;
+    width: 0;
+}
+

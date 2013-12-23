@@ -213,11 +213,15 @@ input[type='email'].error {
 
 .content .cup {
     position: absolute;
-    width: 216px;
-    height: 326px;
-    right: 146px;
-    top: 90px;
+    /*width: 216px;*/
+    /*height: 326px;*/
+    /*right: 146px;*/
+    /*top: 90px;*/
     background: url(../images/cup.png) no-repeat 0 0;
+    width: 365px;
+    height: 395px;
+    right: 52px;
+    top: 50px;
 }
 
 .content .hole {

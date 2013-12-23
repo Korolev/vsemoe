@@ -46,7 +46,12 @@ var AccountViewModel = function (data, app) {
     };
 
     this.removeAccount = function () {
-        console.log('removeAccount', arguments);
+        app.showModal('removeCat',function(){
+            app.accounts.remove(self);
+            if(self.id){
+                ServerApi.deleteAccount({account_id:self.id},console.log);
+            }
+        });
     };
 
     this.saveAccount = function () {
@@ -120,10 +125,8 @@ var AccountViewModel = function (data, app) {
                     app.accountsHash[self.parent()].children.remove(self);
                 }
                 self.parent(val);
-                self.save();
-            }else if(val && !self.id && val == self.parent()){
-                self.save();
             }
+            self.save();
         }
     });
 
@@ -134,9 +137,21 @@ var AccountViewModel = function (data, app) {
     });
 
     this.save = function () {
+        if(!self.description()){
+            app.accounts.remove(self);
+            return false;
+        }
         console.log("SAVE!!!");
         if(self.id){
-
+            ServerApi.updateAccount(false,{
+                description: self.description(),
+                currency_id: self.currency(),
+                parent: self.parent(),
+                type: self.type(),
+                group: self.group(),
+                expand: self.expand(),
+                account_id:self.id
+            });
         }else{
             ServerApi.createAccount({
                 description: self.description(),
