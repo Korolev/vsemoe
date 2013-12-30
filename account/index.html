@@ -24,6 +24,8 @@
     <link href="../css/account.css" rel="stylesheet" type="text/css">
     <link href="../css/pickmeup.css" rel="stylesheet" type="text/css">
     <link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
+    <link href="../js/lib/select/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../js/lib/select/css/core-ui-select.css" rel="stylesheet" type="text/css">
 
 
     <script src="../js/lib/modernizr-2.6.2.min.js"></script>
@@ -104,6 +106,7 @@
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
 <script src="../js/lib/jquery-1.8.2.min.js"></script>
+<script src="../js/lib/select/js/jquery.core-ui-select.js"></script>
 <script src="../js/lib/sammy-latest.min.js"></script>
 <script src="../js/lib/moment.min.js"></script>
 <script src="../js/jquery.treemenu.js"></script>
@@ -509,21 +512,29 @@
                                 <th align="left">ДАТА</th>
                                 <th align="left">СЧЕТ</th>
                                 <th align="left">КАТЕГОРИЯ</th>
+                                <th align="left">ВАЛЮТА</th>
                                 <th align="right">СУММА</th>
                                 <th align="left">КОММЕНТАРИЙ</th>
+                                <th align="left"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr row="1">
+                            <tr class="nohover edit_row">
                                 <td width="24">
                                     <!--<div class="checkbox"></div>-->
                                 </td>
                                 <td align="left" class="thead1">00.00.00</td>
                                 <td align="left" class="thead2">Средства</td>
                                 <td align="left" class="thead3">Откуда/Куда</td>
-                                <td align="right" class="thead4">0.00</td>
+                                <td align="right" class="thead4" colspan="2">0.00</td>
                                 <td align="left" class="thead5">Где или Что Сделано?</td>
+                                <td align="left" class="thead6"></td>
                             </tr>
+                            <!--<tr class="nohover">-->
+                                <!--<td colspan="7">-->
+                                    <!--<div>EDIT</div>-->
+                                <!--</td>-->
+                            <!--</tr>-->
                             </tbody>
                             <!-- ko if: transactions -->
                             <tbody data-bind="foreach:transactionsSet">
@@ -538,10 +549,16 @@
                                     <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
                                 </td>
                                 <td align="left" class="tbody3" data-bind="accountname:to_id"></td>
-                                <td align="right" class="tbody4"
-                                    data-bind="absdigitext:amount, css:$root.getCssClass($data)"></td>
+                                <td align="right" class="tbody4" colspan="2">
+                                    <span></span>
+                                    <span data-bind="absdigitext:amount, css:$root.getCssClass($data)"></span>
+                                    </td>
                                 <td align="left" class="tbody5"><span data-bind="text:description"></span><span
-                                        data-bind="css:{split:split != '0'}"></span></td>
+                                        data-bind="css:{split:split != '0'}"></span>
+                                </td>
+                                <td>
+
+                                </td>
                             </tr>
                             </tbody>
                             <!-- /ko -->
@@ -639,6 +656,107 @@
     </table>
 </script>
 
+<script type="text/html" id="accmanage-tpl">
+    <table class="contentTable">
+        <tr>
+            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'"></td>
+            <!--------rightMenu-------->
+            <td class="tdrightMenu">
+                <div class="rightMenu" data-bind="template:pageEditItemTemplateName"></div>
+            </td>
+        </tr>
+    </table>
+</script>
+
+<script type="text/html" id="default-accmanage-tpl">
+    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
+    <div class="clear"></div>
+    <div class="accounts_main" data-bind="foreach:$root.accountBlocks">
+        <div class="accounts_block" data-bind="css:addClass">
+            <div class="accounts_block_header" data-bind="text:title"></div>
+            <div data-bind="foreach:items">
+                <div class="accounts_block_item">
+                    <i data-bind="css:icon,click:$root.editAcc"></i>
+                    <div data-bind="text:title"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <p class="help_text">
+        Выши счета находятся в панели слева, для того чтобы отредактировать счет, выберите его.
+    </p>
+</script>
+
+<script type="text/html" id="edit-accmanage-tpl">
+    <!-- ko with:$root.accountInEdit -->
+    <div class="inputText floatHeader">
+        <span data-bind="text: id ? 'Редактирование' : 'Создание'"></span>
+        <span style="font-size: 14px;vertical-align: bottom">&gt;&nbsp;<span data-bind="text: description"></span></span>
+    </div>
+    <div class="clear"></div>
+    <div class="account_edit_form">
+        <div class="buttons_bar">
+            <input class="vse-cancel button" type="button" value="Отмена" data-bind="gotoaction:'accmanage'"/>
+            <input class="button" type="button" value="Добавить" data-bind="click:$root.saveAccount"/>
+        </div>
+        <div class="form_row">
+            <div class="form_row_label">
+                <div>
+                    <i data-bind="css:comment"></i>
+                </div>
+            </div>
+            <div class="form_row_input">
+                <label class="block">Название</label>
+                <input type="text" data-bind="value:description"/>
+                <div class="help_text" data-bind="text:helpText"></div>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Cумма</label>
+            </div>
+            <div class="form_row_input split_input">
+                <input type="text" data-bind="value:sum"/>
+                <select data-bind="options:$root.currencyArr,
+                optionsText:function(item){return item.description+' ('+item.shortname+')'},
+                optionsValue:'currency_id',
+                value:$data.currency,
+                optionsCaption:'---'"></select>
+            </div>
+        </div>
+        <div class="form_row big_margin">
+            <div class="form_row_label">
+                <label>Тип</label>
+            </div>
+            <div class="form_row_input">
+                <select data-bind="options:$root.accountBlocks, optionsText:'title'"></select>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Группа</label>
+            </div>
+            <div class="form_row_input">
+                <select data-bind="options:['Мои средства','Долги','Неопределен']"></select>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Статус</label>
+            </div>
+            <div class="form_row_input">
+                <input type="checkbox" data-bind="attr:{id:comment+'_check'}">
+                <label data-bind="attr:{for:comment+'_check'}">Видимый</labe>
+                <div class="help_text">
+                    Видимый счет будет показан в колонке счетов
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko  -->
+</script>
+
 <script type="text/html" id="left-menu-insert-tpl">
     <!--------leftMenu-------->
     <div class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
@@ -673,6 +791,19 @@
     </div>
 </script>
 
+<script type="text/html" id="edit-categories-tpl">
+</script>
+<script type="text/html" id="edit-insert-tpl">
+</script>
+<script type="text/html" id="edit-observe-tpl">
+</script>
+<script type="text/html" id="default-categories-tpl">
+</script>
+<script type="text/html" id="default-insert-tpl">
+</script>
+<script type="text/html" id="default-observe-tpl">
+</script>
+
 <script type="text/html" id="account-page-tpl">
     <!--------accountDiv-------->
     <div id="accountDiv" class="content">
@@ -698,7 +829,7 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div class="topMenuBox shortMenuItem" style="cursor: default" data-bind="">+</div>
+            <div class="topMenuBox shortMenuItem" style="font-size: 22px" data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+</div>
             <div class="topMenuBox shortMenuItem lastItem"
                  data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K
             </div>

@@ -1077,7 +1077,7 @@ table {
     border-top:1px solid #dfdfdf ;
 }
 
-    .baseTable tbody tr:hover {
+    .baseTable tbody tr:not(.nohover):hover {
         filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFD9DFE4,EndColorStr=#FFD2D7DC)!important;
         background: -moz-linear-gradient(top,#D9DFE4 0,#D2D7DC 100%);
         background: -ms-linear-gradient(top,#D9DFE4 0,#D2D7DC 100%)!important;

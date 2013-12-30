@@ -53,7 +53,8 @@ var ApplicationViewModel = function () {
             "changepass": "login",
             "observe": "account",
             "insert": "account",
-            "categories": "account"
+            "categories": "account",
+            "accmanage": "account"
         },
         actionHeader = {
             "login": "",
@@ -63,7 +64,8 @@ var ApplicationViewModel = function () {
             "changepass": "",
             "observe": "У вас есть...",
             "insert": "Ввод платежей...",
-            "categories": "Категории бюджета..."
+            "categories": "Категории бюджета...",
+            "accmanage": "Выберите тип средств..."
         },
         failsCount = 0,
         modal = {
@@ -122,8 +124,8 @@ var ApplicationViewModel = function () {
     this.modalClose = function () {
         self.modalWindow(null);
     };
-    this.showModal = function(name,callback){
-        modal[name].buttons.okFunc = function(){
+    this.showModal = function (name, callback) {
+        modal[name].buttons.okFunc = function () {
             callback();
             self.modalClose();
         };
@@ -138,6 +140,7 @@ var ApplicationViewModel = function () {
 
     this.page = ko.observable();
     this.action = ko.observable();
+    this.editItem = ko.observable();
 
     this.currencyArr = [];
     this.currency = {"478": {shortname: "RUB"}};
@@ -145,6 +148,80 @@ var ApplicationViewModel = function () {
     this.user = new UserViewModel();
 
 //Accounts
+    this.accountBlocks = [
+        {
+            title: "Наличность",
+            addClass: "",
+            items: [
+                {
+                    title: "Бумажник",
+                    icon: "cash",
+                    type: "CASH",
+                    helpText: "В названии лучше использовать одно, два слова.\n Пример: Бумажник, Бумажник Риты"
+                },
+                {
+                    title: "Другая наличность",
+                    icon: "othercash",
+                    type: "CASH"
+                },
+                {
+                    title: "Займы друзьям",
+                    icon: "frienddeposit",
+                    type: "CASH"
+                },
+                {
+                    title: "Займы у друзей",
+                    icon: "friendcredit",
+                    type: "CASH"
+                }
+            ]
+        },
+        {
+            title: "Банк",
+            addClass: "",
+            items: [
+                {
+                    title: "Зарплатная или любая карта",
+                    icon: "card",
+                    type: "CARD"
+
+                },
+                {
+                    title: "Кредитная карта",
+                    icon: "creditcard",
+                    type: "LOAN"
+                },
+                {
+                    title: "Банковский счет",
+                    icon: "bank",
+                    type: "BANK"
+                }
+            ]
+        },
+        {
+            title: "Электронные деньги",
+            addClass: "short",
+            items: [
+                {
+                    title: "Электронные деньги",
+                    icon: "webmoney",
+                    type: "ELECTRON"
+                }
+            ]
+        },
+        {
+            title: "Другое",
+            addClass: "short",
+            items: [
+                {
+                    title: "Другое",
+                    icon: "other",
+                    type: "OTHER"
+                }
+            ]
+        }
+    ];
+
 //baseTypeAccount: ["IN", "OUT", "CASH", "BANK", "CARD", "LOAN", "ELECTRON", "OTHER"],
 //group 0 - ALL; 1 - Active; 2 - Passive;
     this.accounts = ko.observableArray([]);
@@ -160,7 +237,7 @@ var ApplicationViewModel = function () {
             group = self.accountsViewListGroup(),
             type = self.accountsViewListType();
 
-        while(i<len){
+        while (i < len) {
             if (acs[i].parent() == parent
                 && acs[i].group() == group
                 && acs[i].type() == type) {
@@ -168,16 +245,15 @@ var ApplicationViewModel = function () {
             }
             i++;
         }
-        each(self.accounts(), function (i, acc) {
-            if (acc.parent() == self.accountsViewListParent()
-                && acc.group() == self.accountsViewListGroup()
-                && acc.type() == self.accountsViewListType()) {
-                res.push(acc);
-            }
-        });
+
         return res;
-    }, this).extend({throttle : 50});
+    }, this).extend({throttle: 50});
     this.accountsHash = {};
+    this.accountInEdit = ko.observable();
+
+    this.editAcc = function(item,event){
+        location.hash = self.action()+'/'+item.icon;
+    };
 
     this.transactions = ko.observableArray();
     this.transactionsSet = ko.observableArray();
@@ -208,19 +284,19 @@ var ApplicationViewModel = function () {
         p(self.accountsHash[p()].parent());
     };
 
-    this.addNewAccount = function(){
+    this.addNewAccount = function () {
         var parent = self.accountsViewListParent(),
             accConf = {
-                account_id:'',
-                currency_id:self.baseCurrencyId(),
+                account_id: '',
+                currency_id: self.baseCurrencyId(),
                 parent: parent,
                 group: self.accountsViewListGroup(),
                 type: self.accountsViewListType(),
                 editMode: true
-            },acc = new AccountViewModel(accConf,self);
+            }, acc = new AccountViewModel(accConf, self);
 
         self.accounts.unshift(acc);
-        if(parent > 0){
+        if (parent > 0) {
             console.log('PARENT!!');
             self.accountsHash[parent].children.push(acc);
         }
@@ -343,6 +419,15 @@ var ApplicationViewModel = function () {
 
         self.transactionFilteredGen();
     });
+
+    this.saveAccount = function(item,event){
+        try{
+            item.save();
+        }catch (e){
+
+        }
+        location.hash = 'accmanage';
+    };
 
     this.getGainAcc = function () {
         var res = [], sum = 0;
@@ -517,6 +602,29 @@ var ApplicationViewModel = function () {
         self.header(actionHeader[val] || '');
     });
 
+    this.editItem.subscribe(function (val) {
+        var item;
+        if(val && !self.accountInEdit()){
+            each(self.accountBlocks,function(i,block){
+                each(block.items, function(_i,_item){
+                   if(_item.icon == val){
+                       item = _item;
+                   }
+                });
+            });
+            if(item)
+            self.accountInEdit(new AccountViewModel({
+                description:item.title,
+                type:item.type,
+                group: item.group === undefined ? 1 : item.group,
+                comment: val,
+                helpText: item.helpText || ''
+            }),self);
+        }else{
+            self.accountInEdit(null);
+        }
+    });
+
     this.pageTemplateName = ko.computed(function () {
         return self.page() + "-page-tpl";
     }, this);
@@ -524,6 +632,11 @@ var ApplicationViewModel = function () {
     this.pageContentTemplateName = ko.computed(function () {
         return self.action() + "-tpl";
     }, this);
+
+    this.pageEditItemTemplateName = ko.computed(function(){
+        return (self.editItem() ? 'edit-' : 'default-')
+            + self.pageContentTemplateName();
+    },this);
 
     //startFilterInit
     self.selectedFilter(this.tableFilters()[0]);
@@ -533,28 +646,36 @@ var ApplicationViewModel = function () {
 //        ko = {};
 //    }
     // Client-side routes
-    Sammy(function () {
-        var token = getCookie(ApplicationSettings.cookieName);
-        this.get('#:action', function () {
-            var a = this.params.action;
-            if (!self.user.token() && !token) {
-                if (actionMap[a] == 'login') {
+    this.router = Sammy(function () {
+        var token = getCookie(ApplicationSettings.cookieName),
+            doAction = function(a,id){
+                if (!self.user.token() && !token) {
+                    if (actionMap[a] == 'login') {
+                        self.action(a);
+                    } else {
+                        location.hash = "login";
+                    }
+                } else if (!self.user.token() && token) {
+                    self.user.remember(false);
+                    self.user.token(token);
+                    self.user.getLoginFromServer();
                     self.action(a);
                 } else {
-                    location.hash = "login";
+                    self.action(a);
                 }
-            } else if (!self.user.token() && token) {
-                self.user.remember(false);
-                self.user.token(token);
-                self.user.getLoginFromServer();
-                self.action(a);
-            } else {
-                self.action(a);
-            }
+                self.action.valueHasMutated();
+                self.editItem(id);
+            };
+
+        this.get('#:action', function () {
+            var a = this.params.action;
+            doAction(a);
         });
 
         this.get('#:action/:itemId', function () {
-
+            var a = this.params.action,
+                id = this.params.itemId;
+            doAction(a,id);
         });
         this.get('/account/', function () {
             var sammy = this;
@@ -579,5 +700,7 @@ var ApplicationViewModel = function () {
                 sammy.app.runRoute('get', "#login");
             }
         });
-    }).run();
+    });
+
+    this.router.run();
 };

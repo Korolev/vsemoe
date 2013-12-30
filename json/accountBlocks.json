@@ -1,0 +1,73 @@
+[
+    {
+        "title": "Наличность",
+        "addClass": "",
+        "items": [
+            {
+                "title": "Бумажник",
+                "icon": "cash",
+                "type": "CASH",
+                "helpText": "В названии лучше использовать одно, два слова.\n Пример: Бумажник, Бумажник Риты"
+            },
+            {
+                "title": "Другая наличность",
+                "icon": "othercash",
+                "type": "CASH"
+            },
+            {
+                "title": "Займы друзьям",
+                "icon": "frienddeposit",
+                "type": "CASH"
+            },
+            {
+                "title": "Займы у друзьям",
+                "icon": "friendcredit",
+                "type": "CASH"
+            }
+        ]
+    },
+    {
+        "title": "Банк",
+        "addClass": "",
+        "items": [
+            {
+                "title": "Зарплатная или любая карта",
+                "icon": "card",
+                "type": "CARD"
+
+            },
+            {
+                "title": "Кредитная карта",
+                "icon": "creditcard",
+                "type": "LOAN"
+            },
+            {
+                "title": "Банковский счет",
+                "icon": "bank",
+                "type": "BANK"
+            }
+        ]
+    },
+    {
+        "title": "Электронные деньги",
+        "addClass": "short",
+        "items": [
+            {
+                "title": "Электронные деньги",
+                "icon": "webmoney",
+                "type": "ELECTRON"
+            }
+        ]
+    },
+    {
+        "title": "Другое",
+        "addClass": "short",
+        "items": [
+            {
+                "title": "Другое",
+                "icon": "other",
+                "type": "OTHER"
+            }
+        ]
+    }
+]

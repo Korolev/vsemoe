@@ -1,3 +1,41 @@
+input[type='checkbox'] {
+    width: auto;
+    margin-right: 4px;
+    visibility: hidden;
+}
+
+input[type='checkbox']+label {
+    cursor: pointer;
+    position: relative;
+}
+
+input[type='checkbox']+label:before {
+    width: 12px;
+    height: 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #B5BCC5;
+    border-radius: 2px;
+    box-shadow: inset 0 1px 3px #B5BCC5;
+    margin: auto;
+    content: '';
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: -3px;
+}
+
+input:checked + label:after {
+    width: 13px;
+    height: 10px;
+    display: block;
+    position: absolute;
+    left: -18px;
+    top: -1px;
+    background-image: url("/images/check.png");
+    content: '';
+}
+
+
 p {
     line-height: 20px;
 }
@@ -694,4 +732,145 @@ input.vse-cancel{
 
 .treemenu{
 
+}
+
+/* accounts add*/
+.accounts_main{
+
+}
+
+.accounts_block{
+    min-height: 40px;
+    width: 185px;
+    float: left;
+    margin-left: 35px;
+}
+
+.accounts_block.short{
+    width: 105px;
+}
+
+.accounts_block_header{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: 0.1rem;
+    height: 23px;
+    padding: 3px;
+    color: #BBBBBB;
+}
+
+.accounts_block_item{
+    /*float: left;*/
+    display: inline-block;
+    width: 80px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.tdrightMenu i{
+    display: block;
+    height: 37px;
+    width: 37px;
+    border: 1px solid #27a38b;
+    margin: 10px 0;
+    -webkit-box-shadow:inset 1px 1px 20px 1px #fdfdfd;
+    box-shadow:inset 1px 1px 20px 1px #fdfdfd;
+    background-image: url("/img/account_sprite.png");
+    cursor: pointer;
+}
+
+.other{background-position: center -10px;}
+.webmoney{     background-position: center -70px; }
+.bank{     background-position: center -282px; }
+.creditcard{     background-position: center -210px; }
+.card{     background-position: center -140px; }
+.friendcredit{     background-position: center -350px; }
+.frienddeposit{     background-position: center -420px; }
+.othercash{     background-position: center -490px; }
+.cash{     background-position: center -560px; }
+
+.accounts_block_item i:hover{
+    -webkit-box-shadow:inset 1px 1px 20px 1px #ddd;
+    box-shadow:inset 1px 1px 20px 1px #ddd;
+}
+
+.accounts_block_item div{
+    font-size: 10px;
+    padding: 0 3px;
+    cursor: pointer;
+}
+
+.help_text, .annotation{
+    padding: 40px 20px;
+    font-style: italic;
+    font-size: 10px;
+    color: #ccc;
+}
+/* accounts add*/
+
+.form_row{
+    min-height: 35px;
+    vertical-align: top;
+    margin-top: 5px;
+}
+.form_row_label{
+    display: inline-block;
+    width: 30%;
+    text-align: right;
+    padding-right: 10px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form_row_input{
+    display: inline-block;
+    width: 40%;
+}
+
+.form_row_input .help_text{
+    padding: 10px 5px;
+    height: auto;
+}
+
+.form_row_input label.block{
+    display: block;
+}
+
+.form_row_input.split_input select{
+    display: inline-block;
+    width: 30px;
+}
+.form_row_input.split_input input{
+    width: 180px;
+
+}
+
+.form_row_label div{
+    width: 40px;
+    height: 40px;
+    padding-bottom: 20px;
+    float: right;
+    border: 1px solid #27a38b;
+    padding: 5px;
+    position: relative;
+    top:-20px
+}
+
+.form_row_label div i{
+    border: 1px solid transparent;
+    box-shadow: none;
+    margin: 0;
+}
+
+.big_margin{
+
+    margin-top: 50px;
+}
+
+.buttons_bar{
+ padding: 10px;
+    text-align: right;
 }

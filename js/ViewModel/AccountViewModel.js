@@ -27,6 +27,9 @@ var AccountViewModel = function (data, app) {
     this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand | 0);
 
+    this.comment = ko.observable(data.comment || "");
+    this.helpText = data.helpText || '';
+
     this.editMode = ko.observable(!!data.editMode);
 
     this.sum = ko.observable(0);
@@ -143,15 +146,17 @@ var AccountViewModel = function (data, app) {
         }
         console.log("SAVE!!!");
         if(self.id){
-            ServerApi.updateAccount(false,{
-                description: self.description(),
-                currency_id: self.currency(),
-                parent: self.parent(),
-                type: self.type(),
-                group: self.group(),
-                expand: self.expand(),
-                account_id:self.id
-            });
+            ServerApi.updateAccount(false, {
+                data: JSON.stringify({
+                    description: self.description(),
+                    currency_id: self.currency(),
+                    parent: self.parent(),
+                    type: self.type(),
+                    group: self.group(),
+                    expand: self.expand(),
+                    account_id: self.id
+                })
+            },function(r){});
         }else{
             ServerApi.createAccount({
                 description: self.description(),
