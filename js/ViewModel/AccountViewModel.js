@@ -26,6 +26,7 @@ var AccountViewModel = function (data, app) {
     this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand | 0);
+    this.show = ko.observable(!!data.show);
 
     this.comment = ko.observable(data.comment || "");
     this.helpText = data.helpText || '';
@@ -154,7 +155,8 @@ var AccountViewModel = function (data, app) {
                     type: self.type(),
                     group: self.group(),
                     expand: self.expand(),
-                    account_id: self.id
+                    account_id: self.id,
+                    show: self.show() ? 1 : 0
                 })
             },function(r){});
         }else{
@@ -164,7 +166,8 @@ var AccountViewModel = function (data, app) {
                 parent: self.parent(),
                 type: self.type(),
                 group: self.group(),
-                expand: self.expand()
+                expand: self.expand(),
+                show: self.show() ? 1 : 0
             },function(r){
                 if(r.account_id){
                     self.id = r.account_id;

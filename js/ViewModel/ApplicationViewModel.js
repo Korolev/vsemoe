@@ -143,7 +143,7 @@ var ApplicationViewModel = function () {
     this.editItem = ko.observable();
 
     this.currencyArr = [];
-    this.currency = {"478": {shortname: "RUB"}};
+    this.currency = {"478": {shortname: "RUB"}, "0": {shortname: "--"}};
     this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel();
 
@@ -172,7 +172,8 @@ var ApplicationViewModel = function () {
                 {
                     title: "Займы у друзей",
                     icon: "friendcredit",
-                    type: "CASH"
+                    type: "CASH",
+                    group: 2
                 }
             ]
         },
@@ -251,8 +252,8 @@ var ApplicationViewModel = function () {
     this.accountsHash = {};
     this.accountInEdit = ko.observable();
 
-    this.editAcc = function(item,event){
-        location.hash = self.action()+'/'+item.icon;
+    this.editAcc = function (item, event) {
+        location.hash = self.action() + '/' + item.icon;
     };
 
     this.transactions = ko.observableArray();
@@ -420,10 +421,10 @@ var ApplicationViewModel = function () {
         self.transactionFilteredGen();
     });
 
-    this.saveAccount = function(item,event){
-        try{
+    this.saveAccount = function (item, event) {
+        try {
             item.save();
-        }catch (e){
+        } catch (e) {
 
         }
         location.hash = 'accmanage';
@@ -604,23 +605,25 @@ var ApplicationViewModel = function () {
 
     this.editItem.subscribe(function (val) {
         var item;
-        if(val && !self.accountInEdit()){
-            each(self.accountBlocks,function(i,block){
-                each(block.items, function(_i,_item){
-                   if(_item.icon == val){
-                       item = _item;
-                   }
+        if (val && !self.accountInEdit()) {
+            each(self.accountBlocks, function (i, block) {
+                each(block.items, function (_i, _item) {
+                    if (_item.icon == val) {
+                        item = _item;
+                    }
                 });
             });
-            if(item)
-            self.accountInEdit(new AccountViewModel({
-                description:item.title,
-                type:item.type,
-                group: item.group === undefined ? 1 : item.group,
-                comment: val,
-                helpText: item.helpText || ''
-            }),self);
-        }else{
+            if (item)
+                self.accountInEdit(new AccountViewModel({
+                    description: item.title,
+                    type: item.type,
+                    group: item.group === undefined ? 1 : item.group,
+                    comment: val,
+                    currency_id: self.baseCurrencyId(),
+                    show: 1,
+                    helpText: item.helpText || ''
+                }), self);
+        } else {
             self.accountInEdit(null);
         }
     });
@@ -633,10 +636,10 @@ var ApplicationViewModel = function () {
         return self.action() + "-tpl";
     }, this);
 
-    this.pageEditItemTemplateName = ko.computed(function(){
+    this.pageEditItemTemplateName = ko.computed(function () {
         return (self.editItem() ? 'edit-' : 'default-')
             + self.pageContentTemplateName();
-    },this);
+    }, this);
 
     //startFilterInit
     self.selectedFilter(this.tableFilters()[0]);
@@ -648,7 +651,7 @@ var ApplicationViewModel = function () {
     // Client-side routes
     this.router = Sammy(function () {
         var token = getCookie(ApplicationSettings.cookieName),
-            doAction = function(a,id){
+            doAction = function (a, id) {
                 if (!self.user.token() && !token) {
                     if (actionMap[a] == 'login') {
                         self.action(a);
@@ -675,7 +678,7 @@ var ApplicationViewModel = function () {
         this.get('#:action/:itemId', function () {
             var a = this.params.action,
                 id = this.params.itemId;
-            doAction(a,id);
+            doAction(a, id);
         });
         this.get('/account/', function () {
             var sammy = this;
