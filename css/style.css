@@ -80,26 +80,23 @@ header {
     margin-left: auto;
 }
 
-header .logo {
+header .logo,
+header .logo-slogan{
     position: absolute;
     width: 748px;
     height: 237px;
-    background: url('../i/logo.png') 0 0 no-repeat;
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
     margin: 0;
     padding: 0;
-    top: 0px;
+    top: 0;
     left: -200px;
+
+    background-position: 90px -15px;
 }
 
 header .logo-slogan {
-    position: absolute;
-    width: 748px;
-    height: 237px;
-    background: url('../i/logo-slogan.png') 0 0 no-repeat;
-    margin: 0;
-    padding: 0;
-    top: 0px;
-    left: -200px;
+    background-image: url('../img/logo-slogan.png');
 }
 
 header .logo a {
