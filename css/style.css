@@ -221,31 +221,33 @@ nav ul li a:hover {
     height: 22px;
     float: left;
     padding: 0;
-    background: url(../i/img_13.png);
+    background-repeat: no-repeat;
+    /*background: url(../i/img_13.png);*/
+    background-image: url(../img/social.png);
 }
 
 .minisocials .fb {
-    background-position: 0 0;
+    background-position: 5px -36px;
 }
 
 .minisocials .fb:hover {
-    background-position: 0 -22px;
+    background-position: 5px -35px;
 }
 
 .minisocials .twitter {
-    background-position: -22px 0;
+    background-position: 5px 5px;
 }
 
 .minisocials .twitter:hover {
-    background-position: -22px -22px;
+    background-position: 5px 6px;
 }
 
 .minisocials .vk {
-    background-position: -44px 0;
+    background-position: 5px -15px;
 }
 
 .minisocials .vk:hover {
-    background-position: -44px -22px;
+    background-position: 5px -14px;
 }
 
 a {
