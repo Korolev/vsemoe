@@ -223,6 +223,33 @@ var ApplicationViewModel = function () {
         }
     ];
 
+    this.accountBlocksFlat = [];
+
+    each(this.accountBlocks, function(k,block){
+        each(block.items,function(i,v){
+            self.accountBlocksFlat.push(v);
+        })
+    });
+
+    this.accountGroups = [
+        {
+            value:0,
+            system: 'ALL',
+            label : 'Неопределен'
+        },
+        {
+            value:1,
+            system: 'Active',
+            label : 'Мои средства'
+        },
+        {
+            value:2,
+            system: 'Passive',
+            label : 'Долги'
+        }
+    ];
+
+
 //baseTypeAccount: ["IN", "OUT", "CASH", "BANK", "CARD", "LOAN", "ELECTRON", "OTHER"],
 //group 0 - ALL; 1 - Active; 2 - Passive;
     this.accounts = ko.observableArray([]);
@@ -621,7 +648,8 @@ var ApplicationViewModel = function () {
                     comment: val,
                     currency_id: self.baseCurrencyId(),
                     show: 1,
-                    helpText: item.helpText || ''
+                    helpText: item.helpText || '',
+                    currentBlock: item
                 }), self);
         } else {
             self.accountInEdit(null);

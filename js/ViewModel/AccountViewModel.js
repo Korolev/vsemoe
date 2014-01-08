@@ -28,7 +28,7 @@ var AccountViewModel = function (data, app) {
     this.expand = ko.observable(data.expand | 0);
     this.show = ko.observable(!!data.show);
 
-    this.comment = ko.observable(data.comment || "");
+    this.comment = ko.observable(data.comment || "other");
     this.helpText = data.helpText || '';
 
     this.editMode = ko.observable(!!data.editMode);
@@ -37,6 +37,15 @@ var AccountViewModel = function (data, app) {
 
     this.children = ko.observableArray([]);
     this.transactions = [];
+
+    //feature
+    this.currentBlock = ko.observable(data.currentBlock || {});
+
+    this.currentBlock.subscribe(function(block){
+        self.comment(block.icon);
+        self.type(block.type);
+        self.group(block.group == undefined ? 1 : block.group);
+    });
 
     this.editAccount = function () {
         each(app.accounts(), function (i, acc) {

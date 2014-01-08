@@ -18,16 +18,12 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <link href="../css/fonts.css" rel="stylesheet" type="text/css">
-    <link href="../js/lib/select/css/core.css" rel="stylesheet" type="text/css">
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <link href="../css/login.css" rel="stylesheet" type="text/css">
     <link href="../css/personal.css" rel="stylesheet" type="text/css">
     <link href="../css/account.css" rel="stylesheet" type="text/css">
     <link href="../css/pickmeup.css" rel="stylesheet" type="text/css">
     <link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
-
-    <link href="../js/lib/select/css/core-ui-select.css" rel="stylesheet" type="text/css">
-
 
     <script src="../js/lib/modernizr-2.6.2.min.js"></script>
 </head>
@@ -107,7 +103,6 @@
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
 <script src="../js/lib/jquery-1.8.2.min.js"></script>
-<script src="../js/lib/select/js/jquery.core-ui-select.js"></script>
 <script src="../js/lib/sammy-latest.min.js"></script>
 <script src="../js/lib/moment.min.js"></script>
 <script src="../js/jquery.treemenu.js"></script>
@@ -721,14 +716,19 @@
                 <label>Cумма</label>
             </div>
             <div class="form_row_input split_input">
-                <input type="text" data-bind="value:sum"/><div class="fake_select">
-                    <span data-bind="currency:currency"></span>
+                <input type="text" data-bind="value:sum"/><input type="hidden" data-bind="select:{
+                options: $root.currencyArr,
+                optionText: 'shortname',
+                optionValue:'currency_id',
+                value:currency}">
+                <!--<div class="fake_select">-->
+                    <!--<span data-bind="currency:currency"></span>-->
                     <!--<select class="hidden" data-bind="options:$root.currencyArr,-->
                 <!--optionsText:function(item){return item.description+' ('+item.shortname+')'},-->
                 <!--optionsValue:'currency_id',-->
                 <!--value:$data.currency,-->
                 <!--optionsCaption:'---'"></select>-->
-                </div>
+                <!--</div>-->
 
             </div>
         </div>
@@ -737,9 +737,14 @@
                 <label>Тип</label>
             </div>
             <div class="form_row_input">
-                <div class="fake_select">
-                    <span data-bind="text:$root.accountBlocks[0].title"></span>
-                </div>
+                <input type="hidden" data-bind="select:{
+                options: $root.accountBlocksFlat,
+                optionText: 'title',
+                value: currentBlock
+                }"/>
+                <!--<div class="fake_select">-->
+                    <!--<span data-bind="text:$root.accountBlocks[0].title"></span>-->
+                <!--</div>-->
                 <!--<select data-bind="options:$root.accountBlocks, optionsText:'title'"></select>-->
             </div>
         </div>
@@ -748,9 +753,15 @@
                 <label>Группа</label>
             </div>
             <div class="form_row_input">
-                <div class="fake_select">
-                    <span data-bind="text:['Неопределен','Мои средства','Долги'][$data.group()]"></span>
-                </div>
+                <input type="hidden" data-bind="select:{
+                options: $root.accountGroups,
+                optionText: 'label',
+                optionValue: 'value',
+                value: group
+                }"/>
+                <!--<div class="fake_select">-->
+                    <!--<span data-bind="text:['Неопределен','Мои средства','Долги'][$data.group()]"></span>-->
+                <!--</div>-->
                 <!--<select data-bind="options:['Мои средства','Долги','Неопределен']"></select>-->
             </div>
         </div>

@@ -948,6 +948,33 @@ input.vse-cancel:active{
     border-left: 4px solid transparent;
 }
 
+.fake_select_body{
+    position: absolute;
+    max-height: 250px;
+    overflow-y: auto;
+    top:42px;
+    border-radius: 3px;
+    background-color: #FCFDFD;
+    border: 1px solid #CAD5E0;
+    box-shadow: 2px 2px 3px #dee9f4;
+    z-index: 100;
+}
+
+.fake_select_body li{
+    display: block;
+    margin: 0;
+    cursor: pointer;
+    padding: 0px 8px;
+    height: 28px;
+    line-height: 30px;
+}
+
+.fake_select_body li.selected{
+    background-color: #DAD9D4;
+    font-weight: bold;
+    color: #2A3E55;
+}
+
 .form_row_input.split_input .fake_select:before{
 
 }

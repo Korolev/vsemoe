@@ -322,3 +322,90 @@ ko.bindingHandlers['treemenu'] = {
 //        console.log(selected);
     }
 };
+
+ko.bindingHandlers['select'] = {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            config = valueAccessor(),
+            optionText = uw(config.optionText),
+            optionValue = uw(config.optionValue),
+            optionsCaption = uw(config.optionsCaption),
+            options = uw(config.options),
+            value = uw(config.value),
+            isSelected;
+
+        var _text = $('<div class="fake_select" />').insertBefore($element),
+            _ul = $('<ul class="fake_select_body"></ul>').insertAfter(_text).addClass('hidden'),
+            _options = [],
+            _optionValue;
+
+        _ul.css({
+            'left': _text.position().left,
+            'width': _text.innerWidth()
+        });
+
+        console.log(config);
+
+        for (var i = 0; i < options.length; i++) {
+            _optionValue = optionValue ? options[i][optionValue] : options[i];
+            isSelected = optionValue ?
+                _optionValue == value
+                : _optionValue === value;
+
+            _options[i] = $('<li></li>')
+                .text(optionText ? uw(options[i][optionText]) : options[i])
+                .data('_option', options[i])
+                .data('_selected', isSelected);
+
+            _options[i][isSelected ? 'addClass' : 'removeClass']('selected');
+
+            _options[i].on('click', function () {
+                var opt = optionValue ?
+                    $(this).data('_option')[optionValue]
+                    : $(this).data('_option');
+                config.value(opt);
+                _ul.addClass('hidden');
+            });
+            _options[i].appendTo(_ul);
+        }
+
+        _text.on('click', function () {
+            _ul.toggleClass('hidden');
+        });
+
+        $element.data('text', _text);
+        $element.data('options', _options);
+    },
+    update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            config = valueAccessor(),
+            optionText = uw(config.optionText),
+            optionValue = uw(config.optionValue),
+            optionsCaption = uw(config.optionsCaption),
+            options = uw(config.options),
+            value = uw(config.value),
+            _text = $element.data('text'),
+            _options = $element.data('options'),
+            _optionValue,
+            isSelected;
+
+        for (var i = 0; i < _options.length; i++) {
+            _optionValue = optionValue ?
+                _options[i].data('_option')[optionValue]
+                : _options[i].data('_option');
+            isSelected = optionValue ?
+                _optionValue == value
+                : _optionValue === value;
+
+            _options[i][isSelected ? 'addClass' : 'removeClass']('selected');
+
+            if (isSelected) {
+                _text.text(_options[i].data('_option')[optionText]);
+            }
+        }
+
+
+    }
+};
