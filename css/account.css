@@ -912,7 +912,7 @@ input.vse-cancel:active{
     display: inline-block;
     width: 93%;
     padding: 0 3%;
-    border-radius: 0 3px 3px 0;
+    border-radius: 3px;
     color: #777777;
     border: 1px solid #c2c2c2;
     background: #ffffff; /* Old browsers */
@@ -933,6 +933,7 @@ input.vse-cancel:active{
 }
 .form_row_input.split_input .fake_select{
     width: 14%;
+    border-radius: 0 3px 3px 0;
 }
 
 .form_row_input .fake_select:before{
