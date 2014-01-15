@@ -663,18 +663,18 @@ input.vse-cancel:active{
 
 .flexlisttitle .button{
     position: absolute;
-    height: 30px;
-    background-image: none !important;
-    -o-animation: important;
-    animation: important;
-    box-shadow: none;
-    background-color: #fff;
+    /*height: 30px;*/
+    /*background-image: none !important;*/
+    /*-o-animation: important;*/
+    /*animation: important;*/
+    /*box-shadow: none;*/
+    /*background-color: #fff;*/
     top:5px;
     right: 46px;
-    font-weight: normal;
-    border: 1px solid #B5BCC5;
-    border-radius: 3px;
-    color: #000000;
+    /*font-weight: normal;*/
+    /*border: 1px solid #B5BCC5;*/
+    /*border-radius: 3px;*/
+    /*color: #000000;*/
 }
 
 .flexlist{
@@ -742,9 +742,10 @@ input.vse-cancel:active{
 }
 
 .acc_edit_row input[type="text"]{
-    height: 33px;
+    /*height: 33px;*/
     color: #888;
     width: 300px;
+    width: 100%;
 }
 
 .acc_edit_holder select{
@@ -885,6 +886,14 @@ input.vse-cancel:active{
     box-sizing: border-box;
 }
 
+.acc_edit_holder .form_row_input{
+    width: 50%;
+}
+.acc_edit_holder .form_row_label{
+    width: auto;
+    text-align: left;
+}
+
 .form_row_input{
     display: inline-block;
     width: 40%;
@@ -903,7 +912,7 @@ input.vse-cancel:active{
 .form_row_input input[type="text"],
 .form_row_input input[type="email"],
 .form_row_input input[type="password"]{
-    width: 90%;
+    width: 92%;
     padding: 0 4%;
 }
 
@@ -936,6 +945,8 @@ input.vse-cancel:active{
     border-radius: 0 3px 3px 0;
 }
 
+.td_fromaccount_input .fake_select:before,
+.row_edit_form .fake_tree_select:before,
 .form_row_input .fake_select:before{
     position: absolute;
     content: '';
@@ -970,10 +981,59 @@ input.vse-cancel:active{
     line-height: 30px;
 }
 
+.fake_tree_select_body li.selected,
 .fake_select_body li.selected{
     background-color: #DAD9D4;
     font-weight: bold;
     color: #2A3E55;
+}
+
+.fake_tree_select_body{
+    position: absolute;
+    top:42px;
+    border-radius: 3px;
+    background-color: #FCFDFD;
+    border: 1px solid #CAD5E0;
+    box-shadow: 2px 2px 3px #dee9f4;
+    z-index: 100;
+    padding-left: 10px;
+}
+
+.fake_tree_select_body li{
+    display: block;
+    margin: 0;
+    cursor: pointer;
+    padding: 0px 8px;
+    line-height: 30px;
+    position: relative;
+}
+
+.fake_tree_select_body li span{
+    padding-left: 5px;
+}
+
+.fake_tree_select_body li.has_child:before{
+    position: absolute;
+    left: 3px;
+    top:12px;
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-top:4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid #888;
+}
+.fake_tree_select_body li._open:before{
+    left: 2px;
+    margin-top: -1px;
+    border-top:3px solid transparent;
+    border-right: 3px solid #888;
+    border-bottom: 3px solid #888;
+    border-left: 3px solid transparent;
+}
+
+.fake_tree_select_body li ul{
+    padding-left: 10px;
 }
 
 .form_row_input.split_input .fake_select:before{
@@ -1052,11 +1112,11 @@ input.vse-cancel:active{
 }
 
 .td_1{
-    width: 30px;
+    width: 20px;
 }
 
 .td_2{
-    width: 100px;
+    width: 90px;
     color:#ccc;
 }
 
@@ -1154,23 +1214,63 @@ input.vse-cancel:active{
 
 }
 
+.t_row_edit{
+    background-color: #EDEADD;
+}
+.row_edit_form_additional{
+
+}
+
+.row_edit_form_additional textarea{
+    height: 60px;
+    width: 517px;
+    margin: 10px 30px;
+    border-radius: 2px;
+    resize: none;
+    border: 1px solid #EDEADD;
+    padding: 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #888;
+}
+
 .row_edit_form > div{
     display: inline-block;
     margin: 4px 3px;
 }
 
+.row_edit_form .td_date_input .dateInput{
+    line-height: 27px;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+}
+
 .row_edit_form .td_date_input{
-    background-color: #eee;
+    background-color: #fff;
     width: 75px;
     height: 25px;
     border-radius: 2px;
     margin-left: 30px;
 }
 
+.row_edit_form .fake_tree_select,
+.row_edit_form .td_fromaccount_input .fake_select{
+    line-height: 25px;
+    height: 25px;
+    padding: 0 10px;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
 .row_edit_form .td_fromaccount_input{
     width: 135px;
-    border-radius: 3px;
-    background-color: #eee;
+    border-radius: 2px;
+    background-color: #fff;
     height: 25px;
 }
 
@@ -1183,13 +1283,13 @@ input.vse-cancel:active{
 
     display: inline-block;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 2px;
     border: 1px solid #393939;
     min-width: 31px;
     height: 25px;
     margin: -1px 0;
 
-    line-height: 25px;
+    line-height: 27px;
     color: #fff;
     font-weight: bold;
     font-size: 12px;
@@ -1210,14 +1310,14 @@ input.vse-cancel:active{
 }
 
 .row_edit_form .split_input .acc_button{
-    border-radius: 3px 0 0 3px;
+    border-radius: 2px 0 0 2px;
 }
 
 .row_edit_form .acc_select{
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 2px 2px 0;
     background-color: #fefefe;
     height: 25px;
-    width: 120px;
+    width: 135px;
     display: inline-block;
 }
 
@@ -1236,9 +1336,167 @@ input.vse-cancel:active{
 }
 
 .acc_button span{
-    padding: 0 20px;
+    padding: 0 22px;
 }
+.split_input.acc_ammount span,
+.split_input.acc_ammount > div{
+    padding: 0 4px;
+}
+
+.row_edit_form input[type="text"]{
+    box-shadow: none;
+    width: 80px;
+    padding: 0;
+    margin: 0;
+}
+
+.row_edit_form .split_input input[type="text"]{
+    border-radius: 0 2px 2px 0;
+    height: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+    padding: 0 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.acc_button i{
+    background-image: url("/img/transaction_form.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    display: block;
+    width: 26px;
+    height: 24px;
+}
+
+.acc_button i.comment_i{
+    background-position: -1px -199px;
+}
+.acc_button i.split_i{
+    background-position: -1px -250px;
+}
+.acc_button i.ffriend_i{
+    background-position: -1px -99px;
+}
+.acc_button i.tofriend_i{
+    background-position: -1px -149px;
+}
+.acc_button i.add_i{
+    background-position: -1px 0px;
+}
+.acc_button i.substr_i{
+    background-position: -1px -11px;
+    height: 3px;
+    margin-top: 11px;
+}
+.acc_button i.move_i{
+    background-position: -1px -50px;
+}
+
+.acc_close_button{
+    width: 20px;
+    height: 24px;
+    left: 3px;
+    top:1px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.acc_close_button i.close_i{
+    background-image: url("/img/glyphicons-halflings-white.png");
+    width: 16px;
+    height: 16px;
+    background-position:  160px 0px;
+    display: block;
+    margin-top: 3px;
+}
+
+
 
 .acc_button + .acc_button{
     margin-left: 6px;
+}
+
+.acc_category .fake_select{
+    width: 25px;
+    position: absolute;
+    z-index: 100;
+    top:2px;
+    left:2px;
+    color: transparent;
+    text-shadow: none;
+    /*background-color: rgba(0,0,0,0.2);*/
+}
+
+.row_edit_form .fake_tree_select_body li,
+.row_edit_form .fake_select_body li{
+    color: #7D8992;
+    text-shadow: none;
+    white-space: nowrap;
+    height: 30px;
+    line-height: 31px;
+}
+
+.row_edit_form .fake_tree_select_body li{
+    height: auto;
+}
+
+
+.row_edit_form .fake_select_body li i{
+    display: inline-block;
+    background-image: url("/img/transactions_dropdown.png");
+    margin-right: 3px;
+}
+
+.row_edit_form .fake_select_body li i.substr_i{
+    background-position: -2px 0;
+    margin: 0;
+    height: 24px;
+}
+.row_edit_form .fake_select_body li i.add_i{
+    background-position: -2px -29px;
+}
+.row_edit_form .fake_select_body li i.move_i{
+    background-position: -2px -55px;
+}
+.row_edit_form .fake_select_body li i.ffriend_i{
+    background-position: -2px -110px;
+}
+.row_edit_form .fake_select_body li i.tofriend_i{
+    background-position: -2px -83px;
+}
+
+.row_edit_form .fake_select_body li.selected{
+    color: #272E41;
+}
+.row_edit_form .fake_select_body li.selected i.substr_i{
+    background-position: -26px 0;
+}
+.row_edit_form .fake_select_body li.selected i.add_i{
+    background-position: -26px -29px;
+}
+.row_edit_form .fake_select_body li.selected i.move_i{
+    background-position: -26px -55px;
+}
+.row_edit_form .fake_select_body li.selected i.ffriend_i{
+    background-position: -26px -110px;
+}
+.row_edit_form .fake_select_body li.selected i.tofriend_i{
+    background-position: -26px -83px;
+}
+
+.tablecell{
+    display: inline-block;
+    position: relative;
+}
+.span10{
+    width: 80%;
+    min-width: 200px;
+}
+.span2{
+    width: 16%;
+    min-width: 50px;
+    left: 5px;
 }

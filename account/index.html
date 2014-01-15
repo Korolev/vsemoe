@@ -112,6 +112,8 @@
 <script src="../js/ServerApi.js"></script>
 <script src="../js/ViewModel/UserViewModel.js"></script>
 <script src="../js/ViewModel/AccountViewModel.js"></script>
+<script src="../js/ViewModel/TransactionViewModel.js"></script>
+<script src="../js/ViewModel/TransactionEditViewModel.js"></script>
 <script src="../js/ViewModel/FilterViewModel.js"></script>
 <script src="../js/ViewModel/ApplicationViewModel.js"></script>
 <!--<script src="/html_stage/js/jquery.cookie.js"></script>-->
@@ -502,58 +504,110 @@
                         <div class="t_row t_thead">
                             <div class="t_td td_1">
                                 <div class="check"></div>
-                            </div><div class='t_td a_left td_2'>ДАТА
-                            </div><div class='t_td a_left td_3'>СЧЕТ
-                            </div><div class='t_td a_left td_4'>КАТЕГОРИЯ
-                            </div><div class='t_td a_left td_5'>ВАЛЮТА
-                            </div><div class='t_td a_right td_6'>СУММА
-                            </div><div class='t_td a_left td_7'>КОММЕНТАРИЙ</div>
+                            </div>
+                            <div class='t_td a_left td_2'>ДАТА
+                            </div>
+                            <div class='t_td a_left td_3'>СЧЕТ
+                            </div>
+                            <div class='t_td a_left td_4'>КАТЕГОРИЯ
+                            </div>
+                            <div class='t_td a_left td_5'>ВАЛЮТА
+                            </div>
+                            <div class='t_td a_right td_6'>СУММА
+                            </div>
+                            <div class='t_td a_left td_7'>КОММЕНТАРИЙ</div>
                         </div>
-                        <div class="t_row color_grey hidden">
+                        <div class="t_row color_grey" data-bind="css:{hidden:transactionEdit().editMode()}">
                             <div class="t_td td_1">
-                            </div><div class='t_td a_left td_2'>00.00.00
-                            </div><div class='t_td a_left td_3'>Средства
-                            </div><div class='t_td a_left td_4'>Откуда/Куда
-                            </div><div class='t_td a_right td_5_6'>0.00
-                            </div><div class='t_td a_left td_7'>Где или Что Сделано?</div>
+                            </div>
+                            <div class='t_td a_left td_2'>00.00.00
+                            </div>
+                            <div class='t_td a_left td_3'>Средства
+                            </div>
+                            <div class='t_td a_left td_4'>Откуда/Куда
+                            </div>
+                            <div class='t_td a_right td_5_6'>0.00
+                            </div>
+                            <div class='t_td a_left td_7'>Где или Что Сделано?</div>
                         </div>
-                        <div class="t_row_edit">
+                        <div class="t_row_edit" data-bind="css:{hidden:!transactionEdit().editMode()}, with: transactionEdit()">
                             <div class="row_edit_form">
-                                    <div class="td_date_input">
+                                <div class="td_date_input">
+                                    <div class="dateInput" data-bind="datepick:{value:created,format:'DD.MM.YY'}"></div>
                                 </div><div class="td_fromaccount_input">
+                                    <input type="hidden" data-bind="select:{
+                                        options:$root.getActiveAcc(),
+                                        optionText:'description',
+                                        optionValue: 'id',
+                                        value:from_id,
+                                        css:{width: 'auto',top: '28px',left:'0px'}
+                                        }">
                                 </div><div class="td_toaccount_input split_input">
                                     <div class="acc_category acc_button">
-                                        &ndash;
+                                        <i data-bind="css:action().icon"></i>
+                                        <input type="hidden" data-bind="select:{
+                                        options:actions,
+                                        optionText:'description',
+                                        value:action,
+                                        icon:'icon',
+                                        css:{width: 'auto',top: '28px',left:'0px'}
+                                        }">
                                     </div><div class="acc_select">
-
+                                         <input type="hidden" data-bind="treeSelect:{
+                                            options:$root.getConsumptionAcc(),
+                                            optionText:'description',
+                                            optionValue: 'id',
+                                            optionTree: 'children',
+                                            value:to_id,
+                                            css:{width: 'auto',top: '28px',left:'0px'}
+                                         }">
                                     </div>
-                                </div><div class="acc_ammount">
-
+                                </div><div class="acc_ammount split_input">
+                                    <div class="acc_currency acc_button">
+                                        <!--<span data-bind="currency:currency"></span>-->
+                                        <input type="hidden" data-bind="select:{
+                                        options:$root.currencyArr,
+                                        optionText:'shortname',
+                                        optionValue:'currency_id',
+                                        value:currency,
+                                        css:{width: 'auto',top: '28px',left:'0px'}
+                                        }">
+                                    </div><input type="text" />
                                 </div><div class="acc_controls">
-                                    <div class="acc_button">
-                                        C
+                                    <div class="acc_button" data-bind="
+                                    click:function(){$data.commentEdit(!$data.commentEdit())},
+                                    css:{pushed:commentEdit}">
+                                        <i class="comment_i"></i>
                                     </div><div class="acc_button">
-                                        S
+                                        <i class="split_i"></i>
                                     </div><div class="acc_button">
-                                        <span>OK</span>
+                                        <span data-bind="click:save">OK</span>
+                                    </div><div class="acc_close_button" data-bind="if: id">
+                                        <i class="close_i" data-bind="click:cancel"></i>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row_edit_form_additional" data-bind="template:getTpl"></div>
                         </div>
                         <!-- ko if: transactions -->
                         <div data-bind="foreach:transactionsSet">
                             <div class="t_row" data-bind="css:{tr_newday:newday == 1}">
                                 <div class="t_td td_1">
-                                </div><div class='t_td a_left td_2' data-bind="textdate:created">
-                                </div><div class='t_td a_left td_3'>
+                                </div>
+                                <div class='t_td a_left td_2' data-bind="textdate:created">
+                                </div>
+                                <div class='t_td a_left td_3'>
                                     <span data-bind="accountname:from_id"></span>
                                     <span>&nbsp;</span>
                                     <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
-                                </div><div class='t_td a_left td_4' data-bind="accountname:to_id">
-                                </div><div class='t_td a_right td_5_6'>
+                                </div>
+                                <div class='t_td a_left td_4' data-bind="accountname:to_id">
+                                </div>
+                                <div class='t_td a_right td_5_6'>
                                     <span></span>
                                     <span data-bind="absdigitext:amount, css:$root.getCssClass($data)"></span>
-                                </div><div class='t_td a_left td_7'>
+                                </div>
+                                <div class='t_td a_left td_7'>
                                     <span data-bind="text:description"></span>
                                     <span data-bind="css:{split:split != '0'}"></span>
                                 </div>
@@ -674,6 +728,7 @@
             <div data-bind="foreach:items">
                 <div class="accounts_block_item">
                     <i data-bind="css:icon,click:$root.editAcc"></i>
+
                     <div data-bind="text:title"></div>
                 </div>
             </div>
@@ -681,7 +736,7 @@
     </div>
     <div class="clear"></div>
     <p class="help_text">
-        Выши счета находятся в панели слева, для того чтобы отредактировать счет, выберите его.
+        Ваши счета находятся в панели слева, для того чтобы отредактировать счет, выберите его.
     </p>
 </script>
 
@@ -689,7 +744,8 @@
     <!-- ko with:$root.accountInEdit -->
     <div class="inputText floatHeader">
         <span style="display: table-cell" data-bind="text: id ? 'Редактирование' : 'Создание'"></span>
-        <span style="font-size: 11px;line-height:18px;vertical-align: bottom;display: table-cell;padding-left: 6px">&gt;&nbsp;<span data-bind="text: description"></span></span>
+        <span style="font-size: 11px;line-height:18px;vertical-align: bottom;display: table-cell;padding-left: 6px">&gt;&nbsp;<span
+                data-bind="text: description"></span></span>
     </div>
     <div class="clear"></div>
     <div class="account_edit_form">
@@ -706,6 +762,7 @@
             <div class="form_row_input">
                 <label class="block">Название</label>
                 <input type="text" data-bind="value:description"/>
+
                 <div data-bind="if:helpText">
                     <div class="help_text" data-bind="text:helpText"></div>
                 </div>
@@ -722,8 +779,8 @@
                 optionValue:'currency_id',
                 value:currency}">
                 <!--<div class="fake_select">-->
-                    <!--<span data-bind="currency:currency"></span>-->
-                    <!--<select class="hidden" data-bind="options:$root.currencyArr,-->
+                <!--<span data-bind="currency:currency"></span>-->
+                <!--<select class="hidden" data-bind="options:$root.currencyArr,-->
                 <!--optionsText:function(item){return item.description+' ('+item.shortname+')'},-->
                 <!--optionsValue:'currency_id',-->
                 <!--value:$data.currency,-->
@@ -743,7 +800,7 @@
                 value: currentBlock
                 }"/>
                 <!--<div class="fake_select">-->
-                    <!--<span data-bind="text:$root.accountBlocks[0].title"></span>-->
+                <!--<span data-bind="text:$root.accountBlocks[0].title"></span>-->
                 <!--</div>-->
                 <!--<select data-bind="options:$root.accountBlocks, optionsText:'title'"></select>-->
             </div>
@@ -760,7 +817,7 @@
                 value: group
                 }"/>
                 <!--<div class="fake_select">-->
-                    <!--<span data-bind="text:['Неопределен','Мои средства','Долги'][$data.group()]"></span>-->
+                <!--<span data-bind="text:['Неопределен','Мои средства','Долги'][$data.group()]"></span>-->
                 <!--</div>-->
                 <!--<select data-bind="options:['Мои средства','Долги','Неопределен']"></select>-->
             </div>
@@ -772,6 +829,7 @@
             <div class="form_row_input">
                 <input type="checkbox" data-bind="attr:{id:comment+'_check'},checked:show">
                 <label data-bind="attr:{for:comment+'_check'}">Видимый</label>
+
                 <div class="help_text">
                     Видимый счет будет показан в колонке счетов
                 </div>
@@ -853,7 +911,9 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div class="topMenuBox shortMenuItem" style="font-size: 22px" data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+</div>
+            <div class="topMenuBox shortMenuItem" style="font-size: 22px"
+                 data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+
+            </div>
             <div class="topMenuBox shortMenuItem lastItem"
                  data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K
             </div>
@@ -893,49 +953,71 @@
     <!-- /ko -->
 </script>
 <script type="text/html" id="catlist-box-tpl">
-<!-- ko ifnot: editMode -->
+    <!-- ko ifnot: editMode -->
     <div data-bind="css:{has_child: children().length}">
         <div class="catlistItem" data-bind="text:description, click:setParentAccount"></div>
         <i class="icon next" data-bind="click:setParentAccount"></i>
         <i class="icon edit" data-bind="click:editAccount"></i>
         <i class="icon del" data-bind="click:removeAccount"></i>
     </div>
-<!-- /ko -->
-<!-- ko if: editMode -->
-    <div >
+    <!-- /ko -->
+    <!-- ko if: editMode -->
+    <div>
         <div class="acc_edit_holder">
-            <div class="acc_edit_close"><i class="icon del" data-bind="click:function(){ $data.editMode(false);}"></i></div>
-            <div class="acc_edit_row">
-                <label>Название</label>
-                <input type="text" data-bind="value:description">
+            <div class="acc_edit_close"><i class="icon del" data-bind="click:function(){ $data.editMode(false);}"></i>
+            </div>
+            <div class="acc_edit_row form_row">
+                <div class="form_row_label">
+                    <label>Название</label>
+                </div>
+                <div class="form_row_input">
+                    <input type="text" data-bind="value:description">
+                </div>
             </div>
             <!--<div class="acc_edit_row">-->
-                <!--<label>Добавить в</label>-->
-                <!--<input class="treeviewmenu" value="" data-bind="treemenu:{data:$root.accounst,value:parent}">-->
+            <!--<label>Добавить в</label>-->
+            <!--<input class="treeviewmenu" value="" data-bind="treemenu:{data:$root.accounst,value:parent}">-->
             <!--</div>-->
-            <div class="acc_edit_row">
-                <label>Добавить в</label>
-                <select data-bind="options:$root.accounts,
-                optionsText:'description',
-                optionsValue:'id',
-                value:$data.newParent,
-                optionsCaption:'Корневой раздел'"></select>
+            <div class="acc_edit_row form_row">
+                <div class="form_row_label">
+                    <label>Добавить в</label>
+                </div>
+                <div class="form_row_input" >
+                    <div class="tablecell span10">
+                        <input type="hidden" data-bind="select:{
+                    options: $root.accounts,
+                    optionText: 'description',
+                    optionValue:'id',
+                    value:newParent,
+                    optionCaption:'Корневой раздел'
+                    }">
+                    </div>
+                    <div class="tablecell span2">
+                        <input type="hidden" data-bind="select:{
+                    options:$root.currencyArr,
+                    optionText:'shortname',
+                    optionValue:'currency_id',
+                    value:$data.currency,
+                    optionCaption:'---'
+                    }">
+                        <!--<select data-bind="options:$root.accounts,-->
+                        <!--optionsText:'description',-->
+                        <!--optionsValue:'id',-->
+                        <!--value:$data.newParent,-->
+                        <!--optionsCaption:'Корневой раздел'"></select>-->
+                    </div>
+                </div>
             </div>
-            <div class="acc_edit_row">
-                <label>Валюта</label>
-                <select data-bind="options:$root.currencyArr,
-                optionsText:function(item){return item.description+' ('+item.shortname+')'},
-                optionsValue:'currency_id',
-                value:$data.currency,
-                optionsCaption:'---'"></select>
+            <div style="text-align: right;padding-right: 5px" class="form_row">
+                <input type="button" class="button" value="Сохранить" data-bind="click:function(){$data.edtiMode(false);}">
             </div>
             <!--<div class="acc_edit_row">-->
-                <!--<label class="long">Разместить вверху списка</label>-->
+            <!--<label class="long">Разместить вверху списка</label>-->
             <!--</div>-->
         </div>
     </div>
 
-<!-- /ko -->
+    <!-- /ko -->
 
 </script>
 <script type="text/html" id="flexlist-title">
@@ -955,6 +1037,11 @@
 </script>
 <script type="text/html" id="undefined-tpl">
     <!--<h1>Template not found.</h1>-->
+</script>
+<script type="text/html" id="tr-comment-tpl">
+    <textarea data-bind="value:comment"></textarea>
+</script>
+<script type="text/html" id="tr-default-tpl">
 </script>
 </body>
 </html>

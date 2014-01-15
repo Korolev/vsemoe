@@ -142,7 +142,7 @@ var ApplicationViewModel = function () {
     this.action = ko.observable();
     this.editItem = ko.observable();
 
-    this.currencyArr = [];
+    this.currencyArr = ko.observableArray([]);
     this.currency = {"478": {shortname: "RUB"}, "0": {shortname: "--"}};
     this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel();
@@ -286,6 +286,9 @@ var ApplicationViewModel = function () {
     this.transactions = ko.observableArray();
     this.transactionsSet = ko.observableArray();
     this.transFiltered = ko.observableArray();
+    this.transactionEdit = ko.observable(new TransactionEditViewModel({
+        created:new moment()
+    },self));
 
 //Paging
     this.currentPage = ko.observable(1);
@@ -335,7 +338,7 @@ var ApplicationViewModel = function () {
             _transFiltered = [];
         //mk logic
         each(self.transactions(), function (k, t) {
-            if (t.hidden == "0" && t.template == "0" && !!t.finished) {
+            if (t.hidden == 0 && t.template == 0 && !!t.finished) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
             }
@@ -589,10 +592,12 @@ var ApplicationViewModel = function () {
     this.user.token.subscribe(function (val) {
         if (val) {
             ServerApi.getCurrencyList({}, function (r) {
+                var cArr = [];
                 each(r, function (k, v) {
                     self.currency[v.currency_id] = v;
-                    self.currencyArr.push(v);
+                    cArr.push(v);
                 });
+                self.currencyArr(cArr);
             });
             ServerApi.getAccountList({}, function (r) {
                 self.accounts.removeAll();
@@ -618,8 +623,12 @@ var ApplicationViewModel = function () {
                     acc.initChildren(self);
                 });
                 ServerApi.getTransactionList({}, function (r) {
+                    var trs = [];
+                    each(r,function(k,tr){
+                       trs[k] = new TransactionViewModel(tr,self);
+                    });
                     self.transactions.removeAll();
-                    self.transactions.pushAll(r);
+                    self.transactions.pushAll(trs);
                 });
             });
         }

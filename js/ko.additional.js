@@ -124,7 +124,9 @@ ko.bindingHandlers['shorttext'] = {
 
 ko.bindingHandlers['currency'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        var value = ko.utils.unwrapObservable(valueAccessor());
+        var uw = ko.utils.unwrapObservable,
+            value = uw(valueAccessor());
+        value = uw(value);
         value = value ? value : 0;
         try {
             value = bindingContext.$root.currency[value].shortname;
@@ -216,7 +218,6 @@ ko.bindingHandlers['datepick'] = {
             date: moment.isMoment(value) ? value : ko.utils.unwrapObservable(value.value),
             change: function (s, d) {
                 value.value(new moment(d));
-                console.log(value.value().format());
                 bindingContext.$root.selectedFilter(new FilterViewModel({type: 'interval'}, bindingContext.$root));
                 datePicker.addClass('hidden').removeClass('fadeInDown');
             }
@@ -322,7 +323,7 @@ ko.bindingHandlers['treemenu'] = {
 //        console.log(selected);
     }
 };
-
+//TODO option caption BUG replace 1 li but need add before
 ko.bindingHandlers['select'] = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var uw = ko.utils.unwrapObservable,
@@ -330,52 +331,101 @@ ko.bindingHandlers['select'] = {
             config = valueAccessor(),
             optionText = uw(config.optionText),
             optionValue = uw(config.optionValue),
-            optionsCaption = uw(config.optionsCaption),
-            options = uw(config.options),
+            optionsCaption = uw(config.optionCaption),
+            tag = uw(config.tag ? config.tag : 'div'),
+            icon = uw(config.icon),
+            css = uw(config.css),
+            options,
             value = uw(config.value),
-            isSelected;
-
-        var _text = $('<div class="fake_select" />').insertBefore($element),
-            _ul = $('<ul class="fake_select_body"></ul>').insertAfter(_text).addClass('hidden'),
+            isSelected,
+            _text,
+            _ul,
             _options = [],
-            _optionValue;
+            buildUI = function () {
+                options = uw(config.options);
+                if(_text){
+                    _text.remove();
+                }
+                if(_ul){
+                    _ul.remove()
+                }
+                _text = $('<'+tag+' class="fake_select" />').insertBefore($element);
+                _ul = $('<ul class="fake_select_body"></ul>').insertAfter(_text).addClass('hidden');
+                _options = [];
 
-        _ul.css({
-            'left': _text.position().left,
-            'width': _text.innerWidth()
-        });
+                var _optionValue,
+                    _innerContent;
 
-        console.log(config);
+                _ul.css(css ? css :{
+                    'left': _text.position().left,
+                    'width': _text.innerWidth()
+                });
+                if (optionsCaption) {
+                    var opt0 = optionText ? {} : optionsCaption;
+                    if (optionText) {
+                        opt0[optionText] = optionsCaption;
+                        opt0.isCaption = true;
+                    }
 
-        for (var i = 0; i < options.length; i++) {
-            _optionValue = optionValue ? options[i][optionValue] : options[i];
-            isSelected = optionValue ?
-                _optionValue == value
-                : _optionValue === value;
+                    _options[0] = $('<li></li>')
+                        .text(optionsCaption)
+                        .data('_option', opt0)
+                        .data('_selected', value == 0);
 
-            _options[i] = $('<li></li>')
-                .text(optionText ? uw(options[i][optionText]) : options[i])
-                .data('_option', options[i])
-                .data('_selected', isSelected);
+                    _options[0].on('click', function () {
+                        config.value(0);
+                        _ul.addClass('hidden');
+                    });
+                    _options[0].appendTo(_ul);
+                }
 
-            _options[i][isSelected ? 'addClass' : 'removeClass']('selected');
+                for (var i = optionsCaption ? 1 : 0; i < options.length; i++) {
+                    _optionValue = optionValue ? options[i][optionValue] : options[i];
+                    isSelected = optionValue ?
+                        _optionValue == value
+                        : _optionValue === value;
 
-            _options[i].on('click', function () {
-                var opt = optionValue ?
-                    $(this).data('_option')[optionValue]
-                    : $(this).data('_option');
-                config.value(opt);
-                _ul.addClass('hidden');
+                    _innerContent = optionText ? uw(options[i][optionText]) : options[i];
+                    if(icon){
+                        _innerContent = '<i class="'+options[i][icon]+'"></i>'+_innerContent;
+                    }
+
+                    _options[i] = $('<li></li>')
+                        .html(_innerContent)
+                        .data('_option', options[i])
+                        .data('_selected', isSelected);
+
+                    _options[i][isSelected ? 'addClass' : 'removeClass']('selected');
+
+                    _options[i].on('click', function () {
+                        var opt = optionValue ?
+                            $(this).data('_option')[optionValue]
+                            : $(this).data('_option');
+                        config.value(opt);
+                        _ul.addClass('hidden');
+                    });
+                    _options[i].appendTo(_ul);
+                }
+
+                _text.on('click', function () {
+                    $('.fake_select_body').not(_ul).addClass('hidden');
+                    _ul.toggleClass('hidden');
+                });
+
+
+                $element.data('text', _text);
+                $element.data('options', _options);
+            };
+
+        buildUI();
+
+        if (ko.isObservable(config.options)) {
+            config.options.subscribe(function (val) {
+                buildUI();
+                config.value.valueHasMutated();
             });
-            _options[i].appendTo(_ul);
         }
 
-        _text.on('click', function () {
-            _ul.toggleClass('hidden');
-        });
-
-        $element.data('text', _text);
-        $element.data('options', _options);
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var uw = ko.utils.unwrapObservable,
@@ -383,29 +433,121 @@ ko.bindingHandlers['select'] = {
             config = valueAccessor(),
             optionText = uw(config.optionText),
             optionValue = uw(config.optionValue),
-            optionsCaption = uw(config.optionsCaption),
+            optionsCaption = uw(config.optionCaption),
             options = uw(config.options),
             value = uw(config.value),
             _text = $element.data('text'),
             _options = $element.data('options'),
             _optionValue,
             isSelected;
-
         for (var i = 0; i < _options.length; i++) {
             _optionValue = optionValue ?
                 _options[i].data('_option')[optionValue]
                 : _options[i].data('_option');
             isSelected = optionValue ?
-                _optionValue == value
+                _optionValue == uw(value)
                 : _optionValue === value;
+            if (_options[i].data('_option').isCaption && uw(value) == 0) {
+                isSelected = true;
+            }
 
             _options[i][isSelected ? 'addClass' : 'removeClass']('selected');
 
             if (isSelected) {
-                _text.text(_options[i].data('_option')[optionText]);
+                _text.text(uw(_options[i].data('_option')[optionText]));
             }
         }
 
+
+    }
+};
+
+ko.bindingHandlers['treeSelect'] = {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            config = valueAccessor(),
+            optionText = uw(config.optionText),
+            optionTree = uw(config.optionTree),
+            optionValue = uw(config.optionValue),
+            optionsCaption = uw(config.optionCaption),
+            tag = uw(config.tag ? config.tag : 'div'),
+            icon = uw(config.icon),
+            css = uw(config.css),
+            options,
+            value = uw(config.value),
+            isSelected,
+            _text,
+            _ul,
+            _options = [],
+            buildUI = function () {
+                options = uw(config.options);
+                if(_text){
+                    _text.remove();
+                }
+                if(_ul){
+                    _ul.remove()
+                }
+                _text = $('<'+tag+' class="fake_tree_select" />').insertBefore($element);
+                _ul = $('<ul class="fake_tree_select_body"></ul>').insertAfter(_text).addClass('hidden');
+                _options = [];
+
+                var _optionValue,
+                    _innerContent;
+
+                _ul.css(css ? css :{
+                    'left': _text.position().left,
+                    'width': _text.innerWidth()
+                });
+
+                var buildLi = function(arr,parent){
+                    var __options = [],
+                        child,
+                        __ul;
+                    for(var i =0; i< arr.length; i++){
+                        console.log(arr[i], arr[i][optionText]);
+                        __options[i] = $('<li></li>')
+                            .appendTo(parent)
+                            .append($('<span></span>')
+                                .text(uw(arr[i][optionText])));
+
+                        child = uw(arr[i][optionTree]);
+                        if(child.length){
+                            __options[i].addClass('has_child');
+                            __ul = $('<ul class="hidden"></ul>').appendTo(__options[i]);
+                            __options[i].data('_list',__ul);
+                            buildLi(child,__ul);
+                            __options[i].on('click',function(){
+                                $(this).toggleClass('_open');
+                                $(this).data('_list').toggleClass('hidden');
+                            });
+                        }
+                    }
+                    parent.data('_options',__options);
+                };
+
+                buildLi(options,_ul);
+                _text.on('click',function(){
+                   _ul.toggleClass('hidden');
+                });
+            };
+
+            buildUI();
+        console.log(config);
+    },
+    update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            config = valueAccessor(),
+            optionText = uw(config.optionText),
+            optionValue = uw(config.optionValue),
+            optionsCaption = uw(config.optionCaption),
+            options = uw(config.options),
+            value = uw(config.value),
+            _text = $element.data('text'),
+            _options = $element.data('options'),
+            _optionValue,
+            isSelected;
 
     }
 };
