@@ -29,8 +29,8 @@ var FilterViewModel = function (data, app) {
                 : true;
             if (self.value != 'all' && res) {
                 //use start end date
-                res = transaction.created >= start.unix()
-                    && transaction.created <= end.unix();
+                res = transaction.created.unix() >= start.unix()
+                    && transaction.created.unix() <= end.unix();
             }
         } catch (e) {
             console && console.log(e);

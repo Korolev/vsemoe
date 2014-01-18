@@ -106,9 +106,8 @@ var ServerApi = {
         var data = this.utils().makeObj("token, currency_id", arguments);
         this.utils().post("/currency/delete", data, callback);
     },
-    getCurrencyRate: function (token, currency_id, date, from, callback) {
-        var data = this.utils().makeObj("token, currency_id, date, from", arguments);
-        this.utils().post("/currency/rate", data, callback);
+    getCurrencyRate: function (dataObj, callback) {
+        this.utils().post("/currency/rate", dataObj, callback);
     },
     getCurrencyRateList: function (token, currency_id, from, callback) {
         var data = this.utils().makeObj("token, currency_id, from", arguments);

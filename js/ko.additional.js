@@ -151,27 +151,25 @@ ko.bindingHandlers['gotoaction'] = {
 
 ko.bindingHandlers['textdate'] = {
     'update': function (element, valueAccessor) {
-        var value = ko.utils.unwrapObservable(valueAccessor()),
-            date = new Date(),
+        var uw = ko.utils.unwrapObservable,
+            value = moment.isMoment(uw(valueAccessor())) ? uw(valueAccessor()) : moment(uw(valueAccessor())),
+            date = new moment(),
             trdate = new Date(value * 1000),
-            trnow = new Date(+trdate.getFullYear(), parseInt(trdate.getMonth(), 10), parseInt(trdate.getDate(), 10)),
-            now = new Date(+date.getFullYear(), parseInt(date.getMonth(), 10), parseInt(date.getDate(), 10)),
-            now_1 = new Date(+date.getFullYear(), parseInt(date.getMonth(), 10), parseInt(date.getDate(), 10) - 1),
-            now_2 = new Date(+date.getFullYear(), parseInt(date.getMonth(), 10), parseInt(date.getDate(), 10) - 2),
-            dayOfWeek = trdate.getDay();
+            trnow = value.clone().startOf('day'),
+            now = moment().startOf('day'),
+            now_1 = now.clone().subtract('days',1),
+            now_2 = now.clone().subtract('days',2),
+            dayOfWeek = value.day();
 
-        if (trnow.getTime() == now.getTime()) {
-            value = [
-                (trdate.getHours() + "").length == 1 ? "0" + trdate.getHours() : trdate.getHours(),
-                ":",
-                (trdate.getMinutes() + "").length == 1 ? "0" + trdate.getMinutes() : trdate.getMinutes()].join("");
-        } else if (trnow.getTime() == now_1.getTime()) {
+        if (trnow == now) {
+            value = value.format("HH:mm");
+        } else if (trnow == now_1) {
             value = "Вчера"
-        } else if (trnow.getTime() == now_2.getTime()) {
+        } else if (trnow == now_2) {
             value = dayOfWeeks[dayOfWeek];
         } else {
-            value = value ?
-                [trdate.getDate(), calendarMonthNamesLoc[trdate.getMonth()].substr(0, 3), trdate.getFullYear()].join(" ")
+            value = value > new moment().year(1980) ?
+                [value.date(), value.format('MMM').toUpperCase(), value.year()].join(" ")
                 : "";
         }
 
@@ -192,16 +190,16 @@ ko.bindingHandlers['date'] = {
 };
 ko.bindingHandlers['datepick'] = {
     'init': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        var $element = $(element),
-            value = ko.utils.unwrapObservable(valueAccessor()),
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            value = uw(valueAccessor()),
             date,
             textHolder,
             datePicker;
 
-
         date = moment.isMoment(value) ?
             value.format()
-            : ko.utils.unwrapObservable(value.value).format(value.format);
+            : moment(uw(value.value)).format(value.format);
 
         textHolder = $('<div/>', {class: 'dateval'}).appendTo(element).text(date);
         datePicker = $('<div/>', {class: 'hidden animated itemDropDown'}).appendTo(element);
@@ -215,7 +213,7 @@ ko.bindingHandlers['datepick'] = {
         datePicker.pickmeup({
             flat: true,
             locale: datePickerLocale,
-            date: moment.isMoment(value) ? value : ko.utils.unwrapObservable(value.value),
+            date: moment.isMoment(value) ? value : uw(value.value),
             change: function (s, d) {
                 value.value(new moment(d));
                 bindingContext.$root.selectedFilter(new FilterViewModel({type: 'interval'}, bindingContext.$root));
@@ -343,20 +341,21 @@ ko.bindingHandlers['select'] = {
             _options = [],
             buildUI = function () {
                 options = uw(config.options);
-                if(_text){
+                //console.log(options);
+                if (_text) {
                     _text.remove();
                 }
-                if(_ul){
+                if (_ul) {
                     _ul.remove()
                 }
-                _text = $('<'+tag+' class="fake_select" />').insertBefore($element);
+                _text = $('<' + tag + ' class="fake_select" />').insertBefore($element);
                 _ul = $('<ul class="fake_select_body"></ul>').insertAfter(_text).addClass('hidden');
                 _options = [];
 
                 var _optionValue,
                     _innerContent;
 
-                _ul.css(css ? css :{
+                _ul.css(css ? css : {
                     'left': _text.position().left,
                     'width': _text.innerWidth()
                 });
@@ -386,8 +385,8 @@ ko.bindingHandlers['select'] = {
                         : _optionValue === value;
 
                     _innerContent = optionText ? uw(options[i][optionText]) : options[i];
-                    if(icon){
-                        _innerContent = '<i class="'+options[i][icon]+'"></i>'+_innerContent;
+                    if (icon) {
+                        _innerContent = '<i class="' + options[i][icon] + '"></i>' + _innerContent;
                     }
 
                     _options[i] = $('<li></li>')
@@ -482,58 +481,77 @@ ko.bindingHandlers['treeSelect'] = {
             _options = [],
             buildUI = function () {
                 options = uw(config.options);
-                if(_text){
+                if (_text) {
                     _text.remove();
                 }
-                if(_ul){
+                if (_ul) {
                     _ul.remove()
                 }
-                _text = $('<'+tag+' class="fake_tree_select" />').insertBefore($element);
+                _text = $('<' + tag + ' class="fake_tree_select" />').insertBefore($element);
                 _ul = $('<ul class="fake_tree_select_body"></ul>').insertAfter(_text).addClass('hidden');
                 _options = [];
 
                 var _optionValue,
                     _innerContent;
 
-                _ul.css(css ? css :{
+                _ul.css(css ? css : {
                     'left': _text.position().left,
                     'width': _text.innerWidth()
                 });
 
-                var buildLi = function(arr,parent){
+                var buildLi = function (arr, parent) {
                     var __options = [],
                         child,
-                        __ul;
-                    for(var i =0; i< arr.length; i++){
-                        console.log(arr[i], arr[i][optionText]);
+                        __ul,
+                        __text;
+                    for (var i = 0; i < arr.length; i++) {
                         __options[i] = $('<li></li>')
-                            .appendTo(parent)
-                            .append($('<span></span>')
-                                .text(uw(arr[i][optionText])));
+                            .appendTo(parent);
+                        __text = $('<span></span>')
+                            .text(uw(arr[i][optionText]))
+                            .appendTo(__options[i]);
 
                         child = uw(arr[i][optionTree]);
-                        if(child.length){
+
+                        __text.data('_option', arr[i]);
+                        __text.data('_parent', __options[i]);
+
+                        if (child.length) {
                             __options[i].addClass('has_child');
                             __ul = $('<ul class="hidden"></ul>').appendTo(__options[i]);
-                            __options[i].data('_list',__ul);
-                            buildLi(child,__ul);
-                            __options[i].on('click',function(){
-                                $(this).toggleClass('_open');
+                            __text.data('_list', __ul);
+                            buildLi(child, __ul);
+                            __text.on('click', function () {
+                                $(this).data('_parent').toggleClass('_open');
                                 $(this).data('_list').toggleClass('hidden');
+                            });
+                        } else {
+                            __text.on('click', function () {
+                                var selected = $(this).data('_option');
+                                config.value(selected[optionValue]);
+                                _text.text(uw(selected[optionText]));
+                                _ul.find('.selected').removeClass('selected');
+                                $(this).data('_parent').addClass('selected');
+                                _ul.addClass('hidden');
                             });
                         }
                     }
-                    parent.data('_options',__options);
+                    parent.data('_options', __options);
                 };
 
-                buildLi(options,_ul);
-                _text.on('click',function(){
-                   _ul.toggleClass('hidden');
+                buildLi(options, _ul);
+                _text.on('click', function () {
+                    _ul.toggleClass('hidden');
                 });
             };
 
-            buildUI();
-        console.log(config);
+        buildUI();
+
+        if(ko.isObservable(config.options)){
+            config.options.subscribe(function(val){
+               buildUI();
+            });
+        }
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var uw = ko.utils.unwrapObservable,

@@ -377,14 +377,26 @@ var ApplicationViewModel = function () {
             var tr = transFiltered[i];
             if (tr) {
                 tr.newday = 0;
-                calcDay = (new Date(tr.created * 1000)).getDay();
+                calcDay = tr.created.day();
                 if (calcDay != dayOfWeek) {
                     tr.newday = 1;
                     dayOfWeek = calcDay;
                 }
                 res.push(tr);
             } else {
-                res.push({created: false, from_id: 0, to_id: 0, amount: "", description: "", split: 0, newday: 0});
+                res.push({
+                    created: false,
+                    from_id: 0,
+                    to_id: 0,
+                    amount: "",
+                    description: "",
+                    comment: "",
+                    split: 0,
+                    newday: 0,
+                    deleted : 0,
+                    editInstance: ko.observable(false),
+                    currency: self.baseCurrencyId()
+                });
             }
         }
         self.transactionsSet.removeAll();
@@ -460,7 +472,7 @@ var ApplicationViewModel = function () {
         location.hash = 'accmanage';
     };
 
-    this.getGainAcc = function () {
+    this.getGainAcc = ko.computed(function () {
         var res = [], sum = 0;
         each(self.accounts(), function (k, acc) {
             if (acc.type() == "IN" && acc.group() == 0 && acc.parent() == 0) {
@@ -470,9 +482,9 @@ var ApplicationViewModel = function () {
         });
         self.totalGain(sum);
         return res;
-    };
+    },this).extend({throttle:1});
 
-    this.getConsumptionAcc = function () {
+    this.getConsumptionAcc = ko.computed(function () {
         var res = [], sum = 0;
         each(self.accounts(), function (k, acc) {
             if (acc.type() == "OUT" && acc.group() == 0 && acc.parent() == 0) {
@@ -482,9 +494,9 @@ var ApplicationViewModel = function () {
         });
         self.totalConsumption(sum);
         return res;
-    };
+    },this).extend({throttle:1});
 
-    this.getActiveAcc = function () {
+    this.getActiveAcc = ko.computed(function () {
         var res = [], sum = 0;
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 1 && acc.parent() == 0) {
@@ -494,9 +506,9 @@ var ApplicationViewModel = function () {
         });
         self.totalActive(sum);
         return res;
-    };
+    },this).extend({throttle:1});
 
-    this.getPassiveAcc = function () {
+    this.getPassiveAcc = ko.computed(function () {
         var res = [], sum = 0;
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 2 && acc.parent() == 0) {
@@ -506,7 +518,7 @@ var ApplicationViewModel = function () {
         });
         self.totalPassive(sum);
         return res;
-    };
+    },this).extend({throttle:1});
 
     this.getCssClass = function (tr) {
 //TODO calculate class
