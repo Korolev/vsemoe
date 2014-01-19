@@ -317,7 +317,7 @@ label.error, p.error {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .hiddenImp {

@@ -6,7 +6,7 @@
  */
 
 var TransactionEditViewModel = function (data, app, saveCallback) {
-
+    console.log(data);
     var self = this,
         uw = ko.utils.unwrapObservable;
 
@@ -17,11 +17,13 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     this.comment = ko.observable(data.comment || 'Комментарий');
     this.split = ko.observable(data.split);
     this.amount = ko.observable(data.amount);
-    this.currency = ko.observable(data.currency_id || app.baseCurrencyId());
+    this.currency = ko.observable(data.currency_id || data.currency || app.baseCurrencyId());
     this.created = ko.observable(data.created);
     this.deleted = ko.observable(uw(data.deleted) | 0);
     this.finished = data.finished | 0;
     this.hidden = data.hidden | 0;
+
+    console.log(this.currency());
 
     this.actions = ko.observableArray([
         {
@@ -56,6 +58,24 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     ]);
     this.action = ko.observable(self.actions()[0]);
 
+    self.amount.subscribe(function (v) {
+        var val = v + '';
+        if (val.indexOf(',')> -1) {
+            val.replace(',', '.');
+            self.amount(val);
+        }
+        val = parseFloat(val);
+        if (isNaN(val)) {
+            self.amount(0);
+        }
+        if (self.action().action == 'substract' && val > 0) {
+            self.amount(val * -1);
+        }else if(self.action().action != 'substract' && val < 0){
+            self.amount(val * -1);
+        }
+
+    });
+
     this.template = data.template | 0;
     this.template_id = data.template_id;
 
@@ -73,27 +93,33 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     currency_id: self.currency(),
                     comment: self.comment() == 'Комментарий' ? '' : self.comment(),
                     amount: amount,
-                    finished : 1
+                    finished: 1
                 };
-                if(self.id){
+                if (self.id) {
                     obj.transaction_id = self.id;
+                    ServerApi.updateTransaction(false, {data: JSON.stringify(obj)}, function (r) {
+                        saveCallback && saveCallback(r);
+                    })
+                } else {
+                    ServerApi.createTransaction(obj, function (r) {
+                        saveCallback && saveCallback(r);
+                        obj.transaction_id = r.transaction_id;
+                        app.transactions.push(new TransactionViewModel(JSON.parse(JSON.stringify(obj))));
+                        //TODO if created
+                    })
                 }
-                console.log('save', obj);
-                saveCallback && saveCallback(obj);
-//                ServerApi.createTransaction(obj,function(r){
-//                    console.log(r);
-//                })
+
             },
             calculateCurrency = function (cur_from, cur_to, amount) {
-                if(cur_from != cur_to){
-                    console.log(cur_from,cur_to);
+                if (cur_from != cur_to) {
+                    console.log(cur_from, cur_to);
                     ServerApi.getCurrencyRate({
                         currency_id: cur_to,
-                        from : moment().format('YYYY-MM-DD')
-                    },function(r){
-                        send((parseFloat(r[1].rate)/r[0].rate)*amount);
+                        from: moment().format('YYYY-MM-DD')
+                    }, function (r) {
+                        send((parseFloat(r[1].rate) / r[0].rate) * amount);
                     });
-                }else{
+                } else {
                     send(amount);
                 }
             };

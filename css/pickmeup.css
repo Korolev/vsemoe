@@ -41,6 +41,7 @@
 
 .pickmeup .pmu-instance .pmu-days .pmu-button:hover {
     border: 1px solid #3bb728;
+    color: #3bb728;
 }
 
 .pickmeup .pmu-instance .pmu-not-in-month,

@@ -148,7 +148,11 @@ var ServerApi = {
         this.utils().post("/transaction/create", dataObj, callback);
     },
     updateTransaction: function (param, dataObj, callback) {
-        this.utils().post("/transaction/update/" + param, dataObj, callback);
+        if(param){
+            this.utils().post("/transaction/update/" + param, dataObj, callback);
+        }else{
+            this.utils().post("/transaction/update", dataObj, callback);
+        }
     },
     deleteTransaction: function (dataObj, callback) {
         this.utils().post("/transaction/delete", dataObj, callback);

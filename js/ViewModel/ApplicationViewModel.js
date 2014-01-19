@@ -405,6 +405,10 @@ var ApplicationViewModel = function () {
 
     this.transactions.subscribe(function (val) {
         if (val.length) {
+            each(self.accounts(),function(k,acc){
+                acc.transactions = [];
+            });
+
             each(val, function (k, t) {
                 //mk logic
                 if (self.accountsHash[t.from_id]) {

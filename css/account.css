@@ -795,6 +795,8 @@ input.vse-cancel:active{
 .accounts_block_header{
     text-transform: uppercase;
     font-weight: bold;
+    font-family: "HelveticaNeue Bold",Tahoma,Helvetica, serif;
+
     font-size: 10px;
     line-height: 14px;
     letter-spacing: 0.1rem;
@@ -938,7 +940,7 @@ input.vse-cancel:active{
     text-align: left;
     font-size: 12px;
     font-weight: bold;
-    font-family: "HelveticaNeue Bold",Helvetica,Tahoma, serif;
+    font-family: "HelveticaNeue Bold",Tahoma,Helvetica, serif;
     position: relative;
 }
 .form_row_input.split_input .fake_select{
@@ -986,7 +988,7 @@ input.vse-cancel:active{
 .fake_select_body li.selected{
     background-color: #DAD9D4;
     font-weight: bold;
-    font-family: "HelveticaNeue Bold",Helvetica,Tahoma, serif;
+    font-family: "HelveticaNeue Bold",Tahoma,Helvetica, serif;
     color: #2A3E55;
 }
 
@@ -1150,7 +1152,7 @@ input.vse-cancel:active{
 
 .td_5_6 span{
     font-weight: bold;
-    font-family: "HelveticaNeue Bold",Helvetica,Tahoma, serif;
+    font-family: "HelveticaNeue Bold",Tahoma,Helvetica, serif;
 }
 .td_5_6{
     color: #424C58;
@@ -1378,7 +1380,7 @@ input.vse-cancel:active{
 .row_edit_form .acc_button .fake_select,
 .row_edit_form .acc_button > span{
     font-weight: bold;
-    font-family: "HelveticaNeue Bold",Helvetica,Tahoma, serif;
+    font-family: "HelveticaNeue Bold",Tahoma,Helvetica, serif;
 }
 
 .row_edit_form .split_input .acc_button{

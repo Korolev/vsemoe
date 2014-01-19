@@ -31,7 +31,7 @@ var TransactionViewModel = function (data, app) {
 
     this.editRecord = function () {
         $.each(app.transactionsSet(),function(k,tr){
-            tr.removeInstance();
+            tr.removeInstance && tr.removeInstance();
         });
         app.transactionEdit().editMode(false);
         self.editInstance(new TransactionEditViewModel(self, app, function (r) {
