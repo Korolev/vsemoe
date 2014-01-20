@@ -111,7 +111,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
             },
             calculateCurrency = function (cur_from, cur_to, amount) {
-                if (cur_from != cur_to) {
+                if (cur_from != cur_to && false) {
                     console.log(cur_from, cur_to);
                     ServerApi.getCurrencyRate({
                         currency_id: cur_to,
