@@ -421,8 +421,7 @@ var ApplicationViewModel = function () {
                 //mk logic
                 if (self.accountsHash[t.from_id]) {
                     self.accountsHash[t.from_id].transactions.push(t);
-                }
-                if (self.accountsHash[t.to_id]) {
+                }else if (self.accountsHash[t.to_id]) {
                     self.accountsHash[t.to_id].transactions.push(t);
                 }
             });
