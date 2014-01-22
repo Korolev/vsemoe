@@ -110,11 +110,14 @@ var AccountViewModel = function (data, app) {
             res *= -1;
         }
 
-        if (self.parent() && self.parent().length > 2) {
+        if (self.parent() && self.parent().length > 1 && res) {
+            console.log(self.parent(),res);
+            console.log(root.accountsHash[self.parent()].sum());
             root.accountsHash[self.parent()].sum(root.accountsHash[self.parent()].sum() + res);
+            console.log(root.accountsHash[self.parent()].sum());
         }
 
-        self.sum(res);
+        if(!self.children().length)self.sum(res);
     };
 
     this.children.subscribe(function (val) {

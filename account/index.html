@@ -1101,7 +1101,7 @@
     <!--<h1>Template not found.</h1>-->
 </script>
 <script type="text/html" id="tr-comment-tpl">
-    <textarea data-bind="value:comment"></textarea>
+    <textarea data-bind="value:comment, click:function(){if($data.comment() == 'Комментарий'){$data.comment('')}}"></textarea>
 </script>
 <script type="text/html" id="tr-default-tpl">
 </script>

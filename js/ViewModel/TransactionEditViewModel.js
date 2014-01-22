@@ -110,7 +110,10 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                         saveCallback && saveCallback(r);
                         obj.transaction_id = r.transaction_id;
                         app.transactions.push(new TransactionViewModel(JSON.parse(JSON.stringify(obj))));
-                        //TODO if created
+                        self.comment('Комментарий');
+                        self.created(moment());
+                        self.to_id('');
+                        self.amount(0);
                     })
                 }
 

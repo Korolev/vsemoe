@@ -1413,6 +1413,7 @@ input.vse-cancel:active{
 
 .acc_button span{
     padding: 0 22px;
+    display: block;
 }
 .split_input.acc_ammount span,
 .split_input.acc_ammount > div{
