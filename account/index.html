@@ -663,7 +663,7 @@
             <div class="dateInput" data-bind="datepick:{value:created,format:'DD.MM.YY'}"></div>
         </div><div class="td_fromaccount_input">
             <input type="hidden" data-bind="select:{
-                                        options:$root.getActiveAcc(),
+                                        options:$root.getActiveAccFlat(),
                                         optionText:'description',
                                         optionValue: 'id',
                                         value:from_id,

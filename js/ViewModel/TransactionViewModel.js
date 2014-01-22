@@ -34,15 +34,17 @@ var TransactionViewModel = function (data, app) {
             tr.removeInstance && tr.removeInstance();
         });
         app.transactionEdit().editMode(false);
-        self.editInstance(new TransactionEditViewModel(self, app, function (r) {
-            self.amount = r.amount;
-            self.comment = r.comment;
-            self.created = r.created;
-            self.from_id = r.from_id;
-            self.to_id = r.to_id;
-            self.currency = r.currency_id;
+        self.editInstance(new TransactionEditViewModel(self, app, function (obj,r) {
+            var uw = ko.utils.unwrapObservable;
+            self.amount = uw(obj.amount);
+            self.comment = uw(obj.comment);
+            self.created = moment.unix(uw(obj.created));
+            self.from_id = uw(obj.from_id);
+            self.to_id = uw(obj.to_id);
+            self.currency = uw(obj.currency_id);
             console.log(self);
             self.removeInstance();
+            console.log(obj);
             console.log(r);
         }));
     };

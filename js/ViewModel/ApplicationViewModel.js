@@ -520,6 +520,17 @@ var ApplicationViewModel = function () {
         return res;
     },this).extend({throttle:1});
 
+    this.getActiveAccFlat = ko.computed(function () {
+        var res = [], sum = 0;
+        each(self.accounts(), function (k, acc) {
+            if (acc.group() == 1) {
+                res.push(acc);
+                sum += acc.sum();
+            }
+        });
+        return res;
+    },this).extend({throttle:1});
+
     this.getPassiveAcc = ko.computed(function () {
         var res = [], sum = 0;
         each(self.accounts(), function (k, acc) {

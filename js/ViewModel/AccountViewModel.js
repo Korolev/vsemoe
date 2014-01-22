@@ -178,9 +178,24 @@ var AccountViewModel = function (data, app) {
             },function(r){
                 if(r.account_id){
                     self.id = r.account_id;
-                    console.log(app);
                     app.accountsHash[self.id] = self;
                     app.accounts.push(self);
+                    if(self.sum()>0){
+                        var obj = {
+                            from_id: r.account_id,
+                            to_id: r.account_id,
+                            created: moment().unix(),
+                            currency_id: self.currency(),
+                            amount: self.sum(),
+                            description: self.sum(),
+                            finished: 1,
+                            hidden:1,
+                            position:1
+                        };
+                        ServerApi.createTransaction(obj,function(r){
+                            console.log(r);
+                        });
+                    }
                 }
             })
         }

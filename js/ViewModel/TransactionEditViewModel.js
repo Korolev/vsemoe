@@ -93,12 +93,13 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     currency_id: self.currency(),
                     comment: self.comment() == 'Комментарий' ? '' : self.comment(),
                     amount: amount,
+                    description: amount,
                     finished: 1
                 };
                 if (self.id) {
                     obj.transaction_id = self.id;
                     ServerApi.updateTransaction(false, {data: JSON.stringify(obj)}, function (r) {
-                        saveCallback && saveCallback(r);
+                        saveCallback && saveCallback(obj,r);
                     })
                 } else {
                     ServerApi.createTransaction(obj, function (r) {
