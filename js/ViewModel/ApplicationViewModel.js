@@ -488,7 +488,7 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.type() == "IN" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
-                sum += acc.sum();
+                sum += parseInt(acc.sum());
             }
         });
         self.totalGain(sum);
@@ -500,7 +500,7 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.type() == "OUT" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
-                sum += acc.sum();
+                sum += parseInt(acc.sum());
             }
         });
         self.totalConsumption(sum);
@@ -512,7 +512,7 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 1 && acc.parent() == 0) {
                 res.push(acc);
-                sum += acc.sum();
+                sum += parseInt(acc.sum());
             }
         });
         self.totalActive(sum);
@@ -524,7 +524,7 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 1) {
                 res.push(acc);
-                sum += acc.sum();
+                sum += parseInt(acc.sum());
             }
         });
         return res;
