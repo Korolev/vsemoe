@@ -638,14 +638,12 @@ var ApplicationViewModel = function () {
                     accIds.push(a.id);
                 });
                 self.accounts.pushAll(res);
-//                ServerApi.getAccountSum({account_id: accIds.join(',')}, function (r) {
-//                    $.each(r, function (k, rObj) {
-//                        self.accountsHash[rObj.account_id].sum(parseFloat(rObj.sum));
-//                    });
-//                    $.each(self.accounts(), function (k, acc) {
-//                        acc.initChildren(self);
-//                    });
-//                });
+//                if(self.accounts().length < 5){
+//                    ServerApi.newAccountsSet(function(r){
+//                        console.log(r);
+//                    })
+//                }
+
                 each(self.accounts(), function (k, acc) {
                     acc.initChildren(self);
                 });

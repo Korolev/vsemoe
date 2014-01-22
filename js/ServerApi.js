@@ -143,6 +143,9 @@ var ServerApi = {
     getAccountSum: function (dataObj, callback) {
         this.utils().post("/account/sum", dataObj, callback);
     },
+    newAccountsSet: function(callback){
+        this.utils().post("/account/newset", {}, callback);
+    },
 //Transactions
     createTransaction: function (dataObj, callback) {
         this.utils().post("/transaction/create", dataObj, callback);

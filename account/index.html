@@ -427,10 +427,26 @@
                         </div>
                         <!-- ko foreach: getActiveAcc()-->
                         <div class="walletBox">
-                            <div class="largeclickIcon "></div>
-                            <span class="normalText" data-bind="shorttext:description"></span>
-                            <span class="greenSymbol" data-bind="currency:currency"></span>
-                            <span class="greenValue" data-bind="digitext:sum"></span>
+                            <div data-bind="click:function(){$data.expand(!$data.expand())}, css:{'has_children':children().length}">
+                                <div data-bind="css:{
+                                  iconSmallDown: !expand() && children().length,
+                                  iconSmallLeft: expand() && children().length
+                                }" class="largeclickIcon iconSmallLeft">
+                                </div>
+                                <span class="normalText" data-bind="shorttext:description"></span>
+                                <span class="greenSymbol" data-bind="currency:currency"></span>
+                                <span class="greenValue" data-bind="digitext:sum"></span>
+                            </div>
+                            <div class="ul_greenValue" data-bind="if: children().length, css:{hidden:expand()==0}">
+                                <ul data-bind="foreach:children">
+                                    <li>
+                                        <div class="largeclickIcon "></div>
+                                        <span style="padding-left: 10px;" class="normalText" data-bind="shorttext:description"></span>
+                                        <span class="greenSymbol" data-bind="currency:currency"></span>
+                                        <span class="greenValue" data-bind="digitext:sum"></span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <!-- /ko -->
                     </div>
@@ -447,10 +463,26 @@
                         </div>
                         <!-- ko foreach: getPassiveAcc()-->
                         <div class="walletBox">
-                            <div class="largeclickIcon "></div>
-                            <span class="normalText" data-bind="shorttext:description"></span>
-                            <span class="orangeSymbol" data-bind="currency:currency"></span>
-                            <span class="orangeValue" data-bind="digitext:sum"></span>
+                            <div data-bind="click:function(){$data.expand(!$data.expand())}, css:{'has_children':children().length}">
+                                <div data-bind="css:{
+                                  iconSmallDown: !expand() && children().length,
+                                  iconSmallLeft: expand() && children().length
+                                }" class="largeclickIcon iconSmallLeft">
+                                </div>
+                                <span class="normalText" data-bind="shorttext:description"></span>
+                                <span class="orangeSymbol" data-bind="currency:currency"></span>
+                                <span class="orangeValue" data-bind="digitext:sum"></span>
+                            </div>
+                            <div class="ul_greenValue" data-bind="if: children().length, css:{hidden:expand()==0}">
+                                <ul data-bind="foreach:children">
+                                    <li>
+                                        <div class="largeclickIcon "></div>
+                                        <span class="normalText" data-bind="shorttext:description"></span>
+                                        <span class="orangeSymbol" data-bind="currency:currency"></span>
+                                        <span class="orangeValue" data-bind="digitext:sum"></span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <!-- /ko -->
                     </div>
@@ -1072,6 +1104,8 @@
     <textarea data-bind="value:comment"></textarea>
 </script>
 <script type="text/html" id="tr-default-tpl">
+</script>
+<script type="text/html" id="edit-login-tpl">
 </script>
 </body>
 </html>

@@ -564,12 +564,31 @@ footer .copy {
     padding: 0 12px;
 }
 
+.has_children{
+    cursor: pointer;
+}
+
 .normalText {
-    margin-left: 6px;
+    margin-left: 0px;
     font-weight: bold;
     color: #424c58;
     line-height: 30px;
+    font-family: "HelveticaNeue Bold",Tahoma,sans-serif;
 }
+
+.ul_greenValue .normalText {
+    margin-left: 0px;
+    font-weight: normal;
+    color: #424c58;
+    line-height: 30px;
+    font-family: "HelveticaNeue Light",Tahoma,sans-serif;
+}
+
+.ul_greenValue li{
+    border-top: 1px solid #DDDDDD;
+}
+
+
 
 .commentText {
     margin-left: 2px;
