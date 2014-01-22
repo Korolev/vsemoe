@@ -480,6 +480,7 @@ ko.bindingHandlers['treeSelect'] = {
             _ul,
             _options = [],
             buildUI = function () {
+                var selected = value;
                 options = uw(config.options);
                 if (_text) {
                     _text.remove();
@@ -510,6 +511,11 @@ ko.bindingHandlers['treeSelect'] = {
                         __text = $('<span></span>')
                             .text(uw(arr[i][optionText]))
                             .appendTo(__options[i]);
+
+                        if(arr[i][optionValue] == selected){
+                            _text.text(uw(arr[i][optionText]));
+                            __options[i].addClass('selected');
+                        }
 
                         child = uw(arr[i][optionTree]);
 

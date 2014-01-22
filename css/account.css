@@ -1334,6 +1334,8 @@ input.vse-cancel:active{
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .row_edit_form .td_fromaccount_input{

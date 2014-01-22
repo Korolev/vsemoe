@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 38h[????] 5h[18.01]-->
+<!-- 38h[????] 5h[18.01] [20:00-][21.01]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -780,7 +780,7 @@
     <div class="account_edit_form">
         <div class="buttons_bar">
             <input class="vse-cancel button small" type="button" value="Отмена" data-bind="gotoaction:'accmanage'"/>
-            <input class="button small" type="button" value="Добавить" data-bind="click:$root.saveAccount"/>
+            <input class="button small" type="button" data-bind="click:$root.saveAccount, attr:{value:$data.id?'Сохранить':'Добавить'}"/>
         </div>
         <div class="form_row">
             <div class="form_row_label" style="vertical-align: top">
@@ -855,9 +855,9 @@
             <div class="form_row_label" style="vertical-align: top">
                 <label>Статус</label>
             </div>
-            <div class="form_row_input">
-                <input type="checkbox" data-bind="attr:{id:comment+'_check'},checked:show">
-                <label data-bind="attr:{for:comment+'_check'}">Видимый</label>
+            <div class="form_row_input" data-bind="html(console.log($data.show())">
+                <input type="checkbox" data-bind="attr:{id:comment()+'_check'},checked:show">
+                <label data-bind="attr:{for:comment()+'_check'}">Видимый</label>
 
                 <div class="help_text">
                     Видимый счет будет показан в колонке счетов
@@ -959,7 +959,7 @@
 <script type="text/html" id="click-box-tpl">
     <div class="clickBox" data-bind="
     click:function(){$data.toggleExpand();$root.addAccIdToFilter($data);},
-    css:{selected:$root.accountId() == $data.id}">
+    css:{selected:$root.accountId() == $data.id, hidden:show()==0}">
         <div class="smallclickIcon"
              data-bind="css:{
                               iconSmallDown: !expand() && children().length,
@@ -1039,7 +1039,7 @@
             </div>
             <div style="text-align: right;padding-right: 5px" class="form_row">
                 <input type="button" class="button" value="Сохранить"
-                       data-bind="click:function(){$data.edtiMode(false);}">
+                       data-bind="click:function(){$data.editMode(false);}">
             </div>
             <!--<div class="acc_edit_row">-->
             <!--<label class="long">Разместить вверху списка</label>-->

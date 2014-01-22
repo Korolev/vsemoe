@@ -15,7 +15,6 @@ var AccountViewModel = function (data, app) {
                 console && console.log(e);
             }
         };
-
     this.id = data.account_id;
     this.currency = ko.observable(data.currency_id || "0");
     this.description = ko.observable(data.description || "");
@@ -26,7 +25,7 @@ var AccountViewModel = function (data, app) {
     this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand | 0);
-    this.show = ko.observable(!!data.show);
+    this.show = ko.observable(!!(data.show|0));
 
     this.comment = ko.observable(data.comment || "other");
     this.helpText = data.helpText || '';
@@ -44,7 +43,7 @@ var AccountViewModel = function (data, app) {
     this.currentBlock.subscribe(function(block){
         self.comment(block.icon);
         self.type(block.type);
-        self.group(block.group == undefined ? 1 : block.group);
+        //self.group(block.group == undefined ? 1 : block.group);
     });
 
     this.editAccount = function () {
@@ -154,7 +153,6 @@ var AccountViewModel = function (data, app) {
             app.accounts.remove(self);
             return false;
         }
-        console.log("SAVE!!!");
         if(self.id){
             ServerApi.updateAccount(false, {
                 data: JSON.stringify({
@@ -163,7 +161,7 @@ var AccountViewModel = function (data, app) {
                     parent: self.parent(),
                     type: self.type(),
                     group: self.group(),
-                    expand: self.expand(),
+                    expand: +(!!self.expand()),
                     account_id: self.id,
                     show: self.show() ? 1 : 0
                 })
@@ -175,12 +173,14 @@ var AccountViewModel = function (data, app) {
                 parent: self.parent(),
                 type: self.type(),
                 group: self.group(),
-                expand: self.expand(),
+                expand: +(!!self.expand()),
                 show: self.show() ? 1 : 0
             },function(r){
                 if(r.account_id){
                     self.id = r.account_id;
+                    console.log(app);
                     app.accountsHash[self.id] = self;
+                    app.accounts.push(self);
                 }
             })
         }

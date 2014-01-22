@@ -1,6 +1,11 @@
 /**
  * Created by Lenovo on 09.11.13.
  */
+
+//TODO IMPORTANT
+    //change LOGO!!!
+    // SORT CURRENCY BY ABC
+
 var ApplicationSettings = {
     cookieName: "vse_cookie_token"
 };
@@ -190,7 +195,8 @@ var ApplicationViewModel = function () {
                 {
                     title: "Кредитная карта",
                     icon: "creditcard",
-                    type: "LOAN"
+                    type: "LOAN",
+                    group: 2
                 },
                 {
                     title: "Банковский счет",
@@ -307,6 +313,8 @@ var ApplicationViewModel = function () {
         if (self.action() == 'insert' && acc) {
             self.accountId(acc.id);
             self.selectedFilter.valueHasMutated();
+        }else if(self.action() == 'accmanage' && acc) {
+            location.hash = self.action() + '/' + acc.id;
         }
     };
 
@@ -517,7 +525,7 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 2 && acc.parent() == 0) {
                 res.push(acc);
-                sum += acc.sum();
+                sum += parseFloat(acc.sum());
             }
         });
         self.totalPassive(sum);
@@ -613,6 +621,9 @@ var ApplicationViewModel = function () {
                     self.currency[v.currency_id] = v;
                     cArr.push(v);
                 });
+                cArr.sort(function(a,b){
+                   return a.shortname < b.shortname ? -1 : 1;
+                });
                 self.currencyArr(cArr);
             });
             ServerApi.getAccountList({}, function (r) {
@@ -657,7 +668,7 @@ var ApplicationViewModel = function () {
 
     this.editItem.subscribe(function (val) {
         var item;
-        if (val && !self.accountInEdit()) {
+        if (val) {
             each(self.accountBlocks, function (i, block) {
                 each(block.items, function (_i, _item) {
                     if (_item.icon == val) {
@@ -665,7 +676,7 @@ var ApplicationViewModel = function () {
                     }
                 });
             });
-            if (item)
+            if (item){
                 self.accountInEdit(new AccountViewModel({
                     description: item.title,
                     type: item.type,
@@ -675,9 +686,23 @@ var ApplicationViewModel = function () {
                     show: 1,
                     helpText: item.helpText || '',
                     currentBlock: item
-                }), self);
+                }, self));
+            }else if(self.accountsHash[val]){
+                self.accountInEdit(self.accountsHash[val]);
+                each(self.accountBlocksFlat,function(k,b){
+                   if(b.type == self.accountInEdit().type() && !item){
+                       item = b;
+                   }
+                });
+                self.accountInEdit().currentBlock(item);
+            }else{
+                self.accountInEdit(null);
+                location.hash = self.action();
+            }
+
         } else {
             self.accountInEdit(null);
+            location.hash = self.action();
         }
     });
 
