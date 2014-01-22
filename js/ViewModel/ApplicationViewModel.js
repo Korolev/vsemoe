@@ -346,7 +346,7 @@ var ApplicationViewModel = function () {
             _transFiltered = [];
         //mk logic
         each(self.transactions(), function (k, t) {
-            if (t.hidden == 0 && t.template == 0 && !!t.finished) {
+            if (t.hidden == 0 && t.template == 0 && !!t.finished && !t.deleted()) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
             }
@@ -383,7 +383,7 @@ var ApplicationViewModel = function () {
             transFiltered = self.transFiltered();
         for (; i < j; i += 1) {
             var tr = transFiltered[i];
-            if (tr) {
+            if (tr && !tr.deleted()) {
                 tr.newday = 0;
                 calcDay = tr.created.day();
                 if (calcDay != dayOfWeek) {
