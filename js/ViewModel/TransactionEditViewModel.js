@@ -85,6 +85,9 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     this.save = function () {
 
         var send = function (amount) {
+                if(self.action().aciton == 'move' && amount > 0){
+                    amount = amount * -1;
+                }
                 self.commentEdit(false);
                 var obj = {
                     from_id: self.from_id(),
