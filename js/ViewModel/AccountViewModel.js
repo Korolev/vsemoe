@@ -41,8 +41,10 @@ var AccountViewModel = function (data, app) {
     this.currentBlock = ko.observable(data.currentBlock || {});
 
     this.currentBlock.subscribe(function(block){
-        self.comment(block.icon);
-        self.type(block.type);
+        if(block){
+            self.comment(block.icon);
+            self.type(block.type);
+        }
         //self.group(block.group == undefined ? 1 : block.group);
     });
 
@@ -111,10 +113,7 @@ var AccountViewModel = function (data, app) {
         }
 
         if (self.parent() && self.parent().length > 1 && res) {
-            console.log(self.parent(),res);
-            console.log(root.accountsHash[self.parent()].sum());
             root.accountsHash[self.parent()].sum(root.accountsHash[self.parent()].sum() + res);
-            console.log(root.accountsHash[self.parent()].sum());
         }
 
         if(!self.children().length)self.sum(res);
