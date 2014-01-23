@@ -113,7 +113,7 @@ var AccountViewModel = function (data, app) {
         }
 
         if (self.parent() && self.parent().length > 1 && res) {
-            root.accountsHash[self.parent()].sum(root.accountsHash[self.parent()].sum() + res);
+            app.accountsHash[self.parent()].sum(app.accountsHash[self.parent()].sum() + res);
         }
 
         if(!self.children().length)self.sum(res);

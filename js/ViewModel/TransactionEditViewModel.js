@@ -23,8 +23,6 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     this.finished = data.finished | 0;
     this.hidden = data.hidden | 0;
 
-    console.log(this.currency());
-
     this.actions = ko.observableArray([
         {
             icon: 'substr_i',
@@ -104,6 +102,8 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     obj.transaction_id = self.id;
                     ServerApi.updateTransaction(false, {data: JSON.stringify(obj)}, function (r) {
                         saveCallback && saveCallback(obj,r);
+                        app.accountsHash[self.from_id()] && app.accountsHash[self.from_id()].recalculateSum();
+                        app.accountsHash[self.to_id()] && app.accountsHash[self.to_id()].recalculateSum();
                     })
                 } else {
                     ServerApi.createTransaction(obj, function (r) {

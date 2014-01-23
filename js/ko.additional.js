@@ -157,8 +157,8 @@ ko.bindingHandlers['textdate'] = {
             trdate = new Date(value * 1000),
             trnow = value.clone().startOf('day'),
             now = moment().startOf('day'),
-            now_1 = now.clone().subtract('days',1),
-            now_2 = now.clone().subtract('days',2),
+            now_1 = now.clone().subtract('days', 1),
+            now_2 = now.clone().subtract('days', 2),
             dayOfWeek = value.day();
 
         if (trnow == now) {
@@ -217,12 +217,70 @@ ko.bindingHandlers['datepick'] = {
             change: function (s, d) {
                 value.value(new moment(d));
                 bindingContext.$root.selectedFilter(new FilterViewModel({type: 'interval'}, bindingContext.$root));
-                datePicker.addClass('hidden').removeClass('fadeInDown');
+                if (!value.time)datePicker.addClass('hidden').removeClass('fadeInDown');
             }
         });
 
         $element.data('textHolder', textHolder);
         $element.data('datePicker', datePicker);
+
+        //timePicker
+        var createSlider = function (title, label, parts) {
+                var text = $('<div/>', {class: 'slider-text'}).text(label),
+                    resizer = $('<div/>', {class: 'slider-element'}),
+                    resizerVal = $('<div/>', {class: 'slider-value'}),
+                    resizerSetter = $('<div/>', {class: 'slider-value-setter'}),
+                    drag = false;
+
+                resizer.append(resizerVal);
+                resizer.append(resizerSetter);
+
+                resizerSetter.on('mousedown', function () {
+                    drag = true;
+                });
+
+                $(document).on('mousemove', function () {
+                    if(drag){
+                        resizerSetter.css({'left':'40%'});
+                        resizerVal.css({'width':'40%'});
+                    }
+                });
+
+                resizerSetter.on('mouseup', function () {
+                    drag = false;
+                });
+
+                return $('<div/>', {class: 'slider-holder'})
+                    .append(text)
+                    .append(resizer);
+            },
+            timePicker,
+            timeOut = $('<div/>', {class: 'timeOut'}),
+            minSlider = createSlider('minute', 'Мин', 60),
+            hourSlider = createSlider('hour', 'Час', 24),
+            okButton = $('<input type="button" class="vse-cancel small button" value="OK"/>');
+
+        if (value.time) {
+            timePicker = $('<div/>', {class: 'timepicker'})
+                .appendTo(datePicker);
+
+            $('<div/>', {class: 'left-panel'})
+                .appendTo(timePicker)
+                .append(timeOut);
+
+            timeOut.text(moment.isMoment(value) ?
+                value.format('HH:mm')
+                : moment(uw(value.value)).format('HH:mm'));
+
+            $('<div/>', {class: 'right-panel'})
+                .appendTo(timePicker)
+                .append(hourSlider)
+                .append(minSlider);
+
+            $('<div/>', {class: 'button-panel'})
+                .appendTo(timePicker)
+                .append(okButton);
+        }
     },
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var $element = $(element),
@@ -235,8 +293,8 @@ ko.bindingHandlers['datepick'] = {
         date = moment.isMoment(value) ?
             value.format()
             : ko.utils.unwrapObservable(value.value).format(value.format);
-
-        datePicker && datePicker.pickmeup('set_date', moment.isMoment(value) ? value : ko.utils.unwrapObservable(value.value));
+        datePicker && datePicker.pickmeup('set_date',
+            new Date(moment.isMoment(value) ? value.format() : ko.utils.unwrapObservable(value.value).format()));
         textHolder && textHolder.text(date);
     }
 };
@@ -512,7 +570,7 @@ ko.bindingHandlers['treeSelect'] = {
                             .text(uw(arr[i][optionText]))
                             .appendTo(__options[i]);
 
-                        if(arr[i][optionValue] == selected){
+                        if (arr[i][optionValue] == selected) {
                             _text.text(uw(arr[i][optionText]));
                             __options[i].addClass('selected');
                         }
@@ -553,9 +611,9 @@ ko.bindingHandlers['treeSelect'] = {
 
         buildUI();
 
-        if(ko.isObservable(config.options)){
-            config.options.subscribe(function(val){
-               buildUI();
+        if (ko.isObservable(config.options)) {
+            config.options.subscribe(function (val) {
+                buildUI();
             });
         }
     },

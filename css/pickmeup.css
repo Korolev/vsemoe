@@ -7,7 +7,7 @@
  * @license		MIT License, see license.txt
  */
 .pickmeup {
-    background: #ffffff;
+    background: #fdfdfd;
     border-radius: 0.4rem;
     display: none;
     position: absolute;
@@ -32,7 +32,7 @@
     cursor: pointer;
     outline: none;
     text-decoration: none;
-    border: 1px solid #fff;
+    border: 1px solid #fdfdfd;
 }
 
 .pickmeup .pmu-instance .pmu-today {
@@ -44,10 +44,14 @@
     color: #3bb728;
 }
 
+.pickmeup .pmu-instance .pmu-days .pmu-button.pmu-selected:hover {
+    color: #ffffff;
+}
+
 .pickmeup .pmu-instance .pmu-not-in-month,
 .pickmeup .pmu-instance .pmu-not-in-month:hover {
-    color: #ccc;
-    border: 1px solid #fff !important;
+    color: #ccc !important;
+    border: 1px solid #fdfdfd !important;
     cursor: default;
 }
 
@@ -92,7 +96,7 @@
 .pickmeup .pmu-instance nav .pmu-next {
     display: none;
     height: 2rem;
-    width: 1rem;
+    width: 2rem;
 }
 
 .pickmeup .pmu-instance nav .pmu-month {
@@ -135,8 +139,9 @@
 }
 
 .pickmeup .pmu-instance:first-child:last-child .pmu-month {
-    width: 12rem;
-    color: #ff6900;
+    width: 10rem;
+    color: #252525;
+    text-transform: uppercase;
 }
 
 .pickmeup:not(.pmu-view-days) .pmu-days, .pickmeup:not(.pmu-view-days) .pmu-day-of-week, .pickmeup:not(.pmu-view-months) .pmu-months, .pickmeup:not(.pmu-view-years) .pmu-years {
@@ -144,32 +149,121 @@
 }
 
 .pmu-next{
+    background-image: url("../img/calendar_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -39px -108px;
 }
 
 .pmu-prev{
+    background-image: url("../img/calendar_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -39px -62px;
 }
 
 .pmu-prev:before{
-    content: '';
-    border-top: 5px solid rgba(0, 0, 0, 0);
-    border-right: 10px solid #888;
-    border-bottom: 5px solid rgba(0, 0, 0, 0);
-    height: 0;
-    left: 1px;
-    position: absolute;
-    top: 35%;
-    width: 0;
+    /*content: '';*/
+    /*border-top: 5px solid rgba(0, 0, 0, 0);*/
+    /*border-right: 10px solid #888;*/
+    /*border-bottom: 5px solid rgba(0, 0, 0, 0);*/
+    /*height: 0;*/
+    /*left: 1px;*/
+    /*position: absolute;*/
+    /*top: 35%;*/
+    /*width: 0;*/
 }
 
 .pmu-next:before{
-    content: '';
-    border-top: 5px solid rgba(0, 0, 0, 0);
-    border-left: 10px solid #888;
-    border-bottom: 5px solid rgba(0, 0, 0, 0);
-    height: 0;
-    left: 1px;
-    position: absolute;
-    top: 35%;
-    width: 0;
+    /*content: '';*/
+    /*border-top: 5px solid rgba(0, 0, 0, 0);*/
+    /*border-left: 10px solid #888;*/
+    /*border-bottom: 5px solid rgba(0, 0, 0, 0);*/
+    /*height: 0;*/
+    /*left: 1px;*/
+    /*position: absolute;*/
+    /*top: 35%;*/
+    /*width: 0;*/
 }
 
+/*TimePIcker*/
+.timepicker{
+    background-color: #fdfdfd;
+    padding: 0.5rem;
+    cursor: default;
+}
+
+.timepicker .left-panel{
+    width: 5.5rem;
+    float: left;
+    min-height: 50px;
+}
+
+.timepicker .left-panel .timeOut{
+    height: 25px;
+    width: 3.75rem;
+    padding-left: 1rem;
+    background-color: #fff;
+    margin-left: 5px;
+    border-radius: 3px;
+    box-shadow: inset 1px 1px 2px #CCCCCC;
+    background-image: url("../img/calendar_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -40px -154px;
+    letter-spacing: 2px;
+    color: #888;
+}
+
+.timepicker .right-panel{
+    width: 8rem;
+    float: left;
+    min-height: 50px;
+}
+
+.timepicker .button-panel{
+    clear: both;
+    text-align: right;
+    padding: 0.75rem 0;
+}
+
+.timepicker .button-panel input{
+    min-width: 60px;
+}
+
+.timepicker .slider-holder{
+    height: 25px;
+}
+
+.timepicker .slider-text{
+    color: #555;
+    font-size: 12px;
+    display: inline-block;
+    width: 25%;
+}
+.timepicker .slider-element{
+    height: 8px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px #555 inset;
+    display: inline-block;
+    width: 73%;
+    background-color:#b4b4b4;
+}
+
+.timepicker .slider-element .slider-value{
+    background-color:#8FBC70;
+    height: 8px;
+    width: 50%;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px #555 inset;
+}
+
+.timepicker .slider-element .slider-value-setter{
+    background-image: url("../img/calendar_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -42px -195px;
+    width: 20px;
+    height: 37px;
+    position: absolute;
+    left: 50%;
+    margin-left: -10px;
+    top:-7px;
+    cursor: pointer;
+}
