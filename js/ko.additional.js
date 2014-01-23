@@ -223,32 +223,96 @@ ko.bindingHandlers['datepick'] = {
 
         $element.data('textHolder', textHolder);
         $element.data('datePicker', datePicker);
-
         //timePicker
-        var createSlider = function (title, label, parts) {
+        var createSlider = function (title, label, parts, initValue, callback) {
                 var text = $('<div/>', {class: 'slider-text'}).text(label),
                     resizer = $('<div/>', {class: 'slider-element'}),
                     resizerVal = $('<div/>', {class: 'slider-value'}),
                     resizerSetter = $('<div/>', {class: 'slider-value-setter'}),
-                    drag = false;
+                    k = 100 / parts,
+                    findPos = function (obj) {
+                        var curLeft = 0,
+                            curTop = 0;
+
+                        if (obj.offsetParent) {
+                            curLeft = obj.offsetLeft
+                            curTop = obj.offsetTop
+                            while (obj = obj.offsetParent) {
+                                curLeft += obj.offsetLeft
+                                curTop += obj.offsetTop
+                            }
+                        }
+                        return [curLeft, curTop];
+                    }
+                    ;
 
                 resizer.append(resizerVal);
                 resizer.append(resizerSetter);
 
-                resizerSetter.on('mousedown', function () {
+                var drag = false,
+                    pos,
+                    ox,
+                    dx,
+                    width,
+                    valCss,
+                    val;
+
+                if (initValue !== undefined) {
+                    resizerSetter.css({'left': k * initValue + '%'});
+                    resizerVal.css({'width': k * initValue + '%'});
+                }
+
+
+                resizer.on('mousedown', function (e) {
+                    var target = e.target.className == 'slider-value-setter'?
+                        e.target.parentNode
+                        : e.target;
+
+                    width = resizer.width();
+                    pos = findPos(target);
+                    ox = pos[0];
+                    dx = e.screenX - ox;
                     drag = true;
+
+                    valCss = dx/width*100 | 0;
+                    val = parts*valCss/100  | 0;
+                    val = val > parts ? parts : val;
+                    val = val < 0 ? 0 : val;
+
+                    valCss = valCss > 105 ? 105 : valCss;
+                    valCss = valCss < 10 ? 10 : valCss;
+
+                    resizerSetter.css({'left': valCss + '%'});
+                    resizerVal.css({'width': valCss + '%'});
+
+                    $(document).on('mouseup.'+title, function () {
+                        drag = false;
+                        callback(val);
+                        $(document).off('mouseup.'+title);
+                    });
                 });
 
-                $(document).on('mousemove', function () {
-                    if(drag){
-                        resizerSetter.css({'left':'40%'});
-                        resizerVal.css({'width':'40%'});
+                $(document).on('mousemove', function (e) {
+                    var target = e.target.className == 'slider-value-setter'?
+                        e.target.parentNode
+                        : e.target;
+                    if (drag) {
+                        dx = e.screenX - ox;
+
+                        valCss = dx/width*100 | 0;
+                        val = parts*valCss/100  | 0;
+                        val = val > parts ? parts : val;
+                        val = val < 0 ? 0 : val;
+
+                        valCss = valCss > 105 ? 105 : valCss;
+                        valCss = valCss < 10 ? 10 : valCss;
+
+                        resizerSetter.css({'left': valCss + '%'});
+                        resizerVal.css({'width': valCss + '%'});
                     }
                 });
 
-                resizerSetter.on('mouseup', function () {
-                    drag = false;
-                });
+
 
                 return $('<div/>', {class: 'slider-holder'})
                     .append(text)
@@ -256,9 +320,20 @@ ko.bindingHandlers['datepick'] = {
             },
             timePicker,
             timeOut = $('<div/>', {class: 'timeOut'}),
-            minSlider = createSlider('minute', 'Мин', 60),
-            hourSlider = createSlider('hour', 'Час', 24),
+            minSlider = createSlider('minute', 'Мин', 59, moment(value.value()).minutes(), function(val){
+                var new_val = moment(value.value()).minutes(val);
+                value.value(new_val);
+                timeOut.text(new_val.format("HH:mm"));
+            }),
+            hourSlider = createSlider('hour', 'Час', 23, moment(value.value()).hours(), function(val){
+                var new_val = moment(value.value()).hours(val);
+                value.value(new_val);
+                timeOut.text(new_val.format("HH:mm"));
+            }),
             okButton = $('<input type="button" class="vse-cancel small button" value="OK"/>');
+            okButton.on('click',function(){
+                datePicker.addClass('hidden').removeClass('fadeInDown');
+            });
 
         if (value.time) {
             timePicker = $('<div/>', {class: 'timepicker'})
