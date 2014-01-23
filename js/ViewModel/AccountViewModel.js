@@ -98,9 +98,9 @@ var AccountViewModel = function (data, app) {
             amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
             date = tr.created * 1000;
 
-            if (self.group() == 0) {
+            if (self.group() == 0 && tr.deleted() == 0) {
                 if (date > currentmonth.getTime())res += amount;
-            } else {
+            } else if(tr.deleted() == 0){
                 res += amount;
             }
         });
@@ -195,7 +195,11 @@ var AccountViewModel = function (data, app) {
                             position:1
                         };
                         ServerApi.createTransaction(obj,function(r){
-                            console.log(r);
+                            if(r.transaction_id){
+                                obj.transaction_id = r.transaction_id;
+                                app.transactions.push(new TransactionViewModel(obj,app));
+                            }
+                            self.recalculateSum(app)
                         });
                     }
                 }

@@ -59,7 +59,12 @@ var TransactionViewModel = function (data, app) {
     };
     self.deleted.subscribe(function (val) {
         ServerApi.updateTransaction('deleted', {transaction_id: self.id, value: val}, function (r) {
-            console.log(r);
+            if(r){
+                app.accountsHash[self.from_id] && app.accountsHash[self.from_id].recalculateSum();
+                app.accountsHash[self.to_id] && app.accountsHash[self.to_id].recalculateSum();
+            }else{
+                self.deleted(0);
+            }
         });
     });
 
