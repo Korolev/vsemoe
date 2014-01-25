@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <title>Всё Моё &mdash; Сервис управления личными финансами</title>
+    <meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами - VseMoe.RU">
+    <meta name="description" content="Всё Моё &mdash; Сервис управления личными финансами и и семейным бюджетом - VseMoe.RU">
+    <link rel="shortcut icon" href="favicon.ico">
+    <style>
+        body{
+            font-size: 12px;
+            font-family: Tahoma, "sans-serif";
+        }
+        table{
+            border-collapse: collapse;
+        }
+        table td, table th{
+            border: 1px solid #ccc;a
+            padding: 3px;
+        }
+        td{
+            vertical-align: top;
+        }
+        .child td{
+            padding-left: 5px;
+            background-color: #eee;
+        }
+        th{
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body class="inner">
+<div>
+    <table >
+        <tr>
+            <td>Login:</td>
+            <td><input type="text" data-bind="value:login"></td>
+        </tr>
+        <tr>
+            <td>Pass:</td>
+            <td><input type="password" data-bind="value:password"></td>
+        </tr>
+        <tr>
+            <td>Serv:</td>
+            <td><select data-bind="options:ARRAY_OF_URLS, value:__processUrl"></select></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button data-bind="click:loginAction">Login</button></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <div id="mk_spinner" data-bind="visible:showSpinner">Loading...</div>
+    <div data-bind="visible:$root.accounts().length" style="display:none; margin-top:20px">
+        <select data-bind="options:actions,optionsText:'label',value:selectedAction,optionsCaption:'--'"></select>
+    </div>
+    <div data-bind="with:selectedAction">
+        <h3 data-bind="text: 'Операция: '+ label"></h3>
+        <p data-bind="text:description"></p>
+    </div>
+    <div data-bind="visible:$root.accounts().length" style="display:none; margin-top:20px">
+        <table style="width: 100%">
+            <tr>
+                <th>Счет</th>
+                <th>Категория</th>
+            </tr>
+            <tr>
+                <td data-bind="template:{name:'tr-list-tpl',data:accLeft}"></td>
+                <td data-bind="template:{name:'tr-list-tpl',data:accRight}"></td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+
+<script type="text/html" id="tr-list-tpl">
+    <table style="width: 90%">
+        <thead>
+        <th>ID</th>
+        <th>PARENT ID</th>
+        <th>NAME</th>
+        <th>GROUP</th>
+        <th>TYPE</th>
+        <th>CATEGORY</th>
+        </thead>
+        <tbody data-bind="foreach: $data">
+        <tr data-bind="css:{'child': parent > 0}">
+            <td data-bind="text:account_id"></td>
+            <td data-bind="text:parent"></td>
+            <td data-bind="text:description"></td>
+            <td data-bind="text:group"></td>
+            <td data-bind="text:type"></td>
+            <td data-bind="text:category"></td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+
+<script src="js/lib/jquery-1.8.2.min.js"></script>
+<script src="js/lib/easyXDM/Core.js"></script>
+<script src="js/lib/easyXDM/Rpc.js"></script>
+<script src="js/lib/easyXDM/easyXDM.debug.js"></script>
+<script src="js/lib/json2.js"></script>
+<script src="js/lib/knockout.js"></script>
+<script>
+    ko.observableArray.fn.pushAll = function (valuesToPush) {
+        var underlyingArray = this();
+        this.valueWillMutate();
+        ko.utils.arrayPushAll(underlyingArray, valuesToPush);
+        this.valueHasMutated();
+        return this;
+    };
+    var __processUrl = "https://api.vsemoe.com"; // "http://dev.vsemoe.com"; //
+    var ARRAY_OF_URLS = ["https://api.vsemoe.com","http://dev.vsemoe.com"];
+
+    var ApplicationViewModel = function(){
+        var self = this,
+                createRequest = function(url,data,callback){
+                    data.lang = 'ru';
+                    if(self.token()){
+                        data.token = self.token();
+                    }
+                    self.showSpinner(true);
+                    $.ajax({
+                        url: self.__processUrl()+url,
+                        type: 'POST',
+                        dataType: 'JSONP',
+                        data: data,
+                        success: function (response) {
+                            self.showSpinner(false);
+                            if(response.status == 1){
+                                callback&&callback(response);
+                            }
+                        }
+                    });
+                };
+
+        this.__processUrl = ko.observable("http://dev.vsemoe.com");
+
+        this.login = ko.observable("korolev_m@b3k.ru");
+        this.password = ko.observable('222');
+        this.showSpinner = ko.observable(false);
+        this.token = ko.observable("");
+
+        this.currency = {0:"currency_id = 0"};
+        this.accountNames = {0:"account_id = 0"};
+
+        this.accounts = ko.observableArray([]);
+        this.type = ko.observable(null);
+        this.group = ko.observable(null);
+
+        this.actions = [{
+            label: 'Расход',
+            description: 'Слева "Мои средства" и "Пассивы"(это группа 1 и группа 2, тип любой), справа все (группа 0 и тип OUT) счета; транзакция отрицательная',
+            group_from: [1,2],
+            type_from: false,
+            group_to: 0,
+            type_to: 'OUT'
+        },{
+            label: 'Доход',
+            description: 'Слева "Мои средства" и "Пассивы"(это группа 1 и группа 2, тип любой), справа все (группа 0 и тип IN) счета; транзакция положительная',
+            group_from: [1,2],
+            type_from: false,
+            group_to: 0,
+            type_to: 'IN'
+        },{
+            label: 'Перемещение',
+            description: 'Слева "Мои средства" и "Пассивы"(это группа 1 и группа 2, тип любой), справа они же',
+            group_from: [1,2],
+            type_from: false,
+            group_to: [1,2],
+            type_to: false
+        },{
+            label: 'Дать в долг',
+            description: 'Слева "Мои средства" и "Пассивы"(это группа 1 и группа 2, тип любой), справа все с группой 1(Активы) и типом CASH',
+            group_from: [1,2],
+            type_from: false,
+            group_to: 1,
+            type_to: 'CASH'
+        },{
+            label: 'Взять в долг',
+            description: 'Слева "Мои средства" и "Пассивы"(это группа 1 и группа 2, тип любой), справа все с группой 2(Пассивы) и типом LOAN',
+            group_from: [1,2],
+            type_from: false,
+            group_to: 2,
+            type_to: 'LOAN'
+        }];
+
+        this.selectedAction = ko.observable();
+
+        this.baseTypes = ["IN", "OUT", "CASH", "BANK", "CARD", "LOAN", "ELECTRON", "OTHER"];
+        this.baseGroups = [{
+            val:0,
+            label: 'Other'
+        },{
+            val:1,
+            label: 'Active'
+        },{
+            val:2,
+            label: 'Passive'
+        }];
+
+        this.filteredAccounts = ko.computed(function(){
+            return self.accounts();
+        },this);
+
+        this.accLeft = ko.computed(function(){
+            var fAcc = [],
+                    action = self.selectedAction();
+            if(action){
+                $.each(self.accounts(),function(k,acc){
+                    if(action.group_from !== false && action.type_from ){
+                        if($.isArray(action.group_from)){
+                            if(action.group_from.indexOf(acc.group) > -1 && acc.type == action.type_from){
+                                fAcc.push(acc);
+                            }
+                        }else{
+                            if(acc.group == action.group_from && acc.type == action.type_from){
+                                fAcc.push(acc);
+                            }
+                        }
+                    }else if(action.group_from !== false && !action.type_from){
+                        if($.isArray(action.group_from)){
+                            if(action.group_from.indexOf(acc.group) > -1){
+                                fAcc.push(acc);
+                            }
+                        }else{
+                            if(acc.group == action.group_from){
+                                fAcc.push(acc);
+                            }
+                        }
+                    }
+                });
+            }else{
+                fAcc = self.accounts();
+            }
+            return fAcc;
+        },this).extend({throttle:1});
+
+        this.accRight = ko.computed(function(){
+            var fAcc = [],
+                    action = self.selectedAction();
+            if(action){
+                $.each(self.accounts(),function(k,acc){
+                    if(action.group_to !== false && action.type_to ){
+                        if($.isArray(action.group_to)){
+                            if(action.group_to.indexOf(acc.group) > -1 && acc.type == action.type_to){
+                                fAcc.push(acc);
+                            }
+                        }else{
+                            if(acc.group == action.group_to && acc.type == action.type_to){
+                                fAcc.push(acc);
+                            }
+                        }
+                    }else if(action.group_to !== false && !action.type_to){
+                        if($.isArray(action.group_to)){
+                            if(action.group_to.indexOf(acc.group) > -1){
+                                console.log(acc.description,acc.group,action.group_to);
+                                fAcc.push(acc);
+                            }
+                        }else{
+                            if(acc.group == action.group_to){
+                                fAcc.push(acc);
+                            }
+                        }
+                    }
+                });
+            }
+            return fAcc;
+        },this).extend({throttle:1});;
+
+        this.selectedAction.subscribe(function(val){
+            console.log(val);
+        });
+
+
+
+
+        this.selectedAccount = ko.observable();
+
+
+        this.loginAction = function(){
+            createRequest("/user/login",{ user: self.login(), password: self.password()},function (response) {
+                self.showSpinner(false);
+                if(response.status == 1){
+                    self.token(response.data.token);
+                } else {
+                    alert(response.text);
+                }
+            });
+        };
+
+        this.token.subscribe(function(val){
+            if(val) {
+                createRequest("/account/list",{},function (response) {
+                    self.showSpinner(false);
+                    if (response.status == 1) {
+                        $.each(response.data, function(k,v){
+                            v.group = +v.group;
+                            self.accountNames[v.account_id] = v.description;
+                        });
+                        self.accounts.removeAll();
+                        self.accounts.pushAll(response.data);
+                    } else {
+                        alert(response.text);
+                    }
+                });
+            }
+        });
+
+        this.accounts.subscribe(function(val){
+
+        });
+
+
+    };
+
+    $(function(){
+        var app = new ApplicationViewModel();
+        ko.applyBindings(app);
+        app.loginAction();
+        $__app = app;
+    })
+</script>
+
+</body>
+</html>

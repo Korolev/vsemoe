@@ -309,6 +309,7 @@ ko.bindingHandlers['datepick'] = {
 
                         resizerSetter.css({'left': valCss + '%'});
                         resizerVal.css({'width': valCss + '%'});
+                        callback(val);
                     }
                 });
 
