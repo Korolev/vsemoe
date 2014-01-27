@@ -1217,13 +1217,7 @@ input.vse-cancel:active{
 }
 
 .t_row:not(.color_grey):not(.t_thead):not(.edit_row):hover {
-    background-color: #D6DCE0;
-    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#FFD9DFE4,EndColorStr=#FFD2D7DC)!important;
-    background: -moz-linear-gradient(top,#D9DFE4 0,#D2D7DC 100%);
-    background: -ms-linear-gradient(top,#D9DFE4 0,#D2D7DC 100%);
-    background: -o-linear-gradient(top,#D9DFE4 0,#D2D7DC 100%);
-    background: -webkit-linear-gradient(top,#D9DFE4 0,#D2D7DC 100%);
-    background: linear-gradient(to bottom,#D9DFE4 0,#D2D7DC 100%);
+    background-color: #ebe8dc;
 }
 
 .t_row.t_thead,

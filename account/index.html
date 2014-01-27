@@ -850,6 +850,21 @@
 
             </div>
         </div>
+        <!-- ko if:comment() == 'frienddeposit' -->
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Взять из</label>
+            </div>
+            <div class="form_row_input">
+                <input type="hidden" data-bind="select:{
+                                        options:$root.getActiveAcc,
+                                        optionText:'description',
+                                        optionValue: 'id',
+                                        value:createFormAcc
+                                        }">
+            </div>
+        </div>
+        <!-- /ko -->
         <div class="form_row big_margin">
             <div class="form_row_label">
                 <label>Тип</label>

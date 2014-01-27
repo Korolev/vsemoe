@@ -27,6 +27,9 @@ var AccountViewModel = function (data, app) {
     this.expand = ko.observable(data.expand | 0);
     this.show = ko.observable(!!(data.show|0));
 
+    this.showFromIdSelect = ko.observable(false);
+    this.createFormAcc = ko.observable();
+
     this.comment = ko.observable(data.comment || "other");
     this.helpText = data.helpText || '';
 
@@ -155,7 +158,7 @@ var AccountViewModel = function (data, app) {
             app.accounts.remove(self);
             return false;
         }
-        if(self.id){
+        if(self.id && self.id != 'to_delete'){
             ServerApi.updateAccount(false, {
                 data: JSON.stringify({
                     description: self.description(),
@@ -179,9 +182,10 @@ var AccountViewModel = function (data, app) {
                 show: self.show() ? 1 : 0
             },function(r){
                 if(r.account_id){
+                    var oldId = self.id;
                     self.id = r.account_id;
                     app.accountsHash[self.id] = self;
-                    app.accounts.push(self);
+                    if(!oldId)app.accounts.push(self);
                     if(self.sum()>0){
                         var obj = {
                             from_id: r.account_id,

@@ -279,7 +279,6 @@ var ApplicationViewModel = function () {
             }
             i++;
         }
-
         return res;
     }, this).extend({throttle: 50});
     this.accountsHash = {};
@@ -326,7 +325,7 @@ var ApplicationViewModel = function () {
     this.addNewAccount = function () {
         var parent = self.accountsViewListParent(),
             accConf = {
-                account_id: '',
+                account_id: 'to_delete',
                 currency_id: self.baseCurrencyId(),
                 parent: parent,
                 group: self.accountsViewListGroup(),
@@ -336,7 +335,6 @@ var ApplicationViewModel = function () {
 
         self.accounts.unshift(acc);
         if (parent > 0) {
-            console.log('PARENT!!');
             self.accountsHash[parent].children.push(acc);
         }
     };
