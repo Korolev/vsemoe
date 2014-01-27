@@ -663,7 +663,7 @@
             <div class="dateInput" data-bind="datepick:{value:created,format:'DD.MM.YY',time:true}"></div>
         </div><div class="td_fromaccount_input">
             <input type="hidden" data-bind="select:{
-                                        options:$root.getActiveAccFlat(),
+                                        options:fromAcc,
                                         optionText:'description',
                                         optionValue: 'id',
                                         value:from_id,
@@ -681,7 +681,7 @@
                                         }">
             </div><div class="acc_select">
                 <input type="hidden" data-bind="treeSelect:{
-                                            options:getFromList,
+                                            options:toAcc,
                                             optionText:'description',
                                             optionValue: 'id',
                                             optionTree: 'children',

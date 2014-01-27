@@ -41,7 +41,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
             action: 'move',
             description: 'Перемещение',
             method: 'getActiveAcc'
-        },
+        }/*,
         {
             icon: 'tofriend_i',
             action: 'tofriend',
@@ -51,7 +51,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
             icon: 'ffriend_i',
             action: 'ffriend',
             description: 'Взять в долг'
-        }
+        }*/
 
     ]);
     this.action = ko.observable(self.actions()[0]);
@@ -79,6 +79,102 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
     this.editMode = ko.observable(true);
     this.commentEdit = ko.observable(false);
+
+    this.actionsMap = {
+        substract: {
+            group_from: [1, 2],
+            type_from: false,
+            group_to: 0,
+            type_to: 'OUT'
+        }, add: {
+            group_from: [1, 2],
+            type_from: false,
+            group_to: 0,
+            type_to: 'IN'
+        },
+        move: {
+            group_from: [1, 2],
+            type_from: false,
+            group_to: [1, 2],
+            type_to: false
+        },
+        tofriend: {
+            group_from: [1, 2],
+            type_from: false,
+            group_to: 1,
+            type_to: 'CASH'
+        },
+        ffriend: {
+            group_from: [1, 2],
+            type_from: false,
+            group_to: 2,
+            type_to: 'LOAN'
+        }
+    };
+
+    this.fromAcc = ko.computed(function(){
+        var fAcc = [],
+            action = self.actionsMap[self.action().action];
+        if(action){
+            $.each(app.accounts(),function(k,acc){
+                if(action.group_from !== false && action.type_from ){
+                    if($.isArray(action.group_from)){
+                        if(action.group_from.indexOf(acc.group()) > -1 && acc.type() == action.type_from){
+                            if(!acc.children().length)fAcc.push(acc);
+                        }
+                    }else{
+                        if(acc.group() == action.group_from && acc.type() == action.type_from){
+                            if(!acc.children().length)fAcc.push(acc);
+                        }
+                    }
+                }else if(action.group_from !== false && !action.type_from){
+                    if($.isArray(action.group_from)){
+                        if(action.group_from.indexOf(acc.group()) > -1){
+                            if(!acc.children().length)fAcc.push(acc);
+                        }
+                    }else{
+                        if(acc.group() == action.group_from){
+                            if(!acc.children().length)fAcc.push(acc);
+                        }
+                    }
+                }
+            });
+        }else{
+            fAcc = self.accounts();
+        }
+        return fAcc;
+    },this).extend({throttle:1});
+
+    this.toAcc = ko.computed(function(){
+        var fAcc = [],
+            action = self.actionsMap[self.action().action];
+        if(action){
+            $.each(app.accounts(),function(k,acc){
+                if(action.group_to !== false && action.type_to ){
+                    if($.isArray(action.group_to)){
+                        if(action.group_to.indexOf(acc.group()) > -1 && acc.type() == action.type_to){
+                            if(acc.parent() == 0)fAcc.push(acc);
+                        }
+                    }else{
+                        if(acc.group() == action.group_to && acc.type() == action.type_to){
+                            if(acc.parent() == 0)fAcc.push(acc);
+                        }
+                    }
+                }else if(action.group_to !== false && !action.type_to){
+                    if($.isArray(action.group_to)){
+                        if(action.group_to.indexOf(acc.group()) > -1){
+                            if(acc.parent() == 0)fAcc.push(acc);
+                        }
+                    }else{
+                        if(acc.group() == action.group_to){
+                            if(acc.parent() == 0)fAcc.push(acc);
+                        }
+                    }
+                }
+            });
+        }
+        return fAcc;
+    },this).extend({throttle:1});
 
     this.save = function () {
 
