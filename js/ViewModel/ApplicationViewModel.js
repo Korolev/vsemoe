@@ -272,6 +272,7 @@ var ApplicationViewModel = function () {
             type = self.accountsViewListType();
 
         while (i < len) {
+
             if (acs[i].parent() == parent
                 && acs[i].group() == group
                 && acs[i].type() == type) {
@@ -330,6 +331,7 @@ var ApplicationViewModel = function () {
                 parent: parent,
                 group: self.accountsViewListGroup(),
                 type: self.accountsViewListType(),
+                show: 1,
                 editMode: true
             }, acc = new AccountViewModel(accConf, self);
 

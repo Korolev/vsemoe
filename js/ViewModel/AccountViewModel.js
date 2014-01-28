@@ -20,7 +20,7 @@ var AccountViewModel = function (data, app) {
     this.description = ko.observable(data.description || "");
     this.group = ko.observable(data.group | 0 || "");
     this.type = ko.observable(data.type || "");
-    this.parent = ko.observable(data.parent || "");
+    this.parent = ko.observable(data.parent | 0 || "");
     this.newParent = ko.observable(data.parent || "");
     this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
@@ -82,7 +82,7 @@ var AccountViewModel = function (data, app) {
     this.toggleExpand = function () {
         var res = !self.expand();
 //mb app.action() === 'observe' ?
-        if (self.children().length) {
+        if (self.children().length) {aa
             self.expand(res);
             ServerApi.updateAccount("expand", {account_id: self.id, value: res ? 1 : 0}, function (r) {
 
@@ -101,6 +101,7 @@ var AccountViewModel = function (data, app) {
             amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
             date = tr.created * 1000;
 
+            //TODO use rates;
             if (self.group() == 0 && tr.deleted() == 0) {
                 if (date > currentmonth.getTime())res += amount;
             } else if(tr.deleted() == 0){

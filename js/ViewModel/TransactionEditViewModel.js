@@ -205,7 +205,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     ServerApi.createTransaction(obj, function (r) {
                         saveCallback && saveCallback(r);
                         obj.transaction_id = r.transaction_id;
-                        app.transactions.push(new TransactionViewModel(JSON.parse(JSON.stringify(obj))));
+                        app.transactions.push(new TransactionViewModel(JSON.parse(JSON.stringify(obj)),app));
                         self.comment('Комментарий');
                         self.created(moment());
                         self.to_id('');

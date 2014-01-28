@@ -3,7 +3,6 @@
  */
 
 var TransactionViewModel = function (data, app) {
-
     var self = this;
 
     this.id = data.transaction_id;
@@ -22,12 +21,29 @@ var TransactionViewModel = function (data, app) {
     this.template = data.template | 0;
     this.template_id = data.template_id;
 
+    this.currencyRate = ko.observable(1);
+
     this.editInstance = ko.observable();
 
     this.removeInstance = function(){
         app.transactionEdit().editMode(true);
         self.editInstance(false);
     };
+
+    if(self.currency != app.baseCurrencyId()){
+        ServerApi.getCurrencyRate({
+            currency_id:self.currency,
+            from:self.created.unix()
+        },function(r){
+            var i = 0,
+                rate;
+            while(r[i].currency_id != app.baseCurrencyId()){
+                rate = parseFloat(r[i+1].rate)/parseFloat(r[i].rate);
+                i++;
+            }
+            self.currencyRate(rate);
+        })
+    }
 
     this.editRecord = function () {
         $.each(app.transactionsSet(),function(k,tr){
