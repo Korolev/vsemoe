@@ -202,7 +202,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                         app.accountsHash[self.to_id()] && app.accountsHash[self.to_id()].recalculateSum();
                     })
                 } else {
-                    ServerApi.createTransaction(obj, function (r) {
+                    app.createTransaction(obj, function (r) {
                         saveCallback && saveCallback(r);
                         obj.transaction_id = r.transaction_id;
                         app.transactions.push(new TransactionViewModel(JSON.parse(JSON.stringify(obj)),app));
@@ -213,25 +213,12 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     })
                 }
 
-            },
-            calculateCurrency = function (cur_from, cur_to, amount) {
-                if (cur_from != cur_to && false) {
-                    console.log(cur_from, cur_to);
-                    ServerApi.getCurrencyRate({
-                        currency_id: cur_to,
-                        from: moment().format('YYYY-MM-DD')
-                    }, function (r) {
-                        send((parseFloat(r[1].rate) / r[0].rate) * amount);
-                    });
-                } else {
-                    send(amount);
-                }
             };
 
         var from_acc = app.accountsHash[self.from_id()],
-            to_acc = app.accountsHash[self.to_id()];//TODO if self.currency !== to.currency ???
+            to_acc = app.accountsHash[self.to_id()];
 
-        calculateCurrency(from_acc.currency(), self.currency(), self.amount());
+        send(self.amount());
     };
 
     this.cancel = function () {

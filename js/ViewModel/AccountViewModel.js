@@ -82,7 +82,7 @@ var AccountViewModel = function (data, app) {
     this.toggleExpand = function () {
         var res = !self.expand();
 //mb app.action() === 'observe' ?
-        if (self.children().length) {aa
+        if (self.children().length) {
             self.expand(res);
             ServerApi.updateAccount("expand", {account_id: self.id, value: res ? 1 : 0}, function (r) {
 
@@ -99,7 +99,15 @@ var AccountViewModel = function (data, app) {
 
         each(self.transactions, function (k, tr) {
             amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
-            date = tr.created * 1000;
+            if(self.currency() && tr.currency != self.currency()){
+                amount = app.calculateAmount(
+                    tr.currency,
+                    self.currency(),
+                    amount,
+                    tr.created.format('YYYY-MM-DD')
+                );
+            }
+            date = tr.created.unix() * 1000;
 
             //TODO use rates;
             if (self.group() == 0 && tr.deleted() == 0) {
@@ -116,7 +124,7 @@ var AccountViewModel = function (data, app) {
             res *= -1;
         }
 
-        if (self.parent() && self.parent().length > 1 && res) {
+        if (self.parent() && (self.parent() | 0) > 1 && res) {
             app.accountsHash[self.parent()].sum(app.accountsHash[self.parent()].sum() + res);
         }
 
@@ -135,11 +143,10 @@ var AccountViewModel = function (data, app) {
 
     this.editMode.subscribe(function (edit) {
         if (!edit) {
-            var val = self.newParent();
+            var val = self.newParent() | 0;
             if (val && val != self.id && val != self.parent()) {
                 app.accountsHash[val].children.push(self);
                 if (self.parent() > 0) {
-                    console.log(self.parent());
                     app.accountsHash[self.parent()].children.remove(self);
                 }
                 self.parent(val);
@@ -157,6 +164,9 @@ var AccountViewModel = function (data, app) {
     this.save = function () {
         if(!self.description()){
             app.accounts.remove(self);
+            ServerApi.deleteAccount({
+               account_id:self.id
+            });
             return false;
         }
         if(self.id && self.id != 'to_delete'){
@@ -199,12 +209,12 @@ var AccountViewModel = function (data, app) {
                             hidden:1,
                             position:1
                         };
-                        ServerApi.createTransaction(obj,function(r){
+                        app.createTransaction(obj,function(r){
                             if(r.transaction_id){
                                 obj.transaction_id = r.transaction_id;
                                 app.transactions.push(new TransactionViewModel(obj,app));
                             }
-                            self.recalculateSum(app)
+                            self.recalculateSum(app);
                         });
                     }
                 }
@@ -221,4 +231,21 @@ var AccountViewModel = function (data, app) {
         });
         self.children.pushAll(res);
     };
+
+    this.removeTransaction = function(tId){
+        var idx = -1;
+        $.each(self.transactions,function(k,tr){
+            if(tr.id == tId){
+                idx = k;
+            }
+        });
+        if(idx > -1){
+            self.transactions.splice(idx,1);
+        }
+        self.recalculateSum();
+    }
+    this.addTransaction = function(tr){
+        self.transactions.push(tr);
+        self.recalculateSum();
+    }
 };

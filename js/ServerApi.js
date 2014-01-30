@@ -38,9 +38,9 @@ var ServerApi = {
                     success: function(r){
                         console.log(r);
                         if(r.status == 1){
-                            callback(r.data || r.text);
+                            callback && callback(r.data || r.text);
                         }else{
-                            callback(false);
+                            callback && callback(false);
                             console.info(r);
                         }
                     }
@@ -109,9 +109,11 @@ var ServerApi = {
     getCurrencyRate: function (dataObj, callback) {
         this.utils().post("/currency/rate", dataObj, callback);
     },
-    getCurrencyRateList: function (token, currency_id, from, callback) {
-        var data = this.utils().makeObj("token, currency_id, from", arguments);
-        this.utils().post("/currency/ratelist", data, callback);
+    getCurrencyRateDay: function (dataObj, callback) {
+        this.utils().post("/rate/day", dataObj, callback);
+    },
+    getCurrencyRateList: function (dataObj, callback) {
+        this.utils().post("/currency/ratelist", dataObj, callback);
     },
 //Bank
     getBankList: function () {

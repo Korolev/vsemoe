@@ -87,6 +87,12 @@ ko.bindingHandlers['digitext'] = {
     'update': function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor()) + "";
         value = value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+        if(value.indexOf('.') > -1){
+            value = function(val){
+                var res = val.split('.');
+                return res[0]+','+res[1].substr(0,2);
+            }(value);
+        }
         ko.utils.setTextContent(element, value);
     }
 };

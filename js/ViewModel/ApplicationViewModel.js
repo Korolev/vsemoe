@@ -97,7 +97,7 @@ var ApplicationViewModel = function () {
                 }
             },
             removeCat: {
-                text: "Хотите улалить категорию?",
+                text: "Хотите удалить категорию?",
                 buttons: {
                     okLabel: "Да",
                     okFunc: function () {
@@ -489,7 +489,9 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.type() == "IN" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
-                sum += parseInt(acc.sum());
+                sum += acc.currency() != self.baseCurrencyId() ?
+                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    parseInt(acc.sum());
             }
         });
         self.totalGain(sum);
@@ -501,7 +503,9 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.type() == "OUT" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
-                sum += parseInt(acc.sum());
+                sum += acc.currency() != self.baseCurrencyId() ?
+                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    parseInt(acc.sum());
             }
         });
         self.totalConsumption(sum);
@@ -513,7 +517,9 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 1 && acc.parent() == 0) {
                 res.push(acc);
-                sum += parseInt(acc.sum());
+                sum += acc.currency() != self.baseCurrencyId() ?
+                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    parseInt(acc.sum());
             }
         });
         self.totalActive(sum);
@@ -521,11 +527,10 @@ var ApplicationViewModel = function () {
     },this).extend({throttle:1});
 
     this.getActiveAccFlat = ko.computed(function () {
-        var res = [], sum = 0;
+        var res = [];
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 1) {
                 res.push(acc);
-                sum += parseInt(acc.sum());
             }
         });
         return res;
@@ -536,7 +541,9 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 2 && acc.parent() == 0) {
                 res.push(acc);
-                sum += parseFloat(acc.sum());
+                sum += acc.currency() != self.baseCurrencyId() ?
+                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    parseInt(acc.sum());
             }
         });
         self.totalPassive(sum);
@@ -556,6 +563,22 @@ var ApplicationViewModel = function () {
             res = 1;
         }
         return cssClass[res];
+    };
+
+    this.calculateAmount = function(fromCurId,toCurId,amount,from){
+        //TODO use rate to baseCurrency
+        var res = amount,
+            date = from || moment().format('YYYY-MM-DD'),
+            fromRate = fromCurId == self.baseCurrencyId() ?
+                1
+                : self.___usedCurrencyRates[fromCurId+'-'+date] || 1,
+            toRate = toCurId == self.baseCurrencyId() ?
+                1
+                : self.___usedCurrencyRates[toCurId+'-'+date] || 1;
+
+        res = res * fromRate;
+        res = res / toRate;
+        return res;
     };
 
     this.userChangepass = function () {
@@ -642,7 +665,13 @@ var ApplicationViewModel = function () {
                 self.accountsHash = {};
                 var res = [],
                     accIds = [];
+
+                self.___firstDate = moment().unix();
+                self.___usedCurrency = self.___usedCurrency || {};
+                self.___usedCurrencyRates = self.___usedCurrencyRates || {};
+
                 each(r, function (k, acc) {
+                    self.___usedCurrency[acc.currency_id] = {};
                     var a = new AccountViewModel(acc, self);
                     res.push(a);
                     self.accountsHash[a.id] = a;
@@ -658,13 +687,33 @@ var ApplicationViewModel = function () {
                 each(self.accounts(), function (k, acc) {
                     acc.initChildren(self);
                 });
-                ServerApi.getTransactionList({}, function (r) {
+                ServerApi.getTransactionList({
+                    account_id: accIds.join(',')
+                }, function (r) {
                     var trs = [];
                     each(r,function(k,tr){
+                        self.___usedCurrency[tr.currency_id] = 1;
+                        if(tr.currency_id != self.baseCurrencyId()){
+                            self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
+                            self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
+                        }
                        trs[k] = new TransactionViewModel(tr,self);
                     });
-                    self.transactions.removeAll();
-                    self.transactions.pushAll(trs);
+
+                    $.each(self.___usedCurrency, function (key, val) {
+                        if (key != self.baseCurrencyId()) {
+                            ServerApi.getCurrencyRateList({
+                                currency_id: key,
+                                from: moment.unix(self.___firstDate).subtract('d',1).unix()
+                            }, function (r) {
+                                each(r,function(k,curr){
+                                    self.___usedCurrencyRates[curr.currency_id+'-'+moment(Date(curr.modified*1000)).format('YYYY-MM-DD')] = curr.rate;
+                                });
+                                self.transactions.removeAll();
+                                self.transactions.pushAll(trs);
+                            });
+                        }
+                    });
                 });
             });
         }
@@ -791,6 +840,24 @@ var ApplicationViewModel = function () {
             }
         });
     });
+
+    this.createTransaction = function(obj,callback){
+        var app = self;
+        if(obj.currency_id != app.baseCurrencyId()
+            && !app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')]){
+            ServerApi.getCurrencyRateDay({
+                currency_id: obj.currency_id,
+                from: moment().unix()
+            },function(_r){
+                each(_r,function(k,curr){
+                    app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')] = curr.rate;
+                    ServerApi.createTransaction(obj,callback);
+                });
+            });
+        }else{
+            ServerApi.createTransaction(obj,callback);
+        }
+    };
 
     this.router.run();
 };

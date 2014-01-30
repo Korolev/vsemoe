@@ -30,38 +30,35 @@ var TransactionViewModel = function (data, app) {
         self.editInstance(false);
     };
 
-    if(self.currency != app.baseCurrencyId()){
-        ServerApi.getCurrencyRate({
-            currency_id:self.currency,
-            from:self.created.unix()
-        },function(r){
-            var i = 0,
-                rate;
-            while(r[i].currency_id != app.baseCurrencyId()){
-                rate = parseFloat(r[i+1].rate)/parseFloat(r[i].rate);
-                i++;
-            }
-            self.currencyRate(rate);
-        })
-    }
-
     this.editRecord = function () {
         $.each(app.transactionsSet(),function(k,tr){
             tr.removeInstance && tr.removeInstance();
         });
         app.transactionEdit().editMode(false);
         self.editInstance(new TransactionEditViewModel(self, app, function (obj,r) {
-            var uw = ko.utils.unwrapObservable;
+            var uw = ko.utils.unwrapObservable,
+                from_id = uw(obj.from_id),
+                to_id = uw(obj.to_id);
+
             self.amount = uw(obj.amount);
             self.comment = uw(obj.comment);
             self.created = moment.unix(uw(obj.created));
-            self.from_id = uw(obj.from_id);
-            self.to_id = uw(obj.to_id);
             self.currency = uw(obj.currency_id);
-            console.log(self);
+
+            if (self.from_id != from_id) {
+                app.accountsHash[self.from_id].removeTransaction(self.id);
+                app.accountsHash[from_id].addTransaction(self);
+            }
+            if (self.to_id != to_id) {
+                app.accountsHash[self.to_id].removeTransaction(self.id);
+                if (to_id != from_id) {
+                    app.accountsHash[to_id].addTransaction(self);
+                }
+            }
+
+            self.from_id = from_id;
+            self.to_id = to_id;
             self.removeInstance();
-            console.log(obj);
-            console.log(r);
         }));
     };
 
