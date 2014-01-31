@@ -618,6 +618,7 @@ var ApplicationViewModel = function () {
 
     this.userLogin = function () {
         var user = self.user;
+        user.token("");
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
             if (r) {
                 user.token(r.token);
@@ -712,6 +713,9 @@ var ApplicationViewModel = function () {
                                 self.transactions.removeAll();
                                 self.transactions.pushAll(trs);
                             });
+                        }else{
+                            self.transactions.removeAll();
+                            self.transactions.pushAll(trs);
                         }
                     });
                 });
