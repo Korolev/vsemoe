@@ -25,7 +25,7 @@ var AccountViewModel = function (data, app) {
     this.importance = ko.observable(data.importance | 0);
     this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand | 0);
-    this.show = ko.observable(!!(data.show|0));
+    this.show = ko.observable(!!(data.show | 0));
 
     this.showFromIdSelect = ko.observable(false);
     this.createFormAcc = ko.observable();
@@ -43,8 +43,8 @@ var AccountViewModel = function (data, app) {
     //feature
     this.currentBlock = ko.observable(data.currentBlock || {});
 
-    this.currentBlock.subscribe(function(block){
-        if(block){
+    this.currentBlock.subscribe(function (block) {
+        if (block) {
             self.comment(block.icon);
             self.type(block.type);
         }
@@ -63,10 +63,10 @@ var AccountViewModel = function (data, app) {
     };
 
     this.removeAccount = function () {
-        app.showModal('removeCat',function(){
+        app.showModal('removeCat', function () {
             app.accounts.remove(self);
-            if(self.id){
-                ServerApi.deleteAccount({account_id:self.id},console.log);
+            if (self.id) {
+                ServerApi.deleteAccount({account_id: self.id}, console.log);
             }
         });
     };
@@ -90,7 +90,7 @@ var AccountViewModel = function (data, app) {
         }
     };
 
-    this.recalculateSum = function (root) {
+    this.recalculateSum = function () {
         var res = 0,
             amount = 0,
             __now = new Date(),
@@ -99,7 +99,7 @@ var AccountViewModel = function (data, app) {
 
         each(self.transactions, function (k, tr) {
             amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
-            if(self.currency() && tr.currency != self.currency()){
+            if (self.currency() && tr.currency != self.currency()) {
                 amount = app.calculateAmount(
                     tr.currency,
                     self.currency(),
@@ -112,7 +112,7 @@ var AccountViewModel = function (data, app) {
             //TODO use rates;
             if (self.group() == 0 && tr.deleted() == 0) {
                 if (date > currentmonth.getTime())res += amount;
-            } else if(tr.deleted() == 0){
+            } else if (tr.deleted() == 0) {
                 res += amount;
             }
         });
@@ -124,11 +124,15 @@ var AccountViewModel = function (data, app) {
             res *= -1;
         }
 
-        if (self.parent() && (self.parent() | 0) > 1 && res) {
-            app.accountsHash[self.parent()].sum(app.accountsHash[self.parent()].sum() + res);
-        }
+        each(self.children(),function(k,acc){
+            res += acc.sum();
+        });
 
-        if(!self.children().length)self.sum(res);
+        self.sum(res);
+
+        if (self.parent() && (self.parent() | 0) > 1 && res) {
+            app.accountsHash[self.parent()].recalculateSum();
+        }
     };
 
     this.children.subscribe(function (val) {
@@ -162,14 +166,14 @@ var AccountViewModel = function (data, app) {
     });
 
     this.save = function () {
-        if(!self.description()){
+        if (!self.description()) {
             app.accounts.remove(self);
             ServerApi.deleteAccount({
-               account_id:self.id
+                account_id: self.id
             });
             return false;
         }
-        if(self.id && self.id != 'to_delete'){
+        if (self.id && self.id != 'to_delete') {
             ServerApi.updateAccount(false, {
                 data: JSON.stringify({
                     description: self.description(),
@@ -181,8 +185,9 @@ var AccountViewModel = function (data, app) {
                     account_id: self.id,
                     show: self.show() ? 1 : 0
                 })
-            },function(r){});
-        }else{
+            }, function (r) {
+            });
+        } else {
             ServerApi.createAccount({
                 description: self.description(),
                 currency_id: self.currency(),
@@ -191,13 +196,13 @@ var AccountViewModel = function (data, app) {
                 group: self.group(),
                 expand: +(!!self.expand()),
                 show: self.show() ? 1 : 0
-            },function(r){
-                if(r.account_id){
+            }, function (r) {
+                if (r.account_id) {
                     var oldId = self.id;
                     self.id = r.account_id;
                     app.accountsHash[self.id] = self;
-                    if(!oldId)app.accounts.push(self);
-                    if(self.sum()>0){
+                    if (!oldId)app.accounts.push(self);
+                    if (self.sum() > 0) {
                         var obj = {
                             from_id: r.account_id,
                             to_id: r.account_id,
@@ -206,13 +211,13 @@ var AccountViewModel = function (data, app) {
                             amount: self.sum(),
                             description: self.sum(),
                             finished: 1,
-                            hidden:1,
-                            position:1
+                            hidden: 1,
+                            position: 1
                         };
-                        app.createTransaction(obj,function(r){
-                            if(r.transaction_id){
+                        app.createTransaction(obj, function (r) {
+                            if (r.transaction_id) {
                                 obj.transaction_id = r.transaction_id;
-                                app.transactions.push(new TransactionViewModel(obj,app));
+                                app.transactions.push(new TransactionViewModel(obj, app));
                             }
                             self.recalculateSum(app);
                         });
@@ -232,19 +237,19 @@ var AccountViewModel = function (data, app) {
         self.children.pushAll(res);
     };
 
-    this.removeTransaction = function(tId){
+    this.removeTransaction = function (tId) {
         var idx = -1;
-        $.each(self.transactions,function(k,tr){
-            if(tr.id == tId){
+        $.each(self.transactions, function (k, tr) {
+            if (tr.id == tId) {
                 idx = k;
             }
         });
-        if(idx > -1){
-            self.transactions.splice(idx,1);
+        if (idx > -1) {
+            self.transactions.splice(idx, 1);
         }
         self.recalculateSum();
     }
-    this.addTransaction = function(tr){
+    this.addTransaction = function (tr) {
         self.transactions.push(tr);
         self.recalculateSum();
     }
