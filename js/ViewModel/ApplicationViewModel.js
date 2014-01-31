@@ -477,7 +477,7 @@ var ApplicationViewModel = function () {
 
     this.saveAccount = function (item, event) {
         try {
-            item.save();
+            item[item.id && item.id != 'to_delete' ? 'update':'save']();
         } catch (e) {
 
         }
