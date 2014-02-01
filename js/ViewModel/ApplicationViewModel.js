@@ -864,25 +864,25 @@ var ApplicationViewModel = function () {
 
     this.createTransaction = function (obj, callback) {
         var app = self;
-        console.log(JSON.parse(JSON.stringify(obj)));
-        callback({
-            transaction_id: (Math.random() * 100000) | 0
-        });
+//        console.log(JSON.parse(JSON.stringify(obj)));
+//        callback({
+//            transaction_id: (Math.random() * 100000) | 0
+//        });
 
-//        if(obj.currency_id != app.baseCurrencyId()
-//            && !app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')]){
-//            ServerApi.getCurrencyRateDay({
-//                currency_id: obj.currency_id,
-//                from: moment().unix()
-//            },function(_r){
-//                each(_r,function(k,curr){
-//                    app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')] = curr.rate;
-//                    ServerApi.createTransaction(obj,callback);
-//                });
-//            });
-//        }else{
-//            ServerApi.createTransaction(obj,callback);
-//        }
+        if(obj.currency_id != app.baseCurrencyId()
+            && !app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')]){
+            ServerApi.getCurrencyRateDay({
+                currency_id: obj.currency_id,
+                from: moment().unix()
+            },function(_r){
+                each(_r,function(k,curr){
+                    app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')] = curr.rate;
+                    ServerApi.createTransaction(obj,callback);
+                });
+            });
+        }else{
+            ServerApi.createTransaction(obj,callback);
+        }
     };
 
     this.router.run();
