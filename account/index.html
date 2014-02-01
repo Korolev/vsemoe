@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 38h[????] 5h[18.01] 3h[21.01]  5h[22.01] 2h[25.01]  2h[27.01] -->
+<!-- 38h[????] 5h[18.01] 3h[21.01]  5h[22.01] 2h[25.01]  2h[27.01] 1h[29.01] 1h[30.01] 3h[31.01] 3h[01.02]-->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -570,7 +570,7 @@
                         <div data-bind="foreach:transactionsSet">
                             <!-- ko ifnot: editInstance() -->
                                 <!-- ko ifnot: deleted -->
-                                    <div class="t_row" data-bind="css:{tr_newday:newday == 1},
+                                    <div class="t_row" data-bind="css:{tr_newday:newday == 1, tr_show_splits:_showSplits},
                                     template{name: 'tr-row-tpl',data: $data}">
                                     </div>
                                 <!-- /ko -->
@@ -651,11 +651,18 @@
     <div class='t_td a_left td_7'>
                                     <span class="tr_comment" data-bind="text:comment, attr:{title:comment}">
                                     </span><div class="tr_controls" data-bind="if:created">
-        <!--<span data-bind="css:{split:split != '0'}"></span>-->
+        <span data-bind="css:{split:hasSplit}, click:showSplits"></span>
+        <!-- ko ifnot: hasSplit() || !!split -->
         <i data-bind="click:editRecord" class="icon edit"></i>
         <i data-bind="click:removeRecord" class="icon del"></i>
+        <!-- /ko -->
     </div>
     </div>
+    <!-- ko if:_showSplits() -->
+            <div class="transactions_splits" data-bind="foreach:splitTransactions">
+                <div class="t_row" data-bind="template:{name:'tr-row-tpl',data:$data}"></div>
+            </div>
+    <!-- /ko -->
 </script>
 
 <script type="text/html" id="tr-row-edit-tpl">
@@ -706,7 +713,9 @@
                                     click:function(){$data.commentEdit(!$data.commentEdit())},
                                     css:{pushed:commentEdit}">
                 <i class="comment_i"></i>
-            </div><div class="acc_button hidden">
+            </div><div class="acc_button" data-bind="
+                                    click:function(){$data.splitEdit(!$data.splitEdit())},
+                                    css:{pushed:splitEdit}">
                 <i class="split_i"></i>
             </div><div class="acc_button">
                 <span data-bind="click:save">OK</span>
@@ -789,7 +798,7 @@
             <div class="accounts_block_header" data-bind="text:title"></div>
             <div data-bind="foreach:items">
                 <div class="accounts_block_item">
-                    <i data-bind="css:icon,click:$root.editAcc"></i>
+                    <i data-bind="css:$root.accountIconsHash[$data.category],click:$root.editAcc"></i>
 
                     <div data-bind="text:title"></div>
                 </div>
@@ -818,7 +827,7 @@
         <div class="form_row">
             <div class="form_row_label" style="vertical-align: top">
                 <div class="big">
-                    <i data-bind="css:comment"></i>
+                    <i data-bind="css:icon"></i>
                 </div>
             </div>
             <div class="form_row_input">
@@ -1115,6 +1124,30 @@
 </script>
 <script type="text/html" id="undefined-tpl">
     <!--<h1>Template not found.</h1>-->
+</script>
+<script type="text/html" id="tr-split-tpl">
+    <div class="split_transactions_body" data-bind="foreach:splitTransactions">
+        <div class="split_transactions" data-bind="css:{'is-wrong':isWrong}">
+            <div class="transaction_line"></div>
+            <div class="transaction_to">
+                <input type="hidden" data-bind="treeSelect:{
+                                            options:$parent.toAcc,
+                                            optionText:'description',
+                                            optionValue: 'id',
+                                            optionTree: 'children',
+                                            value:to_id,
+                                            css:{width: 'auto', 'min-width':'123px',top: '28px',left:'0px'}
+                                         }">
+            </div><div class="transaction_amount">
+                <input type="text" data-bind="value:amount">
+            </div><div class="transaction_remove" data-bind="if: $index() > 1">
+                <span data-bind="click:$parent.removeSplitTransaction"></span>
+            </div>
+        </div>
+    </div>
+    <div class="split_transactions_footer">
+
+    </div>
 </script>
 <script type="text/html" id="tr-comment-tpl">
     <textarea data-bind="value:comment, click:function(){if($data.comment() == 'Комментарий'){$data.comment('')}}"></textarea>

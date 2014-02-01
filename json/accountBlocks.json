@@ -7,22 +7,27 @@
                 "title": "Бумажник",
                 "icon": "cash",
                 "type": "CASH",
-                "helpText": "В названии лучше использовать одно, два слова.\n Пример: Бумажник, Бумажник Риты"
+                "helpText": "В названии лучше использовать одно, два слова.\n Пример: Бумажник, Бумажник Риты",
+                "category": 2200
             },
             {
                 "title": "Другая наличность",
                 "icon": "othercash",
-                "type": "CASH"
+                "type": "CASH",
+                "category": 2201
             },
             {
                 "title": "Займы друзьям",
                 "icon": "frienddeposit",
-                "type": "CASH"
+                "type": "LOAN",
+                "category": 402
             },
             {
-                "title": "Займы у друзьям",
+                "title": "Займы у друзей",
                 "icon": "friendcredit",
-                "type": "CASH"
+                "type": "LOAN",
+                "group": 2,
+                "category": 2300
             }
         ]
     },
@@ -33,18 +38,22 @@
             {
                 "title": "Зарплатная или любая карта",
                 "icon": "card",
-                "type": "CARD"
+                "type": "CARD",
+                "category": 100
 
             },
             {
                 "title": "Кредитная карта",
                 "icon": "creditcard",
-                "type": "LOAN"
+                "type": "LOAN",
+                "group": 2,
+                "category": 1802
             },
             {
                 "title": "Банковский счет",
                 "icon": "bank",
-                "type": "BANK"
+                "type": "BANK",
+                "category": 2600
             }
         ]
     },
@@ -55,7 +64,8 @@
             {
                 "title": "Электронные деньги",
                 "icon": "webmoney",
-                "type": "ELECTRON"
+                "type": "ELECTRON",
+                "category": 2400
             }
         ]
     },
@@ -66,7 +76,8 @@
             {
                 "title": "Другое",
                 "icon": "other",
-                "type": "OTHER"
+                "type": "OTHER",
+                "category": 2500
             }
         ]
     }

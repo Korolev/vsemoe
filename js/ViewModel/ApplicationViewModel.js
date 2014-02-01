@@ -3,8 +3,8 @@
  */
 
 //TODO IMPORTANT
-    //change LOGO!!!
-    // SORT CURRENCY BY ABC
+//change LOGO!!!
+// SORT CURRENCY BY ABC
 
 var ApplicationSettings = {
     cookieName: "vse_cookie_token"
@@ -153,77 +153,87 @@ var ApplicationViewModel = function () {
     this.user = new UserViewModel();
 
 //Accounts
+    this.accountIconsHash = {
+        2200: 'cash',
+        2201: 'othercash',
+        2300: 'friendcredit',
+        402: 'frienddeposit',
+        2500: 'other',
+        2600: 'bank',
+        2400: 'webmoney',
+        1802: 'creditcard',
+        100: 'card'
+    };
     this.accountBlocks = [
         {
-            title: "Наличность",
-            addClass: "",
-            items: [
+            "title": "Наличность",
+            "addClass": "",
+            "items": [
                 {
-                    title: "Бумажник",
-                    icon: "cash",
-                    type: "CASH",
-                    helpText: "В названии лучше использовать одно, два слова.\n Пример: Бумажник, Бумажник Риты"
+                    "title": "Бумажник",
+                    "type": "CASH",
+                    "helpText": "В названии лучше использовать одно, два слова.\n Пример: Бумажник, Бумажник Риты",
+                    "category": 2200
                 },
                 {
-                    title: "Другая наличность",
-                    icon: "othercash",
-                    type: "CASH"
+                    "title": "Другая наличность",
+                    "type": "CASH",
+                    "category": 2201
                 },
                 {
-                    title: "Займы друзьям",
-                    icon: "frienddeposit",
-                    type: "CASH"
+                    "title": "Займы друзьям",
+                    "type": "LOAN",
+                    "category": 402
                 },
                 {
-                    title: "Займы у друзей",
-                    icon: "friendcredit",
-                    type: "CASH",
-                    group: 2
+                    "title": "Займы у друзей",
+                    "type": "LOAN",
+                    "group": 2,
+                    "category": 2300
                 }
             ]
         },
         {
-            title: "Банк",
-            addClass: "",
-            items: [
+            "title": "Банк",
+            "addClass": "",
+            "items": [
                 {
-                    title: "Зарплатная или любая карта",
-                    icon: "card",
-                    type: "CARD"
-
+                    "title": "Зарплатная или любая карта",
+                    "type": "CARD",
+                    "category": 100
                 },
                 {
-                    title: "Кредитная карта",
-                    icon: "creditcard",
-                    type: "LOAN",
-                    group: 2
+                    "title": "Кредитная карта",
+                    "type": "LOAN",
+                    "group": 2,
+                    "category": 1802
                 },
                 {
-                    title: "Банковский счет",
-                    icon: "bank",
-                    type: "BANK"
+                    "title": "Банковский счет",
+                    "type": "BANK",
+                    "category": 2600
                 }
             ]
         },
         {
-            title: "Электронные деньги",
-            addClass: "short",
-            items: [
+            "title": "Электронные деньги",
+            "addClass": "short",
+            "items": [
                 {
-                    title: "Электронные деньги",
-                    icon: "webmoney",
-                    type: "ELECTRON"
+                    "title": "Электронные деньги",
+                    "type": "ELECTRON",
+                    "category": 2400
                 }
             ]
         },
         {
-            title: "Другое",
-            addClass: "short",
-            items: [
+            "title": "Другое",
+            "addClass": "short",
+            "items": [
                 {
-                    title: "Другое",
-                    icon: "other",
-                    type: "OTHER"
+                    "title": "Другое",
+                    "type": "OTHER",
+                    "category": 2500
                 }
             ]
         }
@@ -231,27 +241,27 @@ var ApplicationViewModel = function () {
 
     this.accountBlocksFlat = [];
 
-    each(this.accountBlocks, function(k,block){
-        each(block.items,function(i,v){
+    each(this.accountBlocks, function (k, block) {
+        each(block.items, function (i, v) {
             self.accountBlocksFlat.push(v);
         })
     });
 
     this.accountGroups = [
         {
-            value:0,
+            value: 3,
             system: 'ALL',
-            label : 'Неопределен'
+            label: 'Неопределен'
         },
         {
-            value:1,
+            value: 1,
             system: 'Active',
-            label : 'Мои средства'
+            label: 'Мои средства'
         },
         {
-            value:2,
+            value: 2,
             system: 'Passive',
-            label : 'Долги'
+            label: 'Долги'
         }
     ];
 
@@ -286,15 +296,16 @@ var ApplicationViewModel = function () {
     this.accountInEdit = ko.observable();
 
     this.editAcc = function (item, event) {
-        location.hash = self.action() + '/' + item.icon;
+        location.hash = self.action() + '/' + self.accountIconsHash[item.category];
     };
 
     this.transactions = ko.observableArray();
+    this.transactionsHash = {};
     this.transactionsSet = ko.observableArray();
     this.transFiltered = ko.observableArray();
     this.transactionEdit = ko.observable(new TransactionEditViewModel({
-        created:new moment()
-    },self));
+        created: new moment()
+    }, self));
 
 //Paging
     this.currentPage = ko.observable(1);
@@ -313,7 +324,7 @@ var ApplicationViewModel = function () {
         if (self.action() == 'insert' && acc) {
             self.accountId(acc.id);
             self.selectedFilter.valueHasMutated();
-        }else if(self.action() == 'accmanage' && acc) {
+        } else if (self.action() == 'accmanage' && acc) {
             location.hash = self.action() + '/' + acc.id;
         }
     };
@@ -346,7 +357,7 @@ var ApplicationViewModel = function () {
             _transFiltered = [];
         //mk logic
         each(self.transactions(), function (k, t) {
-            if (t.hidden == 0 && t.template == 0 && !!t.finished && !t.deleted()) {
+            if (t.hidden == 0 && t.template == 0 && !!t.finished && !t.deleted() && !t.split) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
             }
@@ -401,9 +412,11 @@ var ApplicationViewModel = function () {
                     comment: "",
                     split: 0,
                     newday: 0,
-                    deleted : 0,
+                    deleted: 0,
                     editInstance: ko.observable(false),
-                    currency: self.baseCurrencyId()
+                    currency: self.baseCurrencyId(),
+                    _showSplits: ko.observable(false),
+                    showSplits: function(){}
                 });
             }
         }
@@ -413,7 +426,7 @@ var ApplicationViewModel = function () {
 
     this.transactions.subscribe(function (val) {
         if (val.length) {
-            each(self.accounts(),function(k,acc){
+            each(self.accounts(), function (k, acc) {
                 acc.transactions = [];
             });
 
@@ -477,7 +490,7 @@ var ApplicationViewModel = function () {
 
     this.saveAccount = function (item, event) {
         try {
-            item[item.id && item.id != 'to_delete' ? 'update':'save']();
+            item[item.id && item.id != 'to_delete' ? 'update' : 'save']();
         } catch (e) {
 
         }
@@ -490,13 +503,13 @@ var ApplicationViewModel = function () {
             if (acc.type() == "IN" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.currency() != self.baseCurrencyId() ?
-                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    self.calculateAmount(acc.currency(), self.baseCurrencyId(), acc.sum()) :
                     parseInt(acc.sum());
             }
         });
         self.totalGain(sum);
         return res;
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
     this.getConsumptionAcc = ko.computed(function () {
         var res = [], sum = 0;
@@ -504,13 +517,13 @@ var ApplicationViewModel = function () {
             if (acc.type() == "OUT" && acc.group() == 0 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.currency() != self.baseCurrencyId() ?
-                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    self.calculateAmount(acc.currency(), self.baseCurrencyId(), acc.sum()) :
                     parseInt(acc.sum());
             }
         });
         self.totalConsumption(sum);
         return res;
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
     this.getActiveAcc = ko.computed(function () {
         var res = [], sum = 0;
@@ -518,13 +531,13 @@ var ApplicationViewModel = function () {
             if (acc.group() == 1 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.currency() != self.baseCurrencyId() ?
-                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    self.calculateAmount(acc.currency(), self.baseCurrencyId(), acc.sum()) :
                     parseInt(acc.sum());
             }
         });
         self.totalActive(sum);
         return res;
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
     this.getActiveAccFlat = ko.computed(function () {
         var res = [];
@@ -534,7 +547,7 @@ var ApplicationViewModel = function () {
             }
         });
         return res;
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
     this.getPassiveAcc = ko.computed(function () {
         var res = [], sum = 0;
@@ -542,13 +555,13 @@ var ApplicationViewModel = function () {
             if (acc.group() == 2 && acc.parent() == 0) {
                 res.push(acc);
                 sum += acc.currency() != self.baseCurrencyId() ?
-                    self.calculateAmount(acc.currency(),self.baseCurrencyId(),acc.sum()):
+                    self.calculateAmount(acc.currency(), self.baseCurrencyId(), acc.sum()) :
                     parseInt(acc.sum());
             }
         });
         self.totalPassive(sum);
         return res;
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
     this.getCssClass = function (tr) {
 //TODO calculate class
@@ -565,16 +578,16 @@ var ApplicationViewModel = function () {
         return cssClass[res];
     };
 
-    this.calculateAmount = function(fromCurId,toCurId,amount,from){
+    this.calculateAmount = function (fromCurId, toCurId, amount, from) {
         //TODO use rate to baseCurrency
         var res = amount,
             date = from || moment().format('YYYY-MM-DD'),
             fromRate = fromCurId == self.baseCurrencyId() ?
                 1
-                : self.___usedCurrencyRates[fromCurId+'-'+date] || 1,
+                : self.___usedCurrencyRates[fromCurId + '-' + date] || 1,
             toRate = toCurId == self.baseCurrencyId() ?
                 1
-                : self.___usedCurrencyRates[toCurId+'-'+date] || 1;
+                : self.___usedCurrencyRates[toCurId + '-' + date] || 1;
 
         res = res * fromRate;
         res = res / toRate;
@@ -656,8 +669,8 @@ var ApplicationViewModel = function () {
                     self.currency[v.currency_id] = v;
                     cArr.push(v);
                 });
-                cArr.sort(function(a,b){
-                   return a.shortname < b.shortname ? -1 : 1;
+                cArr.sort(function (a, b) {
+                    return a.shortname < b.shortname ? -1 : 1;
                 });
                 self.currencyArr(cArr);
             });
@@ -679,11 +692,6 @@ var ApplicationViewModel = function () {
                     accIds.push(a.id);
                 });
                 self.accounts.pushAll(res);
-//                if(self.accounts().length < 5){
-//                    ServerApi.newAccountsSet(function(r){
-//                        console.log(r);
-//                    })
-//                }
 
                 each(self.accounts(), function (k, acc) {
                     acc.initChildren(self);
@@ -692,28 +700,36 @@ var ApplicationViewModel = function () {
                     account_id: accIds.join(',')
                 }, function (r) {
                     var trs = [];
-                    each(r,function(k,tr){
+                    each(r, function (k, tr) {
                         self.___usedCurrency[tr.currency_id] = 1;
-                        if(tr.currency_id != self.baseCurrencyId()){
+                        if (tr.currency_id != self.baseCurrencyId()) {
                             self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
                             self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
                         }
-                       trs[k] = new TransactionViewModel(tr,self);
+                        trs[k] = new TransactionViewModel(tr, self);
+                        self.transactionsHash[tr.transaction_id] = trs[k];
+                    });
+
+                    each(trs,function(k, tr){
+                        if(tr.split){
+                            self.transactionsHash[tr.split].hasSplit(true);
+                            self.transactionsHash[tr.split].push(tr);
+                        }
                     });
 
                     $.each(self.___usedCurrency, function (key, val) {
                         if (key != self.baseCurrencyId()) {
                             ServerApi.getCurrencyRateList({
                                 currency_id: key,
-                                from: moment.unix(self.___firstDate).subtract('d',1).unix()
+                                from: moment.unix(self.___firstDate).subtract('d', 1).unix()
                             }, function (r) {
-                                each(r,function(k,curr){
-                                    self.___usedCurrencyRates[curr.currency_id+'-'+moment(Date(curr.modified*1000)).format('YYYY-MM-DD')] = curr.rate;
+                                each(r, function (k, curr) {
+                                    self.___usedCurrencyRates[curr.currency_id + '-' + moment(Date(curr.modified * 1000)).format('YYYY-MM-DD')] = curr.rate;
                                 });
                                 self.transactions.removeAll();
                                 self.transactions.pushAll(trs);
                             });
-                        }else{
+                        } else {
                             self.transactions.removeAll();
                             self.transactions.pushAll(trs);
                         }
@@ -733,12 +749,12 @@ var ApplicationViewModel = function () {
         if (val) {
             each(self.accountBlocks, function (i, block) {
                 each(block.items, function (_i, _item) {
-                    if (_item.icon == val) {
+                    if (self.accountIconsHash[_item.category] == val) {
                         item = _item;
                     }
                 });
             });
-            if (item){
+            if (item) {
                 self.accountInEdit(new AccountViewModel({
                     description: item.title,
                     type: item.type,
@@ -747,17 +763,18 @@ var ApplicationViewModel = function () {
                     currency_id: self.baseCurrencyId(),
                     show: 1,
                     helpText: item.helpText || '',
+                    category: item.category,
                     currentBlock: item
                 }, self));
-            }else if(self.accountsHash[val]){
+            } else if (self.accountsHash[val]) {
                 self.accountInEdit(self.accountsHash[val]);
-                each(self.accountBlocksFlat,function(k,b){
-                   if(b.type == self.accountInEdit().type() && !item){
-                       item = b;
-                   }
+                each(self.accountBlocksFlat, function (k, b) {
+                    if (b.category == self.accountsHash[val].category()) {
+                        item = b;
+                    }
                 });
                 self.accountInEdit().currentBlock(item);
-            }else{
+            } else {
                 self.accountInEdit(null);
                 location.hash = self.action();
             }
@@ -845,22 +862,27 @@ var ApplicationViewModel = function () {
         });
     });
 
-    this.createTransaction = function(obj,callback){
+    this.createTransaction = function (obj, callback) {
         var app = self;
-        if(obj.currency_id != app.baseCurrencyId()
-            && !app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')]){
-            ServerApi.getCurrencyRateDay({
-                currency_id: obj.currency_id,
-                from: moment().unix()
-            },function(_r){
-                each(_r,function(k,curr){
-                    app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')] = curr.rate;
-                    ServerApi.createTransaction(obj,callback);
-                });
-            });
-        }else{
-            ServerApi.createTransaction(obj,callback);
-        }
+        console.log(JSON.parse(JSON.stringify(obj)));
+        callback({
+            transaction_id: (Math.random() * 100000) | 0
+        });
+
+//        if(obj.currency_id != app.baseCurrencyId()
+//            && !app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')]){
+//            ServerApi.getCurrencyRateDay({
+//                currency_id: obj.currency_id,
+//                from: moment().unix()
+//            },function(_r){
+//                each(_r,function(k,curr){
+//                    app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')] = curr.rate;
+//                    ServerApi.createTransaction(obj,callback);
+//                });
+//            });
+//        }else{
+//            ServerApi.createTransaction(obj,callback);
+//        }
     };
 
     this.router.run();

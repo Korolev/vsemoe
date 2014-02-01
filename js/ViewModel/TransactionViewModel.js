@@ -10,7 +10,8 @@ var TransactionViewModel = function (data, app) {
     this.to_id = data.to_id;
     this.description = data.description;
     this.comment = data.comment;
-    this.split = data.split;
+    this.split = data.split | 0;
+    this.hasSplit = ko.observable(false);
     this.amount = data.amount;
     this.currency = data.currency_id;
     this.created = moment.unix(data.created);
@@ -28,6 +29,13 @@ var TransactionViewModel = function (data, app) {
     this.removeInstance = function(){
         app.transactionEdit().editMode(true);
         self.editInstance(false);
+    };
+
+    this.splitTransactions = ko.observableArray();
+
+    this._showSplits = ko.observable(false);
+    this.showSplits = function(){
+        self._showSplits(!self._showSplits());
     };
 
     this.editRecord = function () {

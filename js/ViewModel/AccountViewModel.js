@@ -30,8 +30,13 @@ var AccountViewModel = function (data, app) {
     this.showFromIdSelect = ko.observable(false);
     this.createFormAcc = ko.observable();
 
-    this.comment = ko.observable(data.comment || "other");
+    this.comment = ko.observable(data.comment);
     this.helpText = data.helpText || '';
+
+    this.category = ko.observable(data.category);
+    this.icon = ko.computed(function(){
+        return app.accountIconsHash[self.category()] || "other";
+    },this).extend({throttle:1});
 
     this.editMode = ko.observable(!!data.editMode);
 
@@ -45,8 +50,8 @@ var AccountViewModel = function (data, app) {
 
     this.currentBlock.subscribe(function (block) {
         if (block) {
-            self.comment(block.icon);
             self.type(block.type);
+            self.category(block.category);
         }
         //self.group(block.group == undefined ? 1 : block.group);
     });
@@ -115,6 +120,8 @@ var AccountViewModel = function (data, app) {
             } else if (tr.deleted() == 0) {
                 res += amount;
             }
+
+            if(tr.hasSplit()) res = 0;
         });
         if ((self.creditlimit() | 0) > 0) {
             res = parseFloat(self.creditlimit()) - res;
@@ -177,6 +184,7 @@ var AccountViewModel = function (data, app) {
                 currency_id: self.currency(),
                 amount: newSumm - self.sum(),
                 description: newSumm - self.sum(),
+                category: self.category(),
                 finished: 1,
                 hidden: 1,
                 position: 1
@@ -212,6 +220,7 @@ var AccountViewModel = function (data, app) {
                     group: self.group(),
                     expand: +(!!self.expand()),
                     account_id: self.id,
+                    category: self.category(),
                     show: self.show() ? 1 : 0
                 })
             }, function (r) {
@@ -223,6 +232,7 @@ var AccountViewModel = function (data, app) {
                 parent: self.parent(),
                 type: self.type(),
                 group: self.group(),
+                category: self.category(),
                 expand: +(!!self.expand()),
                 show: self.show() ? 1 : 0
             }, function (r) {

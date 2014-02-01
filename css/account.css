@@ -117,7 +117,7 @@ ul li span,
     width: 22px;
     height: 17px;
     top: 6px;
-    margin: 0 0 0 8px;
+    margin: 0 8px;
     vertical-align: middle;
     background-image: url("../images/split.png");
     background-position: center;
@@ -949,8 +949,7 @@ input.vse-cancel:active{
 }
 
 .td_fromaccount_input .fake_select:before,
-.row_edit_form .fake_tree_select:before,
-.form_row_input .fake_select:before{
+.fake_tree_select:before{
     position: absolute;
     content: '';
     width: 0px;
@@ -1216,8 +1215,23 @@ input.vse-cancel:active{
     height: 33px;
 }
 
+.tr_show_splits,
 .t_row:not(.color_grey):not(.t_thead):not(.edit_row):hover {
-    background-color: #ebe8dc;
+    background-color: #ebe8dc !important;
+}
+
+.tr_show_splits .t_row{
+    background-color: #F7F6F2 !important;
+    border-top: 1px solid #ECE9E0 !important;
+}
+
+.tr_show_splits .t_row .td_2,
+.tr_show_splits .t_row .td_3{
+    visibility: hidden;
+}
+
+.tr_show_splits{
+    height: auto !important;
 }
 
 .t_row.t_thead,
@@ -1272,7 +1286,7 @@ input.vse-cancel:active{
     background: -ms-linear-gradient(top,  #555c62 0%,#2c2f32 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #555c62 0%,#2c2f32 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#555c62', endColorstr='#2c2f32',GradientType=0 ); /* IE6-9 */
-
+    z-index: 100;
     height: 33px;
     border: 1px solid #303030;
 
@@ -1318,7 +1332,12 @@ input.vse-cancel:active{
     border-radius: 2px;
     margin-left: 25px;
 }
-
+.fake_tree_select{
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
 .row_edit_form .fake_tree_select,
 .row_edit_form .td_fromaccount_input .fake_select{
     line-height: 25px;
@@ -1328,9 +1347,6 @@ input.vse-cancel:active{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .row_edit_form .td_fromaccount_input{
@@ -1505,7 +1521,7 @@ input.vse-cancel:active{
     /*background-color: rgba(0,0,0,0.2);*/
 }
 
-.row_edit_form .fake_tree_select_body li,
+.fake_tree_select_body li,
 .row_edit_form .fake_select_body li{
     color: #7D8992;
     text-shadow: none;
@@ -1514,7 +1530,7 @@ input.vse-cancel:active{
     line-height: 31px;
 }
 
-.row_edit_form .fake_tree_select_body li{
+.fake_tree_select_body li{
     height: auto;
     line-height: 25px;
 }
@@ -1578,3 +1594,82 @@ input.vse-cancel:active{
 }
 
 /* TODO BOLD use bold font*/
+
+.split_transactions_body{
+    padding-left: 265px;
+    padding-top: 10px;
+}
+
+.split_transactions_footer{
+    height: 20px;
+}
+
+.split_transactions{
+    margin-top: -6px;
+}
+.split_transactions .fake_tree_select{
+    display: block;
+    height: 27px;
+    width: 105px;
+    background-color: #ffffff;
+    border: 1px solid #c8c8c8;
+    border-radius: 2px;
+    line-height: 27px;
+    padding: 0 20px 0 10px;
+}
+
+.transaction_line{
+    display: inline-block;
+    height: 37px;
+    width: 16px;
+    border: 2px solid #fff;
+    border-width: 0 0 2px 2px;
+    top: -18px;
+    right: -4px;
+}
+
+.split_transactions .transaction_to{
+    display: inline-block;
+    min-width: 50px;
+}
+.split_transactions .transaction_amount{
+    display: inline-block;
+    margin-left: 4px;
+}
+.split_transactions .transaction_amount input{
+    box-shadow: none;
+    height: 27px;
+    width: 109px;
+    border: 1px solid #c8c8c8;
+    border-radius: 2px;
+    padding: 0 5px;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.is-wrong .transaction_amount input{
+    color: #ff0000;
+    border-color: #ff0000;
+}
+
+.is-wrong .transaction_amount{
+    padding-right: 33px;
+    background-image: url('/images/alert.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.transaction_remove{
+    display: inline-block;
+    padding:  1px 0 0 4px;
+}
+
+.transaction_remove span{
+    display: inline-block;
+    background-image: url("/img/edit_del_next.png");
+    background-position: 0 -34px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
