@@ -103,25 +103,25 @@ var AccountViewModel = function (data, app) {
             currentmonth = new Date(__now.getFullYear(), __now.getMonth());
 
         each(self.transactions, function (k, tr) {
-            amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
-            if (self.currency() && tr.currency != self.currency()) {
-                amount = app.calculateAmount(
-                    tr.currency,
-                    self.currency(),
-                    amount,
-                    tr.created.format('YYYY-MM-DD')
-                );
-            }
-            date = tr.created.unix() * 1000;
+            if(!tr.hasSplit()){
+                amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
+                if (self.currency() && tr.currency != self.currency()) {
+                    amount = app.calculateAmount(
+                        tr.currency,
+                        self.currency(),
+                        amount,
+                        tr.created.format('YYYY-MM-DD')
+                    );
+                }
+                date = tr.created.unix() * 1000;
 
-            //TODO use rates;
-            if (self.group() == 0 && tr.deleted() == 0) {
-                if (date > currentmonth.getTime())res += amount;
-            } else if (tr.deleted() == 0) {
-                res += amount;
+                //TODO use rates;
+                if (self.group() == 0 && tr.deleted() == 0) {
+                    if (date > currentmonth.getTime())res += amount;
+                } else if (tr.deleted() == 0) {
+                    res += amount;
+                }
             }
-
-            if(tr.hasSplit()) res = 0;
         });
         if ((self.creditlimit() | 0) > 0) {
             res = parseFloat(self.creditlimit()) - res;
