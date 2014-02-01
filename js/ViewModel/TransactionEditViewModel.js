@@ -293,9 +293,11 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                                 }
                                 obj.amount = split.amount();
                                 obj.description = split.amount();
-                                app.createTransaction(obj, function (_r) {
-                                    var _newTr,
-                                        clone_obj = JSON.parse(JSON.stringify(obj));
+
+                                var _newTr,
+                                    clone_obj = JSON.parse(JSON.stringify(obj));
+
+                                app.createTransaction(clone_obj, function (_r) {
                                     clone_obj.transaction_id = _r.transaction_id;
                                     _newTr = new TransactionViewModel(clone_obj, app);
                                     newTransaction.hasSplit(true);

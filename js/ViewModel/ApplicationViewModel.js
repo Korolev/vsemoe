@@ -713,7 +713,7 @@ var ApplicationViewModel = function () {
                     each(trs,function(k, tr){
                         if(tr.split){
                             self.transactionsHash[tr.split].hasSplit(true);
-                            self.transactionsHash[tr.split].push(tr);
+                            self.transactionsHash[tr.split].splitTransactions.push(tr);
                         }
                     });
 
