@@ -263,11 +263,11 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     app.accountsHash[self.to_id()] && app.accountsHash[self.to_id()].recalculateSum();
                 })
             } else {
-                if(self.action().action == 'add'){
-                    _new_from = self.to_id();
-                    obj.to_id = obj.from_id;
-                    obj.from_id = _new_from;
-                }
+//                if(self.action().action == 'add'){
+//                    _new_from = self.to_id();
+//                    obj.to_id = obj.from_id;
+//                    obj.from_id = _new_from;
+//                }
                 app.createTransaction(obj, function (r) {
                     obj.transaction_id = r.transaction_id;
                     var newTransaction = new TransactionViewModel(JSON.parse(JSON.stringify(obj)), app),
@@ -286,11 +286,11 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                                 obj.comment = '';
                                 obj.split = obj.transaction_id || obj.split;
                                 delete obj.transaction_id;
-                                if(_new_from){
-                                    obj.from_id = split.to_id();
-                                }else{
-                                    obj.to_id = split.to_id();
-                                }
+//                                if(_new_from){
+//                                    obj.from_id = split.to_id();
+//                                }else{
+//                                    obj.to_id = split.to_id();
+//                                }
                                 obj.amount = split.amount();
                                 obj.description = split.amount();
 
