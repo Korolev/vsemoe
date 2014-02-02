@@ -307,6 +307,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                                 });
                             }
                         });
+                        self.splitTransactions.removeAll();
                     }
                 })
             }
