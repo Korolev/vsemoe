@@ -573,9 +573,10 @@ var ApplicationViewModel = function () {
         if (from && to && from.group() == to.group()) {
             res = 0;
         }
-        if (from && to && from.group() == 1 && tr.amount > 0) {
+        if (to.type() == 'IN') {
             res = 1;
         }
+
         return cssClass[res];
     };
 
