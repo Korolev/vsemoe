@@ -573,7 +573,7 @@ var ApplicationViewModel = function () {
         if (from && to && from.group() == to.group()) {
             res = 0;
         }
-        if (to.type() == 'IN') {
+        if (to && to.type() == 'IN') {
             res = 1;
         }
 
