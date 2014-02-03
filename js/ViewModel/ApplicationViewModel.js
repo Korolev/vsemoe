@@ -886,4 +886,23 @@ var ApplicationViewModel = function () {
     };
 
     this.router.run();
+
+    $(document).on('click', function (e) {
+        var target = e.target;
+        try {
+            while (target != document) {
+                var attrClass = target.getAttribute('class');
+                if (attrClass && (attrClass.indexOf('filterItemConfig_holder') > -1)) {
+                    break;
+                }
+                target = target.parentNode;
+            }
+            if(target == document){
+                self.showFilterConfig(false);
+            }
+        } catch (e) {
+            console && console.log(e);
+        }
+
+    });
 };

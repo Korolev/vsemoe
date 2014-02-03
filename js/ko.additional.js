@@ -26,14 +26,58 @@ $(document).on('click', function (e) {
     try {
         while (target != document) {
             var attrClass = target.getAttribute('class');
-            if (attrClass && (attrClass.split(' '))[0] == 'dateInput') {
+            if (attrClass && (attrClass.indexOf('dateInput') > -1)) {
                 break;
             }
             target = target.parentNode;
         }
-        $('.dateInput').not(target).each(function (k, el) {
-            $(el).find('.itemDropDown').removeClass('fadeInDon').addClass('hidden');
-        });
+        if(target){
+            $('.dateInput').not(target).each(function (k, el) {
+                $(el).find('.itemDropDown').removeClass('fadeInDon').addClass('hidden');
+            });
+        }
+    } catch (e) {
+        console && console.log(e);
+    }
+
+});
+
+$(document).on('click', function (e) {
+    var target = e.target;
+    try {
+        while (target != document) {
+            var attrClass = target.getAttribute('class');
+            if (attrClass && (attrClass.indexOf('binding_select') > -1)) {
+                break;
+            }
+            target = target.parentNode;
+        }
+        if(target){
+            $('.binding_select').not(target).each(function (k, el) {
+                $(el).find('.fake_select_body').addClass('hidden');
+            });
+        }
+    } catch (e) {
+        console && console.log(e);
+    }
+
+});
+
+$(document).on('click', function (e) {
+    var target = e.target;
+    try {
+        while (target != document) {
+            var attrClass = target.getAttribute('class');
+            if (attrClass && (attrClass.indexOf('binding_tree_select') > -1)) {
+                break;
+            }
+            target = target.parentNode;
+        }
+        if(target){
+            $('.binding_tree_select').not(target).each(function (k, el) {
+                $(el).find('.fake_tree_select_body').addClass('hidden');
+            });
+        }
     } catch (e) {
         console && console.log(e);
     }
@@ -208,7 +252,7 @@ ko.bindingHandlers['datepick'] = {
             : moment(uw(value.value)).format(value.format);
 
         textHolder = $('<div/>', {class: 'dateval'}).appendTo(element).text(date);
-        datePicker = $('<div/>', {class: 'hidden animated itemDropDown'}).appendTo(element);
+        datePicker = $('<div/>', {class: 'hidden animated itemDropDown '}).appendTo(element);
 
         textHolder.on('click', function (e) {
             var hidden = datePicker.hasClass('hidden');
@@ -489,7 +533,7 @@ ko.bindingHandlers['select'] = {
                     _ul.remove()
                 }
                 _text = $('<' + tag + ' class="fake_select" />').insertBefore($element);
-                _ul = $('<ul class="fake_select_body"></ul>').insertAfter(_text).addClass('hidden');
+                _ul = $('<ul class="fake_select_body "></ul>').insertAfter(_text).addClass('hidden');
                 _options = [];
 
                 var _optionValue,
@@ -547,7 +591,7 @@ ko.bindingHandlers['select'] = {
                 }
 
                 _text.on('click', function () {
-                    $('.fake_select_body').not(_ul).addClass('hidden');
+                    //$('.fake_select_body').not(_ul).addClass('hidden');
                     _ul.toggleClass('hidden');
                 });
 
@@ -564,7 +608,7 @@ ko.bindingHandlers['select'] = {
                 config.value.valueHasMutated();
             });
         }
-
+        $element.parent().addClass('binding_select');
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var uw = ko.utils.unwrapObservable,
@@ -629,7 +673,7 @@ ko.bindingHandlers['treeSelect'] = {
                     _ul.remove()
                 }
                 _text = $('<' + tag + ' class="fake_tree_select" />').insertBefore($element);
-                _ul = $('<ul class="fake_tree_select_body"></ul>').insertAfter(_text).addClass('hidden');
+                _ul = $('<ul class="fake_tree_select_body "></ul>').insertAfter(_text).addClass('hidden');
                 _options = [];
 
                 var _optionValue,
@@ -698,6 +742,8 @@ ko.bindingHandlers['treeSelect'] = {
                 buildUI();
             });
         }
+
+        $element.parent().addClass('binding_tree_select');
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var uw = ko.utils.unwrapObservable,
