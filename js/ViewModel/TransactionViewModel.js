@@ -18,6 +18,7 @@ var TransactionViewModel = function (data, app) {
     this.deleted = ko.observable(data.deleted | 0);
     this.finished = data.finished | 0;
     this.hidden = data.hidden | 0;
+    this.position = data.position | 0;
 
     this.template = data.template | 0;
     this.template_id = data.template_id;

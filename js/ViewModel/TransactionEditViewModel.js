@@ -31,7 +31,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     };
 
     this.id = data.transaction_id || data.id;
-    this.from_id = ko.observable(data.from_id || "66792");
+    this.from_id = ko.observable(data.from_id || "118255");
     this.to_id = ko.observable(data.to_id);
     this.description = data.description;
     this.comment = ko.observable(data.comment || 'Комментарий');
@@ -61,17 +61,17 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
             action: 'move',
             description: 'Перемещение',
             method: 'getActiveAcc'
-        }/*,
-         {
-         icon: 'tofriend_i',
-         action: 'tofriend',
-         description: 'Дать в долг'
-         },
-         {
-         icon: 'ffriend_i',
-         action: 'ffriend',
-         description: 'Взять в долг'
-         }*/
+        },
+        {
+            icon: 'tofriend_i',
+            action: 'frienddeposit',
+            description: 'Дать в долг'
+        },
+        {
+            icon: 'ffriend_i',
+            action: 'friendcredit',
+            description: 'Взять в долг'
+        }
 
     ]);
     this.action = ko.observable(self.actions()[0]);
@@ -86,12 +86,9 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
         if (isNaN(val)) {
             self.amount(0);
         }
-        if (self.action().action == 'substract' && val > 0) {
-            self.amount(val * -1);
-        } else if (self.action().action != 'substract' && val < 0) {
+        if (val < 0) {
             self.amount(val * -1);
         }
-
     });
 
     this.template = data.template | 0;
@@ -109,7 +106,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
     this.splitEdit.subscribe(function (val) {
 
-        if (val) {
+        if (val && self.splitTransactions().length < 2) {
             self.commentEdit(false);
             self.splitTransactions.push(new splitTransaction());
             self.splitTransactions.push(new splitTransaction());
@@ -139,13 +136,21 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
         }
     };
 
+    this.action.subscribe(function(val){
+       if(val && (val.action == 'friendcredit' || val.action == 'frienddeposit')){
+           window.location.hash = "accmanage/"+val.action;
+           self.action(self.actions()[0]);
+       }
+    });
+
     this.actionsMap = {
         substract: {
             group_from: [1, 2],
             type_from: false,
             group_to: 0,
             type_to: 'OUT'
-        }, add: {
+        },
+        add: {
             group_from: [1, 2],
             type_from: false,
             group_to: 0,
@@ -157,13 +162,13 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
             group_to: [1, 2],
             type_to: false
         },
-        tofriend: {
+        frienddeposit: {
             group_from: [1, 2],
             type_from: false,
             group_to: 1,
-            type_to: 'CASH'
+            type_to: 'LOAN'
         },
-        ffriend: {
+        friendcredit: {
             group_from: [1, 2],
             type_from: false,
             group_to: 2,

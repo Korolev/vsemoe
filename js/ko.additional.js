@@ -24,7 +24,7 @@ var datePickerLocale = {
 $(document).on('click', function (e) {
     var target = e.target;
     try {
-        while (target != document) {
+        while (target != document && target) {
             var attrClass = target.getAttribute('class');
             if (attrClass && (attrClass.indexOf('dateInput') > -1)) {
                 break;
@@ -45,7 +45,7 @@ $(document).on('click', function (e) {
 $(document).on('click', function (e) {
     var target = e.target;
     try {
-        while (target != document) {
+        while (target != document && target) {
             var attrClass = target.getAttribute('class');
             if (attrClass && (attrClass.indexOf('binding_select') > -1)) {
                 break;
@@ -66,7 +66,7 @@ $(document).on('click', function (e) {
 $(document).on('click', function (e) {
     var target = e.target;
     try {
-        while (target != document) {
+        while (target != document && target) {
             var attrClass = target.getAttribute('class');
             if (attrClass && (attrClass.indexOf('binding_tree_select') > -1)) {
                 break;

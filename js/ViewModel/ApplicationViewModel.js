@@ -416,7 +416,8 @@ var ApplicationViewModel = function () {
                     editInstance: ko.observable(false),
                     currency: self.baseCurrencyId(),
                     _showSplits: ko.observable(false),
-                    showSplits: function(){}
+                    showSplits: function () {
+                    }
                 });
             }
         }
@@ -702,18 +703,16 @@ var ApplicationViewModel = function () {
                     var trs = [];
                     each(r, function (k, tr) {
                         self.___usedCurrency[tr.currency_id] = 1;
-                        if(tr.position != 1){ //TODO remove  this hack
-                            if (tr.currency_id != self.baseCurrencyId()) {
-                                self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
-                                self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
-                            }
-                            trs[k] = new TransactionViewModel(tr, self);
-                            self.transactionsHash[tr.transaction_id] = trs[k];
+                        if (tr.currency_id != self.baseCurrencyId()) {
+                            self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
+                            self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
                         }
+                        trs[k] = new TransactionViewModel(tr, self);
+                        self.transactionsHash[tr.transaction_id] = trs[k];
                     });
 
-                    each(trs,function(k, tr){
-                        if(tr.split){
+                    each(trs, function (k, tr) {
+                        if (tr.split) {
                             self.transactionsHash[tr.split].hasSplit(true);
                             self.transactionsHash[tr.split].splitTransactions.push(tr);
                         }
@@ -871,19 +870,19 @@ var ApplicationViewModel = function () {
 //            transaction_id: (Math.random() * 100000) | 0
 //        });
 
-        if(obj.currency_id != app.baseCurrencyId()
-            && !app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')]){
+        if (obj.currency_id != app.baseCurrencyId()
+            && !app.___usedCurrencyRates[obj.currency_id + '-' + moment().format('YYYY-MM-DD')]) {
             ServerApi.getCurrencyRateDay({
                 currency_id: obj.currency_id,
                 from: moment().unix()
-            },function(_r){
-                each(_r,function(k,curr){
-                    app.___usedCurrencyRates[obj.currency_id+'-'+moment().format('YYYY-MM-DD')] = curr.rate;
-                    ServerApi.createTransaction(obj,callback);
+            }, function (_r) {
+                each(_r, function (k, curr) {
+                    app.___usedCurrencyRates[obj.currency_id + '-' + moment().format('YYYY-MM-DD')] = curr.rate;
+                    ServerApi.createTransaction(obj, callback);
                 });
             });
-        }else{
-            ServerApi.createTransaction(obj,callback);
+        } else {
+            ServerApi.createTransaction(obj, callback);
         }
     };
 
@@ -892,14 +891,14 @@ var ApplicationViewModel = function () {
     $(document).on('click', function (e) {
         var target = e.target;
         try {
-            while (target != document) {
+            while (target != document && target) {
                 var attrClass = target.getAttribute('class');
                 if (attrClass && (attrClass.indexOf('filterItemConfig_holder') > -1)) {
                     break;
                 }
                 target = target.parentNode;
             }
-            if(target == document){
+            if (target == document) {
                 self.showFilterConfig(false);
             }
         } catch (e) {

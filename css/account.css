@@ -949,6 +949,7 @@ input.vse-cancel:active{
 }
 
 .td_fromaccount_input .fake_select:before,
+.fake_select:before,
 .fake_tree_select:before{
     position: absolute;
     content: '';
@@ -1396,6 +1397,10 @@ input.vse-cancel:active{
     font-family: "HelveticaNeue Bold",Tahoma,Helvetica, serif;
 }
 
+.acc_button .fake_select:before{
+    display: none;
+}
+
 .row_edit_form .split_input .acc_button{
     border-radius: 2px 0 0 2px;
 }
@@ -1528,6 +1533,8 @@ input.vse-cancel:active{
     white-space: nowrap;
     height: 30px;
     line-height: 31px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .fake_tree_select_body li{

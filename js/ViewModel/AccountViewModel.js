@@ -28,7 +28,7 @@ var AccountViewModel = function (data, app) {
     this.show = ko.observable(!!(data.show | 0));
 
     this.showFromIdSelect = ko.observable(false);
-    this.createFormAcc = ko.observable();
+    this.createFromAcc = ko.observable("118255");
 
     this.comment = ko.observable(data.comment);
     this.helpText = data.helpText || '';
@@ -102,9 +102,14 @@ var AccountViewModel = function (data, app) {
             date,
             currentmonth = new Date(__now.getFullYear(), __now.getMonth());
 
+        //maybe optimize this sort an out from recalculateSum
+        self.transactions.sort(function(a,b){
+           return a.created < b.created ? -1 : 1;
+        });
+
         each(self.transactions, function (k, tr) {
             if(!tr.hasSplit()){
-                amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
+                amount = Math.abs(parseFloat(tr.amount)) * (tr.from_id == self.id ? -1 : 1);
                 if (self.currency() && tr.currency != self.currency()) {
                     amount = app.calculateAmount(
                         tr.currency,
@@ -121,14 +126,14 @@ var AccountViewModel = function (data, app) {
                 } else if (tr.deleted() == 0) {
                     res += amount;
                 }
+                if(tr.position == 1){
+                    res = parseFloat(tr.amount);
+                }
             }
         });
         if ((self.creditlimit() | 0) > 0) {
             res = parseFloat(self.creditlimit()) - res;
             res = 0;//TODO
-        }
-        if (self.group() == 0 && self.type() == 'IN') {
-            res *= -1;
         }
 
         each(self.children(),function(k,acc){
@@ -188,10 +193,6 @@ var AccountViewModel = function (data, app) {
                 hidden: 1,
                 position: 1
             };
-            app.createTransaction(obj, function (r) {});
-            obj.amount = newSumm - self.sum();
-            obj.description = newSumm - self.sum();
-            obj.position = 0;
             app.createTransaction(obj, function (r) {
                 if (r.transaction_id) {
                     obj.transaction_id = r.transaction_id;
@@ -256,6 +257,9 @@ var AccountViewModel = function (data, app) {
                             hidden: 1,
                             position: 1
                         };
+                        if(self.type == 'LOAN' && self.group() == 2 && self.createFromAcc()){
+                            obj.from_id = self.createFromAcc();
+                        }
                         app.createTransaction(obj, function (r) {
                             if (r.transaction_id) {
                                 obj.transaction_id = r.transaction_id;
