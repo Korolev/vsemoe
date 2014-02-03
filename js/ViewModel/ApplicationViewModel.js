@@ -702,12 +702,14 @@ var ApplicationViewModel = function () {
                     var trs = [];
                     each(r, function (k, tr) {
                         self.___usedCurrency[tr.currency_id] = 1;
-                        if (tr.currency_id != self.baseCurrencyId()) {
-                            self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
-                            self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
+                        if(tr.position != 1){ //TODO remove  this hack
+                            if (tr.currency_id != self.baseCurrencyId()) {
+                                self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
+                                self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
+                            }
+                            trs[k] = new TransactionViewModel(tr, self);
+                            self.transactionsHash[tr.transaction_id] = trs[k];
                         }
-                        trs[k] = new TransactionViewModel(tr, self);
-                        self.transactionsHash[tr.transaction_id] = trs[k];
                     });
 
                     each(trs,function(k, tr){

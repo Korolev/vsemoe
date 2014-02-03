@@ -175,20 +175,23 @@ var AccountViewModel = function (data, app) {
     this.update = function(){
         var newSumm = self.sum() | 0;
         self.recalculateSum();
-        console.log(self.sum() != newSumm);
         if(self.sum() != newSumm){
             var obj = {
                 from_id: self.id,
                 to_id: self.id,
                 created: moment().unix(),
                 currency_id: self.currency(),
-                amount: newSumm - self.sum(),
-                description: newSumm - self.sum(),
+                amount: newSumm,
+                description: newSumm,
                 category: self.category(),
                 finished: 1,
                 hidden: 1,
                 position: 1
             };
+            app.createTransaction(obj, function (r) {});
+            obj.amount = newSumm - self.sum();
+            obj.description = newSumm - self.sum();
+            obj.position = 0;
             app.createTransaction(obj, function (r) {
                 if (r.transaction_id) {
                     obj.transaction_id = r.transaction_id;
