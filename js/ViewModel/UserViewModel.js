@@ -78,7 +78,13 @@ var UserViewModel = function () {
 
     this.getLoginFromServer = function () {
         ServerApi.getUserByToken({}, function (r) {
-            self.login(r[0].login);
+            try{
+                self.login(r[0].login);
+            }catch (e){
+                console.log(r);
+                console.log(e);
+            }
+
         })
     };
 
