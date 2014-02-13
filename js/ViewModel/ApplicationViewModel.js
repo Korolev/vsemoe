@@ -707,8 +707,9 @@ var ApplicationViewModel = function () {
                                 self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
                                 self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
                             }
-                            trs[k] = new TransactionViewModel(tr, self);
-                            self.transactionsHash[tr.transaction_id] = trs[k];
+                            var transaction = new TransactionViewModel(tr, self);
+                            trs.push(transaction);
+                            self.transactionsHash[tr.transaction_id] = transaction;
                         }
                     });
 
@@ -718,7 +719,6 @@ var ApplicationViewModel = function () {
                             self.transactionsHash[tr.split].splitTransactions.push(tr);
                         }
                     });
-
                     $.each(self.___usedCurrency, function (key, val) {
                         if (key != self.baseCurrencyId()) {
                             ServerApi.getCurrencyRateList({
@@ -811,6 +811,7 @@ var ApplicationViewModel = function () {
     this.router = Sammy(function () {
         var token = getCookie(ApplicationSettings.cookieName),
             doAction = function (a, id) {
+                console.log(a,id);
                 if (!self.user.token() && !token) {
                     if (actionMap[a] == 'login') {
                         self.action(a);
