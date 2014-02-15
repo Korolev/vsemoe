@@ -1216,7 +1216,7 @@ input.vse-cancel:active{
 }
 
 .tr_show_splits,
-.t_row:not(.color_grey):not(.t_thead):not(.edit_row):hover {
+.t_row:not(.color_grey):not(.empty):not(.t_thead):not(.edit_row):hover {
     background-color: #ebe8dc !important;
 }
 

@@ -574,7 +574,7 @@
                         <div data-bind="foreach:transactionsSet">
                             <!-- ko ifnot: editInstance() -->
                                 <!-- ko ifnot: deleted -->
-                                    <div class="t_row" data-bind="css:{tr_newday:newday == 1, tr_show_splits:_showSplits},
+                                    <div class="t_row" data-bind="css:{empty:!created, tr_newday:newday == 1, tr_show_splits:_showSplits},
                                     template{name: 'tr-row-tpl',data: $data}">
                                     </div>
                                 <!-- /ko -->
