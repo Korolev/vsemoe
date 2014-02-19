@@ -822,7 +822,9 @@ var ApplicationViewModel = function () {
                     if (actionMap[a] == 'login') {
                         self.action(a);
                         if (id) {
+                            console.log('token',id);
                             ServerApi.checkToken({token: id}, function (r) {
+                                console.log('check token response',r);
                                 if (!r) {
                                     self.user.errorText('Ошибка. Неверный токен.');
                                     self.user.tokenError(true);
