@@ -33,12 +33,13 @@ var UserViewModel = function () {
     this.remember = ko.observable(true);
 
     this.loginError = ko.observable(false);
+    this.tokenError = ko.observable(false);
     this.emailError = ko.observable(false);
     this.passwordError = ko.observable(false);
     this.errorText = ko.observable("Логин и пароль не соответствуют друг другу");
 
     this.hasErrors = ko.computed(function () {
-        return this.loginError() || this.emailError() || this.passwordError();
+        return this.loginError() || this.emailError() || this.passwordError() || this.tokenError();
     }, this);
 
     this.clearError = function () {
@@ -64,7 +65,8 @@ var UserViewModel = function () {
     });
 
     this.repasswordValidate = function () {
-
+        self.passwordError(self.password() != self.repassword());
+        self.errorText('Пароли не соответсвуют друг другу');
     };
 
     this.login.subscribe(function (val) {

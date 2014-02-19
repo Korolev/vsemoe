@@ -596,7 +596,11 @@ var ApplicationViewModel = function () {
     };
 
     this.userChangepass = function () {
-//TODO
+        if (!self.user.passwordError() && self.user.repassword() && !self.tokenError()) {
+            ServerApi.restorepasswordUser({
+                password: self.user.repassword()
+            });
+        }
     };
 
     this.userRestore = function () {
@@ -749,6 +753,7 @@ var ApplicationViewModel = function () {
 
     this.editItem.subscribe(function (val) {
         var item;
+        self.__restoreToken = val ? val : self.__restoreToken;
         if (val) {
             each(self.accountBlocks, function (i, block) {
                 each(block.items, function (_i, _item) {
@@ -816,6 +821,16 @@ var ApplicationViewModel = function () {
                 if (!self.user.token() && !token) {
                     if (actionMap[a] == 'login') {
                         self.action(a);
+                        if (id) {
+                            ServerApi.checkToken({token: id}, function (r) {
+                                if (!r) {
+                                    self.user.errorText('Ошибка. Неверный токен.');
+                                    self.user.tokenError(true);
+                                }else{
+                                    self.user.token(id);
+                                }
+                            });
+                        }
                     } else {
                         location.hash = "login";
                     }

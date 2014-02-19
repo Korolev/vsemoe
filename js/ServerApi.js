@@ -75,6 +75,9 @@ var ServerApi = {
         //TODO: what about token ?
         this.utils().post("/user/logout", dataObj, callback);
     },
+    restorepasswordUser: function (dataObj, callback) {
+        this.utils().post("/user/changepasswordtoken", dataObj, callback);
+    },
     lostpasswordUser: function (dataObj, callback) {
         this.utils().post("/user/lostpassword", dataObj, callback);
     },
