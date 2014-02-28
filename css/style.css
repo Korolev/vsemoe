@@ -34,7 +34,10 @@ a {
 html {
     width: 100%;
     height: 100%;
+    min-height: 600px;
     background-color: #fff;
+    /*background-image: url("/img/main_bg.png");*/
+    /*background-repeat: repeat-x;*/
 }
 
 body {
@@ -50,6 +53,7 @@ body {
     letter-spacing: 0.7px;
 }
 
+
 .top {
     height: 360px;
     background: rgb(236, 246, 248);
@@ -61,6 +65,7 @@ body {
     background: linear-gradient(to bottom, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaf5f7', endColorstr='#ffffff', GradientType=0);
 
+
 }
 
 .wrap {
@@ -68,6 +73,7 @@ body {
     margin-top: -360px;
     min-height: 100%;
     margin: 0 auto;
+
 }
 
 header {
@@ -1660,4 +1666,282 @@ span.attach:hover {
     text-align: left;
     padding: 0 0 0 20px;
     font-size: 16px;
+}
+
+/* Payment page Start */
+.payment-page{
+    padding: 40px 91px;
+    width: 815px;
+}
+/* Payment page End */
+.additional-info-colapser{
+    border-top: 1px solid #CCCCCC;
+    position: relative;
+    height: 20px;
+}
+
+.additional-info-colapser .switcher{
+    position: absolute;
+    right: 0px;
+    background-image: url("/img/payment/payments_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -361px -13px;
+    height: 20px;
+    width: 17px;
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg); /* IE 9 */
+    -webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
+    border: 1px solid #CCCCCC;
+    border-width: 1px 1px 0px;
+    cursor: pointer;
+}
+
+.payment-page {
+    color: #707070;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.payment_description{
+
+}
+
+
+.payment_description{
+
+}
+
+.payment-page .progress_chart{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.payment-page .center{
+    text-align: center;
+}
+.payment-page .italic{
+    font-style: italic;
+    font-family: Georgia, "HelveticaNeue Light",sans-serif;
+}
+
+.payment-page h2,
+.payment-page h3{
+    color: #707070;
+    font-family: "HelveticaNeue Bold",sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 0 0 0 -3px;
+    padding: 37px 0 16px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.payment-page h3{
+    font-size: 22px;
+}
+
+.float_left_column{
+    float: left;
+    width: 40%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.float_left_column .list_box{
+    min-height: 190px;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.float_left_column .list_box .out_link{
+    display: block;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 28px;
+    height: 28px;
+    background-image: url("/img/payment/payments_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -42px -5px;
+}
+
+.float_left_column .list_box .out_link.blue{
+    background-position: 0 -5px;
+}
+.float_left_column .list_box .out_link.green{
+    background-position: -42px -5px;
+}
+
+.float_left_column ul{
+
+}
+.float_left_column ul li{
+    line-height: 26px;
+}
+
+.float_left_column ul li:before{
+    content: "-";
+}
+
+.payment-page h1{
+    font-family: "HelveticaNeue Light",sans-serif;
+    color: #707070;
+    font-size: 34px;
+    line-height: 42px;
+}
+
+/* Testimonials */
+
+.testimonials{
+
+}
+
+.testimonials_header{
+    position: relative;
+}
+
+.testimonials_header .testimonials_navigation{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -5px;
+}
+
+.testimonials_navigation div{
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-image: url("/img/payment/payments_sprite.png");
+    background-repeat: no-repeat;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.testimonials_navigation .nav_prev{
+    background-position: -80px -3px;
+}
+.testimonials_navigation .nav_next{
+    background-position: -120px -3px;
+}
+
+.testimonials_holder{
+    overflow: hidden;
+    position: relative;
+    height: 220px;
+}
+
+.testimonials_holder .testimonials_body{
+    display: block;
+    width: 31%;
+    margin-left: 2%;
+    height: 200px;
+    float: left;
+}
+
+
+.testimonials_holder .testimonials_user{
+    padding: 15px 0 15px 40px;
+    font-size: 11px;
+
+}
+.testimonials_holder .testimonials_user_message{
+    display: inline-block;
+    width: 100%;
+    height: 180px;
+    background-color: #eaeef2;
+    vertical-align: middle;
+    font-size: 11px;
+    line-height: 15px;
+    padding: 20px 30px 20px 40px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+.testimonials_holder .testimonials_user_message{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.testimonials_holder .testimonials_user_message:before{
+    content: "";
+    position: absolute;
+    display: block;
+    height: 0px;
+    width: 0px;
+    border: 8px solid #eaeef2;
+    top: 40px;
+    left: 25px;
+    border-color: transparent #eaeef2 #eaeef2 transparent;
+}
+
+
+.testimonials_holder .testimonials_body:nth-child(2n) .testimonials_user_message{
+    background-color: #fbf9f5;
+}
+.testimonials_holder .testimonials_body:nth-child(2n) .testimonials_user_message:before{
+    border-color: transparent #fbf9f5 #fbf9f5 transparent;
+}
+
+.payment-page a{
+    font-style: italic;
+    color: #00A5C7;
+    line-height: 26px;
+}
+
+.payment-page .app_cost{
+    margin-top: 40px;
+}
+
+.payment-page .app_cost_table{
+    margin: 20px 0;
+}
+
+.wizard-navigation{
+    display: block;
+    height: 75px;
+    position: relative;
+}
+
+.wizard-navigation div{
+    position: absolute;
+    top: -15px;
+    right: -65px;
+}
+
+.wizard-navigation div span,
+.wizard-navigation div a{
+    font-style: normal;
+    color: #707070;
+    display: block;
+    position: relative;
+    float: left;
+    width: 150px;
+    padding-left: 20px;
+    height: 35px;
+    line-height: 36px;
+    background-image: url("/img/payment/navarrows.png");
+    background-repeat: no-repeat;
+    background-position: -12px -4px;
+}
+
+.wizard-navigation div a:after,
+.wizard-navigation div span:after{
+    content: "";
+    display: block;
+    background-image: url("/img/payment/navarrows.png");
+    background-repeat: no-repeat;
+    background-position: -153px -120px;
+    width: 20px;
+    height: 35px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.wizard-navigation div a{
+    background-position: -12px -60px;
+}
+
+.wizard-navigation div a:after{
+    background-position: -153px -179px;
 }

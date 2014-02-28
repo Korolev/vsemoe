@@ -66,7 +66,7 @@ var UserViewModel = function () {
 
     this.repasswordValidate = function () {
         self.passwordError(self.password() != self.repassword());
-        self.errorText('Пароли не соответсвуют друг другу');
+        self.errorText('Пароли не соответствуют друг другу');
     };
 
     this.login.subscribe(function (val) {
