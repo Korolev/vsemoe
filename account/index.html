@@ -361,6 +361,21 @@
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
 </script>
 
+<script type="text/html" id="confirm-tpl">
+    <div class="form_item" style="height: 200px;">
+        <!-- ko ifnot: $root.user.token() -->
+        <p>Пожалуйста, перейдите в указанный вами почтовый ящик для продолжения регистрации.</p>
+        <!-- /ko -->
+        <!-- ko if: $root.user.token() -->
+        <p>E-mail <a href="#observe" data-bind="text:$root.user.login"></a> подтвержден.
+            <br>
+            <br>
+            <a href="#observe">Начать работу</a></p>
+        <!-- /ko -->
+    </div>
+    <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
+</script>
+
 <script type="text/html" id="observe-tpl">
     <table class="contentTable">
         <tr>

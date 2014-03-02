@@ -53,6 +53,7 @@ var ApplicationViewModel = function () {
         actionMap = {
             "login": "login",
             "register": "login",
+            "confirm": "login",
             "restore": "login",
             "congratulations": "login",
             "changepass": "login",
@@ -71,6 +72,9 @@ var ApplicationViewModel = function () {
             "insert": "Ввод платежей...",
             "categories": "Категории бюджета...",
             "accmanage": "Выберите тип средств..."
+        },
+        pageParams = {
+
         },
         failsCount = 0,
         modal = {
@@ -623,10 +627,10 @@ var ApplicationViewModel = function () {
         var user = self.user;
         ServerApi.createUser({user: user.email(), password: user.password()}, function (r) {
             if (r) {
-                //TODO make confirm email
                 user.login(user.email());
                 user.email("");
-                self.userLogin();
+                location.hash = '#confirm';
+                //self.userLogin();
             } else {
                 user.errorText(user.email() + " пользователь существует.Выберите другой логин.");
                 user.emailError(true);
@@ -655,6 +659,7 @@ var ApplicationViewModel = function () {
         })
     };
     this.userLogOut = function () {
+        //TODO create method clear user
         console.log("logout");
         var user = self.user;
         user.token("");
@@ -752,45 +757,89 @@ var ApplicationViewModel = function () {
     });
 
     this.editItem.subscribe(function (val) {
-        var item;
-        self.__restoreToken = val ? val : self.__restoreToken;
-        if (val) {
-            each(self.accountBlocks, function (i, block) {
-                each(block.items, function (_i, _item) {
-                    if (self.accountIconsHash[_item.category] == val) {
-                        item = _item;
-                    }
-                });
-            });
-            if (item) {
-                self.accountInEdit(new AccountViewModel({
-                    description: item.title,
-                    type: item.type,
-                    group: item.group === undefined ? 1 : item.group,
-                    comment: val,
-                    currency_id: self.baseCurrencyId(),
-                    show: 1,
-                    helpText: item.helpText || '',
-                    category: item.category,
-                    currentBlock: item
-                }, self));
-            } else if (self.accountsHash[val]) {
-                self.accountInEdit(self.accountsHash[val]);
-                each(self.accountBlocksFlat, function (k, b) {
-                    if (b.category == self.accountsHash[val].category()) {
-                        item = b;
-                    }
-                });
-                self.accountInEdit().currentBlock(item);
-            } else {
-                self.accountInEdit(null);
-                location.hash = self.action();
-            }
 
-        } else {
-            self.accountInEdit(null);
-            location.hash = self.action();
+
+        var item;
+
+        switch (self.action()) {
+            case 'confirm' :
+                if (val) {
+                    console.log('token', val);
+                    self.user.token(val);
+                    self.user.clearError();
+                    ServerApi.checkToken({token: val}, function (r) {
+                        console.log('check token response', r);
+                        if (!r) {
+                            self.user.errorText('Ошибка. Неверный токен.');
+                            self.user.tokenError(true);
+                        } else {
+                            self.user.token(val);
+                            self.user.getLoginFromServer();
+                        }
+                    });
+                }
+                break;
+            case 'changepass' :
+                if (val) {
+                    console.log('token', val);
+                    self.user.token(val);
+                    self.user.clearError();
+                    ServerApi.checkToken({token: val}, function (r) {
+                        console.log('check token response', r);
+                        if (!r) {
+                            self.user.errorText('Ошибка. Неверный токен.');
+                            self.user.tokenError(true);
+                        } else {
+                            self.user.token(val);
+                            self.user.getLoginFromServer();
+                        }
+                    });
+                }
+                break;
+            case 'accmanage' :
+                if (val) {
+                    each(self.accountBlocks, function (i, block) {
+                        each(block.items, function (_i, _item) {
+                            if (self.accountIconsHash[_item.category] == val) {
+                                item = _item;
+                            }
+                        });
+                    });
+                    if (item) {
+                        self.accountInEdit(new AccountViewModel({
+                            description: item.title,
+                            type: item.type,
+                            group: item.group === undefined ? 1 : item.group,
+                            comment: val,
+                            currency_id: self.baseCurrencyId(),
+                            show: 1,
+                            helpText: item.helpText || '',
+                            category: item.category,
+                            currentBlock: item
+                        }, self));
+                    } else if (self.accountsHash[val]) {
+                        self.accountInEdit(self.accountsHash[val]);
+                        each(self.accountBlocksFlat, function (k, b) {
+                            if (b.category == self.accountsHash[val].category()) {
+                                item = b;
+                            }
+                        });
+                        self.accountInEdit().currentBlock(item);
+                    } else {
+                        self.accountInEdit(null);
+                        location.hash = self.action();
+                    }
+
+                } else {
+                    self.accountInEdit(null);
+                    location.hash = self.action();
+                }
+                break;
+            default :
+                console.log('def');
         }
+
+
     });
 
     this.pageTemplateName = ko.computed(function () {
@@ -817,22 +866,12 @@ var ApplicationViewModel = function () {
     this.router = Sammy(function () {
         var token = getCookie(ApplicationSettings.cookieName),
             doAction = function (a, id) {
-                console.log(a, id);
+                if (id) {
+                    pageParams[a] = id;
+                }
                 if (!self.user.token() && !token) {
                     if (actionMap[a] == 'login') {
                         self.action(a);
-                        if (id) {
-                            console.log('token',id);
-                            ServerApi.checkToken({token: id}, function (r) {
-                                console.log('check token response',r);
-                                if (!r) {
-                                    self.user.errorText('Ошибка. Неверный токен.');
-                                    self.user.tokenError(true);
-                                }else{
-                                    self.user.token(id);
-                                }
-                            });
-                        }
                     } else {
                         location.hash = "login";
                     }

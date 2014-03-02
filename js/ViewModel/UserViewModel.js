@@ -46,6 +46,7 @@ var UserViewModel = function () {
         self.loginError(false);
         self.emailError(false);
         self.passwordError(false);
+        self.tokenError(false);
     };
 
     this.loginValidate = function () {
@@ -79,6 +80,7 @@ var UserViewModel = function () {
     this.token = ko.observable();
 
     this.getLoginFromServer = function () {
+        console.log('getLoginFromServer');
         ServerApi.getUserByToken({}, function (r) {
             try{
                 self.login(r[0].login);
