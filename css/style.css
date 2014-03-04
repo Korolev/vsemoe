@@ -15,6 +15,10 @@ input[type=text], textarea {
     outline: none;
 }
 
+.hidden{
+    display: none;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -1687,13 +1691,17 @@ span.attach:hover {
     background-position: -361px -13px;
     height: 20px;
     width: 17px;
+    border: 1px solid #CCCCCC;
+    border-width: 0px 1px 1px;
+    cursor: pointer;
+}
+
+.additional-info-colapser .switcher.open{
     transform:rotate(180deg);
     -ms-transform:rotate(180deg); /* IE 9 */
     -webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
-    border: 1px solid #CCCCCC;
     border-width: 1px 1px 0px;
-    cursor: pointer;
-}
+}    
 
 .payment-page {
     color: #707070;
@@ -1893,6 +1901,24 @@ span.attach:hover {
 
 .payment-page .app_cost_table{
     margin: 20px 0;
+    position: relative;
+}
+
+
+.app_cost_table .pay_links{
+    position: absolute;
+    bottom:5px;
+    right:0;
+    height: 80px;
+}
+
+.app_cost_table .pay_links a{
+    display: block;
+    float:right;
+    margin-right: 9px;
+    height: 80px;
+    width:80px;
+    border-radius:50%;
 }
 
 .wizard-navigation{
@@ -1901,12 +1927,80 @@ span.attach:hover {
     position: relative;
 }
 
-.wizard-navigation div{
+.wizard-navigation > div{
     position: absolute;
     top: -15px;
-    right: -65px;
+    right: -68px;
+    overflow:hidden;
+}
+.wizard-navigation div span,
+.wizard-navigation div a{
+    font-style: normal;
+    font-size:13px;
+    color: #707070;
+    display: block;
+    position: relative;
+    float: left;
+    padding: 0 20px 0 30px;
+    height: 35px;
+    min-width: 130px;
+    line-height: 36px;
+    background-color: #f7f6f2;
+}
+.wizard-navigation div span{
+    background-color: #f3f1e8;    
 }
 
+.wizard-navigation div a:after,
+.wizard-navigation div span:after{
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    right: -44px;
+    top: -13px;
+    border-style: solid;
+    border-color: transparent transparent transparent #f7f6f2;
+    border-width: 30px 30px 30px 15px;
+    z-index:11;
+}
+
+.wizard-navigation div span:after{
+    border-color: transparent transparent transparent #f3f1e8;
+}    
+
+.wizard-navigation div a:before,
+.wizard-navigation div span:before{
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    right: -46px;
+    top: -13px;
+    border-style: solid;
+    border-color: transparent transparent transparent #fff;
+    border-width: 30px 30px 30px 15px;
+    z-index:10;
+}
+
+.wizard-navigation > div > :first-child{
+    padding-left:20px;
+}
+
+.wizard-navigation > div > :last-child:before,
+.wizard-navigation > div > :last-child:after{
+    display:none;
+}
+
+.pay_link_holder .pay_link{
+    display: block;
+    
+}
+
+
+/*
 .wizard-navigation div span,
 .wizard-navigation div a{
     font-style: normal;
@@ -1943,4 +2037,4 @@ span.attach:hover {
 
 .wizard-navigation div a:after{
     background-position: -153px -179px;
-}
+}*/
