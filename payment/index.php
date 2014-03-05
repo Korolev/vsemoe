@@ -93,14 +93,23 @@
             $action = 'intro';
             $page = $_GET['action'];
             $cost = $_GET['summ'];
+            $payTextHash = array(
+                45 => 'Дорогой Друг, вы покупаете за 45 рублей программный пакет на 1 месяц.',
+                79 => 'Дорогой Друг, вы покупаете за 79 рублей программный пакет на 2 месяца.',
+                450 => 'Дорогой Друг, вы покупаете за 450 рублей программный пакет на 1 год.'
+                );
             if(isset($page)){
                 $action = $page;
             }
             $content = file_get_contents('template/'.$action.'.html');
+            if(isset($cost)){
+                $content = str_replace('{!invitation}',$payTextHash[$cost], $content);
+            }
             echo "<!--".$content."-->";
             echo $content;
         ?>
     </div>
+    <div class="empty"></div>
     <footer>
         <div class="in">
             <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
