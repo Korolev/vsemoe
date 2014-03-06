@@ -1722,8 +1722,12 @@ span.attach:hover {
 }
 
 .payment-page .progress_chart{
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
+}
+
+.payment-page .progress_chart img{
+    margin-left: 15px;
 }
 
 .payment-page .center{
