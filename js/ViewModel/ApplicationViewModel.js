@@ -787,7 +787,7 @@ var ApplicationViewModel = function () {
                     ServerApi.checkToken({token: val}, function (r) {
                         console.log('check token response', r);
                         if (!r) {
-                            self.user.errorText('Ошибка. Неверный токен.');
+                            self.user.errorText('Ошибка. Неверный токен. Попробуйте восстановить пароль<br><a href="#restore">еще раз.</a>');
                             self.user.tokenError(true);
                         } else {
                             self.user.token(val);

@@ -343,7 +343,7 @@
         </div>
 
         <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
-            <p class="error" data-bind="text:user.errorText"></p>
+            <p class="error" data-bind="html:user.errorText"></p>
         </div>
         <div class="form_but">
             <input type="button" data-bind="click:userChangepass" value="Изменить"/>
