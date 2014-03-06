@@ -1807,7 +1807,7 @@ span.attach:hover {
 }
 
 .float_left_column ul li:before{
-    content: "-";
+    content: "- ";
 }
 
 .payment-page h1{
