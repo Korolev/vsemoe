@@ -1698,6 +1698,19 @@ span.attach:hover {
     cursor: pointer;
 }
 
+.additional-info-colapser .switcher:before{
+    position: absolute;
+    color: #ccc;
+    content: 'Скрыть';
+    right: 22px;
+    top: 0px;
+    font-size:10px;
+}
+
+.additional-info-colapser .switcher.open:before{
+    content: '';
+}    
+
 .additional-info-colapser .switcher.open{
     transform:rotate(180deg);
     -ms-transform:rotate(180deg); /* IE 9 */
@@ -1727,7 +1740,7 @@ span.attach:hover {
 }
 
 .payment-page .progress_chart img{
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .payment-page .center{
