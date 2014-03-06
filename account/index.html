@@ -339,7 +339,7 @@
             <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
                  data-bind="css:{hidden:!user.passwordError()}"/>
 <!-- ko if: user.showPassword() -->
-            <input type="text" tabindex="1" name="password" placeholder="Повторите Пароль"
+            <input type="text" tabindex="1" name="password" placeholder="Пароль"
                    data-bind="value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
 <!-- /ko -->
 <!-- ko ifnot: user.showPassword() -->
