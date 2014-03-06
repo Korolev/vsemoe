@@ -176,6 +176,7 @@ input[type='email'].error {
     text-align: right;
     font-size: 11px;
     color: #636363;
+    margin-top: -10px;
 }
 
 .content .form .form_item.remember input[type='checkbox'] {
@@ -341,7 +342,7 @@ label.error, p.error {
 }
 
 span.email {
-    color: #02a3c5;
+    color: #fe6000;
 }
 
 form.changepass p {
