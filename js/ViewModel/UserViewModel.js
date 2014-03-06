@@ -32,6 +32,8 @@ var UserViewModel = function () {
     this.repassword = ko.observable("");
     this.remember = ko.observable(true);
 
+    this.showPassword = ko.observable(false);
+
     this.loginError = ko.observable(false);
     this.tokenError = ko.observable(false);
     this.emailError = ko.observable(false);

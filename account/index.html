@@ -94,7 +94,7 @@
             <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
             <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
         </ul>-->
-        <span class="copy">@ 2013 - 2014 &laquo;Всё Моё&raquo; Все права защищены</span>
+        <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
     </div>
 </footer>
 <!-- jQuery library -->
@@ -322,31 +322,45 @@
                 <span name="user" class="email" data-bind="text:user.login"></span>
             </p>
         </div>
+
+        <!--<div class="form_item">-->
+            <!--<img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"-->
+                 <!--data-bind="css:{hidden:!user.passwordError()}"/>-->
+            <!--<input type="password" tabindex="2" name="password" placeholder="Пароль"-->
+                   <!--data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>-->
+
+            <!--<div class="resetBox"-->
+                 <!--data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>-->
+        <!--</div>-->
+
         <div class="form_item">
+            <a href="#restore" class="forgot hiddenToggle" title="Напомнить или изменить пароль"
+               data-bind="css:{hiddenImp:user.repassword() != ''}">?</a>
             <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
                  data-bind="css:{hidden:!user.passwordError()}"/>
-            <input type="password" tabindex="2" name="password" placeholder="Пароль"
-                   data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>
-
-            <div class="resetBox"
-                 data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>
-        </div>
-
-        <div class="form_item">
-            <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
-                 data-bind="css:{hidden:!user.passwordError()}"/>
-            <input type="password" tabindex="2" name="password" placeholder="Повторите Пароль"
-                   data-bind="event:{focusout:user.repasswordValidate()},value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
-
+<!-- ko if: user.showPassword() -->
+            <input type="text" tabindex="1" name="password" placeholder="Повторите Пароль"
+                   data-bind="value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
+<!-- /ko -->
+<!-- ko ifnot: user.showPassword() -->
+            <input type="password" tabindex="1" name="password" placeholder="Повторите Пароль"
+                   data-bind="value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
+<!-- /ko -->
             <div class="resetBox"
                  data-bind="css:{hiddenImp:user.repassword().length == 0},click:function(){$root.user.repassword('')}"></div>
         </div>
 
-        <div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">
-            <p class="error" data-bind="html:user.errorText"></p>
+        <div class="form_item remember">
+            <input type="checkbox" id="remember" data-bind="checked: user.showPassword"/>
+            <label for="remember">Показать пароль</label>
         </div>
+
+        <!--<div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">-->
+            <!--<p class="error" data-bind="html:user.errorText"></p>-->
+        <!--</div>-->
+
         <div class="form_but">
-            <input type="button" data-bind="click:userChangepass" value="Изменить"/>
+            <input type="button" data-bind="click:userChangepass" value="Cменить"/>
         </div>
     </div>
 </script>
