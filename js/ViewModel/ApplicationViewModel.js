@@ -866,6 +866,7 @@ var ApplicationViewModel = function () {
     this.router = Sammy(function () {
         var token = getCookie(ApplicationSettings.cookieName),
             doAction = function (a, id) {
+                self.user.errorText('');
                 if (id) {
                     pageParams[a] = id;
                 }
