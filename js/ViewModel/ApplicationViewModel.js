@@ -603,6 +603,10 @@ var ApplicationViewModel = function () {
         if (!self.user.passwordError() && self.user.repassword() && !self.user.tokenError()) {
             ServerApi.restorepasswordUser({
                 password: self.user.repassword()
+            },function(res){
+                if(res){
+                    location.href='observe';
+                }
             });
         }
     };
