@@ -600,7 +600,7 @@ var ApplicationViewModel = function () {
     };
 
     this.userChangepass = function () {
-        if (!self.user.passwordError() && self.user.repassword() && !self.tokenError()) {
+        if (!self.user.passwordError() && self.user.repassword() && !self.user.tokenError()) {
             ServerApi.restorepasswordUser({
                 password: self.user.repassword()
             });
