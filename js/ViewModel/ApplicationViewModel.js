@@ -605,7 +605,7 @@ var ApplicationViewModel = function () {
                 password: self.user.repassword()
             },function(res){
                 if(res){
-                    location.href='observe';
+                    location.hash ='observe';
                 }
             });
         }
