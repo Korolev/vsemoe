@@ -71,7 +71,7 @@ $(document).ready(function(){
 
 
 function slider() {
-    var selectElement = $('.elements div:not(.hidden)');
+    var selectElement = $('.elements div:not(.hidden_slide)');
     var num = parseInt(selectElement.attr('data-num'));
     num = num + 1;
     if (num > 4) { num = 1; }
