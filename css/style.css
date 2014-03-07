@@ -511,7 +511,7 @@ ul, ol {
     transition: all 1200ms ease-in-out;
 }
 
-.slider .elements .slide-2.phone.hidden {
+.slider .elements .slide-2.phone.hidden_slide {
     left: -1500px;
 }
 
@@ -529,7 +529,7 @@ ul, ol {
     transition: all 1200ms ease-in-out;
 }
 
-.slider .elements .slide-3.phone.hidden {
+.slider .elements .slide-3.phone.hidden_slide {
     left: -1500px;
 }
 
@@ -547,7 +547,7 @@ ul, ol {
     transition: all 1200ms ease-in-out;
 }
 
-.slider .elements .slide-4.phone.hidden {
+.slider .elements .slide-4.phone.hidden_slide {
     left: -1500px;
 }
 
