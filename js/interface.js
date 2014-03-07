@@ -75,8 +75,8 @@ function slider() {
     var num = parseInt(selectElement.attr('data-num'));
     num = num + 1;
     if (num > 4) { num = 1; }
-    $('.elements .phone').addClass('hidden');
-    $('.elements .phone[data-num=' + num + ']').removeClass('hidden');
+    $('.elements .phone').addClass('hidden_slide');
+    $('.elements .phone[data-num=' + num + ']').removeClass('hidden_slide');
 
     $('div.navi ul li').removeClass('selected');
     $('div.navi ul li[data-num=' + num + ']').addClass('selected');

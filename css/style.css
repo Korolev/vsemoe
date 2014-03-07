@@ -493,9 +493,8 @@ ul, ol {
     transition: all 1200ms ease-in-out;
 }
 
-.slider .elements .slide-1.phone.hidden {
+.slider .elements .slide-1.phone.hidden_slide {
     left: -1500px;
-    display: block;
 }
 
 .slider .elements .slide-2.phone {
