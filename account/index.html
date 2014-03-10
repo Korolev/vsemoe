@@ -379,10 +379,10 @@
         <p>Пожалуйста, перейдите в указанный вами почтовый ящик для продолжения регистрации.</p>
         <!-- /ko -->
         <!-- ko if: $root.user.token() -->
-        <p>E-mail <a href="#observe" data-bind="text:$root.user.login"></a> подтвержден.
+        <p>E-mail <span class="email" data-bind="text:$root.user.login"></span> подтвержден.
             <br>
             <br>
-            <a href="#observe">Начать работу</a></p>
+            <input style="width: auto" type='button' class="button" onclick="location.hash='observe'" value="Начать работу"/></p>
         <!-- /ko -->
     </div>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
@@ -870,6 +870,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- ko ifnot:comment() == 'creditcard' -->
         <div class="form_row">
             <div class="form_row_label">
                 <label>Cумма</label>
@@ -880,17 +882,41 @@
                 optionText: 'shortname',
                 optionValue:'currency_id',
                 value:currency}">
-                <!--<div class="fake_select">-->
-                <!--<span data-bind="currency:currency"></span>-->
-                <!--<select class="hidden" data-bind="options:$root.currencyArr,-->
-                <!--optionsText:function(item){return item.description+' ('+item.shortname+')'},-->
-                <!--optionsValue:'currency_id',-->
-                <!--value:$data.currency,-->
-                <!--optionsCaption:'---'"></select>-->
-                <!--</div>-->
-
             </div>
         </div>
+        <!-- /ko -->
+
+        <!-- ko if:comment() == 'creditcard' -->
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Установленный<br> банком лимит</label>
+            </div>
+            <div class="form_row_input split_input">
+                <input type="text" data-bind="value:creditlimit"/><input type="hidden" data-bind="select:{
+                options: $root.currencyArr,
+                optionText: 'shortname',
+                optionValue:'currency_id',
+                value:currency}">
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Доступно <br> <span style="font-size: 10px; color: #aaa ">(по кредитной карте)</span></label>
+            </div>
+            <div class="form_row_input">
+                <input type="text" data-bind="value:sum"/>
+            </div>
+        </div>
+        <div class="form_row">
+            <div class="form_row_label">
+                <label>Личные<br> средства</label>
+            </div>
+            <div class="form_row_input">
+                <input type="text" data-bind=""/>
+            </div>
+        </div>
+        <!-- /ko -->
+
         <!-- ko if:comment() == 'frienddeposit' -->
         <div class="form_row">
             <div class="form_row_label">
@@ -916,10 +942,7 @@
                 optionText: 'title',
                 value: currentBlock
                 }"/>
-                <!--<div class="fake_select">-->
-                <!--<span data-bind="text:$root.accountBlocks[0].title"></span>-->
-                <!--</div>-->
-                <!--<select data-bind="options:$root.accountBlocks, optionsText:'title'"></select>-->
+
             </div>
         </div>
         <div class="form_row">
@@ -933,22 +956,22 @@
                 optionValue: 'value',
                 value: group
                 }"/>
-                <!--<div class="fake_select">-->
-                <!--<span data-bind="text:['Неопределен','Мои средства','Долги'][$data.group()]"></span>-->
-                <!--</div>-->
-                <!--<select data-bind="options:['Мои средства','Долги','Неопределен']"></select>-->
             </div>
         </div>
         <div class="form_row">
             <div class="form_row_label" style="vertical-align: top">
                 <label>Статус</label>
             </div>
-            <div class="form_row_input" data-bind="html(console.log($data.show())">
+            <div class="form_row_input">
                 <input type="checkbox" data-bind="attr:{id:comment()+'_check'},checked:show">
                 <label data-bind="attr:{for:comment()+'_check'}">Видимый</label>
 
                 <div class="help_text">
                     Видимый счет будет показан в колонке счетов
+                </div>
+
+                <div class="delete_acc">
+                    <div class="delete_acc_button" data-bind="click:deleteRecord"></div>
                 </div>
             </div>
         </div>
@@ -1031,8 +1054,8 @@
             <div class="topMenuBox shortMenuItem" style="font-size: 22px"
                  data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+
             </div>
-            <div class="topMenuBox shortMenuItem lastItem"
-                 data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">K
+            <div class="topMenuBox shortMenuItem lastItem categories_tab"
+                 data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">
             </div>
             <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
             <div class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>

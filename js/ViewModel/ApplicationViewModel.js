@@ -210,6 +210,7 @@ var ApplicationViewModel = function () {
                     "title": "Кредитная карта",
                     "type": "LOAN",
                     "group": 2,
+                    "helpText": "В названии лучше использовать одно, два слова.\n Пример: кредитная карта, кредитная Виза",
                     "category": 1802
                 },
                 {

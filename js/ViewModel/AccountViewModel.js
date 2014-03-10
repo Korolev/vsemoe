@@ -34,9 +34,9 @@ var AccountViewModel = function (data, app) {
     this.helpText = data.helpText || '';
 
     this.category = ko.observable(data.category);
-    this.icon = ko.computed(function(){
+    this.icon = ko.computed(function () {
         return app.accountIconsHash[self.category()] || "other";
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
     this.editMode = ko.observable(!!data.editMode);
 
@@ -103,7 +103,7 @@ var AccountViewModel = function (data, app) {
             currentmonth = new Date(__now.getFullYear(), __now.getMonth());
 
         each(self.transactions, function (k, tr) {
-            if(!tr.hasSplit()){
+            if (!tr.hasSplit()) {
                 amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
                 if (self.currency() && tr.currency != self.currency()) {
                     amount = app.calculateAmount(
@@ -131,7 +131,7 @@ var AccountViewModel = function (data, app) {
             res *= -1;
         }
 
-        each(self.children(),function(k,acc){
+        each(self.children(), function (k, acc) {
             res += acc.sum();
         });
 
@@ -172,10 +172,10 @@ var AccountViewModel = function (data, app) {
         }
     });
 
-    this.update = function(){
+    this.update = function () {
         var newSumm = self.sum() | 0;
         self.recalculateSum();
-        if(self.sum() != newSumm){
+        if (self.sum() != newSumm) {
             var obj = {
                 from_id: self.id,
                 to_id: self.id,
@@ -188,7 +188,8 @@ var AccountViewModel = function (data, app) {
                 hidden: 1,
                 position: 1
             };
-            app.createTransaction(obj, function (r) {});
+            app.createTransaction(obj, function (r) {
+            });
             obj.amount = newSumm - self.sum();
             obj.description = newSumm - self.sum();
             obj.position = 0;
@@ -200,9 +201,14 @@ var AccountViewModel = function (data, app) {
                 self.recalculateSum(app);
                 self.save();
             });
-        }else{
+        } else {
             self.save();
         }
+    };
+
+    this.deleteRecord = function () {
+        self.description('');
+        self.save();
     };
 
     this.save = function () {
@@ -210,6 +216,10 @@ var AccountViewModel = function (data, app) {
             app.accounts.remove(self);
             ServerApi.deleteAccount({
                 account_id: self.id
+            }, function (r) {
+                if (r) {
+                    location.hash = 'accmanage';
+                }
             });
             return false;
         }

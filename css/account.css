@@ -1674,3 +1674,31 @@ input.vse-cancel:active{
     height: 20px;
     cursor: pointer;
 }
+
+.categories_tab{
+    background-image: url('../img/sit_norm.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.categories_tab.selected{
+    background-image: url('../img/sit_activ.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.delete_acc{
+    width: 100px;
+    margin-top: 10px;
+    border-top: 1px solid #a1a1a1;
+}
+
+.delete_acc_button{
+    background-image: url('../img/acc_del.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    margin-top: 10px;
+}
