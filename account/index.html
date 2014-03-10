@@ -30,33 +30,40 @@
 <body class="inner">
 <div class="top"></div>
 <div class="wrap">
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter22607524 = new Ya.Metrika({id:22607524,
-                    webvisor:true,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true});
-        } catch(e) { }
-    });
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function () {
+                try {
+                    w.yaCounter22607524 = new Ya.Metrika({id: 22607524,
+                        webvisor: true,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true});
+                } catch (e) {
+                }
+            });
 
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+            var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () {
+                        n.parentNode.insertBefore(s, n);
+                    };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
     <header>
         <div class="logo fl">
             <h1><a href="/" title="Всё Мое"></a></h1>
@@ -324,13 +331,13 @@
         </div>
 
         <!--<div class="form_item">-->
-            <!--<img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"-->
-                 <!--data-bind="css:{hidden:!user.passwordError()}"/>-->
-            <!--<input type="password" tabindex="2" name="password" placeholder="Пароль"-->
-                   <!--data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>-->
+        <!--<img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"-->
+        <!--data-bind="css:{hidden:!user.passwordError()}"/>-->
+        <!--<input type="password" tabindex="2" name="password" placeholder="Пароль"-->
+        <!--data-bind="value: user.password,valueUpdate:'input',css:{error:user.passwordError()}"/>-->
 
-            <!--<div class="resetBox"-->
-                 <!--data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>-->
+        <!--<div class="resetBox"-->
+        <!--data-bind="css:{hiddenImp:user.password().length == 0},click:function(){$root.user.password('')}"></div>-->
         <!--</div>-->
 
         <div class="form_item">
@@ -338,14 +345,14 @@
                data-bind="css:{hiddenImp:user.repassword() != ''}">?</a>
             <img src="/images/alert.png" class="error" alt="Ошибка" title="Ошибка"
                  data-bind="css:{hidden:!user.passwordError()}"/>
-<!-- ko if: user.showPassword() -->
+            <!-- ko if: user.showPassword() -->
             <input type="text" tabindex="1" name="password" placeholder="Пароль"
                    data-bind="value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
-<!-- /ko -->
-<!-- ko ifnot: user.showPassword() -->
+            <!-- /ko -->
+            <!-- ko ifnot: user.showPassword() -->
             <input type="password" tabindex="1" name="password" placeholder="Пароль"
                    data-bind="value: user.repassword,valueUpdate:'input',css:{error:user.passwordError()}"/>
-<!-- /ko -->
+            <!-- /ko -->
             <div class="resetBox"
                  data-bind="css:{hiddenImp:user.repassword().length == 0},click:function(){$root.user.repassword('')}"></div>
         </div>
@@ -356,7 +363,7 @@
         </div>
 
         <!--<div class="allErrors" data-bind="css:{hidden:!user.hasErrors()}">-->
-            <!--<p class="error" data-bind="html:user.errorText"></p>-->
+        <!--<p class="error" data-bind="html:user.errorText"></p>-->
         <!--</div>-->
 
         <div class="form_but">
@@ -382,7 +389,8 @@
         <p>E-mail <span class="email" data-bind="text:$root.user.login"></span> подтвержден.
             <br>
             <br>
-            <input style="width: auto" type='button' class="button" onclick="location.hash='observe'" value="Начать работу"/></p>
+            <input style="width: auto" type='button' class="button" onclick="location.hash='observe'"
+                   value="Начать работу"/></p>
         <!-- /ko -->
     </div>
     <a href="#register" class="form_link">Зарегистрироваться на Всё Моё?</a>
@@ -473,7 +481,8 @@
                                 <ul data-bind="foreach:children">
                                     <li>
                                         <div class="largeclickIcon "></div>
-                                        <span style="padding-left: 10px;" class="normalText" data-bind="shorttext:description"></span>
+                                        <span style="padding-left: 10px;" class="normalText"
+                                              data-bind="shorttext:description"></span>
                                         <span class="greenSymbol" data-bind="currency:currency"></span>
                                         <span class="greenValue" data-bind="digitext:sum"></span>
                                     </li>
@@ -600,16 +609,16 @@
                         <!-- ko if: transactions -->
                         <div data-bind="foreach:transactionsSet">
                             <!-- ko ifnot: editInstance() -->
-                                <!-- ko ifnot: deleted -->
-                                    <div class="t_row" data-bind="css:{empty:!created, tr_newday:newday == 1, tr_show_splits:_showSplits},
+                            <!-- ko ifnot: deleted -->
+                            <div class="t_row" data-bind="css:{empty:!created, tr_newday:newday == 1, tr_show_splits:_showSplits},
                                     template{name: 'tr-row-tpl',data: $data}">
-                                    </div>
-                                <!-- /ko -->
-                                <!-- ko if: deleted -->
-                                    <div class="t_row deleted_row">
-                                        <span data-bind="click:restoreRecord">Восстановить</span>
-                                    </div>
-                                <!-- /ko -->
+                            </div>
+                            <!-- /ko -->
+                            <!-- ko if: deleted -->
+                            <div class="t_row deleted_row">
+                                <span data-bind="click:restoreRecord">Восстановить</span>
+                            </div>
+                            <!-- /ko -->
                             <!-- /ko -->
                             <!-- ko if: editInstance() -->
                             <div class="t_row_edit" data-bind="css:{tr_newday:newday == 1, t_row: !editInstance(), t_edit_row: editInstance()},
@@ -681,18 +690,20 @@
     </div>
     <div class='t_td a_left td_7'>
                                     <span class="tr_comment" data-bind="text:comment, attr:{title:comment}">
-                                    </span><div class="tr_controls" data-bind="if:created">
-        <span data-bind="css:{split:hasSplit}, click:showSplits"></span>
-        <!-- ko ifnot: hasSplit() || !!split -->
-        <i data-bind="click:editRecord" class="icon edit"></i>
-        <i data-bind="click:removeRecord" class="icon del"></i>
-        <!-- /ko -->
-    </div>
+                                    </span>
+
+        <div class="tr_controls" data-bind="if:created">
+            <span data-bind="css:{split:hasSplit}, click:showSplits"></span>
+            <!-- ko ifnot: hasSplit() || !!split -->
+            <i data-bind="click:editRecord" class="icon edit"></i>
+            <i data-bind="click:removeRecord" class="icon del"></i>
+            <!-- /ko -->
+        </div>
     </div>
     <!-- ko if:_showSplits() -->
-            <div class="transactions_splits" data-bind="foreach:splitTransactions">
-                <div class="t_row" data-bind="template:{name:'tr-row-tpl',data:$data}"></div>
-            </div>
+    <div class="transactions_splits" data-bind="foreach:splitTransactions">
+        <div class="t_row" data-bind="template:{name:'tr-row-tpl',data:$data}"></div>
+    </div>
     <!-- /ko -->
 </script>
 
@@ -700,7 +711,8 @@
     <div class="row_edit_form">
         <div class="td_date_input">
             <div class="dateInput" data-bind="datepick:{value:created,format:'DD.MM.YY',time:true}"></div>
-        </div><div class="td_fromaccount_input">
+        </div>
+        <div class="td_fromaccount_input">
             <input type="hidden" data-bind="select:{
                                         options:fromAcc,
                                         optionText:'description',
@@ -708,7 +720,8 @@
                                         value:from_id,
                                         css:{width: '132px',top: '28px',left:'0px'}
                                         }">
-        </div><div class="td_toaccount_input split_input">
+        </div>
+        <div class="td_toaccount_input split_input">
             <div class="acc_category acc_button">
                 <i data-bind="css:action().icon"></i>
                 <input type="hidden" data-bind="select:{
@@ -718,7 +731,8 @@
                                         icon:'icon',
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
-            </div><div class="acc_select">
+            </div>
+            <div class="acc_select">
                 <input type="hidden" data-bind="treeSelect:{
                                             options:toAcc,
                                             optionText:'description',
@@ -728,7 +742,8 @@
                                             css:{width: 'auto', 'min-width':'123px',top: '28px',left:'0px'}
                                          }">
             </div>
-        </div><div class="acc_ammount split_input">
+        </div>
+        <div class="acc_ammount split_input">
             <div class="acc_currency acc_button">
                 <!--<span data-bind="currency:currency"></span>-->
                 <input type="hidden" data-bind="select:{
@@ -738,19 +753,24 @@
                                         value:currency,
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
-            </div><input type="text" data-bind="value:amount"/>
-        </div><div class="acc_controls">
+            </div>
+            <input type="text" data-bind="value:amount"/>
+        </div>
+        <div class="acc_controls">
             <div class="acc_button" data-bind="
                                     click:function(){$data.commentEdit(!$data.commentEdit())},
                                     css:{pushed:commentEdit}">
                 <i class="comment_i"></i>
-            </div><div class="acc_button" data-bind="
+            </div>
+            <div class="acc_button" data-bind="
                                     click:function(){$data.splitEdit(!$data.splitEdit())},
                                     css:{pushed:splitEdit}">
                 <i class="split_i"></i>
-            </div><div class="acc_button">
+            </div>
+            <div class="acc_button">
                 <span data-bind="click:save">OK</span>
-            </div><div class="acc_close_button" data-bind="if: id">
+            </div>
+            <div class="acc_close_button" data-bind="if: id">
                 <i class="close_i" data-bind="click:cancel"></i>
             </div>
         </div>
@@ -853,7 +873,8 @@
     <div class="account_edit_form">
         <div class="buttons_bar">
             <input class="vse-cancel button small" type="button" value="Отмена" data-bind="gotoaction:'accmanage'"/>
-            <input class="button small" type="button" data-bind="click:$root.saveAccount, attr:{value:$data.id?'Сохранить':'Добавить'}"/>
+            <input class="button small" type="button"
+                   data-bind="click:$root.saveAccount, attr:{value:$data.id?'Сохранить':'Добавить'}"/>
         </div>
         <div class="form_row">
             <div class="form_row_label" style="vertical-align: top">
@@ -969,9 +990,10 @@
                 <div class="help_text">
                     Видимый счет будет показан в колонке счетов
                 </div>
-
-                <div class="delete_acc">
-                    <div class="delete_acc_button" data-bind="click:deleteRecord"></div>
+                <div data-bind="if:id">
+                    <div class="delete_acc">
+                        <div class="delete_acc_button" data-bind="click:deleteRecord"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1192,9 +1214,11 @@
                                             value:to_id,
                                             css:{width: 'auto', 'min-width':'123px',top: '28px',left:'0px'}
                                          }">
-            </div><div class="transaction_amount">
+            </div>
+            <div class="transaction_amount">
                 <input type="text" data-bind="value:amount">
-            </div><div class="transaction_remove" data-bind="if: $index() > 1">
+            </div>
+            <div class="transaction_remove" data-bind="if: $index() > 1">
                 <span data-bind="click:$parent.removeSplitTransaction"></span>
             </div>
         </div>
@@ -1204,7 +1228,8 @@
     </div>
 </script>
 <script type="text/html" id="tr-comment-tpl">
-    <textarea data-bind="value:comment, click:function(){if($data.comment() == 'Комментарий'){$data.comment('')}}"></textarea>
+    <textarea
+            data-bind="value:comment, click:function(){if($data.comment() == 'Комментарий'){$data.comment('')}}"></textarea>
 </script>
 <script type="text/html" id="tr-default-tpl">
 </script>
