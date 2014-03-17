@@ -16,6 +16,23 @@
         })();
 
         $(document).ready(function(){
+            var hash = location.hash || '#intro_web';
+
+            console.log(hash);
+
+            $('.in-page').each(function(k,el){
+                $(el).addClass('hidden');
+            });
+
+            $('.page_switcher a').each(function(k,el){
+                if($(el).attr('href').indexOf(hash) == -1){
+                    $(el).removeClass('current');
+                }else{
+                    $(el).addClass('current');
+                }
+            });
+            $(hash).removeClass('hidden');
+
             $('.page_switcher a').on('click',function(e){
                 //todo remove thi govnokod =)
                 $('.in-page').each(function(k,el){
