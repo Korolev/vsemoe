@@ -649,7 +649,7 @@ ul, ol {
     text-decoration: none;
 }
 
-.desc.hidden {
+.desc.hidden_slide {
     right: -1500px;
 }
 
@@ -888,7 +888,7 @@ ul, ol {
 section {
     margin-top: 0;
     margin-right: auto;
-    margin-bottom: 200px;
+    margin-bottom: 40px;
     margin-left: auto;
 }
 
@@ -1116,6 +1116,23 @@ i.icon,
     background-position: 0 -738px;
 }
 
+
+
+
+.wallet-color {
+    background-position: 6px -114px;
+}
+
+.disk-color {
+    background-position: 6px -53px;
+}
+
+.projector-color {
+    background-position: 6px -5px;
+}
+
+
+
 .icon.medium {
     width: 28px;
     height: 28px;
@@ -1239,15 +1256,15 @@ i.icon,
 
 .snapshot h3 {
     font: 26px/1 "PFDinDisplayPro", sans-serif;
-    font-weight: 700;
-    color: #6f6f6f;
+    font-weight: 300;
+    color: #FF6900;
     position: relative;
     margin-bottom: 14px;
 }
 
 .snapshot h3 i {
     position: absolute;
-    left: -87px;
+    left: -80px;
 }
 
 .snapshot.right h3 i {
@@ -2069,4 +2086,88 @@ span.attach:hover {
     min-height: 100px;
     width:55%;
     padding: 10px 0 0 17px;
+}
+.hidden{
+    display: none !important;
+}
+
+.page_switcher{
+    text-align: center;
+    margin-top: -50px;
+    padding-bottom: 20px;
+}
+
+.page_switcher a{
+    font-family:"HelveticaNeue Bold",sans-serif;
+    color: #707070;
+    font-size: 16px;
+}
+
+.page_switcher a.current{
+    color: #66CDCD;
+}
+
+.page_switcher span{
+    display: inline-block;
+}
+
+.page_switcher span a{
+    padding: 0 15px;
+    display: block;
+}
+
+
+#intro_web p,
+#intro_iphone p {
+    font-size: 16px;
+}
+
+#intro_web .snapshot{
+    border-top: 1px solid #CCCCCC;
+}
+
+#intro_web .snapshot:first-child{
+    border-top: none;
+    margin-top: -20px;
+}
+
+#intro_web .snapshot{
+    text-align: center;
+    margin: 0;
+    padding: 70px 10px 0 10px;
+}
+
+#intro_web .snapshot img{
+    float: none;
+    margin: 0;
+}
+
+#intro_web .snapshot h2{
+    color: #444B55;
+    font-family: "PFDinDisplayPro",sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+}
+
+#intro_web .snapshot div,
+#intro_web .snapshot h2{
+    text-align: left;
+}
+
+#intro_web .snapshot .description > p{
+    display: inline-block;
+    width: 47%;
+    margin-right: 2%;
+    vertical-align: top;
+}
+
+#intro_web .snapshot .description{
+    float: left;
+    margin-left: 40px;
+    padding-left: 78px;
+    width: 630px;
+}
+
+#intro_web i{
+    background-image: url("/img/payment/intro_web_sprite.png");
 }

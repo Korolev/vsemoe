@@ -717,15 +717,13 @@ var ApplicationViewModel = function () {
                     var trs = [];
                     each(r, function (k, tr) {
                         self.___usedCurrency[tr.currency_id] = 1;
-                        if (tr.position != 1) { //TODO remove  this hack
-                            if (tr.currency_id != self.baseCurrencyId()) {
-                                self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
-                                self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
-                            }
-                            var transaction = new TransactionViewModel(tr, self);
-                            trs.push(transaction);
-                            self.transactionsHash[tr.transaction_id] = transaction;
+                        if (tr.currency_id != self.baseCurrencyId()) {
+                            self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
+                            self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
                         }
+                        var transaction = new TransactionViewModel(tr, self);
+                        trs.push(transaction);
+                        self.transactionsHash[tr.transaction_id] = transaction;
                     });
 
                     each(trs, function (k, tr) {

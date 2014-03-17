@@ -672,23 +672,18 @@
 
 <script type="text/html" id="tr-row-tpl">
     <div class="t_td td_1">
-    </div>
-    <div class='t_td a_left td_2' data-bind="textdate:created">
-    </div>
-    <div class='t_td a_left td_3'>
+    </div><div class='t_td a_left td_2' data-bind="textdate:created">
+    </div><div class='t_td a_left td_3'>
         <span data-bind="accountname:from_id"></span>
         <span>&nbsp;</span>
         <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
-    </div>
-    <div class='t_td a_left td_4' data-bind="accountname:to_id">
-    </div>
-    <div class='t_td a_right td_5_6'>
+    </div><div class='t_td a_left td_4' data-bind="accountname:to_id">
+    </div><div class='t_td a_right td_5_6'>
                                     <span class="tr_currency" data-bind="if:currency != $root.baseCurrencyId()">
                                         <span data-bind="currency:currency"></span>
                                     </span>
         <span data-bind="absdigitext:amount, css:$root.getCssClass($data)"></span>
-    </div>
-    <div class='t_td a_left td_7'>
+    </div><div class='t_td a_left td_7'>
                                     <span class="tr_comment" data-bind="text:comment, attr:{title:comment}">
                                     </span>
 
@@ -711,8 +706,7 @@
     <div class="row_edit_form">
         <div class="td_date_input">
             <div class="dateInput" data-bind="datepick:{value:created,format:'DD.MM.YY',time:true}"></div>
-        </div>
-        <div class="td_fromaccount_input">
+        </div><div class="td_fromaccount_input">
             <input type="hidden" data-bind="select:{
                                         options:fromAcc,
                                         optionText:'description',
@@ -720,8 +714,7 @@
                                         value:from_id,
                                         css:{width: '132px',top: '28px',left:'0px'}
                                         }">
-        </div>
-        <div class="td_toaccount_input split_input">
+        </div><div class="td_toaccount_input split_input">
             <div class="acc_category acc_button">
                 <i data-bind="css:action().icon"></i>
                 <input type="hidden" data-bind="select:{
@@ -731,8 +724,7 @@
                                         icon:'icon',
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
-            </div>
-            <div class="acc_select">
+            </div><div class="acc_select">
                 <input type="hidden" data-bind="treeSelect:{
                                             options:toAcc,
                                             optionText:'description',
@@ -742,8 +734,7 @@
                                             css:{width: 'auto', 'min-width':'123px',top: '28px',left:'0px'}
                                          }">
             </div>
-        </div>
-        <div class="acc_ammount split_input">
+        </div><div class="acc_ammount split_input">
             <div class="acc_currency acc_button">
                 <!--<span data-bind="currency:currency"></span>-->
                 <input type="hidden" data-bind="select:{
@@ -753,24 +744,19 @@
                                         value:currency,
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
-            </div>
-            <input type="text" data-bind="value:amount"/>
-        </div>
-        <div class="acc_controls">
+            </div><input type="text" data-bind="value:amount"/>
+        </div><div class="acc_controls">
             <div class="acc_button" data-bind="
                                     click:function(){$data.commentEdit(!$data.commentEdit())},
                                     css:{pushed:commentEdit}">
                 <i class="comment_i"></i>
-            </div>
-            <div class="acc_button" data-bind="
+            </div><div class="acc_button" data-bind="
                                     click:function(){$data.splitEdit(!$data.splitEdit())},
                                     css:{pushed:splitEdit}">
                 <i class="split_i"></i>
-            </div>
-            <div class="acc_button">
+            </div><div class="acc_button">
                 <span data-bind="click:save">OK</span>
-            </div>
-            <div class="acc_close_button" data-bind="if: id">
+            </div><div class="acc_close_button" data-bind="if: id">
                 <i class="close_i" data-bind="click:cancel"></i>
             </div>
         </div>
@@ -1073,10 +1059,10 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div class="topMenuBox shortMenuItem" style="font-size: 22px"
+            <div class="topMenuBox shortMenuItem lastItem" style="font-size: 22px"
                  data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+
             </div>
-            <div class="topMenuBox shortMenuItem lastItem categories_tab"
+            <div class="topMenuBox shortMenuItem categories_tab"
                  data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">
             </div>
             <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>

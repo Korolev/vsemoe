@@ -4,7 +4,6 @@
 	<link href="css/fonts.css" rel="stylesheet" type="text/css">
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
     <script src="js/jquery-1.9.1.min.js"></script>
-	<script src="js/interface.js"></script>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-38982546-1']);
@@ -15,6 +14,21 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
+
+        $(document).ready(function(){
+            $('.page_switcher a').on('click',function(e){
+                //todo remove thi govnokod =)
+                $('.in-page').each(function(k,el){
+                    $(el).addClass('hidden');
+                });
+
+                $('.page_switcher a').each(function(k,el){
+                  $(el).removeClass('current');
+                });
+                $(e.target).addClass('current');
+                $($(e.target).attr('href')).removeClass('hidden');
+            });
+        });
     </script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=1100">
@@ -71,127 +85,164 @@
 				</ul>
 			</nav>
 		</header>
-		<div class="container">			
+		<div class="container">
 			<span class="status-left">Все под контролем!</span>
 			<h1 class="ribbon">Экскурсия</h1>
-			<section class="snapshot right">
-				<img src="i/phone-overview.png" alt="">
-				<div class="description">
-					<a href="https://itunes.apple.com/ru/app/vse-moe/id633467924" class="to-appstore tl">Перейти в AppStore</a>
-					<ul>
-                        <li>
-							<h3><i class="icon big bill"></i>Мы не храним чеки!</h3>
-							<p>
-								Влюбом месте внесли платеж в дороге  и о чеках забыли.
-							</p>
-						</li>
-						<li>
-							<h3><i class="icon big projector"></i>Вы все видите!</h3>
-							<p>Одним взглядом охватите все цифры за месяц, ваши доходы и расходы, их разницу. Активы и долги, итоговую сумму денежных средств. </p>
-						</li>
-					</ul>
-				</div>
-				<div class="clearfix"></div>
-			</section>
+            <div class="page_switcher">
+                <span><a href="#intro_web" class="current">WEB</a></span>
+                <span class="chertochka"> </span>
+                <span><a href="#intro_iphone">IPHONE</a></span>
+            </div>
+            <div id="intro_web" class="in-page">
+                <section class="snapshot">
+                    <h2>Отслеживаем</h2>
+                    <img src="img/payment/web_slide_1.png" alt="">
+                    <div class="description">
+                        <h3><i class="icon big wallet-color"></i>Все под контролем!</h3>
+                        <p>Всё Моё помогает собрать, систематизировать и отслеживать ваши денежные средства, долги и обязательства с течением времени.</p>
+                        <p>Изменять, удалять и отслеживать деньги на них. Рассчитать сколько потребляет ребенок в месяц подгузников, детского пюре и лекарств.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </section>
+                <section class="snapshot">
+                    <h2>Балансовый лист</h2>
+                    <img src="img/payment/web_slide_2.png" alt="">
+                    <div class="description">
+                        <h3><i class="icon big projector-color"></i>Все увидеть!</h3>
+                        <p>Отследите доходы и расходы в течении месяца. Узнаете сколько вы потратили на бензин, в командировке или путешествуя по Индии.</p>
+                        <p>Контролируйте только крупные покупки или траты: аренду,  домашний ремонт, или лечение у докторов.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </section>
+                <section class="snapshot">
+                    <h2>Книга доходов и расходов...</h2>
+                    <img src="img/payment/web_slide_3.png" alt="">
+                    <div class="description">
+                        <h3><i class="icon big disk-color"></i>Возможно!</h3>
+                        <p>Проследите количество бонусов и зарплату в итоге, земельные налоги и штрафы. Сосчитаете доходы по частной практике и фрилансу, траты</p>
+                        <p>на ремонт и благоустройство дачи, обеды и дружеские ужины в кофейне.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </section>
+            </div>
+            <div id="intro_iphone" class="in-page hidden">
+                <section class="snapshot right">
+                    <img src="i/phone-overview.png" alt="">
+                    <div class="description">
+                        <a href="https://itunes.apple.com/ru/app/vse-moe/id633467924" class="to-appstore tl">Перейти в AppStore</a>
+                        <ul>
+                            <li>
+                                <h3><i class="icon big bill"></i>Вы контролируете деньги</h3>
+                                <p>
+                                    Охватили взглядом все цифры в течении месяца и за день, ваши доходы и расходы, денежный остаток. Активы и долги, итоговую сумму денежных средств.
+                                </p>
+                            </li>
+                            <li>
+                                <h3><i class="icon big projector"></i>Не храним чеки!</h3>
+                                <p>В любом месте внесли платеж в дороге и о чеках забыли.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </section>
 
-			<section class="snapshot">
-				<div class="description">
-					<ul>
-						<li>
-							<h3><i class="icon big star"></i>Транзакция в два клика</h3>
-							<p>
-								Повторяющие платежи в два действия: сумма и нужная звездная кнопка.
-								Вы успешно проведете транзакцию. 
-							</p>
-						</li>
-						<li>
-							<h3><i class="icon big stars"></i>Фавориты 3-х видов!</h3>
-							<p>Такие фаворитные платежи могут быть трех видов: расходами, доходами и перемещением денег.</p>
-						</li>
-					</ul>
-			  </div>
-				<img src="i/phone-favorite.png" alt="">
-				<div class="clearfix"></div>
-			</section>
+                <section class="snapshot">
+                    <div class="description">
+                        <ul>
+                            <li>
+                                <h3><i class="icon big star"></i>Минимум действий</h3>
+                                <p>
+                                    Любимые платежи в два действия: сумма и звездная кнопка. Быстрый способ внести транзакцию.
+                                </p>
+                            </li>
+                            <li>
+                                <h3><i class="icon big stars"></i>Транзакции на сайте!</h3>
+                                <p>Все транзакции можно просмотреть и отредактировать на сайте.</p>
+                            </li>
+                        </ul>
+                  </div>
+                    <img src="i/phone-favorite.png" alt="">
+                    <div class="clearfix"></div>
+                </section>
 
-			<section class="snapshot right">
-				<img src="i/phone-input.png" alt="">
-				<div class="description">
-					<ul>
-						<li>
-							<h3><i class="icon big nums"></i>Обычный платеж - всегда!</h3>
-							<p class="small">
-								Мы не забыли о обязательной возможности ввода транзакции
-								с разными настройками. 
-							</p>
-						</li>
-						<li>
-							<h3><i class="icon big cart"></i>Категории бюджета!</h3>
-							<p class="small">Встроенный список категорий бюджета.</p>
-						</li>
-					</ul>
-			  </div>
-				<div class="clearfix"></div>
-			</section>
-			<section class="snapshot">
-				<div class="description">
-					<ul>
-						<li>
-							<h3><i class="icon big bill-plus"></i>Платеж - неопределен ...</h3>
-							<p>
-								«На ходу» ввели сумму и ... закрыли приложение. Не беда, будет время, вы всегда вернетесь и уточните платеж.</p>
-						</li>
-						<li>
-							<h3><i class="icon big bill"></i>В любой валюте!</h3>
-							<p>Свои финансы можно вести в любой валюте, и добавить еще 130 видов. Возможность выбрать свои курс обмена.</p>
-						</li>
-					</ul>
-		    </div>
-				<img src="i/phone-payments.png" alt="">
-				<div class="clearfix"></div>
-			</section>
-			<section class="snapshot right">
-				<div class="description">
-					<ul>
-						<li>
-							<h3><i class="icon big wallet"></i>Возможность</h3>
-							<p>Можно вести сразу несколько <br>
-							  типов денежных средств.<img src="i/multiple-accounts.png" alt="">
-							</p>
-						</li>
-						<li>
-							<h3><i class="icon big cloud"></i>Ничего не теряется</h3>
-							<p>Все цифры в приложении и на сервере, все настройки - только ваши и в любом месте.</p>
-						</li>
-					</ul>
-		    </div>
-				<img src="i/phone-bill.png" alt="">
-				<div class="clearfix"></div>
-			</section>
-			<section class="snapshot" id="last">
-				<div class="description">
-					<ul>
-						<li>
-							<h3><i class="icon big chart"></i>Графики: Капитал</h3>
-							<p>
-								Легко узнать где и сколько у тебя денег. Сколько денежных средств на каждом счету и как они меняются.</p>
-						</li>
-						<li>
-							<h3><i class="icon big disk"></i>Графики: Доходы и Расходы</h3>
-							<p>
-							  Просто понять, что происходит с твоими деньгами в неделю, месяц, полгода только прикоснись к экрану.
-							</p>
-						</li>
-					</ul>
-		    </div>
-				<img src="i/phone-charts.png" alt="">
-				<a href="https://itunes.apple.com/ru/app/vse-moe/id633467924" class="to-appstore br">Перейти в AppStore</a>
-				<div class="clearfix"></div>
-			</section>
-		</div>
-		<div class="empty"></div>
-	</div>
-	<footer>
+                <section class="snapshot right">
+                    <img src="i/phone-input.png" alt="">
+                    <div class="description">
+                        <ul>
+                            <li>
+                                <h3><i class="icon big nums"></i>Обычный платеж - всегда!</h3>
+                                <p class="small">
+                                    Мы не забыли о обязательной возможности ввода транзакции
+                                    с разными настройками.
+                                </p>
+                            </li>
+                            <li>
+                                <h3><i class="icon big cart"></i>Мелкие расходы!</h3>
+                                <p class="small">Отслеживайте карманные расходы и собирайте денежные средства на новый телефон или поездку в Таиланд.</p>
+                            </li>
+                        </ul>
+                  </div>
+                    <div class="clearfix"></div>
+                </section>
+                <section class="snapshot">
+                    <div class="description">
+                        <ul>
+                            <li>
+                                <h3><i class="icon big bill-plus"></i>Платеж - неопределен ...</h3>
+                                <p>
+                                    «На ходу» ввели сумму и ... закрыли приложение. Не беда, будет время, вы всегда вернетесь и уточните платеж.</p>
+                            </li>
+                            <li>
+                                <h3><i class="icon big bill"></i>В любой валюте!</h3>
+                                <p>Свои финансы можно вести в любой валюте и добавить еще.
+                                    Выбрать свои курс обмена.</p>
+                            </li>
+                        </ul>
+                </div>
+                    <img src="i/phone-payments.png" alt="">
+                    <div class="clearfix"></div>
+                </section>
+                <section class="snapshot right">
+                    <div class="description">
+                        <ul>
+                            <li>
+                                <h3><i class="icon big wallet"></i>Возможность</h3>
+                                <p>Вы соберете и сможете отслеживать разные виды денежных средств, видеть общую сумму вашего капитала.
+                                    <img src="i/multiple-accounts.png" alt="">
+                                </p>
+                            </li>
+                            <li>
+                                <h3><i class="icon big cloud"></i>Куда уходят деньги.</h3>
+                                <p>Отследите как сильно вы закредитованы. Куда уходят деньги. Сколько вы расходуйте на себя и близких и сколько вам нужно.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <img src="i/phone-bill.png" alt="">
+                    <div class="clearfix"></div>
+                </section>
+                <section class="snapshot" id="last">
+                    <div class="description">
+                        <ul>
+                            <li>
+                                <h3><i class="icon big chart"></i>Доходы, расходы и капитал </h3>
+                                <p>Передвиньте график в право, влево, или нажмите на бар. Попадете в другой промежуток времени: месяц, неделю, полгода.</p>
+                            </li>
+                            <li>
+                                <h3><i class="icon big disk"></i>Вы анализируете деньги</h3>
+                                <p>
+                                    Хороший способ отслеживать денежные средства, а также разные источники доходов и расходов.
+                                </p>
+                            </li>
+                        </ul>
+                </div>
+                    <img src="i/phone-charts.png" alt="">
+                    <a href="https://itunes.apple.com/ru/app/vse-moe/id633467924" class="to-appstore br">Перейти в AppStore</a>
+                    <div class="clearfix"></div>
+                </section>
+    		</div>
+        </div>
+       <div class="empty"></div>
+        <footer>
 		<div class="in">
             <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
 			<ul class="navi">

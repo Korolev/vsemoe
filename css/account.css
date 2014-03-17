@@ -1679,6 +1679,7 @@ input.vse-cancel:active{
     background-image: url('../img/sit_norm.png');
     background-repeat: no-repeat;
     background-position: center center;
+    margin-right: 20px;
 }
 
 .categories_tab.selected{
