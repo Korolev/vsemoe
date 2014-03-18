@@ -134,7 +134,8 @@ header .logo-slogan a {
     height: 41px;
     top: 17px;
     right: 0px;
-    background: url('../i/loginbtn.png') 0 0 no-repeat;
+    /*background: url('../i/loginbtn.png') 0 0 no-repeat;*/
+    background: url('../img/yellow.png') 0 0 no-repeat;
 }
 
 .loginbtn-minisocials,
@@ -144,7 +145,8 @@ header .logo-slogan a {
     height: 41px;
     top: 23px;
     right: 0px;
-    background: url('../i/loginbtn.png') 0 0 no-repeat;
+    /*background: url('../i/loginbtn.png') 0 0 no-repeat;*/
+    background: url('../img/yellow.png') 0 0 no-repeat;
 }
 
 nav.login {
@@ -1222,7 +1224,7 @@ i.icon,
 
 .status-right {
     position: absolute;
-    top: 68px;
+    top: 60px;
     right: 64px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -1348,8 +1350,11 @@ line-height: 27px;*/
     padding-right: 160px;
     padding-top: 36px;
     padding-bottom: 33px;
-    background: url('../i/stamp.png') 735px 32px no-repeat;
     line-height: 1.3;
+}
+
+.rules_page{
+    background: url('../i/stamp.png') 795px 142px no-repeat;
 }
 
 .hero-unit.hero-image {
@@ -1361,7 +1366,8 @@ line-height: 27px;*/
 }
 
 .content-block {
-    width: 868px;
+    width: 700px;
+    padding-right: 168px;
     color: #7c7974;
     font-size: 14px;
     line-height: 25px;

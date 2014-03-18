@@ -75,7 +75,7 @@
         <div class="logo fl">
             <a href="/" title="Всё Мое"></a>
         </div>
-        <a class="loginbtn" href="/login.html"></a>
+        <a class="loginbtn" href="/account"></a>
         <nav>
             <ul class="fr">
                 <li><a href="/tour.html">Экскурсия</a></li>
