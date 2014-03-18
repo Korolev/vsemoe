@@ -536,7 +536,7 @@
 <script type="text/html" id="insert-tpl">
     <table class="contentTable">
         <tr>
-            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'"></td>
+            <td class="tdleftMenu" data-bind="template:'left-menu-insert-new-tpl'"></td>
             <!--------rightMenu-------->
             <td class="tdrightMenu">
                 <div class="rightMenu">
@@ -1009,6 +1009,40 @@
                 <span class="bottomText">ДОЛГИ</span>
             </div>
             <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
+        </div>
+        <div class="emptyBox">
+            <span class="categoryText">МОИ СРЕДСТВА</span>
+        </div>
+        <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getActiveAcc()}"></div>
+        <div class="emptyBox">
+            <span class="categoryText">ДОЛГИ</span>
+        </div>
+        <div class="selectableClickBox" data-bind="template:{name:'click-box-tpl',foreach:getPassiveAcc()}"></div>
+    </div>
+</script>
+
+<script type="text/html" id="left-menu-insert-new-tpl">
+    <!--------leftMenu-------->
+    <div class="leftMenu">
+        <div class="allBox" style="margin-top: 20px;">
+            <span class="bigText">ИТОГ</span>
+            <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
+            <span class="bigComment">КАПИТАЛА</span>
+        </div>
+        <div class="bottomBox">
+            <div class="grayBox">
+                <span class="bottomText">МОИ СРЕДСТВА</span>
+            </div>
+            <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
+        </div>
+        <div class="bottomBox">
+            <div class="grayBox">
+                <span class="bottomText">ДОЛГИ</span>
+            </div>
+            <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
+        </div>
+        <div style="position: relative;top:21px;left:-10px;margin-right: -30px;width: 210px;" class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
+                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи
         </div>
         <div class="emptyBox">
             <span class="categoryText">МОИ СРЕДСТВА</span>
