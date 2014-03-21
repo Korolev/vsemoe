@@ -672,22 +672,25 @@
 
 <script type="text/html" id="tr-row-tpl">
     <div class="t_td td_1">
-    </div><div class='t_td a_left td_2' data-bind="textdate:created">
-    </div><div class='t_td a_left td_3'>
+    </div>
+    <div class='t_td a_left td_2' data-bind="textdate:created">
+    </div>
+    <div class='t_td a_left td_3'>
         <span data-bind="accountname:from_id"></span>
         <span>&nbsp;</span>
         <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
-    </div><div class='t_td a_left td_4' data-bind="accountname:to_id">
-    </div><div class='t_td a_right td_5_6'>
+    </div>
+    <div class='t_td a_left td_4' data-bind="accountname:to_id">
+    </div>
+    <div class='t_td a_right td_5_6'>
                                     <span class="tr_currency" data-bind="if:currency != $root.baseCurrencyId()">
                                         <span data-bind="currency:currency"></span>
                                     </span>
         <span data-bind="absdigitext:amount, css:$root.getCssClass($data)"></span>
-    </div><div class='t_td a_left td_7'>
-                                    <span class="tr_comment" data-bind="text:comment, attr:{title:comment}">
-                                    </span>
-
-        <div class="tr_controls" data-bind="if:created">
+    </div>
+    <div class='t_td a_left td_7'>
+        <span class="tr_comment" data-bind="text:comment, attr:{title:comment}">
+        </span><div class="tr_controls" data-bind="if:created">
             <span data-bind="css:{split:hasSplit}, click:showSplits"></span>
             <!-- ko ifnot: hasSplit() || !!split -->
             <i data-bind="click:editRecord" class="icon edit"></i>
@@ -999,13 +1002,13 @@
             <span class="bigComment">КАПИТАЛА</span>
         </div>
         <div class="bottomBox">
-            <div class="grayBox">
+            <div class="greenBox">
                 <span class="bottomText">МОИ СРЕДСТВА</span>
             </div>
             <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
         </div>
         <div class="bottomBox">
-            <div class="grayBox">
+            <div class="orangeBox">
                 <span class="bottomText">ДОЛГИ</span>
             </div>
             <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
@@ -1030,13 +1033,13 @@
             <span class="bigComment">КАПИТАЛА</span>
         </div>
         <div class="bottomBox">
-            <div class="grayBox">
+            <div class="greenBox">
                 <span class="bottomText">МОИ СРЕДСТВА</span>
             </div>
             <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
         </div>
         <div class="bottomBox">
-            <div class="grayBox">
+            <div class="orangeBox">
                 <span class="bottomText">ДОЛГИ</span>
             </div>
             <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>

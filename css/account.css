@@ -1171,6 +1171,7 @@ input.vse-cancel:active{
     display: inline-block;
     width: 25%;
     height: 30px;
+    overflow: hidden;
 }
 
 .td_7 .tr_controls i{
@@ -1189,6 +1190,7 @@ input.vse-cancel:active{
     display: block;
 }
 
+
 .td_7 .tr_controls i.edit{
     background-position: 0px -3px;
     right: 24px;
@@ -1200,7 +1202,7 @@ input.vse-cancel:active{
 
 
 .td_7 .tr_comment{
-    width: 75%;
+    width: 74%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
