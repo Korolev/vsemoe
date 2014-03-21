@@ -75,46 +75,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
     ]);
 
-    var action_index = 0;
-
-    if(self.from_id() && self.to_id()){
-        (function(){
-            var from_type,
-                from_group,
-                to_type,
-                to_group,
-                status = 0,
-                acc;
-
-            if(app.accountsHash[self.from_id()]){
-                status++;
-                acc = app.accountsHash[self.from_id()];
-                from_group = acc.group();
-                from_type = acc.type();
-            }
-            if(app.accountsHash[self.to_id()]){
-                status++;
-                acc = app.accountsHash[self.to_id()];
-                to_group = acc.group();
-                to_type = acc.type();
-            }
-
-            if (status == 2) {
-                if (to_type == 'IN') {
-                    action_index = 1;
-                } else if (from_group > 0 && to_group > 0) {
-                    action_index = 2;
-                }
-                console.log(from_group)
-                console.log(from_type)
-                console.log(to_group)
-                console.log(to_type)
-            }
-
-        }());
-    }
-
-    this.action = ko.observable(self.actions()[action_index]);
+    this.action = ko.observable(self.actions()[data.action_index]);
 
     self.amount.subscribe(function (v) {
         var val = v + '';

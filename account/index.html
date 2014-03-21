@@ -678,7 +678,7 @@
     <div class='t_td a_left td_3'>
         <span data-bind="accountname:from_id"></span>
         <span>&nbsp;</span>
-        <span data-bind="if:$root.getCssClass($data)=='transport_tr'">&rarr;</span>
+        <span data-bind="if:cssClass =='transport_tr'">&rarr;</span>
     </div>
     <div class='t_td a_left td_4' data-bind="accountname:to_id">
     </div>
@@ -686,7 +686,7 @@
                                     <span class="tr_currency" data-bind="if:currency != $root.baseCurrencyId()">
                                         <span data-bind="currency:currency"></span>
                                     </span>
-        <span data-bind="absdigitext:amount, css:$root.getCssClass($data)"></span>
+        <span data-bind="absdigitext:amount, css:cssClass"></span>
     </div>
     <div class='t_td a_left td_7'>
         <span class="tr_comment" data-bind="text:comment, attr:{title:comment}">

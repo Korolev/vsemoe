@@ -569,21 +569,6 @@ var ApplicationViewModel = function () {
         return res;
     }, this).extend({throttle: 1});
 
-    this.getCssClass = function (tr) {
-//TODO calculate class
-        var cssClass = ["transport_tr", "incoming_tr", "passive_tr"],
-            from = self.accountsHash[tr.from_id],
-            to = self.accountsHash[tr.to_id],
-            res = 2;
-        if (from && to && from.group() == to.group()) {
-            res = 0;
-        }
-        if (from && to && from.group() == 1 && tr.amount > 0) {
-            res = 1;
-        }
-        return cssClass[res];
-    };
-
     this.calculateAmount = function (fromCurId, toCurId, amount, from) {
         //TODO use rate to baseCurrency
         var res = amount,

@@ -145,7 +145,7 @@ ko.bindingHandlers['absdigitext'] = {
     'update': function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var value = parseFloat(ko.utils.unwrapObservable(valueAccessor()));
 
-        if (!isNaN(value) && bindingContext.$root.getCssClass(viewModel) == "transport_tr") {
+        if (!isNaN(value) && viewModel.cssClass == "transport_tr") {
             value = Math.abs(value);
         }
 
