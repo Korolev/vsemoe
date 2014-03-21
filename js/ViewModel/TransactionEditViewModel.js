@@ -75,7 +75,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
     ]);
 
-    this.action = ko.observable(self.actions()[data.action_index]);
+    this.action = ko.observable(self.actions()[data.action_index | 0]);
 
     self.amount.subscribe(function (v) {
         var val = v + '';
