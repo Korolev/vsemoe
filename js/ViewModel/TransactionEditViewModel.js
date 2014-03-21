@@ -43,6 +43,8 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     this.finished = data.finished | 0;
     this.hidden = data.hidden | 0;
 
+    this.cssClass = data.cssClass;
+
     this.actions = ko.observableArray([
         {
             icon: 'substr_i',
