@@ -677,7 +677,7 @@
     </div>
     <div class='t_td a_left td_3'>
         <span data-bind="accountname:from_id"></span>
-        <span>&nbsp;</span>
+        <span data-bind="html:(console.log($data))">&nbsp;</span>
         <span data-bind="if:cssClass =='transport_tr'">&rarr;</span>
     </div>
     <div class='t_td a_left td_4' data-bind="accountname:to_id">

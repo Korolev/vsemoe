@@ -418,6 +418,7 @@ var ApplicationViewModel = function () {
                     split: 0,
                     newday: 0,
                     deleted: 0,
+                    cssClass: "",
                     editInstance: ko.observable(false),
                     currency: self.baseCurrencyId(),
                     _showSplits: ko.observable(false),
