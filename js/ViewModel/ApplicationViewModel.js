@@ -2,13 +2,6 @@
  * Created by Lenovo on 09.11.13.
  */
 
-//TODO IMPORTANT
-//change LOGO!!!
-// SORT CURRENCY BY ABC
-
-var ApplicationSettings = {
-    cookieName: "vse_cookie_token"
-};
 //TODO move all date manipulation to Moment.js
 var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
         "Апреля", "Мая", "Июня",

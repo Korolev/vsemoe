@@ -1,3 +1,15 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        //additional-info-colapser
+        var colapser = $('.additional-info-colapser .switcher'),
+                colapsCont = $('.additional-info');
+
+        colapser.on('click',function(){
+            colapsCont.toggleClass('hidden');
+            colapser.toggleClass('open');
+        });
+    });
+</script>
 <div class="wizard-navigation">
     <div>
         <span>1. ПРЕДЛОЖЕНИЕ</span>

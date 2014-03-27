@@ -25,7 +25,7 @@ var ServerApi = {
                 }
                 return res;
             },
-            post: function (url, data, callback) {
+            post: function (url, data, callback, doNotShowError) {
                 data.lang = data.lang || opt.lang;
                 if(!data.token && !!opt.token){
                     data.token = opt.token;
@@ -42,6 +42,13 @@ var ServerApi = {
                         }else{
                             callback && callback(false);
                             console.info(r);
+                            if(!doNotShowError){
+                                $.gritter.add({
+                                    title : 'Ошибка ',
+                                    text : r.text,
+                                    time: 1500
+                                });
+                            }
                         }
                     }
                 });
@@ -113,10 +120,10 @@ var ServerApi = {
         this.utils().post("/currency/rate", dataObj, callback);
     },
     getCurrencyRateDay: function (dataObj, callback) {
-        this.utils().post("/rate/day", dataObj, callback);
+        this.utils().post("/rate/day", dataObj, callback, true);
     },
     getCurrencyRateList: function (dataObj, callback) {
-        this.utils().post("/currency/ratelist", dataObj, callback);
+        this.utils().post("/currency/ratelist", dataObj, callback, true);
     },
 //Bank
     getBankList: function () {

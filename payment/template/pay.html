@@ -1,3 +1,49 @@
+<script src="/js/config/ApplicationSettings.js" ></script>
+<script src="/js/utils/ServerApi.js" ></script>
+<script src="/js/utils/util.js" ></script>
+<script>
+    (function (window, document, $) {
+        var token = getCookie(ApplicationSettings.cookieName),
+                login;
+
+        $(function () {
+            if (token) {
+                ServerApi.getUserByToken({
+                    token: token
+                }, function (r) {
+                    login = r[0].login;
+                    $('.login').val(login);
+                });
+            }
+            $(".pay_link a").on('click',function(e){
+                var $el = $(e.target),
+                        href = $el.attr('href').substr(1);
+                $.get(location.pathname+location.search+'&dir='+href,function(r){
+                   var res = r.response,
+                           span;
+                    if(res){
+                        $('.paper_content').html(res);
+                        span = $('.wizard-navigation span');
+                        span.before('<a href="'+location.pathname+location.search+'">'+span.text()+'</a>');
+                        span.text(span.next().text());
+                        span.next().remove();
+
+                        $('#token').val(token);
+                        $('#summ').val(getParameterByName('summ'));
+                        $('#text_summ').text(getParameterByName('summ')+' руб.');
+
+                        $('#shopSuccessURL').val(location.protocol+'//'+location.host+'?action=confirm');
+                        $('#shopFailURL').val(location.protocol+'//'+location.host+'?action=fail');
+                    }
+
+                });
+
+                return false;
+            });
+
+        });
+    })(window, document, jQuery);
+</script>
 <div class="wizard-navigation">
     <div>
         <a href="/payment">1. ПРЕДЛОЖЕНИЕ</a>
@@ -5,7 +51,7 @@
         <a href="#">3. ОПЛАТА</a>
     </div>
 </div>
-<div styel="min-height:600px">
+<div class="paper_content" styel="min-height:600px">
     <p style="width: 300px">{!invitation}</p>
     <div style="height:40px; min-width:100px; margin:10px 0">
         <input style="width:300px" type="email" placeholder="Электронная Почта" name="user" class="login">
@@ -15,26 +61,26 @@
         Понимание личных денег — ваш ключ к успеху! Все платежи без комиссии.
     </p>
     <div class="pay_link_holder">
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link visa_mastercard">
+            <a href="#visa_mastercard"></a>
         </div>
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link yandex_money">
+            <a href="#yandex_money"></a>
         </div>
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link euronet_wallet">
+            <a href="#euronet_wallet"></a>
         </div>
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link paypal_wallet">
+            <a href="#paypal_wallet"></a>
         </div>
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link mobile_wallet">
+            <a href="#mobile_wallet"></a>
         </div>
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link qiwi_wallet">
+            <a href="#qiwi_wallet"></a>
         </div>
-        <div class="pay_link">
-            <a href="#"></a>
+        <div class="pay_link webmoney_wallet">
+            <a href="#webmoney_wallet"></a>
         </div>
         <div class="clear"></div>
     </div>

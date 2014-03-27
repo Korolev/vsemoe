@@ -2177,3 +2177,37 @@ span.attach:hover {
 #intro_web i{
     background-image: url("/img/payment/intro_web_sprite.png");
 }
+
+.pay_link a{
+    background-image: url("/img/payment/pay_services.png");
+    background-position: left top;
+    background-repeat: no-repeat;
+}
+
+.visa_mastercard a{
+    background-position: 6px 0px;
+}
+
+.yandex_money a{
+    background-position: 3px -108px;
+}
+
+.euronet_wallet a{
+    background-position: 3px -216px;
+}
+
+.paypal_wallet a{
+    background-position: -166px 0px;
+}
+
+.mobile_wallet a{
+    background-position: -166px -108px;
+}
+
+.qiwi_wallet a{
+    background-position: -166px -216px;
+}
+
+.webmoney_wallet a{
+    background-position: -342px 0px;
+}

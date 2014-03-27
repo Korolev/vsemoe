@@ -1,0 +1,24 @@
+<form name=ShopForm method="POST" action="https://demomoney.yandex.ru/eshop.xml">
+    <input type="hidden" name="scid" value="51196">
+    <input type="hidden" name="ShopID" value="14909">
+
+    <input type="hidden" name="shopSuccessURL" id="shopSuccessURL" value="">
+    <input type="hidden" name="shopFailURL" id="shopFailURL" value="">
+
+    <input type="hidden" id="token" name="CustomerNumber" size="43">
+    <input type='hidden' placeholder="" name="Sum" id="summ" size="43">
+    <br>
+
+    <p>Сумма к оплате: <b id="text_summ"></b>
+        <br>
+        Способ оплаты: <b>Яндекс.Деньги</b>
+    </p>
+    <br><br>
+    <input name="paymentType" id="paymentType" checked="checked" value="" type="radio">
+    <label for="paymentType">Со счета в Яндекс.Деньгах</label><br>
+    <input name="paymentType" id="paymentTypeAC" value="AC" type="radio">
+    <label for="paymentTypeAC">С банковской карты</label><br>
+    <input name="paymentType" id="paymentTypeGP" value="GP" type="radio">
+    <label for="paymentTypeGP">По коду через терминал<br></label><br>
+    <input type=submit value="Оплатить"><br>
+</form>

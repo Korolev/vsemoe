@@ -23,6 +23,7 @@
     <link href="../css/personal.css" rel="stylesheet" type="text/css">
     <link href="../css/account.css" rel="stylesheet" type="text/css">
     <link href="../css/pickmeup.css" rel="stylesheet" type="text/css">
+    <link href="../css/jquery.gritter.css" rel="stylesheet" type="text/css">
     <link href="../css/animate-custom.css" rel="stylesheet" type="text/css">
 
     <script src="../js/lib/modernizr-2.6.2.min.js"></script>
@@ -107,21 +108,24 @@
 <!-- jQuery library -->
 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery-1.8.2.min.js"><\/script>')</script>-->
-<!-- VERSION?v7 -->
-<script src="../js/lib/jquery-1.8.2.min.js?v7"></script>
-<script src="../js/lib/sammy-latest.min.js?v7"></script>
-<script src="../js/lib/moment.min.js?v7"></script>
-<script src="../js/jquery.treemenu.js?v7"></script>
-<script src="../js/jquery.pickmeup.min.js?v7"></script>
-<script src="../js/lib/knockout-latest.js?v7"></script>
-<script src="../js/ko.additional.js?v7"></script>
-<script src="../js/ServerApi.js?v7"></script>
-<script src="../js/ViewModel/UserViewModel.js?v7"></script>
-<script src="../js/ViewModel/AccountViewModel.js?v7"></script>
-<script src="../js/ViewModel/TransactionViewModel.js?v7"></script>
-<script src="../js/ViewModel/TransactionEditViewModel.js?v7"></script>
-<script src="../js/ViewModel/FilterViewModel.js?v7"></script>
-<script src="../js/ViewModel/ApplicationViewModel.js?v7"></script>
+<!-- VERSION?v9 -->
+<script src="../js/config/ApplicationSettings.js"></script>
+<script src="../js/jquery-1.9.1.min.js?v9"></script>
+<script src="../js/lib/jquery.gritter.js?v9"></script>
+<script src="../js/lib/sammy-latest.min.js?v9"></script>
+<script src="../js/lib/moment.min.js?v9"></script>
+<script src="../js/utils/util.js?v9"></script>
+<script src="../js/jquery.treemenu.js?v9"></script>
+<script src="../js/jquery.pickmeup.min.js?v9"></script>
+<script src="../js/lib/knockout-latest.js?v9"></script>
+<script src="../js/ko.additional.js?v9"></script>
+<script src="../js/utils/ServerApi.js?v9"></script>
+<script src="../js/ViewModel/UserViewModel.js?v9"></script>
+<script src="../js/ViewModel/AccountViewModel.js?v9"></script>
+<script src="../js/ViewModel/TransactionViewModel.js?v9"></script>
+<script src="../js/ViewModel/TransactionEditViewModel.js?v9"></script>
+<script src="../js/ViewModel/FilterViewModel.js?v9"></script>
+<script src="../js/ViewModel/ApplicationViewModel.js?v9"></script>
 <!--<script src="/html_stage/js/jquery.cookie.js"></script>-->
 <!--<script src="../js/lib/jquery-ui.js"></script>-->
 <!--<script src="../js/lib/jquery.validate.min.js"></script>-->
@@ -677,7 +681,7 @@
     </div>
     <div class='t_td a_left td_3'>
         <span data-bind="accountname:from_id"></span>
-        <span data-bind="html:(console.log($data))">&nbsp;</span>
+        <span>&nbsp;</span>
         <span data-bind="if:cssClass =='transport_tr'">&rarr;</span>
     </div>
     <div class='t_td a_left td_4' data-bind="accountname:to_id">
