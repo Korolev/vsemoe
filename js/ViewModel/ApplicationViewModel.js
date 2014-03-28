@@ -356,12 +356,21 @@ var ApplicationViewModel = function () {
 
     this.transactionFilteredGen = function () {
         var transFiltered = [],
-            _transFiltered = [];
+            _transFiltered = [],
+            totalIn = 0,
+            totalOut = 0;
         //mk logic
         each(self.transactions(), function (k, t) {
             if (t.hidden == 0 && t.template == 0 && !!t.finished && !t.deleted() && !t.split) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
+                //
+                if(t.action_index == 0){
+                    totalOut += self.calculateAmount(t.currency,self.baseCurrencyId(),t.amount,t.created);
+                }
+                if(t.action_index == 1){
+                    totalIn += self.calculateAmount(t.currency,self.baseCurrencyId(),t.amount,t.created);
+                }
             }
         });
 
@@ -384,6 +393,8 @@ var ApplicationViewModel = function () {
         self.totalPages(tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1);
         self.totalPagesArr.removeAll();
         self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
+        self.transactionsSetInTotal(totalIn);
+        self.transactionsSetOutTotal(totalOut);
         self.transactionsSetGen();
     };
 
@@ -393,9 +404,7 @@ var ApplicationViewModel = function () {
             j = self.currentPage() * self.pageSize,
             dayOfWeek = -1,
             calcDay,
-            transFiltered = self.transFiltered(),
-            totalIn = 0,
-            totalOut = 0;
+            transFiltered = self.transFiltered();
         for (; i < j; i += 1) {
             var tr = transFiltered[i];
             if (tr && !tr.deleted()) {
@@ -406,13 +415,7 @@ var ApplicationViewModel = function () {
                     dayOfWeek = calcDay;
                 }
                 res.push(tr);
-                //
-                if(tr.action_index == 0){
-                    totalOut += self.calculateAmount(tr.currency,self.baseCurrencyId(),tr.amount,tr.created);
-                }
-                if(tr.action_index == 1){
-                    totalIn += self.calculateAmount(tr.currency,self.baseCurrencyId(),tr.amount,tr.created);
-                }
+
             } else {
                 res.push({
                     created: false,
@@ -433,8 +436,6 @@ var ApplicationViewModel = function () {
                 });
             }
         }
-        self.transactionsSetInTotal(totalIn);
-        self.transactionsSetOutTotal(totalOut);
         self.transactionsSet.removeAll();
         self.transactionsSet(res);
     };
