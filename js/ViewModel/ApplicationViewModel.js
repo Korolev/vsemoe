@@ -356,21 +356,13 @@ var ApplicationViewModel = function () {
 
     this.transactionFilteredGen = function () {
         var transFiltered = [],
-            _transFiltered = [],
-            totalIn = 0,
-            totalOut = 0;
+            _transFiltered = [];
         //mk logic
         each(self.transactions(), function (k, t) {
             if (t.hidden == 0 && t.template == 0 && !!t.finished && !t.deleted() && !t.split) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
-                //
-                if(t.action_index == 0){
-                    totalOut += self.calculateAmount(t.currency,self.baseCurrencyId(),t.amount,t.created);
-                }
-                if(t.action_index == 1){
-                    totalIn += self.calculateAmount(t.currency,self.baseCurrencyId(),t.amount,t.created);
-                }
+
             }
         });
 
@@ -393,10 +385,25 @@ var ApplicationViewModel = function () {
         self.totalPages(tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1);
         self.totalPagesArr.removeAll();
         self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
-        self.transactionsSetInTotal(totalIn);
-        self.transactionsSetOutTotal(totalOut);
+
         self.transactionsSetGen();
     };
+
+    this.transFiltered.subscribe(function (arr) {
+        var totalIn = 0,
+            totalOut = 0;
+        each(arr, function (k, t) {
+            //
+            if (t.action_index == 0) {
+                totalOut += self.calculateAmount(t.currency, self.baseCurrencyId(), t.amount, t.created);
+            }
+            if (t.action_index == 1) {
+                totalIn += self.calculateAmount(t.currency, self.baseCurrencyId(), t.amount, t.created);
+            }
+        });
+        self.transactionsSetInTotal(totalIn);
+        self.transactionsSetOutTotal(totalOut);
+    });
 
     this.transactionsSetGen = function () {
         var res = [],
@@ -581,7 +588,7 @@ var ApplicationViewModel = function () {
 
     this.calculateAmount = function (fromCurId, toCurId, amount, from) {
         //TODO use rate to baseCurrency
-        if(moment.isMoment(from)){
+        if (moment.isMoment(from)) {
             from = from.format('YYYY-MM-DD');
         }
         var res = amount,
@@ -601,9 +608,9 @@ var ApplicationViewModel = function () {
         if (!self.user.passwordError() && self.user.repassword() && !self.user.tokenError()) {
             ServerApi.restorepasswordUser({
                 password: self.user.repassword()
-            },function(res){
-                if(res){
-                    location.hash ='observe';
+            }, function (res) {
+                if (res) {
+                    location.hash = 'observe';
                 }
             });
         }
@@ -730,7 +737,7 @@ var ApplicationViewModel = function () {
                         }
                     });
                     $.each(self.___usedCurrency, function (key, val) {
-                        if (key-0 && key != self.baseCurrencyId()) {
+                        if (key - 0 && key != self.baseCurrencyId()) {
                             ServerApi.getCurrencyRateList({
                                 currency_id: key,
                                 from: moment.unix(self.___firstDate).subtract('d', 1).unix()
