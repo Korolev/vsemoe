@@ -112,7 +112,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
     this.splitEdit.subscribe(function (val) {
 
-        if (val) {
+        if (val && self.splitTransactions().length < 2) {
             self.commentEdit(false);
             self.splitTransactions.push(new splitTransaction());
             self.splitTransactions.push(new splitTransaction());

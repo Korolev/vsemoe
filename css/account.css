@@ -1,5 +1,5 @@
 BODY {
-    background: none repeat scroll 0 0 #FFFFFF;
+    /*background: none repeat scroll 0 0 #FFFFFF;*/
     color: #000000;
     font-family: Arial,"sans serif";
 }
@@ -1274,6 +1274,7 @@ input.vse-cancel:active{
 
 .tr_newday .td_2{
     color: #888;
+    text-align: center;
 }
 
 .t_row.color_grey{
