@@ -1705,3 +1705,38 @@ input.vse-cancel:active{
     cursor: pointer;
     margin-top: 10px;
 }
+
+.in_out_summ{
+    margin: -30px 0 20px;
+    overflow: hidden;
+    padding-left: 30px;
+}
+
+.in_out_summ_holder{
+    float: left;
+    width: 170px;
+}
+
+.in_out_summ_holder div span{
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "HelveticaNeue Bold",Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    display: inline-block;
+    vertical-align: baseline;
+}
+.in_out_summ_holder div span.currency{
+    font-size: 12px;
+}
+
+.in_out_summ_holder .vse_title{
+    padding: 5px 0;
+    color: #CCCCCC;
+}
+
+.in_total{
+    color: #819625;
+}
+
+.out_total{
+    color: #424C58;
+}

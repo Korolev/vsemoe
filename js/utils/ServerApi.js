@@ -41,7 +41,7 @@ var ServerApi = {
                             callback && callback(r.data || r.text);
                         }else{
                             callback && callback(false);
-                            console.info(r);
+                            console.info(r,data);
                             if(!doNotShowError){
                                 $.gritter.add({
                                     title : 'Ошибка ',

@@ -107,6 +107,7 @@
 /*значение остаток дохода*/
 .largeValue {
     font-size: 30px;
+    font-size: 28px;
     float: right;
     font-family: PFDinDisplayPro Bold;
     color: #272e41;

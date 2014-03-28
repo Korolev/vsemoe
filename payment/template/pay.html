@@ -7,13 +7,46 @@
                 login;
 
         $(function () {
+            var form_holder = $('.autorisation_false'),
+                    invitation_holder = $('.autorisation_true'),
+                    showForm = function(){
+                        invitation_holder.addClass('hidden');
+                        form_holder.removeClass('hidden');
+                    },
+                    showInvit = function(){
+                        form_holder.addClass('hidden');
+                        invitation_holder.removeClass('hidden');
+                    },
+                    checkToken = function(){
+                        ServerApi.getUserByToken({
+                            token: token
+                        }, function (r) {
+                            if(r){
+                                login = r[0].login;
+                                $('.login').text(login);
+                            }else{
+                                showForm();
+                            }
+                        });
+                    };
             if (token) {
-                ServerApi.getUserByToken({
-                    token: token
-                }, function (r) {
-                    login = r[0].login;
-                    $('.login').val(login);
-                });
+                showInvit();
+                checkToken();
+            }else{
+                showForm();
+                $('#login_button').on('click',function(){
+                    ServerApi.loginUser({
+                        user: $('#user_login').val(),
+                        password: $('#user_password').val()
+                    },function(r){
+                        if(r){
+                            token = r.token;
+                            setCookie(ApplicationSettings.cookieName,token);
+                            checkToken();
+                            showInvit();
+                        }
+                    });
+                })
             }
             $(".pay_link a").on('click',function(e){
                 var $el = $(e.target),
@@ -53,8 +86,21 @@
 </div>
 <div class="paper_content" styel="min-height:600px">
     <p style="width: 300px">{!invitation}</p>
-    <div style="height:40px; min-width:100px; margin:10px 0">
-        <input style="width:300px" type="email" placeholder="Электронная Почта" name="user" class="login">
+    <p class="autorisation_true hidden" style="width: 300px">Для аккаунта: <b class="login"></b></p>
+    <div class="autorisation_false hidden">
+        <h2>Авторизация</h2>
+        <p class="italic" style="color:#ccc">
+            Вам необходимо войти в систему, для зачисления средств на Ваш аккаунт.
+        </p>
+        <div style="height:40px; min-width:100px; margin:10px 0">
+            <input style="width:300px" type="email" placeholder="Электронная Почта" name="user" id="user_login">
+        </div>
+        <div style="height:40px; min-width:100px; margin:10px 0">
+            <input style="width:300px" type="password" placeholder="Пароль" name="password" id="user_password">
+        </div>
+        <div style="height:40px; min-width:100px; margin:10px 0">
+            <input type="button" value="Войти" id="login_button">
+        </div>
     </div>
     <h2>Выберите способ оплаты</h2>
     <p class="italic" style="color:#ccc">

@@ -300,6 +300,10 @@ var ApplicationViewModel = function () {
     this.transactions = ko.observableArray();
     this.transactionsHash = {};
     this.transactionsSet = ko.observableArray();
+
+    this.transactionsSetInTotal = ko.observable(0);
+    this.transactionsSetOutTotal = ko.observable(0);
+
     this.transFiltered = ko.observableArray();
     this.transactionEdit = ko.observable(new TransactionEditViewModel({
         created: new moment()
@@ -389,7 +393,9 @@ var ApplicationViewModel = function () {
             j = self.currentPage() * self.pageSize,
             dayOfWeek = -1,
             calcDay,
-            transFiltered = self.transFiltered();
+            transFiltered = self.transFiltered(),
+            totalIn = 0,
+            totalOut = 0;
         for (; i < j; i += 1) {
             var tr = transFiltered[i];
             if (tr && !tr.deleted()) {
@@ -400,6 +406,13 @@ var ApplicationViewModel = function () {
                     dayOfWeek = calcDay;
                 }
                 res.push(tr);
+                //
+                if(tr.action_index == 0){
+                    totalOut += self.calculateAmount(tr.currency,self.baseCurrencyId(),tr.amount,tr.created);
+                }
+                if(tr.action_index == 1){
+                    totalIn += self.calculateAmount(tr.currency,self.baseCurrencyId(),tr.amount,tr.created);
+                }
             } else {
                 res.push({
                     created: false,
@@ -420,6 +433,8 @@ var ApplicationViewModel = function () {
                 });
             }
         }
+        self.transactionsSetInTotal(totalIn);
+        self.transactionsSetOutTotal(totalOut);
         self.transactionsSet.removeAll();
         self.transactionsSet(res);
     };
@@ -565,6 +580,9 @@ var ApplicationViewModel = function () {
 
     this.calculateAmount = function (fromCurId, toCurId, amount, from) {
         //TODO use rate to baseCurrency
+        if(moment.isMoment(from)){
+            from = from.format('YYYY-MM-DD');
+        }
         var res = amount,
             date = from || moment().format('YYYY-MM-DD'),
             fromRate = fromCurId == self.baseCurrencyId() ?
@@ -573,7 +591,6 @@ var ApplicationViewModel = function () {
             toRate = toCurId == self.baseCurrencyId() ?
                 1
                 : self.___usedCurrencyRates[toCurId + '-' + date] || 1;
-
         res = res * fromRate;
         res = res / toRate;
         return res;
@@ -712,7 +729,7 @@ var ApplicationViewModel = function () {
                         }
                     });
                     $.each(self.___usedCurrency, function (key, val) {
-                        if (key != self.baseCurrencyId()) {
+                        if (key-0 && key != self.baseCurrencyId()) {
                             ServerApi.getCurrencyRateList({
                                 currency_id: key,
                                 from: moment.unix(self.___firstDate).subtract('d', 1).unix()
@@ -720,8 +737,9 @@ var ApplicationViewModel = function () {
                                 each(r, function (k, curr) {
                                     self.___usedCurrencyRates[curr.currency_id + '-' + moment(Date(curr.modified * 1000)).format('YYYY-MM-DD')] = curr.rate;
                                 });
-                                self.transactions.removeAll();
-                                self.transactions.pushAll(trs);
+                                self.transactions.valueHasMutated();
+                                self.accounts.valueHasMutated();
+                                self.transactionsSetGen();
                             });
                         } else {
                             self.transactions.removeAll();

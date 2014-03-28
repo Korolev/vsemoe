@@ -577,6 +577,23 @@
                         </div>
                     </div>
                     <div class="clear"></div>
+                    <div class="in_out_summ">
+                        <div class="in_total in_out_summ_holder">
+                            <div class="vse_title">сумма доходов</div>
+                            <div>
+                                <span data-bind="digitext:transactionsSetInTotal">0</span>
+                                <span class="currency" data-bind="currncy:$root.baseCurrencyId">RUB</span>
+                            </div>
+                        </div>
+                        <div class="out_total in_out_summ_holder">
+                            <div class="vse_title">сумма доходов</div>
+                            <div>
+                                <span data-bind="digitext:transactionsSetOutTotal">0</span>
+                                <span class="currency" data-bind="currncy:$root.baseCurrencyId">RUB</span>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
                     <div class="fake_tableBox">
                         <div class="t_row t_thead">
                             <div class="t_td td_1">
@@ -1048,7 +1065,7 @@
             </div>
             <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
         </div>
-        <div style="position: relative;top:21px;left:-10px;margin-right: -30px;width: 210px;" class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
+        <div style="z-index:1000;position: relative;top:53px;left:-10px;margin:0 -30px 33px 0;width: 210px;" class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
                 click:function(){$root.addAccIdToFilter({id:''})}">Все платежи
         </div>
         <div class="emptyBox">
@@ -1136,7 +1153,7 @@
     <ul data-bind="foreach:children">
         <li data-bind="click:function(){$root.addAccIdToFilter($data);}">
             <span class="hiddenText" data-bind="shorttext:description"></span>
-            <span class="hiddenValue" data-bind="shorttext:sum">0</span>
+            <span class="hiddenValue" data-bind="digitext:sum">0</span>
         </li>
     </ul>
     <!-- /ko -->
