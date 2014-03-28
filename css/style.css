@@ -49,7 +49,6 @@ html {
 
 body {
     width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
     color: #858e93;
@@ -58,20 +57,21 @@ body {
     font-size: 12px;
     line-height: 1;
     letter-spacing: 0.7px;
+    background-image: url("../i/bg_b.png");
 
 }
 
 
 .top {
     height: 360px;
-    background: rgb(236, 246, 248);
-    background: -moz-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(236, 246, 248, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
-    background: -webkit-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -o-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: -ms-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    background: linear-gradient(to bottom, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaf5f7', endColorstr='#ffffff', GradientType=0);
+    /*background: rgb(236, 246, 248);*/
+    /*background: -moz-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(236, 246, 248, 1)), color-stop(100%, rgba(255, 255, 255, 1)));*/
+    /*background: -webkit-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: -o-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: -ms-linear-gradient(top, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*background: linear-gradient(to bottom, rgba(236, 246, 248, 1) 0%, rgba(255, 255, 255, 1) 100%);*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eaf5f7', endColorstr='#ffffff', GradientType=0);*/
 }
 
 .wrap {
@@ -1354,8 +1354,8 @@ line-height: 27px;*/
 }
 
 .rules_page{
-    background-color: #ffffff;
     background: url('../i/stamp.png') 795px 142px no-repeat;
+    background-color: #ffffff;
 }
 
 .hero-unit.hero-image {
