@@ -176,11 +176,11 @@ ko.bindingHandlers['textdate'] = {
             now_2 = now.clone().subtract('days', 2),
             dayOfWeek = value.day();
 
-        if (trnow == now) {
+        if (trnow.format() == now.format()) {
             value = value.format("HH:mm");
-        } else if (trnow == now_1) {
+        } else if (trnow.format() == now_1.format()) {
             value = "Вчера"
-        } else if (trnow == now_2) {
+        } else if (trnow.format() == now_2.format()) {
             value = dayOfWeeks[dayOfWeek];
         } else {
             value = value > new moment().year(1980) ?
