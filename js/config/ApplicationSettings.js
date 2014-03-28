@@ -3,5 +3,5 @@
  */
 
 var ApplicationSettings = {
-    cookieName: "vse_cookie_token"
+    cookieName: "vse_cookie_token_"
 };

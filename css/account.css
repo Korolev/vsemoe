@@ -1732,6 +1732,7 @@ input.vse-cancel:active{
 .in_out_summ_holder .vse_title{
     padding: 5px 0;
     color: #CCCCCC;
+    text-transform: uppercase;
 }
 
 .in_total{
