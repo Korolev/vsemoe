@@ -1733,6 +1733,9 @@ input.vse-cancel:active{
     padding: 5px 0;
     color: #CCCCCC;
     text-transform: uppercase;
+    font-weight: bold;
+    font-size: 10px;
+    font-family: "HelveticaNeue Bold", Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
 }
 
 .in_total{
