@@ -1117,7 +1117,7 @@
             </ul>
         </nav>
         <div class="topMenu">
-            <div class="topMenuBox shortMenuItem lastItem" style="font-size: 22px; color:#B4C1C7;"
+            <div class="topMenuBox shortMenuItem lastItem" style="font-size: 22px;"
                  data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+
             </div>
             <div class="topMenuBox shortMenuItem categories_tab"
@@ -1272,7 +1272,8 @@
     </div>
 </script>
 <script type="text/html" id="tr-comment-tpl">
-    <textarea
+    <!-- TODO AUTOFOCUS -->
+    <textarea autofocus
             data-bind="value:comment, click:function(){if($data.comment() == 'Комментарий'){$data.comment('')}}"></textarea>
 </script>
 <script type="text/html" id="tr-default-tpl">

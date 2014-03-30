@@ -225,7 +225,7 @@ footer .copy {
     .topMenuBox.selected {
         background: #eee;
         box-shadow: inset 0px 2px 4px #ddd;
-        color: #2a3e55;
+        color: #424c57;
     }
 
     .topMenuBox.shortMenuItem {
