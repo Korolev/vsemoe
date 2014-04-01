@@ -2132,11 +2132,13 @@ span.attach:hover {
 .page_switcher a{
     font-family:"HelveticaNeue Bold",sans-serif;
     color: #707070;
+    color: #02a3c5;
     font-size: 16px;
 }
 
 .page_switcher a.current{
     color: #02a3c5;
+    color: #707070;
 }
 
 .page_switcher span{
