@@ -5,8 +5,28 @@
     <link href="/css/login.css" rel="stylesheet" type="text/css" media="screen">
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="screen">
     <script src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/utils/ServerApi.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function(){            
+
+            $("#submit_buttom").on('click',function(){
+                ServerApi.createResponse({data:JSON.stringify({
+                    name: $('#form_name').val(),
+                    email: $('#form_email').val(),
+                    message: $('#form_message').val()
+                })},function(r){
+                    if(r){
+                        $('#form_name').val(''),
+                        $('#form_email').val(''),
+                        $('#form_message').val('')
+
+                        var p = $('<p></p>').text('Спасибо за Ваше менние!');
+
+                        $('#submit_buttom').after(p).remove();
+                    }
+                })
+            });
+
             console.log('ready');
             //additional-info-colapser
             var colapser = $('.additional-info-colapser .switcher'),
@@ -101,16 +121,16 @@
         <div class="feedback_form">
         <form>
             <div class="form_row"> 
-                <input style="width:300px" type="text" placeholder="Имя" name="user" class="login">
+                <input style="width:300px" type="text" placeholder="Имя" name="user" class="login" id='form_name'>
             </div>
             <div class="form_row"> 
-                <input style="width:300px" type="email" placeholder="Ваша электронная почта" name="email" class="login">
+                <input style="width:300px" type="email" placeholder="Ваша электронная почта" name="email" class="login" id='form_email'>
             </div>
             <div class="form_row"> 
-                <textarea name="message" placeholder="Текст сообщения"></textarea>
+                <textarea name="message" placeholder="Текст сообщения" id='form_message'></textarea>
             </div>
             <div class="form_row" style="padding-top:40px"> 
-                <input type="submit" value="Отправить">
+                <input type="button" id='submit_buttom' value="Отправить">
             </div>
         </form>
         </div>

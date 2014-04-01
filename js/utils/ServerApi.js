@@ -188,5 +188,12 @@ var ServerApi = {
     },
     updateSetting: function (dataObj, callback) {
         this.utils().post("/settings/set", dataObj, callback);
+    },
+// Testimonials
+    createResponse: function (dataObj, callback) {
+        this.utils().post("/responce/add", dataObj, callback, true);
+    },
+    getResponseList: function (dataObj, callback) {
+        this.utils().post("/responce/list", dataObj, callback, true);
     }
 };

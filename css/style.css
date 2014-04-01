@@ -1870,7 +1870,7 @@ span.attach:hover {
 /* Testimonials */
 
 .testimonials{
-
+    overflow: hidden;
 }
 
 .testimonials_header{
@@ -1905,11 +1905,12 @@ span.attach:hover {
     overflow: hidden;
     position: relative;
     height: 220px;
+    margin-right: -300px;
 }
 
 .testimonials_holder .testimonials_body{
     display: block;
-    width: 31%;
+    width: 253px;
     margin-left: 2%;
     height: 200px;
     float: left;
