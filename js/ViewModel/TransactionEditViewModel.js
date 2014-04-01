@@ -43,6 +43,8 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     this.finished = data.finished | 0;
     this.hidden = data.hidden | 0;
 
+    this.amounFocus = ko.observable();
+
     this.cssClass = data.cssClass;
 
     this.actions = ko.observableArray([
@@ -79,23 +81,54 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
     this.action = ko.observable(self.actions()[data.action_index | 0]);
 
-    self.amount.subscribe(function (v) {
-        var val = v + '';
+    self.amounFocus.subscribe(function(val){
+        if(val && self.amount()*1 == 0){
+            self.amount('');
+            console.log(self.amount());
+        }else{
+            self.validateAmount();
+        }
+    });
+
+    self.validateKeyDown = function (el,e) {
+        if(e.keyCode == 13 || (e.keyCode == 61 && !e.shiftKey)){
+            self.validateAmount(e.target.value);
+        }else{
+            return true;
+        }
+    };
+
+    self.validateAmount = function (v) {
+        v = v || self.amount();
+        var val = v + '',
+            res;
+console.log(val);
         if (val.indexOf(',') > -1) {
             val.replace(',', '.');
-            self.amount(val);
+            res = val;
         }
-        val = parseFloat(val);
-        if (isNaN(val)) {
-            self.amount(0);
-        }
-        if (self.action().action == 'substract' && val > 0) {
-            self.amount(val * -1);
-        } else if (self.action().action != 'substract' && val < 0) {
-            self.amount(val * -1);
+        if(val.search(/\d*[-\/\+\*]+\d+/g) > -1){
+            try{
+                console.log(val);
+                res = parseMathString(val);
+                console.log(res);
+            } catch (e){
+
+            }
+        }else{
+            res = parseFloat(val);
+            if (isNaN(val)) {
+                res = '';
+            }
         }
 
-    });
+        if (self.action().action == 'substract' && val > 0) {
+            res = val * -1;
+        } else if (self.action().action != 'substract' && val < 0) {
+            res = val * -1;
+        }
+        self.amount(res);
+    };
 
     this.template = data.template | 0;
     this.template_id = data.template_id;

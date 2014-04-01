@@ -49,13 +49,29 @@
                 })
             }
             $(".pay_link a").on('click',function(e){
+
+                if($('.replace_me').length){
+                    $('.replace_me').remove();
+                }
+
                 var $el = $(e.target),
-                        href = $el.attr('href').substr(1);
+                        href = $el.attr('href').substr(1),
+                        info = parseMathString($el.data('info')),
+                        container = $('.paper_content');
+
+                console.log(info);
+                href = info ? info.url : false;
+
+                console.log(href);
+
                 $.get(location.pathname+location.search+'&dir='+href,function(r){
                    var res = r.response,
                            span;
                     if(res){
-                        $('.paper_content').html(res);
+                        $('<div class="replace_me"></div>').appendTo(container)
+                                .css({height:'0px',width:'0px',overflow:'hidden'})
+                                .html(res);
+
                         span = $('.wizard-navigation span');
                         span.before('<a href="'+location.pathname+location.search+'">'+span.text()+'</a>');
                         span.text(span.next().text());
@@ -67,6 +83,9 @@
 
                         $('#shopSuccessURL').val(location.protocol+'//'+location.host+'?action=confirm');
                         $('#shopFailURL').val(location.protocol+'//'+location.host+'?action=fail');
+
+                        $('#'+info.key+info.val).attr('checked','checked');
+                        $('.replace_me form').submit();
                     }
 
                 });
@@ -109,23 +128,23 @@
     </p>
     <div class="pay_link_holder">
         <div class="pay_link visa_mastercard">
-            <a href="#visa_mastercard"></a>
+            <a href="#visa_mastercard" data-info="{url:'yandex_money',key:'paymentType', val:'AC'}"></a>
         </div>
         <div class="pay_link yandex_money">
-            <a href="#yandex_money"></a>
+            <a href="#yandex_money" data-info="{url:'yandex_money',key:'paymentType', val:''}"></a>
         </div>
         <div class="pay_link euronet_wallet">
-            <a href="#euronet_wallet"></a>
+            <a href="#euronet_wallet" data-info="{url:'yandex_money',key:'paymentType', val:'GP'}"></a>
         </div>
-        <div class="pay_link paypal_wallet">
-            <a href="#paypal_wallet"></a>
-        </div>
-        <div class="pay_link mobile_wallet">
-            <a href="#mobile_wallet"></a>
-        </div>
-        <div class="pay_link qiwi_wallet">
-            <a href="#qiwi_wallet"></a>
-        </div>
+        <!--<div class="pay_link paypal_wallet">-->
+            <!--<a href="#paypal_wallet"></a>-->
+        <!--</div>-->
+        <!--<div class="pay_link mobile_wallet">-->
+            <!--<a href="#mobile_wallet"></a>-->
+        <!--</div>-->
+        <!--<div class="pay_link qiwi_wallet">-->
+            <!--<a href="#qiwi_wallet"></a>-->
+        <!--</div>-->
         <div class="pay_link webmoney_wallet">
             <a href="#webmoney_wallet"></a>
         </div>

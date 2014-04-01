@@ -46,7 +46,7 @@ var ServerApi = {
                                 $.gritter.add({
                                     title : 'Ошибка ',
                                     text : r.text,
-                                    time: 2500
+                                    time: 4500
                                 });
                             }
                         }

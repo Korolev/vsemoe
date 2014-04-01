@@ -167,6 +167,8 @@ header nav {
 
 nav ul li {
     float: left;
+    overflow: hidden;
+    height: 30px;
 }
 
 nav ul li a {
@@ -184,6 +186,28 @@ nav ul li a {
     font-family: "HelveticaNeue Light", sans-serif;
     font-size: 14px;
     letter-spacing: 0.7px;
+}
+
+nav>ul>li:hover{
+    height: 80px;
+    position: relative;
+    top:-10px;
+    padding-top: 10px;
+    z-index: 1000;
+}
+
+nav ul li:hover ul{
+    position: relative;
+    background-color: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    top: -10px;
+}
+
+nav ul li ul li{
+    display: block;
+    float: none;
+    height: 30px;
 }
 
 nav ul li.active a,
@@ -2211,4 +2235,10 @@ span.attach:hover {
 
 .webmoney_wallet a{
     background-position: -342px 0px;
+}
+.success_pay{
+    background-image: url('/img/payment/gift.jpg');
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    padding: 40px 450px 20px 0;
 }

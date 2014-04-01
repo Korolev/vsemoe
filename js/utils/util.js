@@ -1,3 +1,21 @@
+
+function parseMathString(string){
+    try{
+        var res = 0,
+            elems = [],
+            parts = string.split('='),
+            func;
+
+        if(parts[0].length){
+            res = (new Function('','return '+parts[0]))();
+        }
+
+        return res;
+    }catch (e){
+        console.log(e);
+    }
+}
+
 function getCookie(name) {
     var matches = document.cookie.match(new RegExp(
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

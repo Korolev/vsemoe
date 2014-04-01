@@ -1,10 +1,17 @@
 <?php 
 $html = file_get_contents('template/_default.html');
 $action = 'intro';
+$userCookie = $_COOKIE;
 $page = $_GET['action'];
 $sub_action = $_GET['dir'];
 $cost = $_GET['summ'];
 $response = '';
+
+if(!$userCookie['vse_cookie_token_'] & $page == 'pay'){
+    setcookie('vse_redirect_url',$_SERVER['HTTP_REFERER'].'?'.$_SERVER['QUERY_STRING'],0,'/');
+    header('Location: http://'.$_SERVER['HTTP_HOST'].'/account/#login');
+}
+
 $payTextHash = array(
     45 => 'Дорогой друг, вы покупаете за 45 рублей программный пакет на 1 месяц.',
     79 => 'Дорогой друг, вы покупаете за 79 рублей программный пакет на 2 месяца.',

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 43h[30.12-17.01] 5h[18.01] 3h[21.01]  5h[22.01] 2h[25.01]  2h[27.01] 1h[29.01] 1h[30.01] 3h[31.01] 5h[01.02]  1h[02.02]-->
+<!-- 4h 4h~~ -->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -768,7 +768,7 @@
                                         value:currency,
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
-            </div><input type="text" data-bind="value:amount"/>
+            </div><input type="text" data-bind="value:amount, hasfocus:amounFocus, event:{keydown:validateKeyDown}"/>
         </div><div class="acc_controls">
             <div class="acc_button" data-bind="
                                     click:function(){$data.commentEdit(!$data.commentEdit())},
@@ -1013,26 +1013,29 @@
 
 <script type="text/html" id="left-menu-insert-tpl">
     <!--------leftMenu-------->
-    <div class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
-                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи
-    </div>
+    <!--<div class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},-->
+                <!--click:function(){$root.addAccIdToFilter({id:''})}">Все платежи-->
+    <!--</div>-->
     <div class="leftMenu">
-        <div class="allBox">
-            <span class="bigText">ИТОГ</span>
-            <span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>
-            <span class="bigComment">КАПИТАЛА</span>
-        </div>
-        <div class="bottomBox">
-            <div class="greenBox">
-                <span class="bottomText">МОИ СРЕДСТВА</span>
-            </div>
-            <span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>
-        </div>
-        <div class="bottomBox">
-            <div class="orangeBox">
-                <span class="bottomText">ДОЛГИ</span>
-            </div>
-            <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
+        <!--<div class="allBox">-->
+            <!--<span class="bigText">ИТОГ</span>-->
+            <!--<span class="largeValue" data-bind="digitext: totalActive() - totalPassive()"></span>-->
+            <!--<span class="bigComment">КАПИТАЛА</span>-->
+        <!--</div>-->
+        <!--<div class="bottomBox">-->
+            <!--<div class="greenBox">-->
+                <!--<span class="bottomText">МОИ СРЕДСТВА</span>-->
+            <!--</div>-->
+            <!--<span gr="1" class="grayResult" data-bind="digitext:totalActive"></span>-->
+        <!--</div>-->
+        <!--<div class="bottomBox">-->
+            <!--<div class="orangeBox">-->
+                <!--<span class="bottomText">ДОЛГИ</span>-->
+            <!--</div>-->
+            <!--<span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>-->
+        <!--</div>-->
+        <div style="width: auto;height: 87px;">
+
         </div>
         <div class="emptyBox">
             <span class="categoryText">МОИ СРЕДСТВА</span>
@@ -1274,7 +1277,7 @@
 <script type="text/html" id="tr-comment-tpl">
     <!-- TODO AUTOFOCUS -->
     <textarea autofocus
-            data-bind="value:comment, click:function(){if($data.comment() == 'Комментарий'){$data.comment('')}}"></textarea>
+            data-bind="value:comment, event:{keydown:function(){if($data.comment() == 'Комментарий'){$data.comment('');}return true;}},hasfocus:true"></textarea>
 </script>
 <script type="text/html" id="tr-default-tpl">
 </script>

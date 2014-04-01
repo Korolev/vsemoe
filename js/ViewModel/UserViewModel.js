@@ -97,9 +97,12 @@ var UserViewModel = function () {
     this.token.subscribe(function (val) {
         ServerApi.options.token = val;
         var currYear = (new Date()).getFullYear();
+        setCookie(ApplicationSettings.cookieName, 0, {expires: new Date(0)});
         if (self.remember()) {
             console.log("setcookie");
             setCookie(ApplicationSettings.cookieName, val, {expires: new Date([currYear * 1 + 1, 12, 30])});
+        }else{
+            setCookie(ApplicationSettings.cookieName, val);
         }
     });
 };

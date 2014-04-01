@@ -652,9 +652,18 @@ var ApplicationViewModel = function () {
         user.token("");
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
             if (r) {
-                user.token(r.token);
-                location.hash = "observe";
-                user.password("");
+                var checkRedirectUrl = getCookie('vse_redirect_url'),
+                    currYear = (new Date()).getFullYear();
+
+                if(checkRedirectUrl){
+                    setCookie(ApplicationSettings.cookieName, r.token, {expires: new Date([currYear * 1 + 1, 12, 30])});
+                    setCookie('vse_redirect_url',0,{expires:new Date(0)});
+                    location.href = checkRedirectUrl
+                }else{
+                    user.token(r.token);
+                    location.hash = "observe";
+                    user.password("");
+                }
             } else {
                 user.loginError(true);
                 user.passwordError(true);
@@ -676,6 +685,8 @@ var ApplicationViewModel = function () {
         user.login("");
         user.password("");
         user.repassword("");
+        self.transactions([]);
+        self.accounts([]);
         setCookie(ApplicationSettings.cookieName, "", {expires: new Date(1999)});
         location.hash = "login";
     };
@@ -922,6 +933,7 @@ var ApplicationViewModel = function () {
                             }
                         });
                     } else {
+                        console.log('fali TYT')
                         sammy.app.runRoute('get', "#login");
                     }
                 });
