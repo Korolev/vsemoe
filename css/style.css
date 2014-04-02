@@ -1243,12 +1243,14 @@ i.icon,
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #66cdcd;
-    font: 15px/1 "HelveticaNeue Bold", sans-serif;
+    /*font: 15px/1 "HelveticaNeue Bold", sans-serif;*/
+    font: 17px/1 "PFDinDisplayPro Bold", sans-serif;
 }
 
 .status-right {
     position: absolute;
     top: 60px;
+    top: 40px;
     right: 64px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -1339,6 +1341,7 @@ i.icon,
 line-height: 27px;*/
     font-size: 17px;
     line-height: 25px;
+    letter-spacing: normal;
 }
 
 .snapshot .description p.small {
@@ -1380,6 +1383,10 @@ line-height: 27px;*/
 .rules_page{
     background: url('../i/stamp.png') 795px 142px no-repeat;
     background-color: #ffffff;
+}
+
+.rules_page p{
+    letter-spacing: normal;
 }
 
 .hero-unit.hero-image {
@@ -2148,6 +2155,7 @@ span.attach:hover {
 .page_switcher span a{
     padding: 0 15px;
     display: block;
+    z-index: 10001;
 }
 
 
@@ -2162,7 +2170,8 @@ span.attach:hover {
 
 #intro_web .snapshot:first-child{
     border-top: none;
-    margin-top: -20px;
+    /*margin-top: -60px;*/
+    padding-top: 10px;
 }
 
 #intro_web .snapshot{
@@ -2178,6 +2187,7 @@ span.attach:hover {
 
 #intro_web .snapshot h2{
     color: #444B55;
+    color: #FF6900;
     font-family: "PFDinDisplayPro",sans-serif;
     font-weight: 400;
     font-size: 26px;
@@ -2203,7 +2213,7 @@ span.attach:hover {
 }
 
 #intro_web i{
-    background-image: url("/img/payment/intro_web_sprite.png");
+    /*background-image: url("/img/payment/intro_web_sprite.png");*/
 }
 
 .pay_link a{
