@@ -189,8 +189,8 @@ nav ul li a {
     /*-webkit-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;*/
     /*transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;*/
     line-height: 18px;
-    /*font-family: "HelveticaNeue Light", sans-serif;*/
-    font-family: Verdana, Arial, sans-serif;
+    font-family: "HelveticaNeue Light", sans-serif;
+    /*font-family: Verdana, Arial, sans-serif;*/
     font-size: 14px;
     letter-spacing: 0.7px;
 }
@@ -225,6 +225,7 @@ nav ul li ul li:hover{
     background-color: #DAD9D4;
     color: #424c58;
     font-weight: bold;
+    font-family: "HelveticaNeue Bold", sans-serif;
 }
 nav ul li ul li a{
     line-height: 30px;
