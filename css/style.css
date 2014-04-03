@@ -212,6 +212,7 @@ nav ul li ul{
     top: 30px;
     -moz-box-shadow: 2px 2px 5px #e6e8e8;
     box-shadow: 2px 2px 5px #e6e8e8;
+    z-index: 2000;
 }
 nav ul li:hover ul{
     display: block;
