@@ -102,7 +102,6 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
         v = v || self.amount();
         var val = v + '',
             res;
-console.log(val);
         if (val.indexOf(',') > -1) {
             val.replace(',', '.');
             res = val;

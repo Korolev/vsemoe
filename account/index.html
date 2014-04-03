@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 4h 4h~~ -->
+<!-- 4h 4h 3h -->
 <!--[if lt IE 7]>
 <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
@@ -791,7 +791,7 @@
 <script type="text/html" id="categories-tpl">
     <table class="contentTable">
         <tr>
-            <td class="tdleftMenu" data-bind="template:'left-menu-insert-tpl'"></td>
+            <td class="tdleftMenu" data-bind="template:'left-menu-category-tpl'"></td>
             <!--------rightMenu-------->
             <td class="tdrightMenu categories">
                 <div class="rightMenu">
@@ -1048,6 +1048,11 @@
     </div>
 </script>
 
+<script type="text/html" id="left-menu-category-tpl">
+    <!--------leftMenu-------->
+    <div class="totalMenu selected" style="top:2px;line-height: 39px">Все категории</div>
+</script>
+
 <script type="text/html" id="left-menu-insert-new-tpl">
     <!--------leftMenu-------->
     <div class="leftMenu">
@@ -1101,13 +1106,19 @@
         <nav class="login-nav">
             <ul class="fr">
                 <li>
-                    <a class="emailAccount" href="" data-bind="text:user.login">testing@mail.ru</a>
+                    <a href="/feedback">Поддержка</a>
                 </li>
                 <li>
                     <div class="chertochka"></div>
                 </li>
                 <li>
-                    <a href="/feedback">Поддержка</a>
+                    <a href="/payment">Тарифы</a>
+                </li>
+                <li>
+                    <div class="chertochka"></div>
+                </li>
+                <li>
+                    <a class="emailAccount" href="" data-bind="text:user.login">testing@mail.ru</a>
                 </li>
                 <li>
                     <div class="chertochka"></div>

@@ -238,6 +238,10 @@ footer .copy {
         text-align: center;
     }
 
+    .topMenuBox.shortMenuItem{
+        color: #B4C1C7;
+    }
+
     .topMenuBox.shortMenuItem.lastItem{
         margin-right: 130px;
     }
@@ -251,8 +255,9 @@ footer .copy {
     padding: 0px;
     margin: 0px auto 80px;
     background-color: #FFFFFF;
-    box-shadow: 0 3px 25px rgba(209, 230, 234, 1);
+    /*box-shadow: 0 3px 25px rgba(209, 230, 234, 1);*/
     /*box-shadow: 0 3px 50px rgba(209, 230, 234, 1); - OLD value*/
+    box-shadow: 0 15px 20px #e6e8e8;
     z-index: 1000;
 }
 

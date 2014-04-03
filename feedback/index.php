@@ -95,7 +95,10 @@
         <div class="logo fl">
             <a href="/" title="Всё Мое"></a>
         </div>
-        <a class="loginbtn" href="/account"></a>
+        <span class="loginbtn">
+                        <a href="/account"></a>
+                        <a href="/account#register"></a>
+                    </span>
         <nav>
             <ul class="fr">
                 <li><a href="/tour.html">Экскурсия</a></li>
@@ -105,6 +108,7 @@
                 <li><a href="/payment">Тарифы</a></li>
                 <li class="chertochka"></li>
                 <li>
+                <span>Контакты</span>
                                     <ul>
                                         <li><a href="/contacts.html">Контакты</a></li>
                                         <li><a href="/feedback">Поддержка</a></li>

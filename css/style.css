@@ -130,12 +130,18 @@ header .logo-slogan a {
 .loginbtn,
 .loginbtn:hover {
     position: absolute;
-    width: 92px;
-    height: 41px;
-    top: 17px;
+    width: 199px;
+    height: 48px;
+    top: 14px;
     right: 0px;
     /*background: url('../i/loginbtn.png') 0 0 no-repeat;*/
-    background: url('../img/yellow.png') 0 0 no-repeat;
+    /*background: url('../img/yellow.png') 0 0 no-repeat;*/
+    background: url('../img/intro/reg_login.png') 0 0 no-repeat;
+}
+.loginbtn a{
+    display: inline-block;
+    height: 100%;
+    width: 47%;
 }
 
 .loginbtn-minisocials,
@@ -162,15 +168,15 @@ header nav {
     float: right;
     background: transparent;
     box-shadow: none;
-    margin: 0;
+    margin: 0 20px 0 0;
 }
 
 nav ul li {
     float: left;
-    overflow: hidden;
     height: 30px;
 }
 
+nav ul li span ,
 nav ul li a {
     text-transform: uppercase;
     color: #8b9296;
@@ -178,36 +184,55 @@ nav ul li a {
     padding: 0 18px;
     display: block;
     text-decoration: none;
-    -moz-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;
-    -o-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;
-    -webkit-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;
-    transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;
+    /*-moz-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;*/
+    /*-o-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;*/
+    /*-webkit-transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;*/
+    /*transition: color 300ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;*/
     line-height: 18px;
-    font-family: "HelveticaNeue Light", sans-serif;
+    /*font-family: "HelveticaNeue Light", sans-serif;*/
+    font-family: Verdana, Arial, sans-serif;
     font-size: 14px;
     letter-spacing: 0.7px;
 }
 
 nav>ul>li:hover{
-    height: 80px;
     position: relative;
-    top:-10px;
-    padding-top: 10px;
     z-index: 1000;
 }
 
-nav ul li:hover ul{
-    position: relative;
-    background-color: #ffffff;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    top: -10px;
+nav>ul>li:hover a:first-child{
+
 }
 
+
+nav ul li ul{
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    top: 30px;
+    -moz-box-shadow: 2px 2px 5px #e6e8e8;
+    box-shadow: 2px 2px 5px #e6e8e8;
+}
+nav ul li:hover ul{
+    display: block;
+}
+
+nav ul li ul li:hover a{
+    color: #424c58;
+}
+nav ul li ul li:hover{
+    background-color: #DAD9D4;
+    color: #424c58;
+    font-weight: bold;
+}
+nav ul li ul li a{
+    line-height: 30px;
+}
 nav ul li ul li{
     display: block;
     float: none;
     height: 30px;
+    line-height: 30px;
 }
 
 nav ul li.active a,

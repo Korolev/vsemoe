@@ -117,6 +117,7 @@ var ApplicationViewModel = function () {
     this.selectedFilter = ko.observable();
     this.accountId = ko.observable('');
     this.showFilterConfig = ko.observable(false);
+    this.minTransactionDate;
     this.timeFilterTo = ko.observable(new moment().endOf('day'));
     this.timeFilterFrom = ko.observable(new moment().startOf('day'));
 
@@ -497,7 +498,7 @@ var ApplicationViewModel = function () {
                         self.timeFilterTo(endDate);
                         self.timeFilterFrom(self.timeFilterTo().clone().subtract(sub[1], sub[0]).startOf('day'));
                     } else if (val) {
-                        self.timeFilterFrom(new moment().startOf('day'));
+                        self.timeFilterFrom(new moment(self.minTransactionDate).startOf('day'));
                         self.timeFilterTo(endDate);
                     }
                     break;
@@ -738,6 +739,10 @@ var ApplicationViewModel = function () {
                         }
                         var transaction = new TransactionViewModel(tr, self);
                         trs.push(transaction);
+                        self.minTransactionDate = self.minTransactionDate ?
+                            transaction.created < moment(self.minTransactionDate) ?
+                                transaction.created.format() : self.minTransactionDate
+                            :transaction.created.format();
                         self.transactionsHash[tr.transaction_id] = transaction;
                     });
 
@@ -922,18 +927,21 @@ var ApplicationViewModel = function () {
             if (token) {
                 ServerApi.checkToken({token: token}, function (r) {
                     if (r) {
-                        ServerApi.checkAutoLogin(token, function (al) {
-                            if (al) {
-                                sammy.app.runRoute('get', "#observe");
-                                self.user.remember(true);
-                                self.user.token(token);
-                                self.user.getLoginFromServer();
-                            } else {
-                                sammy.app.runRoute('get', "#login");
-                            }
-                        });
+                        sammy.app.runRoute('get', "#observe");
+                        self.user.remember(true);
+                        self.user.token(token);
+                        self.user.getLoginFromServer();
+//                        ServerApi.checkAutoLogin(token, function (al) {
+//                            if (al) {
+//                                sammy.app.runRoute('get', "#observe");
+//                                self.user.remember(true);
+//                                self.user.token(token);
+//                                self.user.getLoginFromServer();
+//                            } else {
+//                                sammy.app.runRoute('get', "#login");
+//                            }
+//                        });
                     } else {
-                        console.log('fali TYT')
                         sammy.app.runRoute('get', "#login");
                     }
                 });
