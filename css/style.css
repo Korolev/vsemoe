@@ -863,6 +863,11 @@ ul, ol {
     line-height: 0px;
 }
 
+#intro_web .videobox,
+#intro_web .description{
+    width: 100%;
+}
+
 .smallvideo {
     width: 230px;
     display: inline-block;
@@ -1833,6 +1838,7 @@ span.attach:hover {
 .payment-page .italic{
     font-style: italic;
     font-family: Georgia, "HelveticaNeue Light",sans-serif;
+    color: #b6c1c6;
 }
 
 .payment-page h2,
@@ -1847,8 +1853,20 @@ span.attach:hover {
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
+.payment-page h2{
+    font-family: "HelveticaNeue Light",sans-serif;
+    font-weight: normal;
+    color: #FF6900;
+}
+
 .payment-page h3{
     font-size: 22px;
+}
+
+.app_cost,
+.testimonials_header,
+.payment_description{
+    margin-top: 60px !important;
 }
 
 .float_left_column{
