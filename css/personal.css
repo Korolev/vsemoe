@@ -222,6 +222,10 @@ footer .copy {
     font-family: Verdana, Lucida Grande, Helvetica, Arial san-serif;
 }
 
+    .topMenuBox.shortMenuItem{
+        color: #B4C1C7;
+    }
+
     .topMenuBox.selected {
         background: #eee;
         box-shadow: inset 0px 2px 4px #ddd;
@@ -238,9 +242,6 @@ footer .copy {
         text-align: center;
     }
 
-    .topMenuBox.shortMenuItem{
-        color: #B4C1C7;
-    }
 
     .topMenuBox.shortMenuItem.lastItem{
         margin-right: 130px;

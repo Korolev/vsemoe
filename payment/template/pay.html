@@ -81,8 +81,8 @@
                         $('#summ').val(getParameterByName('summ'));
                         $('#text_summ').text(getParameterByName('summ')+' руб.');
 
-                        $('#shopSuccessURL').val(location.protocol+'//'+location.host+'?action=confirm');
-                        $('#shopFailURL').val(location.protocol+'//'+location.host+'?action=fail');
+                        $('#shopSuccessURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm');
+                        $('#shopFailURL').val(location.protocol+'//'+location.host+'/payment/?action=fail');
 
                         $('#'+info.key+info.val).attr('checked','checked');
                         $('.replace_me form').submit();
@@ -131,7 +131,7 @@
             <a href="#visa_mastercard" data-info="{url:'yandex_money',key:'paymentType', val:'AC'}"></a>
         </div>
         <div class="pay_link yandex_money">
-            <a href="#yandex_money" data-info="{url:'yandex_money',key:'paymentType', val:''}"></a>
+            <a href="#yandex_money" data-info="{url:'yandex_money',key:'paymentType', val:'PC'}"></a>
         </div>
         <div class="pay_link euronet_wallet">
             <a href="#euronet_wallet" data-info="{url:'yandex_money',key:'paymentType', val:'GP'}"></a>

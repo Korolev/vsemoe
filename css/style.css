@@ -1277,7 +1277,7 @@ i.icon,
 .status-right {
     position: absolute;
     top: 60px;
-    top: 40px;
+    top: 25px;
     right: 64px;
     text-transform: uppercase;
     letter-spacing: 1px;

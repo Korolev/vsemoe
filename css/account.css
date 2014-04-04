@@ -904,7 +904,7 @@ input.vse-cancel:active{
 }
 
 .form_row_input .help_text{
-    padding: 10px 5px;
+    padding: 10px 0px;
     height: auto;
 }
 
@@ -1275,7 +1275,6 @@ input.vse-cancel:active{
 
 .tr_newday .td_2{
     color: #888;
-    text-align: center;
 }
 
 .t_row.color_grey{
