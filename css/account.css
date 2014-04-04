@@ -574,10 +574,12 @@ input.vse-cancel:active{
 
 .tdrightMenu.categories{
     background-color: #EAE9E5;
+    background-color: #ebe8dc;
     padding: 0 0 0 0;
 }
 .tdrightMenu.categories .inputText{
     margin-left: 46px;
+    color: #938e85;
 }
 /* = TABS = */
 .vse-tabs{
@@ -732,7 +734,7 @@ input.vse-cancel:active{
 
 .acc_edit_holder{
     background-color: #fefefe;
-    border: 1px solid #888;
+    border: 1px solid #cfdee5;
     padding: 10px;
     position: relative;
     cursor: default;
@@ -952,6 +954,7 @@ input.vse-cancel:active{
 }
 
 .td_fromaccount_input .fake_select:before,
+.fake_select:before,
 .fake_tree_select:before{
     position: absolute;
     content: '';

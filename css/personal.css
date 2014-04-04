@@ -435,7 +435,7 @@ footer .copy {
 
     .leftMenu ul {
         width: 206px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #ECE9E2;
         box-shadow: 0 1px 0px #fff;
     }
 
@@ -667,7 +667,7 @@ footer .copy {
     width: 206px;
     min-height: 30px;
     border-bottom: 1px solid #fff;
-    box-shadow: inset 0 -1px 0px #ddd;
+    box-shadow: inset 0 -1px 0px #ece9e2;
 }
 
 .emptyBox {
