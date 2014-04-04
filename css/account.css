@@ -461,7 +461,7 @@ input.vse-cancel:active{
 
 .itemDropDown{
     position: absolute;
-    z-index: 10001;
+    z-index: 1200;
     border-radius: 5px;
     border:1px solid #aaa;
     background-color: #fff;
@@ -471,6 +471,9 @@ input.vse-cancel:active{
     top:24px;
     min-width: 100px;
     min-height: 100px;
+    border: 1px solid #CAD5E0;
+    border-radius: 3px;
+    box-shadow: 2px 2px 3px #DEE9F4;
 }
 
 .dateInput .itemDropDown{
@@ -953,8 +956,8 @@ input.vse-cancel:active{
     border-radius: 0 3px 3px 0;
 }
 
-.td_fromaccount_input .fake_select:before,
 .fake_select:before,
+.td_fromaccount_input .fake_select:before,
 .fake_tree_select:before{
     position: absolute;
     content: '';
@@ -966,6 +969,10 @@ input.vse-cancel:active{
     border-top:6px solid #888;
     border-right: 4px solid transparent;
     border-left: 4px solid transparent;
+}
+
+.split_input .fake_select:before{
+    border: none;
 }
 
 .fake_select_body{
