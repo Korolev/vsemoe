@@ -863,6 +863,8 @@ ul, ol {
     line-height: 0px;
 }
 
+#intro_iphone .videobox,
+#intro_iphone .description,
 #intro_web .videobox,
 #intro_web .description{
     width: 100%;
@@ -2222,7 +2224,7 @@ span.attach:hover {
 #intro_web .snapshot{
     text-align: center;
     margin: 0;
-    padding: 70px 10px 0 10px;
+    padding: 140px 10px 0 10px;
 }
 
 #intro_web .snapshot img{
@@ -2231,11 +2233,15 @@ span.attach:hover {
 }
 
 #intro_web .snapshot h2{
-    color: #444B55;
+    /*color: #444B55;*/
+    /*color: #FF6900;*/
+    /*font-family: "PFDinDisplayPro",sans-serif;*/
+    /*font-weight: 400;*/
+    /*font-size: 26px;*/
+    font-family: "HelveticaNeue Light",sans-serif;
+    font-weight: normal;
     color: #FF6900;
-    font-family: "PFDinDisplayPro",sans-serif;
-    font-weight: 400;
-    font-size: 26px;
+    font-size: 30px;
 }
 
 #intro_web .snapshot div,
