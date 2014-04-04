@@ -1864,10 +1864,12 @@ span.attach:hover {
     font-weight: normal;
     color: #FF6900;
     text-shadow: none !important;
+    letter-spacing: 0.07rem;
 }
 
 .payment-page h3{
     font-size: 22px;
+    letter-spacing: 0.07rem;
 }
 
 .app_cost,
