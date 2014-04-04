@@ -209,13 +209,14 @@ nav ul li ul{
     display: none;
     position: absolute;
     background-color: #ffffff;
-    top: 30px;
+    top: 25px;
     -moz-box-shadow: 2px 2px 5px #e6e8e8;
     box-shadow: 2px 2px 5px #e6e8e8;
     z-index: 2000;
 }
 nav ul li:hover ul{
     display: block;
+    width: 130px;
 }
 
 nav ul li ul li:hover a{
@@ -228,7 +229,9 @@ nav ul li ul li:hover{
     font-family: "HelveticaNeue Bold", sans-serif;
 }
 nav ul li ul li a{
-    line-height: 30px;
+    line-height: 34px;
+    font-size: 12px;
+    text-shadow: none;
 }
 nav ul li ul li{
     display: block;
