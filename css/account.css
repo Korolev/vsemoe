@@ -545,7 +545,8 @@ input.vse-cancel:active{
     top: 10px;
     left: 8px;
     width: 210px;
-    line-height: 36px;
+    line-height: 39px;
+    height: 35px;
     background: none repeat scroll 0% 0% #4A4C4F;
     color: rgb(255, 255, 255);
     box-shadow: -8px 0px 0px rgb(255, 105, 0);

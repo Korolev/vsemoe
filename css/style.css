@@ -1858,10 +1858,12 @@ span.attach:hover {
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
+.feedback-page h2,
 .payment-page h2{
     font-family: "HelveticaNeue Light",sans-serif;
     font-weight: normal;
     color: #FF6900;
+    text-shadow: none !important;
 }
 
 .payment-page h3{
@@ -2227,7 +2229,7 @@ span.attach:hover {
 #intro_web .snapshot{
     text-align: center;
     margin: 0;
-    padding: 140px 10px 0 10px;
+    padding: 70px 10px 20px 10px;
 }
 
 #intro_web .snapshot img{
