@@ -310,7 +310,6 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                     saveCallback && saveCallback(r);
                     self.comment('Комментарий');
                     self.created(moment());
-                    self.to_id('');
                     self.amount(0);
                     app.transactions.push(newTransaction);
                     app.transactionsHash[newTransaction.id] = newTransaction;
