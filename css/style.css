@@ -1829,7 +1829,7 @@ span.attach:hover {
 }
 
 .payment-page .progress_chart{
-    text-align: left;
+    text-align: center;
     margin-bottom: 20px;
 }
 
@@ -2047,7 +2047,7 @@ span.attach:hover {
 .app_cost_table .pay_links a{
     display: block;
     float:right;
-    margin-right: 9px;
+    margin:0 5px 0 4px;
     height: 80px;
     width:80px;
     border-radius:50%;
