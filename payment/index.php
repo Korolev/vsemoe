@@ -7,6 +7,10 @@ $sub_action = $_GET['dir'];
 $cost = $_GET['summ'];
 $response = '';
 
+if($page == 'PaymentSuccess'){
+    $page = 'confirm';
+}
+
 if(!$userCookie['vse_cookie_token_'] & $page == 'pay'){
     setcookie('vse_redirect_url',$_SERVER['HTTP_REFERER'].'?'.$_SERVER['QUERY_STRING'],0,'/');
     header('Location: http://'.$_SERVER['HTTP_HOST'].'/account/#login');
