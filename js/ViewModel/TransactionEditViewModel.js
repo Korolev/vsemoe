@@ -6,7 +6,6 @@
  */
 
 var TransactionEditViewModel = function (data, app, saveCallback) {
-    console.log(data);
     var self = this,
         uw = ko.utils.unwrapObservable;
 

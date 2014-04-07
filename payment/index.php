@@ -12,8 +12,9 @@ if($page == 'PaymentSuccess'){
 }
 
 if(!$userCookie['vse_cookie_token_'] & $page == 'pay'){
-    setcookie('vse_redirect_url',$_SERVER['HTTP_REFERER'].'?'.$_SERVER['QUERY_STRING'],0,'/');
-    header('Location: http://'.$_SERVER['HTTP_HOST'].'/account/#login');
+    $vse_redirect_url = $_SERVER['HTTP_REFERER'].'?'.$_SERVER['QUERY_STRING'];
+    $vse_redirect_url = urlencode($vse_redirect_url);
+    header('Location: http://'.$_SERVER['HTTP_HOST'].'/account/#login/'.$vse_redirect_url);
 }
 
 $payTextHash = array(

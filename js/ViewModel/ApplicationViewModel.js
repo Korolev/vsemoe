@@ -650,20 +650,17 @@ var ApplicationViewModel = function () {
 
     this.userLogin = function () {
         var user = self.user;
-        user.token("");
         ServerApi.loginUser({user: user.login(), password: user.password()}, function (r) {
             if (r) {
-                var checkRedirectUrl = getCookie('vse_redirect_url'),
-                    currYear = (new Date()).getFullYear();
-
-                if(checkRedirectUrl){
-                    setCookie(ApplicationSettings.cookieName, r.token, {expires: new Date([currYear * 1 + 1, 12, 30])});
-                    setCookie('vse_redirect_url',0,{expires:new Date(0)});
+                var checkRedirectUrl = pageParams['login'];
+                if (checkRedirectUrl) {
+                    checkRedirectUrl = decodeURIComponent(checkRedirectUrl);
+                    user.setToken(r.token);
                     location.href = checkRedirectUrl
-                }else{
+                } else {
                     user.token(r.token);
-                    location.hash = "observe";
                     user.password("");
+                    location.hash = "observe";
                 }
             } else {
                 user.loginError(true);
@@ -679,101 +676,99 @@ var ApplicationViewModel = function () {
     };
     this.userLogOut = function () {
         //TODO create method clear user
-        console.log("logout");
-        var user = self.user;
-        user.token("");
-        user.email("");
-        user.login("");
-        user.password("");
-        user.repassword("");
-        self.transactions([]);
-        self.accounts([]);
-        setCookie(ApplicationSettings.cookieName, "", {expires: new Date(1999)});
-        location.hash = "login";
+        self.user.removeToken();
+        location.reload();
+//        var user = self.user;
+//        user.email("");
+//        user.login("");
+//        user.password("");
+//        user.repassword("");
+//        self.transactions([]);
+//        self.accounts([]);
+//        user.token("");
+//        location.hash = "login";
     };
 
-    this.user.token.subscribe(function (val) {
-        if (val) {
-            ServerApi.getCurrencyList({}, function (r) {
-                var cArr = [];
-                each(r, function (k, v) {
-                    self.currency[v.currency_id] = v;
-                    cArr.push(v);
-                });
-                cArr.sort(function (a, b) {
-                    return a.shortname < b.shortname ? -1 : 1;
-                });
-                self.currencyArr(cArr);
+    this.user.afterLoginFunc = function () {
+        ServerApi.getCurrencyList({}, function (r) {
+            var cArr = [];
+            each(r, function (k, v) {
+                self.currency[v.currency_id] = v;
+                cArr.push(v);
             });
-            ServerApi.getAccountList({}, function (r) {
-                self.accounts.removeAll();
-                self.accountsHash = {};
-                var res = [],
-                    accIds = [];
+            cArr.sort(function (a, b) {
+                return a.shortname < b.shortname ? -1 : 1;
+            });
+            self.currencyArr(cArr);
+        });
+        ServerApi.getAccountList({}, function (r) {
+            self.accounts.removeAll();
+            self.accountsHash = {};
+            var res = [],
+                accIds = [];
 
-                self.___firstDate = moment().unix();
-                self.___usedCurrency = self.___usedCurrency || {};
-                self.___usedCurrencyRates = self.___usedCurrencyRates || {};
+            self.___firstDate = moment().unix();
+            self.___usedCurrency = self.___usedCurrency || {};
+            self.___usedCurrencyRates = self.___usedCurrencyRates || {};
 
-                each(r, function (k, acc) {
-                    self.___usedCurrency[acc.currency_id] = {};
-                    var a = new AccountViewModel(acc, self);
-                    res.push(a);
-                    self.accountsHash[a.id] = a;
-                    accIds.push(a.id);
+            each(r, function (k, acc) {
+                self.___usedCurrency[acc.currency_id] = {};
+                var a = new AccountViewModel(acc, self);
+                res.push(a);
+                self.accountsHash[a.id] = a;
+                accIds.push(a.id);
+            });
+            self.accounts.pushAll(res);
+
+            each(self.accounts(), function (k, acc) {
+                acc.initChildren(self);
+            });
+            ServerApi.getTransactionList({
+                account_id: accIds.join(',')
+            }, function (r) {
+                var trs = [];
+                each(r, function (k, tr) {
+                    self.___usedCurrency[tr.currency_id] = 1;
+                    if (tr.currency_id != self.baseCurrencyId()) {
+                        self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
+                        self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
+                    }
+                    var transaction = new TransactionViewModel(tr, self);
+                    trs.push(transaction);
+                    self.minTransactionDate = self.minTransactionDate ?
+                        transaction.created < moment(self.minTransactionDate) ?
+                            transaction.created.format() : self.minTransactionDate
+                        : transaction.created.format();
+                    self.transactionsHash[tr.transaction_id] = transaction;
                 });
-                self.accounts.pushAll(res);
 
-                each(self.accounts(), function (k, acc) {
-                    acc.initChildren(self);
+                each(trs, function (k, tr) {
+                    if (tr.split) {
+                        self.transactionsHash[tr.split].hasSplit(true);
+                        self.transactionsHash[tr.split].splitTransactions.push(tr);
+                    }
                 });
-                ServerApi.getTransactionList({
-                    account_id: accIds.join(',')
-                }, function (r) {
-                    var trs = [];
-                    each(r, function (k, tr) {
-                        self.___usedCurrency[tr.currency_id] = 1;
-                        if (tr.currency_id != self.baseCurrencyId()) {
-                            self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
-                            self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
-                        }
-                        var transaction = new TransactionViewModel(tr, self);
-                        trs.push(transaction);
-                        self.minTransactionDate = self.minTransactionDate ?
-                            transaction.created < moment(self.minTransactionDate) ?
-                                transaction.created.format() : self.minTransactionDate
-                            :transaction.created.format();
-                        self.transactionsHash[tr.transaction_id] = transaction;
-                    });
-
-                    each(trs, function (k, tr) {
-                        if (tr.split) {
-                            self.transactionsHash[tr.split].hasSplit(true);
-                            self.transactionsHash[tr.split].splitTransactions.push(tr);
-                        }
-                    });
-                    $.each(self.___usedCurrency, function (key, val) {
-                        if (key - 0 && key != self.baseCurrencyId()) {
-                            ServerApi.getCurrencyRateList({
-                                currency_id: key,
-                                from: moment.unix(self.___firstDate).subtract('d', 1).unix()
-                            }, function (r) {
-                                each(r, function (k, curr) {
-                                    self.___usedCurrencyRates[curr.currency_id + '-' + moment(Date(curr.modified * 1000)).format('YYYY-MM-DD')] = curr.rate;
-                                });
-                                self.transactions.valueHasMutated();
-                                self.accounts.valueHasMutated();
-                                self.transactionsSetGen();
+                $.each(self.___usedCurrency, function (key, val) {
+                    if (key - 0 && key != self.baseCurrencyId()) {
+                        ServerApi.getCurrencyRateList({
+                            currency_id: key,
+                            from: moment.unix(self.___firstDate).subtract('d', 1).unix()
+                        }, function (r) {
+                            each(r, function (k, curr) {
+                                self.___usedCurrencyRates[curr.currency_id + '-' + moment(Date(curr.modified * 1000)).format('YYYY-MM-DD')] = curr.rate;
                             });
-                        } else {
-                            self.transactions.removeAll();
-                            self.transactions.pushAll(trs);
-                        }
-                    });
+                            self.transactions.valueHasMutated();
+                            self.accounts.valueHasMutated();
+                            self.transactionsSetGen();
+                        });
+                    } else {
+                        self.transactions.removeAll();
+                        self.transactions.pushAll(trs);
+                    }
                 });
             });
-        }
-    });
+        });
+    };
 
     this.action.subscribe(function (val) {
         if (actionMap[val])self.page(actionMap[val]);
@@ -901,10 +896,13 @@ var ApplicationViewModel = function () {
                         location.hash = "login";
                     }
                 } else if (!self.user.token() && token) {
-                    self.user.remember(false);
                     self.user.token(token);
                     self.user.getLoginFromServer();
-                    self.action(a);
+                    if (actionMap[a] == 'login') {
+                        location.hash = 'observe';
+                    } else {
+                        self.action(a);
+                    }
                 } else {
                     self.action(a);
                 }

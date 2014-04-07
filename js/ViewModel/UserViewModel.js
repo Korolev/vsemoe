@@ -32,6 +32,10 @@ var UserViewModel = function () {
     this.repassword = ko.observable("");
     this.remember = ko.observable(true);
 
+    this.afterLoginFunc = function(){
+
+    };
+
     this.showPassword = ko.observable(false);
 
     this.loginError = ko.observable(false);
@@ -94,15 +98,32 @@ var UserViewModel = function () {
         })
     };
 
+    this.setToken = function(val){
+        var currDate = new Date(),
+            token = getCookie(ApplicationSettings.cookieName);
+
+        currDate.addYears(4);
+        if(token != val){
+            setCookie(ApplicationSettings.cookieName, val, self.remember() ? {
+                expires: currDate
+            } : {});
+        }
+    };
+
+    this.removeToken = function(){
+        setCookie(ApplicationSettings.cookieName, 0, {expires: new Date('1990')});
+    };
+
     this.token.subscribe(function (val) {
         ServerApi.options.token = val;
-        var currYear = (new Date()).getFullYear();
-        setCookie(ApplicationSettings.cookieName, 0, {expires: new Date(0)});
-        if (self.remember()) {
-            console.log("setcookie");
-            setCookie(ApplicationSettings.cookieName, val, {expires: new Date([currYear * 1 + 1, 12, 30])});
-        }else{
-            setCookie(ApplicationSettings.cookieName, val);
+        var token = getCookie(ApplicationSettings.cookieName);
+
+        if (val && val != token) {
+            self.setToken(val);
+        }
+
+        if(val){
+            self.afterLoginFunc();
         }
     });
 };

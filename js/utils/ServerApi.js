@@ -195,5 +195,8 @@ var ServerApi = {
     },
     getResponseList: function (dataObj, callback) {
         this.utils().post("/responce/list", dataObj, callback, true);
+    },
+    getUserPayment: function (dataObj, callback) {
+        this.utils().post("/user/payment", dataObj, callback, true);
     }
 };

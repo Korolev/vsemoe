@@ -3,5 +3,6 @@
  */
 
 var ApplicationSettings = {
-    cookieName: "vse_cookie_token_"
+    cookieName: "vse_cookie_token_",
+    cookieRedirect: "vse_redirect_url"
 };

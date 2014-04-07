@@ -23,6 +23,7 @@ function getCookie(name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 function setCookie(name, value, options) {
+    console.log(arguments);
     options = options || {};
 
     options.path = options.path ? options.path : '/';
