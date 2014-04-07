@@ -867,7 +867,7 @@ ul, ol {
 }
 
 #intro_iphone .videobox,
-#intro_iphone .description,
+#intro_iphone .videobox .description,
 #intro_web .videobox,
 #intro_web .description{
     width: 100%;
