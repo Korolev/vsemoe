@@ -25,6 +25,8 @@
                                 login = r[0].login;
                                 $('.login').text(login);
                             }else{
+                                var href = encodeURIComponent(location.href);
+                                location.href = location.protocol+'//'+location.host+'/account/#login/'+href;
                                 showForm();
                             }
                         });
