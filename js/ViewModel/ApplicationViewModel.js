@@ -896,13 +896,19 @@ var ApplicationViewModel = function () {
                         location.hash = "login";
                     }
                 } else if (!self.user.token() && token) {
-                    self.user.token(token);
-                    self.user.getLoginFromServer();
-                    if (actionMap[a] == 'login') {
-                        location.hash = 'observe';
-                    } else {
-                        self.action(a);
-                    }
+                    ServerApi.checkToken({token: token}, function (r) {
+                        if (r) {
+                            self.user.token(token);
+                            self.user.getLoginFromServer();
+                            if (actionMap[a] == 'login') {
+                                location.hash = 'observe';
+                            } else {
+                                self.action(a);
+                            }
+                        }else{
+                            self.user.removeToken();
+                        }
+                    });
                 } else {
                     self.action(a);
                 }
