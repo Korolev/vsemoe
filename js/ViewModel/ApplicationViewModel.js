@@ -907,6 +907,7 @@ var ApplicationViewModel = function () {
                             }
                         }else{
                             self.user.removeToken();
+                            location.reload();
                         }
                     });
                 } else {
