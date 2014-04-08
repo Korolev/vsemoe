@@ -7,6 +7,9 @@ $sub_action = $_GET['dir'];
 $cost = $_GET['summ'];
 $response = '';
 
+if($page == 'PaymentFail'){
+    $page = 'fail';
+}
 if($page == 'PaymentSuccess'){
     $page = 'confirm';
 }

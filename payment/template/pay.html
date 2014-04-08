@@ -83,9 +83,14 @@
 
                         $('#shopSuccessURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm');
                         $('#shopFailURL').val(location.protocol+'//'+location.host+'/payment/?action=fail');
+                        $('#successURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm');
+                        $('#failURL').val(location.protocol+'//'+location.host+'/payment/?action=fail');
 
                         $('#'+info.key+info.val).attr('checked','checked');
-                        $('.replace_me form').submit();
+
+                        setTimeout(function(){
+                            $('.replace_me form').submit();
+                        },200);
                     }
 
                 });
