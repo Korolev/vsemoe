@@ -46,6 +46,33 @@ $(function () {
         }, time1);
     };
 
-    animate();
+//    animate();
+
+    var animate2 = function(){
+        setTimeout(function () {
+            img_1.css({opacity:0}).removeClass('hidden');
+            bg_1.css({opacity:0}).removeClass('hidden');
+
+            bg_2.animate({opacity: 0}, time1, function () {});
+            img_2.animate({opacity: 0}, time1, function () {});
+            bg_1.animate({opacity: 1}, time1, function () {});
+            img_1.animate({opacity: 1}, time1, function () {
+                animate2_2();
+            });
+        },time1*2);
+    }
+
+    animate2();
+
+    var animate2_2 = function(){
+        setTimeout(function () {
+            bg_2.animate({opacity: 1}, time1, function () {});
+            img_2.animate({opacity: 1}, time1, function () {});
+            bg_1.animate({opacity: 0}, time1, function () {});
+            img_1.animate({opacity: 0}, time1, function () {
+                animate2();
+            });
+        },time1*2);
+    }
 
 });
