@@ -107,8 +107,8 @@
                 <span class="user-email" data-bind="text: login"></span>
                 <nav class="user-pages-nav">
                     <ul class="fr">
-                        <li><a href="/feedback">Поддержка</a></li>
-                        <li class="active"><a href="/payment">Тарифы</a></li>
+                        <li class="active"><a href="/feedback">Поддержка</a></li>
+                        <li><a href="/payment">Тарифы</a></li>
                         <li><a href="/account">Приложение</a></li>
                         <li><a href="#" class="logout-link" data-bind="click:logout">Выйти</a></li>
                     </ul>
