@@ -3,6 +3,7 @@
 <head>
 	<link href="css/fonts.css" rel="stylesheet" type="text/css">
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="css/newmain.css" rel="stylesheet" type="text/css" media="screen">
     <script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/interface.js"></script>
     <script type="text/javascript">
@@ -25,8 +26,6 @@
 	<link rel="shortcut icon" href="favicon.ico">
 </head>
 <body class="inner">
-    <div class="top"></div>
-	<div class="wrap">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function (d, w, c) {
@@ -54,61 +53,73 @@
 </script>
 <noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-		<header>
-			<div class="logo fl">
-				<a href="index.html" title="Всё Мое"></a>
-			</div>
-            <span class="loginbtn">
-                <a href="/account"></a>
-                <a href="/account/#register"></a>
-            </span>
-            <nav>
-				<ul class="fr">
-                    <li><a href="tour.html">Экскурсия</a></li>
-                    <li class="chertochka"></li>
-					<li><a href="http://media.vsemoe.ru">Новости</a></li>
-                    <li class="chertochka"></li>
-                    <li><a href="/payment">Тарифы</a></li>
-                    <li class="chertochka"></li>
-                    <li>
-                        <span>Контакты</span>
-                        <ul>
-                            <li><a href="/contacts.html">Контакты</a></li>
-                            <li><a href="/feedback">Поддержка</a></li>
-                        </ul>
+	<header class="not-authorized">
+        <div class="wrap">
+            <div class="logo-slogan">
+                <a href="index.html" title="Всё Мое">&nbsp;</a>
+            </div>
+            <div class="menu-login-register">
+                <nav class="navigation">
+                    <ul class="fr">
+                        <li><a href="tour.html">Экскурсия</a></li>
+                        <li class="chertochka"></li>
+                        <li><a href="http://media.vsemoe.ru">Новости</a></li>
+                        <li class="chertochka"></li>
+                        <li><a href="/payment">Тарифы</a></li>
+                        <li class="chertochka"></li>
+                        <li>
+                            <span>Контакты</span>
+                            <ul>
+                                <li><a href="/contacts.html">Контакты</a></li>
+                                <li><a href="/feedback">Поддержка</a></li>
+                            </ul>
 
-                    </li>
-				</ul>
-			</nav>
-		</header>
+                        </li>
+                        <li class="chertochka"></li>
+                    </ul>
+                </nav>
+                <div class="social-links">
+                    <ul class="minisocials">
+                        <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                        <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                        <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+                    </ul>
+                </div>
+                <div class="signin-login-button">
+                    <a href="/account" class="loginbtn-minisocials">Войти</a> /
+                    <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="wrap">
         <div class="container bottom">
-        <h6>Свяжитесь с нами</h6>
+            <h6>Свяжитесь с нами</h6>
             <hr>
             <div class="contact">
-			<div class="leftContact">
+    			<div class="leftContact">
                     <p>
                         <span class="word">Помощь</span><br>
-			            Если у вас возникли проблемы<br>
+    		            Если у вас возникли проблемы<br>
                         с Сервисом Всё Моё.<br>
                         Воспользуйтесь нашей помощью.<br>
                     </p>
                     <p> <i class="icon mail"></i><span class="green"><a href="mailto:suppot@vsemoe.ru">support@vsemoe.ru</a></span><br>
                         <i class="icon phone"></i><span class="phoneText">+ 7 499 704 61 14 (003)</span><br>
-                        <i class="icon mail"></i>Задайте вопрос на форуме<a href="http://vsemoe.reformal.ru"><span class="green"> Всё Моё</span>
-          </a>
-              </p>
+                        <i class="icon mail"></i>Задайте вопрос на форуме<a href="http://vsemoe.reformal.ru"><span class="green"> Всё Моё</span></a>
+                    </p>
                 </div>
-				<div class="rightContact">
-					<h3>ООО &laquo;Всё Моё&raquo;</h3>
-					<p><br>
+    			<div class="rightContact">
+    				<h3>ООО &laquo;Всё Моё&raquo;</h3>
+    				<p><br>
                         <span class="word">Адрес</span><br>
                         Москва, Береговой Проезд,<br>
                     д 7, корп 1, офис 1, 121087.                  </p>
                     <p> <i class="icon mail"></i><span class="green"><a href="mailto:info@vsemoe.ru">info@vsemoe.ru</a></span><br>
                     <i class="icon phone"></i><span class="phoneText">+7 499 704 61 14</span>
                   </p>
-			  </div>
-			  <div class="clear"></div>
+    		    </div>
+    			<div class="clear"></div>
             </div>
 			<div class="map-block">
                 <div class="place">Где это?</div>
@@ -116,24 +127,24 @@
 <!--                <small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=ru&amp;geocode=&amp;q=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0,+%D0%91%D0%B5%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D0%B9+%D0%9F%D1%80%D0%BE%D0%B5%D0%B7%D0%B4,++%D0%94+7,+%D0%9A%D0%BE%D1%80%D0%BF+1&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=60.806372,135.263672&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=%D0%BF%D1%80.+%D0%91%D0%B5%D1%80%D0%B5%D0%B3%D0%BE%D0%B2%D0%BE%D0%B9,+7+%D0%BA%D0%BE%D1%80%D0%BF%D1%83%D1%81+1,+%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0,+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F,+121087&amp;ll=55.754373,37.506058&amp;spn=0.002644,0.007339&amp;z=16&amp;iwloc=A" style="color:#0000FF;text-align:left">Просмотреть увеличенную карту</a></small>-->
 			</div>
         </div>
-		<div class="empty"></div>
 	</div>
-	<footer>
-		<div class="in">
-            <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
-			<ul class="navi">
-				<li><a href="tour.html">Экскурсия</a></li>
-				<li><a href="http://media.vsemoe.ru">Новости</a></li>
-				<li><a href="contacts.html">Контакты</a></li>
-				<li><a href="rules.html">Правила</a></li>
-			</ul>
+    <footer class="footer">
+        <div class="in">
+            <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
+            <ul class="navi">
+                <li><a href="/tour.html">Экскурсия</a></li>
+                <li><a href="http://media.vsemoe.ru">Новости</a></li>
+                <li><a href="/payment">Тарифы</a></li>
+                <li><a href="/contacts.html">Контакты</a></li>
+                <li><a href="/rules.html">Правила</a></li>
+            </ul>
             <ul class="socials">
-				<li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
-				<li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
-				<li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-			</ul>
+                <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+            </ul>
             <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
-		</div>
-	</footer>
+        </div>
+    </footer>
 </body>
 </html>

@@ -4,10 +4,18 @@
     <link href="/css/fonts.css" rel="stylesheet" type="text/css">
     <link href="/css/login.css" rel="stylesheet" type="text/css" media="screen">
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/newmain.css" rel="stylesheet" type="text/css" media="screen">
     <script src="/js/jquery-1.9.1.min.js"></script>
-    <script src="/js/utils/ServerApi.js"></script>
+    <script src="/js/lib/moment.min.js?v9"></script>
+    <script src="/js/config/ApplicationSettings.js"></script>
+    <script src="/js/utils/util.js?v9"></script>
+    <script src="/js/lib/knockout-latest.js?v9"></script>
+    <script src="/js/ko.additional.js?v9"></script>
+    <script src="/js/utils/ServerApi.js?v9"></script>
+    <script src="/js/ViewModel/UserViewModel.js?v9"></script>
+    <script src="/js/header.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){            
+        $(document).ready(function(){
 
             $("#submit_buttom").on('click',function(){
                 ServerApi.createResponse({data:JSON.stringify({
@@ -31,7 +39,7 @@
             //additional-info-colapser
             var colapser = $('.additional-info-colapser .switcher'),
                 colapsCont = $('.additional-info');
-                
+
                 colapser.on('click',function(){
                     colapsCont.toggleClass('hidden');
                     colapser.toggleClass('open');
@@ -62,8 +70,6 @@
     <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body class="inner">
-<div class="top"></div>
-<div class="wrap">
  <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
 (function (d, w, c) {
@@ -92,63 +98,92 @@
 <noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
     <header>
-        <div class="logo fl">
-            <a href="/" title="Всё Мое"></a>
-        </div>
-        <span class="loginbtn">
-                        <a href="/account"></a>
-                        <a href="/account/#register"></a>
-                    </span>
-        <nav>
-            <ul class="fr">
-                <li><a href="/tour.html">Экскурсия</a></li>
-                <li class="chertochka"></li>
-                <li><a href="http://media.vsemoe.ru">Новости</a></li>
-                <li class="chertochka"></li>
-                <li><a href="/payment">Тарифы</a></li>
-                <li class="chertochka"></li>
-                <li>
-                <span>Контакты</span>
-                                    <ul>
-                                        <li><a href="/contacts.html">Контакты</a></li>
-                                        <li><a href="/feedback">Поддержка</a></li>
-                                    </ul>
+        <div class="wrap">
+            <div class="logo-slogan">
+                <a href="index.html" title="Всё Мое">&nbsp;</a>
+            </div>
+             <!-- ko if: login -->
+            <div class="menu-login-authorized">
+                <span class="user-email" data-bind="text: login"></span>
+                <nav class="user-pages-nav">
+                    <ul class="fr">
+                        <li><a href="/feedback">Поддержка</a></li>
+                        <li class="active"><a href="/payment">Тарифы</a></li>
+                        <li><a href="/account">Приложение</a></li>
+                        <li><a href="#" class="logout-link" data-bind="click:logout">Выйти</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- /ko -->
+            <!-- ko ifnot: login -->
+            <div class="menu-login-register">
+                <nav class="navigation">
+                    <ul class="fr">
+                        <li><a href="tour.html">Экскурсия</a></li>
+                        <li class="chertochka"></li>
+                        <li><a href="http://media.vsemoe.ru">Новости</a></li>
+                        <li class="chertochka"></li>
+                        <li><a href="/payment">Тарифы</a></li>
+                        <li class="chertochka"></li>
+                        <li>
+                            <span>Контакты</span>
+                            <ul>
+                                <li><a href="/contacts.html">Контакты</a></li>
+                                <li><a href="/feedback">Поддержка</a></li>
+                            </ul>
 
-                                </li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container bottom feedback-page">
-        <h2>Поддержка</h2>
-        <p>Дорогие друзья! Здесь, Вы можете оставить свои идейные мысли и предложения. Нам очень<br> важны ваши мнения, комментарии, пожелания, и заметки об ошибках.</p>
-        <p>Если форма обратной связи вдруг не работает — позвоните нам: <b>+7 499 704-61-14</b></p>
-        <div class="feedback_form">
-        <form>
-            <div class="form_row"> 
-                <input style="width:300px" type="text" placeholder="Имя" name="user" class="login" id='form_name'>
+                        </li>
+                        <li class="chertochka"></li>
+                    </ul>
+                </nav>
+                <div class="social-links">
+                    <ul class="minisocials">
+                        <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                        <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                        <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+                    </ul>
+                </div>
+                <div class="signin-login-button">
+                    <a href="/account" class="loginbtn-minisocials">Войти</a> /
+                    <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
+                </div>
             </div>
-            <div class="form_row"> 
-                <input style="width:300px" type="email" placeholder="Ваша электронная почта" name="email" class="login" id='form_email'>
-            </div>
-            <div class="form_row"> 
-                <textarea name="message" placeholder="Текст сообщения" id='form_message'></textarea>
-            </div>
-            <div class="form_row" style="padding-top:40px"> 
-                <input type="button" id='submit_buttom' value="Отправить">
-            </div>
-        </form>
+            <!-- /ko -->
         </div>
-        <?php ?>
+    </header>
+    <div class="wrap">
+        <div class="container bottom feedback-page">
+            <h2>Поддержка</h2>
+            <p>Дорогие друзья! Здесь, Вы можете оставить свои идейные мысли и предложения. Нам очень<br> важны ваши мнения, комментарии, пожелания, и заметки об ошибках.</p>
+            <p>Если форма обратной связи вдруг не работает — позвоните нам: <b>+7 499 704-61-14</b></p>
+            <div class="feedback_form">
+            <form>
+                <div class="form_row">
+                    <input style="width:300px" type="text" placeholder="Имя" name="user" class="login" id='form_name'>
+                </div>
+                <div class="form_row">
+                    <input style="width:300px" type="email" placeholder="Ваша электронная почта" name="email" class="login" id='form_email'>
+                </div>
+                <div class="form_row">
+                    <textarea name="message" placeholder="Текст сообщения" id='form_message'></textarea>
+                </div>
+                <div class="form_row" style="padding-top:40px">
+                    <input type="button" id='submit_buttom' value="Отправить">
+                </div>
+            </form>
+            </div>
+            <?php ?>
+        </div>
     </div>
-    <div class="empty"></div>
-    <footer>
+    <footer class="footer">
         <div class="in">
-            <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
+            <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
             <ul class="navi">
-                <li><a href="tour.html">Экскурсия</a></li>
+                <li><a href="/tour.html">Экскурсия</a></li>
                 <li><a href="http://media.vsemoe.ru">Новости</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-                <li><a href="rules.html">Правила</a></li>
+                <li><a href="/payment">Тарифы</a></li>
+                <li><a href="/contacts.html">Контакты</a></li>
+                <li><a href="/rules.html">Правила</a></li>
             </ul>
             <ul class="socials">
                 <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>

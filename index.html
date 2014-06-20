@@ -1,83 +1,88 @@
 <!DOCTYPE HTML>
 <html lang="ru-RU">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1100">
     <link href="css/fonts.css" rel="stylesheet" type="text/css">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
-    <link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/jquery.classybox.css" />
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.easing-1.3.pack.js"></script>
-	<script type="text/javascript" src="js/jquery.mousewheel-3.0.4.pack.js"></script>
-	<script type="text/javascript" src="js/jquery.fancybox-1.3.4.js"></script>
-    <script src="js/interface.js"></script>
-    <script src="js/jquery.classybox.js"></script>
-    <script src="js/jwplayer.js"></script>
-    <script src="js/jwplayer.html5.js"></script>
-	<script type="text/javascript">
-	        var _gaq = _gaq || [];
-	        _gaq.push(['_setAccount', 'UA-38982546-1']);
-	        _gaq.push(['_setDomainName', 'vsemoe.ru']);
-	        _gaq.push(['_trackPageview']);
-	        (function () {
-	            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	        })();
+    <link href="fancybox/2.0/jquery.fancybox.css" rel="stylesheet" type="text/css">
+    <link href="css/newmain.css" rel="stylesheet" type="text/css" media="screen">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="fancybox/2.0/jquery.fancybox.js"></script>
+    <script type="text/javascript" src="fancybox/2.0/jquery.fancybox-media.js"></script>
+    <script type="text/javascript" src="js/newmain.js"></script>
+    <script src="/js/utils/ServerApi.js"></script>
+    <script src="/js/testimonials.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38982546-1']);
+        _gaq.push(['_setDomainName', 'vsemoe.ru']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
     </script>
-    <meta charset="UTF-8">
-	<meta name="viewport" content="width=1100">
-	<title>Всё Моё &mdash; Сервис управления личными финансами, новости о личных деньгах</title>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function () {
+                try {
+                    w.yaCounter22607524 = new Ya.Metrika({id: 22607524,
+                        webvisor: true,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true});
+                } catch (e) {
+                }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () {
+                        n.parentNode.insertBefore(s, n);
+                    };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt=""/></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <title>Всё Моё &mdash; Сервис управления личными финансами, новости о личных деньгах</title>
     <meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами, новости о личных деньгах">
-    <meta name="description" content="Всё Моё &mdash; Сервис управления личными финансами и семейным бюджетом, последние новости о личных деньгах ">
-    <meta name="keywords" content="iphone, расходы, семейный бюджет, домашние деньги, управление деньгами, доходы, учет, программы, Все Мое, VseMoe">
+    <meta name="description"
+          content="Всё Моё &mdash; Сервис управления личными финансами и семейным бюджетом, последние новости о личных деньгах ">
+    <meta name="keywords"
+          content="iphone, расходы, семейный бюджет, домашние деньги, управление деньгами, доходы, учет, программы, Все Мое, VseMoe">
     <link rel="shortcut icon" href="favicon.ico">
 </head>
-<body class="inner">
 
-    <div class="top"></div>
-	<div class="wrap">
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-(function (d, w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter22607524 = new Ya.Metrika({id:22607524,
-                    webvisor:true,
-                    clickmap:true,
-                    trackLinks:true,
-                    accurateTrackBounce:true});
-        } catch(e) { }
-    });
-
-    var n = d.getElementsByTagName("script")[0],
-        s = d.createElement("script"),
-        f = function () { n.parentNode.insertBefore(s, n); };
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-    if (w.opera == "[object Opera]") {
-        d.addEventListener("DOMContentLoaded", f, false);
-    } else { f(); }
-})(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-		<header>
-			<div class="logo-slogan fl">
-				<a href="index.html" title="Всё Мое"></a>
-			</div>
-            <a class="loginbtn-minisocials" href="/account"></a>
-			<ul class="minisocials">
-			        <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
-                    <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
-				    <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-			    </ul>
-            <nav>
-				<ul class="fr">
+<body>
+<header class="not-authorized">
+    <div class="wrap">
+        <div class="logo-slogan">
+            <a href="index.html" title="Всё Мое">&nbsp;</a>
+        </div>
+        <div class="menu-login-register">
+            <nav class="navigation">
+                <ul class="fr">
                     <li><a href="tour.html">Экскурсия</a></li>
                     <li class="chertochka"></li>
-					<li><a href="http://media.vsemoe.ru">Новости</a></li>
+                    <li><a href="http://media.vsemoe.ru">Новости</a></li>
                     <li class="chertochka"></li>
                     <li><a href="/payment">Тарифы</a></li>
                     <li class="chertochka"></li>
@@ -89,202 +94,249 @@
                         </ul>
 
                     </li>
-				</ul>
-			</nav>
-            <div class="slider-icon">
-                <a href="https://itunes.apple.com/ru/app/vse-moe/id633467924" style="display: block;height: 100%" title="Доступно в App Store"></a>
+                    <li class="chertochka"></li>
+                </ul>
+            </nav>
+            <div class="social-links">
+                <ul class="minisocials">
+                    <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                    <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                    <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+                </ul>
             </div>
-            <div class="navi">
-				<ul>
-					<li data-num="1" data-link="slide-1" data-prev="slide-2" class="selected"></li>
-					<li data-num="2" data-link="slide-2" data-prev="slide-1"></li>
-                    <li data-num="3" data-link="slide-3" data-prev="slide-3" data-post="slide-1"></li>
-				</ul>
-			</div>
-            <div class="desc">
-				<h2>Мы не спрашиваем себя <br>&laquo;где мои деньги?&raquo;</h2>
-				<p>
-                    Закончились деньги? А до зарплаты далеко? Или может надоело занимать у друзей до получки? Наверняка, мечтаете о большой сумме денег? А может не хватает на норковую шубу?</p>
-				<p>Хватит мечтать! Деньги любят счет. Их можно увеличить. Станьте богаче, начните пользоваться сервисом прямо сейчас.</p>
-				<p>«Всё Моё» &mdash;  это система из мобильного и веб приложения. Хорошая возможность узнать, где и сколько у Вас денег.</p>
-				<a href="https://itunes.apple.com/ru/app/vse-moe/id633467924" class="app-store" title="Доступно в App Store"></a>
-                <i>или</i>
-              <a href="tour.html" class="tour">Экскурсия<div class="orangearrow"></div></a>
-			</div>
-		</header>
-        <section class="slider">
-            <div class="title">
-                <h1>Легко понять, что происходит с твоими деньгами!</h1>
+            <div class="signin-login-button">
+                <a href="/account" class="loginbtn-minisocials">Войти</a> /
+                <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
             </div>
-            <div class="elements">
-				<div data-num="1" class="phone slide-1"></div>
-				<div data-num="2" class="phone slide-2 hidden_slide"></div>
-				<div data-num="3" class="phone slide-3 hidden_slide"></div>
-                <div data-num="4" class="phone slide-4 hidden_slide"></div>
-			</div>
-        </section>
-		<section class="info">
-			<ul>
-				<li>
-					<h3>Безопасно<br />и надежно</h3>
-					<p>
-                        Надёжно и конфиденциально<br />
-                        храняться транзакции.<br />
-                        Мы никому не передаём<br />
-                        Ваши денежные данные.</p>
-					<a href="rules.html" class="more">подробнее</a>
-				</li>
-				<li>
-					<h3>Все в одном<br />приложении</h3>
-					<p>
-                        В любом месте и в любое время<br />
-                        легко ввести платеж, и увидеть<br />
-                        Ваши денежные средства. 6<br />
-                        нужных величин всегда под рукой.</p>
-					<a href="tour.html" class="more">подробнее</a>
-				</li>
-				<li>
-					<h3>Сохраняет<br />и организует</h3>
-					<p>
-                        Мы надеемся, что Вы быстро<br />
-                        организуете Ваши платежи<br />
-                        и покупки, доходы и сбережения.<br /><br /></p>
-					<a href="tour.html#last" class="more">подробнее</a>
-				</li>
-			</ul>
-			<div class="clear"></div>
-		</section>
-        <section class="action">
-            <div class="description">
-                <h1>Если Вы собрались понять свои денежные средства.</h1>
-                <i>Ваши действия</i>
-            </div>
-			<ul>
-				<li class="text">
-                    <a id="i1" href="i/img_61.png">
-                        <img alt="i1" src="i/img_51.png" />
-                    </a>
-				</li>
-                <li class="symbol"><h3></h3></li>
-                <li class="symbol"><h3>1</h3></li>
-				<li class="text">
-					<h3>Вносим</h3>
-					<p>
-                    Вам потребуется фиксировать транзации, хотя бы большую их часть, в любом месте. Это можно сделать через фавориты в два действия: сумма и кнопка или через развернутую форму.
-					</p>
-				</li>
-			</ul>
-            <ul>
-                <li class="symbol"><h3>2</h3></li>
-				<li class="text">
-					<h3>Понимаем</h3>
-					<p>
-                        Вносим доходы и расходы<br />
-                        в течении месяца. Увеличиваем<br />
-                        свои деньги, капитал и доходы.<br />
-                        Контролируем расходы,<br />
-                        уменьшаем долги.
-					</p>
-				</li>
-                <li class="symbol"><h3></h3></li>
-                <li class="text">
-                    <a id="i2" href="i/img_62.png">
-                        <img alt="i1" src="i/img_52.png" />
-                    </a>
-                </li>
-			</ul>
-            <ul>
-				<li class="text">
-                    <a id="i3" href="i/img_63.png">
-                        <img alt="i1" src="i/img_53.png" />
-                    </a>
-				</li>
-                <li class="symbol"><h3></h3></li>
-                <li class="symbol"><h3>3</h3></li>
-				<li class="text">
-					<h3>Анализируем</h3>
-					<p>
-                        Если мы хотим контролировать<br />
-                      расходы, нам нужно понять наши траты, сделать их более умными. Нам нужно учесть свои доходы и капитал. Найти возможности их увеличить.</p>
-				</li>
-			</ul>
-            <ul>
-                <li class="symbol"><h3>4</h3></li>
-                <li class="text">
-					<h3>Мечтаем и<br />воплощаем</h3>
-					<p>
-                        Подумаем о наших мечтах<br />
-                        и желаниях, у нас есть капитал, мы можем позволить себе многое!
-					</p>
-				</li>
-                <li class="symbol"><h3></h3></li>
-                <li class="text">
-                    <a id="i4" href="i/img_64.png">
-                        <img alt="i1" src="i/img_54.png" />
-                    </a>
-                </li>
-			</ul>
-			<div class="clear"></div>
-		</section>
-        <section class="videobox">
-            <div class="description">
-                <h1>Презентация</h1>
-                <p>Чтобы все закрепить и понять, лучше посмотреть все в действии</p>
-            </div>
-			<iframe width="648" height="456" src="https://www.youtube.com/embed/iI33CxZU2FE" frameborder="0" allowfullscreen></iframe>
-        </section>
-        <section class="videobox">
-            <div class="description">
-                <i>И еще немного видео.</i>
-            </div>
-            <div class="video"> 
-                <span class="smallvideo">
-                    <a href="http://www.youtube.com/watch?v=VZ0FPiXyiDc&feature=youtu.be" title="Ты - обычный человек">
-                        <img src="images/slide1.png" alt="" />
-                    </a>
-                    <div class="slideText">Ты — обычный человек</div>
-                </span>
-                <span class="smallvideo">
-                    <a href="http://www.youtube.com/watch?v=4A-xSkUf6Ho&feature=youtu.be" title="Цель">
-                        <img src="images/slide2.png" alt="" />
-                    </a>
-                    <div class="slideText">Цель</div>
-                </span>
-                <span class="smallvideo">
-                    <a href="http://www.youtube.com/watch?v=LZXCYOJWfgI&feature=youtu.be" title="Это может быть не сном">
-                         <img src="images/slide3.png" alt="" />
-                    </a>
-                    <div class="slideText">Это может быть не сном</div>
-                </span>
-            </div>
+        </div>
+    </div>
+</header>
+<div class="slider-presentation slide-1" data-slides="2">
+    <div class="slide slide-1 background-one"></div>
+    <div class="slide slide-2 background-two"></div>
 
-		</section>
-		<div class="empty"></div>
-	</div>
-	<footer>
-		<div class="in">
-            <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
-			<ul class="navi">
-				<li><a href="tour.html">Экскурсия</a></li>
-				<li><a href="http://media.vsemoe.ru">Новости</a></li>
-				<li><a href="contacts.html">Контакты</a></li>
-				<li><a href="rules.html">Правила</a></li>
-			</ul>
-            <ul class="socials">
-				<li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
-				<li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
-				<li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-			</ul>
-            <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
-		</div>
-	</footer>
+    <div class="wrap">
+        <div class="slide slide-1 image-one" ></div>
+        <div class="slide slide-2 image-two"></div>
+        <div class="slide slide-2 bottle">
+            <a href="https://itunes.apple.com/ru/app/vse-moe/id633467924"
+               title="Доступно в App Store"></a>
+        </div>
+        <div class="app">
+            <a href="https://itunes.apple.com/ru/app/vse-moe/id633467924"
+               title="Доступно в App Store">Доступно <br>в App Store</a>
+        </div>
+        <div class="cloud">
+            <h1>Помогаем организовать<br> денежные средства</h1>
+
+            <p>
+                Закончились деньги? Надоело занимать у друзей? Наверняка,
+                мечтаете о большой сумме денег? Не хватает на норковую шубу?
+                Хватит мечтать! Деньги любят счет. Их возможно увеличить. Станьте богаче, начните пользоваться сервисом
+                прямо сейчас.
+            </p>
+
+            <p>«Всё Моё» &mdash; это система из мобильного и веб приложения. Возможность узнать, где и сколько у
+                Вас денег.</p>
+            <div class='buttons'>
+                <a class="button orange_button" href="/account/#register">Начать</a>
+                <i>или</i>
+                <a href="tour.html">Экскурсия</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrap iphone-or-web">
+    <span>iPhone</span>
+    <span>Web</span>
+</div>
+<div class="main-info">
+    <div class="wrap">
+        <ul>
+            <li style="width:345px;">
+                <h3>Денежные цифры<br/>
+                  в одном месте</h3>
+                <p>
+                  В любом месте и время, возможно ввести транзакции, и увидеть Ваши денежные средства. Все важные цифры всегда под рукой.</p>
+                <a href="tour.html" class="more">подробнее</a>
+            </li>
+            <li style="width:377px;">
+                <h3>Создайте<br/>прогресс</h3>
+                <p>
+                  Вы легко организуете Ваши данные и создадите положительные изменения  денежных средств.</p>
+                <a href="tour.html#intro_iphone" class="more">подробнее</a>
+            </li>
+            <li style="width:260px;">
+                <h3>Безопасно<br/>и надежно</h3>
+                <p>
+                  Безопасно и конфиденциально хранятся Ваши транзакции. Мы не передаём денежные данные без Вашего согласия.</p>
+                <a href="rules.html" class="more">подробнее</a>
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="presentation-section four-steps-action">
+    <div class="wrap">
+        <div class="description">
+            <h1>Если Вы собрались понять свои денежные средства.</h1>
+            <h2>Ваши действия</h2>
+        </div>
+        <div class="steps-container">
+            <div class="step step-one">
+                <div class="step-description">
+                    <h3>
+                        <span class="step-index">1</span>
+                        Вносим</h3>
+                    <p> Возможно фиксировать доходы и расходы, хотя бы большую их часть,
+                        в любом месте в течении времени.</p>
+                </div>
+                <div class="step-pic">
+                    <img src="img/may/main_s_1.png"/>
+                    <a href="img/may/main_big_1.png"></a>
+                </div>
+            </div>
+            <div class="step step-two">
+                <div class="step-description">
+                    <h3>
+                        <span class="step-index">2</span>
+                        Понимаем</h3>
+                    <p> Стоит понять свои траты, сделать их более разумными. Находим основные и косвенные доходы.<br>
+                        Активы которыми владеем. </p>
+                </div>
+                <div class="step-pic">
+                    <img src="img/may/main_s_2.png"/>
+                    <a href="img/may/main_big_2.png"></a>
+                </div>
+            </div>
+            <div class="step step-three">
+                <div class="step-description">
+                    <h3>
+                        <span class="step-index">3</span>
+                        Анализируем</h3>
+                    <p> Контролируем расходы,
+                        уменьшаем долги. Собираем доходы, создаем сбережения
+                        и свой капитал. Находим хорошие возможности их увеличить.</p>
+                </div>
+                <div class="step-pic">
+                    <img src="img/may/main_s_3.png"/>
+                    <a href="img/may/main_big_3.png"></a>
+                </div>
+            </div>
+            <div class="step step-four">
+                <div class="step-description">
+                    <h3>
+                        <span class="step-index">4</span>
+                        Мечтаем и<br/>воплощаем</h3>
+                    <p> Теперь можно подумать о наших желаниях, у нас есть капитал,
+                        мы можем позволить себе многое!</p>
+                </div>
+                <div class="step-pic">
+                    <img src="img/may/main_s_4.png"/>
+                    <a href="img/may/main_big_4.png"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="presentation-section progress-diagram">
+    <div class="wrap">
+        <div class="description">
+            <h1>Создайте прогресс своих денежных средств!</h1>
+            <h2>Как это сделать:</h2>
+        </div>
+        <img class="diagram-img" src="img/may/graphics.png">
+    </div>
+</div>
+<div class="presentation-section testimonials">
+    <div class="wrap">
+        <div class="testimonials_header">
+            <h1>Клиенты о нас ...</h1>
+            <div class="testimonials_navigation">
+                <div class="nav_prev"></div>
+                <div class="nav_next"></div>
+            </div>
+        </div>
+        <div class="testimonials_holder">
+            <div class="testimonials_body">
+                <div class="testimonials_user">от Superbabochka</div>
+                <div class="testimonials_user_message">
+                    <p>Спасибо! Двигайтесь в том же направлении!</p>
+                </div>
+            </div>
+            <div class="testimonials_body">
+                <div class="testimonials_user">от Jou_Jizzy</div>
+                <div class="testimonials_user_message">
+                    <p>Все отлично и хорошо! Прям хватает по полной:) Единственное что хотелось
+                        бы - вместо стартового экрана с почтой и паролем, вводить цифровой пароль
+                        из 4 цифр, как на защите разблокировки.</p>
+                </div>
+            </div>
+            <div class="testimonials_body">
+                <div class="testimonials_user">от IVAN312330</div>
+                <div class="testimonials_user_message">
+                    <p>К плюсам отнесу простоту, минималистичный дизайн. То что надо простому
+                        человеку. Нет кучи дурацких настоек. Но конечно, чувствуется некоторая
+                        недоработанность, не очень удобная навигация. Не хватает раздела “Помощь”.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="presentation-section videobox">
+    <div class="wrap">
+        <div class="description">
+            <h2>И еще немного видео.</h2>
+        </div>
+        <div class="video">
+                <div class="smallvideo">
+                    <a class="fancybox.iframe" rel="video" href="http://www.youtube.com/embed/VZ0FPiXyiDc?autoplay=1" title="Ты - обычный человек">
+                        <img src="images/slide1.png" alt=""/>
+                    </a>
+                    <h3 class="slideText">Ты — обычный человек</h3>
+                </div>
+                <div class="smallvideo">
+                    <a class="fancybox.iframe" rel="video" href="http://www.youtube.com/embed/4A-xSkUf6Ho?autoplay=1" title="Цель">
+                        <img src="images/slide2.png" alt=""/>
+                    </a>
+                    <h3 class="slideText">Цель</h3>
+                </div>
+                <div class="smallvideo">
+                    <a class="fancybox.iframe" rel="video" href="http://www.youtube.com/embed/LZXCYOJWfgI?autoplay=1"
+                       title="Это может быть не сном">
+                        <img src="images/slide3.png" alt=""/>
+                    </a>
+                    <h3 class="slideText">Это может быть не сном</h3>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="presentation-section login-section">
+    <div class="wrap">
+        <div class="signin-login-button">
+            <a href="/account" class="loginbtn-minisocials">Войти</a> /
+            <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="in">
+        <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
+        <ul class="navi">
+            <li><a href="/tour.html">Экскурсия</a></li>
+            <li><a href="http://media.vsemoe.ru">Новости</a></li>
+            <li><a href="/payment">Тарифы</a></li>
+            <li><a href="/contacts.html">Контакты</a></li>
+            <li><a href="/rules.html">Правила</a></li>
+        </ul>
+        <ul class="socials">
+            <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+            <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+            <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+        </ul>
+        <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
+    </div>
+</footer>
 </body>
 </html>
-<script>
-     $(document).ready(function () {        
-         $(".video a").ClassyBox({
-             width: 900,
-             title: 0
-         });       
-     });
-</script>

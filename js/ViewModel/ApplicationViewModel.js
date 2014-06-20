@@ -103,8 +103,8 @@ var ApplicationViewModel = function () {
                 }
             }
         };
-
-    this.todayShorUpper = (new Date()).getDate() + ' ' + calendarMonthNamesLoc[date.getMonth()].substr(0, 3).toUpperCase();
+    var today = new Date();
+    this.todayShorUpper = today.getDate() + ' ' + calendarMonthNamesLoc[today.getMonth()].substr(0, 3).toUpperCase();
     this.header = ko.observable('');
 //Filters
     this.tableFilters = ko.observableArray(function (arr) {

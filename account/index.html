@@ -19,6 +19,7 @@
 
     <link href="../css/fonts.css" rel="stylesheet" type="text/css">
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link href="../css/newmain.css" rel="stylesheet" type="text/css">
     <link href="../css/login.css" rel="stylesheet" type="text/css">
     <link href="../css/personal.css" rel="stylesheet" type="text/css">
     <link href="../css/account.css" rel="stylesheet" type="text/css">
@@ -28,9 +29,8 @@
 
     <script src="../js/lib/modernizr-2.6.2.min.js"></script>
 </head>
-<body class="inner">
-<div class="top"></div>
-<div class="wrap">
+<body class="inner app">
+<div class="wrap ">
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function (d, w, c) {
@@ -66,7 +66,7 @@
     </noscript>
     <!-- /Yandex.Metrika counter -->
     <header>
-        <div class="logo fl">
+        <div class="logo">
             <h1><a href="/" title="Всё Мое"></a></h1>
         </div>
     </header>
@@ -87,21 +87,21 @@
     </div>
     <!-- /ko -->
 </div>
-<footer>
+<footer class="footer">
     <div class="in">
-        <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
-        <!--<ul class="navi">
-            <li><a href="tour.html">Продукты</a></li>
-            <li><a href="http://media.vsemoe.org">Блог</a></li>
-            <li><a href="contacts.html">Контакты</a></li>
-            <li><a href="rules.html">Правила</a></li>
-            <li><a href="price.html">Реклама</a></li>
+        <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
+        <ul class="navi">
+            <li><a href="/tour.html">Экскурсия</a></li>
+            <li><a href="http://media.vsemoe.ru">Новости</a></li>
+            <li><a href="/payment">Тарифы</a></li>
+            <li><a href="/contacts.html">Контакты</a></li>
+            <li><a href="/rules.html">Правила</a></li>
         </ul>
         <ul class="socials">
             <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
             <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
             <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-        </ul>-->
+        </ul>
         <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
     </div>
 </footer>
@@ -179,12 +179,13 @@
 <script type="text/html" id="login-page-tpl">
     <!------------loginDiv------------>
     <div id="loginDiv" class="content">
-        <nav class="login-nav">
-            <ul class="fr">
-                <li></li>
-                <li><a href="/feedback">Поддержка</a></li>
-            </ul>
-        </nav>
+        <div class="menu-login-authorized">
+            <nav class="user-pages-nav">
+                <ul class="fr">
+                    <li><a href="/feedback">Поддержка</a></li>
+                </ul>
+            </nav>
+        </div>
         <div class="hole"></div>
         <div class="cup"></div>
         <div class="form" id="formtab">
@@ -1103,33 +1104,18 @@
 <script type="text/html" id="account-page-tpl">
     <!--------accountDiv-------->
     <div id="accountDiv" class="content">
-        <nav class="login-nav">
-            <ul class="fr">
-                <li>
-                    <a href="/feedback">Поддержка</a>
-                </li>
-                <li>
-                    <div class="chertochka"></div>
-                </li>
-                <li>
-                    <a href="/payment">Тарифы</a>
-                </li>
-                <li>
-                    <div class="chertochka"></div>
-                </li>
-                <li>
-                    <a class="emailAccount" href="" data-bind="text:user.login">testing@mail.ru</a>
-                </li>
-                <li>
-                    <div class="chertochka"></div>
-                </li>
-                <li>
-                    <a id="existAccount" href="/" data-bind="click:$root.userLogOut">
-                        <div class="logout"></div>
-                        Выход</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="menu-login-authorized">
+            <span class="user-email" data-bind="text: user.login"></span>
+            <nav class="user-pages-nav">
+                <ul class="fr">
+                    <li><a href="/feedback">Поддержка</a></li>
+                    <li><a href="/payment">Тарифы</a></li>
+                    <li class="active"><a href="/account">Приложение</a></li>
+                    <li><a href="#" class="logout-link" data-bind="click:user.logout">Выйти</a></li>
+                </ul>
+            </nav>
+        </div>
+
         <div class="topMenu">
             <div class="topMenuBox shortMenuItem lastItem" style="font-size: 22px;"
                  data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+

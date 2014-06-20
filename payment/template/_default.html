@@ -4,9 +4,19 @@
     <link href="/css/fonts.css" rel="stylesheet" type="text/css">
     <link href="/css/login.css" rel="stylesheet" type="text/css" media="screen">
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/newmain.css" rel="stylesheet" type="text/css" media="screen">
     <link href="/css/jquery.gritter.css" rel="stylesheet" type="text/css">
     <script src="/js/lib/jquery-1.8.2.min.js?v9"></script>
     <script src="/js/lib/jquery.gritter.js?v9"></script>
+    <script src="/js/lib/moment.min.js?v9"></script>
+    <script src="/js/lib/sammy-latest.min.js?v9"></script>
+    <script src="/js/config/ApplicationSettings.js"></script>
+    <script src="/js/utils/util.js?v9"></script>
+    <script src="/js/lib/knockout-latest.js?v9"></script>
+    <script src="/js/ko.additional.js?v9"></script>
+    <script src="/js/utils/ServerApi.js?v9"></script>
+    <script src="/js/ViewModel/UserViewModel.js?v9"></script>
+    <script src="/js/header.js"></script>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-38982546-1']);
@@ -31,82 +41,109 @@
     <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body class="inner">
-<div class="top"></div>
-<div class="wrap">
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (d, w, c) {
-            (w[c] = w[c] || []).push(function() {
-                try {
-                    w.yaCounter22607524 = new Ya.Metrika({id:22607524,
-                        webvisor:true,
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true});
-                } catch(e) { }
-            });
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter22607524 = new Ya.Metrika({id:22607524,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+            } catch(e) { }
+        });
 
-            var n = d.getElementsByTagName("script")[0],
-                    s = d.createElement("script"),
-                    f = function () { n.parentNode.insertBefore(s, n); };
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+        var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-            if (w.opera == "[object Opera]") {
-                d.addEventListener("DOMContentLoaded", f, false);
-            } else { f(); }
-        })(document, window, "yandex_metrika_callbacks");
-    </script>
-    <noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    <header>
-        <div class="logo fl">
-            <a href="/" title="Всё Мое"></a>
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<header>
+    <div class="wrap">
+        <div class="logo-slogan">
+            <a href="index.html" title="Всё Мое">&nbsp;</a>
         </div>
-        <span class="loginbtn">
-                <a href="/account"></a>
-                <a href="/account/#register"></a>
-            </span>
-        <nav>
-            <ul class="fr">
-                <li><a href="/tour.html">Экскурсия</a></li>
-                <li class="chertochka"></li>
-                <li><a href="http://media.vsemoe.ru">Новости</a></li>
-                <li class="chertochka"></li>
-                <li><a href="/payment">Тарифы</a></li>
-                <li class="chertochka"></li>
-                <li>
-                    <span>Контакты</span>
-                    <ul>
-                        <li><a href="/contacts.html">Контакты</a></li>
-                        <li><a href="/feedback">Поддержка</a></li>
-                    </ul>
+        <!-- ko if: login -->
+        <div class="menu-login-authorized">
+            <span class="user-email" data-bind="text: login"></span>
+            <nav class="user-pages-nav">
+                <ul class="fr">
+                    <li><a href="/feedback">Поддержка</a></li>
+                    <li class="active"><a href="/payment">Тарифы</a></li>
+                    <li><a href="/account">Приложение</a></li>
+                    <li><a href="#" class="logout-link" data-bind="click:logout">Выйти</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- /ko -->
+        <!-- ko ifnot: login -->
+        <div class="menu-login-register">
+            <nav class="navigation">
+                <ul class="fr">
+                    <li><a href="tour.html">Экскурсия</a></li>
+                    <li class="chertochka"></li>
+                    <li><a href="http://media.vsemoe.ru">Новости</a></li>
+                    <li class="chertochka"></li>
+                    <li><a href="/payment">Тарифы</a></li>
+                    <li class="chertochka"></li>
+                    <li>
+                        <span>Контакты</span>
+                        <ul>
+                            <li><a href="/contacts.html">Контакты</a></li>
+                            <li><a href="/feedback">Поддержка</a></li>
+                        </ul>
 
-                </li>
-            </ul>
-        </nav>
-    </header>
+                    </li>
+                    <li class="chertochka"></li>
+                </ul>
+            </nav>
+            <div class="social-links">
+                <ul class="minisocials">
+                    <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                    <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                    <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+                </ul>
+            </div>
+            <div class="signin-login-button">
+                <a href="/account" class="loginbtn-minisocials">Войти</a> /
+                <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</header>
+<div class="wrap">
     <div class="container bottom payment-page">
         {!document_content}
     </div>
-    <div class="empty"></div>
-    <footer>
-        <div class="in">
-            <div class="bottomlogo"><a href="http://vsemoe.ru"></a></div>
-            <ul class="navi">
-                <li><a href="tour.html">Экскурсия</a></li>
-                <li><a href="http://media.vsemoe.ru">Новости</a></li>
-                <li><a href="contacts.html">Контакты</a></li>
-                <li><a href="rules.html">Правила</a></li>
-            </ul>
-            <ul class="socials">
-                <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
-                <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
-                <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-            </ul>
-            <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
-        </div>
-    </footer>
+</div>
+<footer class="footer">
+    <div class="in">
+        <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
+        <ul class="navi">
+            <li><a href="/tour.html">Экскурсия</a></li>
+            <li><a href="http://media.vsemoe.ru">Новости</a></li>
+            <li><a href="/payment">Тарифы</a></li>
+            <li><a href="/contacts.html">Контакты</a></li>
+            <li><a href="/rules.html">Правила</a></li>
+        </ul>
+        <ul class="socials">
+            <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+            <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+            <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+        </ul>
+        <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
+    </div>
+</footer>
 </body>
 </html>

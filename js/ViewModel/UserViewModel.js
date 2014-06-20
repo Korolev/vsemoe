@@ -85,18 +85,36 @@ var UserViewModel = function () {
 
     this.token = ko.observable();
 
-    this.getLoginFromServer = function () {
-        console.log('getLoginFromServer');
-        ServerApi.getUserByToken({}, function (r) {
-            try{
-                self.login(r[0].login);
-            }catch (e){
-                console.log(r);
-                console.log(e);
-            }
-
-        })
+    this.getLoginFromServer = function (callback) {
+        var token = getCookie(ApplicationSettings.cookieName);
+        if(!token) {
+            if(typeof callback == 'function') { callback(); }
+        } else {
+            ServerApi.getUserByToken({token: token}, function (r) {
+                try{
+                    self.login(r[0].login);
+                    if(typeof callback == 'function') { callback(); }
+                }catch (e){
+                    console.log(r);
+                    console.log(e);
+                    if(typeof callback == 'function') { callback(); }
+                }
+            });
+        }
     };
+
+    this.logout = function(callback) {
+        var token = getCookie(ApplicationSettings.cookieName);
+        ServerApi.logoutUser({token: token}, function(r) {
+            console.log(r);
+            self.login('');
+            self.removeToken()
+            if(typeof callback == 'function') { callback(); }
+            else {
+                window.location = '/';
+            }
+        })
+    }
 
     this.setToken = function(val){
         var currDate = new Date(),
