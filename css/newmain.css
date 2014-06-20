@@ -240,8 +240,8 @@ header .menu-login-register .navigation li ul {
   background-color: #ffffff;
   top: 25px;
   left: -3px;
-  -moz-box-shadow: 2px 5px 5px rgba(0,0,0,0.5);
-  box-shadow: 2px 5px 5px rgba(0,0,0,0.5);
+  -moz-box-shadow: 2px 5px 5px rgba(0,0,0,0.2);
+  box-shadow: 2px 5px 5px rgba(0,0,0,0.2);
   z-index: 2000;
   text-align: left;
 }

@@ -1225,6 +1225,7 @@ input.vse-cancel:active{
     font-style: normal;
 }
 
+.fake_tableBox .t_row.empty,
 .t_row{
     border: 1px solid transparent;
     height: 33px;

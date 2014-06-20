@@ -108,7 +108,7 @@ var UserViewModel = function () {
         ServerApi.logoutUser({token: token}, function(r) {
             console.log(r);
             self.login('');
-            self.removeToken()
+            self.removeToken();
             if(typeof callback == 'function') { callback(); }
             else {
                 window.location = '/';

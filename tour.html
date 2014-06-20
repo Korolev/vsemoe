@@ -1,10 +1,23 @@
 <!DOCTYPE HTML>
 <html lang="ru-RU">
 <head>
-	<link href="css/fonts.css" rel="stylesheet" type="text/css">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="screen">
-    <link href="css/newmain.css" rel="stylesheet" type="text/css" media="screen">
-    <script src="js/jquery-1.9.1.min.js"></script>
+    <link href="/css/fonts.css" rel="stylesheet" type="text/css">
+    <link href="/css/login.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/newmain.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/jquery.gritter.css" rel="stylesheet" type="text/css">
+    <script src="/js/lib/jquery-1.8.2.min.js?v9"></script>
+    <script src="/js/lib/jquery.gritter.js?v9"></script>
+    <script src="/js/lib/moment.min.js?v9"></script>
+    <script src="/js/lib/sammy-latest.min.js?v9"></script>
+    <script src="/js/config/ApplicationSettings.js"></script>
+    <script src="/js/utils/util.js?v9"></script>
+    <script src="/js/lib/knockout-latest.js?v9"></script>
+    <script src="/js/ko.additional.js?v9"></script>
+    <script src="/js/utils/ServerApi.js?v9"></script>
+    <script src="/js/ViewModel/UserViewModel.js?v9"></script>
+    <script src="/js/header.js"></script>
+
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-38982546-1']);
@@ -84,48 +97,63 @@
 </script>
 <noscript><div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-		<header class="not-authorized">
-            <div class="wrap">
-                <div class="logo-slogan">
-                    <a href="index.html" title="Всё Мое">&nbsp;</a>
-                </div>
-                <div class="menu-login-register">
-                    <nav class="navigation">
-                        <ul class="fr">
-                            <li><a href="tour.html">Экскурсия</a></li>
-                            <li class="chertochka"></li>
-                            <li><a href="http://media.vsemoe.ru">Новости</a></li>
-                            <li class="chertochka"></li>
-                            <li><a href="/payment">Тарифы</a></li>
-                            <li class="chertochka"></li>
-                            <li>
-                                <span>Контакты</span>
-                                <ul>
-                                    <li><a href="/contacts.html">Контакты</a></li>
-                                    <li><a href="/feedback">Поддержка</a></li>
-                                </ul>
+    <header>
+        <div class="wrap">
+            <div class="logo-slogan">
+                <a href="index.html" title="Всё Мое">&nbsp;</a>
+            </div>
+            <!-- ko if: login -->
+            <div class="menu-login-authorized">
+                <span class="user-email" data-bind="text: login"></span>
+                <nav class="user-pages-nav">
+                    <ul class="fr">
+                        <li><a href="/feedback">Поддержка</a></li>
+                        <li class="active"><a href="/payment">Тарифы</a></li>
+                        <li><a href="/account">Приложение</a></li>
+                        <li><a href="#" class="logout-link" data-bind="click:logout">Выйти</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- /ko -->
+            <!-- ko ifnot: login -->
+            <div class="menu-login-register">
+                <nav class="navigation">
+                    <ul class="fr">
+                        <li><a href="/tour.html">Экскурсия</a></li>
+                        <li class="chertochka"></li>
+                        <li><a href="http://media.vsemoe.ru">Новости</a></li>
+                        <li class="chertochka"></li>
+                        <li><a href="/payment">Тарифы</a></li>
+                        <li class="chertochka"></li>
+                        <li>
+                            <span>Контакты</span>
+                            <ul>
+                                <li><a href="/contacts.html">Контакты</a></li>
+                                <li><a href="/feedback">Поддержка</a></li>
+                            </ul>
 
-                            </li>
-                            <li class="chertochka"></li>
-                        </ul>
-                    </nav>
-                    <div class="social-links">
-                        <ul class="minisocials">
-                            <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
-                            <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
-                            <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
-                        </ul>
-                    </div>
-                    <div class="signin-login-button">
-                        <a href="/account" class="loginbtn-minisocials">Войти</a> /
-                        <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
-                    </div>
+                        </li>
+                        <li class="chertochka"></li>
+                    </ul>
+                </nav>
+                <div class="social-links">
+                    <ul class="minisocials">
+                        <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                        <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                        <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+                    </ul>
+                </div>
+                <div class="signin-login-button">
+                    <a href="/account" class="loginbtn-minisocials">Войти</a> /
+                    <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
                 </div>
             </div>
-        </header>
+            <!-- /ko -->
+        </div>
+    </header>
         <div class="wrap">
     		<div class="container">
-    			<span class="status-left">Все под контролем!</span>
+    			<span class="status-left" style="display: none">Все под контролем!</span>
     			<h1 class="ribbon">Экскурсия</h1>
                 <div class="page_switcher">
                     <span><a href="#intro_web" class="current">WEB</a></span>
