@@ -119,7 +119,7 @@
             <div class="menu-login-register">
                 <nav class="navigation">
                     <ul class="fr">
-                        <li><a href="tour.html">Экскурсия</a></li>
+                        <li><a href="/tour.html">Экскурсия</a></li>
                         <li class="chertochka"></li>
                         <li><a href="http://media.vsemoe.ru">Новости</a></li>
                         <li class="chertochka"></li>
