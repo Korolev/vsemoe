@@ -267,6 +267,7 @@ header .menu-login-register .navigation ul li ul li a {
   line-height: 34px;
   font-size: 11px;
   text-shadow: none;
+  display: block;
 }
 header .menu-login-register .navigation ul li ul li {
   display: block;

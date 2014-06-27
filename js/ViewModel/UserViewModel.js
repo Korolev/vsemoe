@@ -95,6 +95,9 @@ var UserViewModel = function () {
                     self.login(r[0].login);
                     if(typeof callback == 'function') { callback(); }
                 }catch (e){
+                    if(!r){
+                        self.removeToken();
+                    }
                     console.log(r);
                     console.log(e);
                     if(typeof callback == 'function') { callback(); }
