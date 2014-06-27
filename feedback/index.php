@@ -13,6 +13,11 @@
     <script src="/js/ko.additional.js?v9"></script>
     <script src="/js/utils/ServerApi.js?v9"></script>
     <script src="/js/ViewModel/UserViewModel.js?v9"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                window.__namespace = document.getElementsByTagName('body')[0];
+            });
+    </script>
     <script src="/js/header.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -161,8 +166,10 @@
                 <div class="form_row">
                     <input style="width:300px" type="text" placeholder="Имя" name="user" class="login" id='form_name'>
                 </div>
-                <div class="form_row">
-                    <input style="width:300px" type="email" placeholder="Ваша электронная почта" name="email" class="login" id='form_email'>
+                <div data-bind='css:{hidden:login()}'>
+                    <div class="form_row">
+                        <input style="width:300px" data-bind="text:login" type="email" placeholder="Ваша электронная почта" name="email" class="login" id='form_email'>
+                    </div>
                 </div>
                 <div class="form_row">
                     <textarea name="message" placeholder="Текст сообщения" id='form_message'></textarea>

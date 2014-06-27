@@ -1,8 +1,8 @@
 // Load current user info
 $(function(){
     var usr = new UserViewModel();
-
-    ko.applyBindings(usr, document.getElementsByTagName('header')[0]);
+    var namespace = window.__namespace !== undefined ? window.__namespace : document.getElementsByTagName('header')[0];
+    ko.applyBindings(usr, namespace);
 
     usr.getLoginFromServer(function() {
       $('header').css({ 'opacity': '1' });
