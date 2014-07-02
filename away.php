@@ -1,4 +1,4 @@
-å<?php
+<?php
 $url = $_GET['to'];
 $pwd = getcwd();
 $filename = $pwd.'/log/redirect.log';

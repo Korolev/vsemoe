@@ -1962,6 +1962,7 @@ span.attach:hover {
 .payment_description .testimonials {
   padding: 0;
   background: #fff;
+  overflow: hidden;
 }
 .payment_description .testimonials .testimonials_header .testimonials_navigation {
   bottom: 0;
