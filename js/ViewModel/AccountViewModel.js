@@ -23,14 +23,16 @@ var AccountViewModel = function (data, app) {
     this.parent = ko.observable(data.parent | 0 || "");
     this.newParent = ko.observable(data.parent || "");
     this.importance = ko.observable(data.importance | 0);
-    this.creditlimit = ko.observable(data.creditlimit || "");
     this.expand = ko.observable(data.expand | 0);
     this.show = ko.observable(!!(data.show | 0));
+
+    this.creditlimit = ko.observable(data.creditlimit || "");
 
     this.showFromIdSelect = ko.observable(false);
     this.createFormAcc = ko.observable();
 
-    this.comment = ko.observable(data.comment);
+//    this.comment = ko.observable(data.comment);
+    this.comment = ko.observable(app.accountIconsHash[data.category]);
     this.helpText = data.helpText || '';
 
     this.category = ko.observable(data.category);
@@ -41,6 +43,16 @@ var AccountViewModel = function (data, app) {
     this.editMode = ko.observable(!!data.editMode);
 
     this.sum = ko.observable(0);
+    this.availableSum = ko.computed({
+        read: function () {
+            return self.sum() + parseFloat(self.creditlimit());
+        },
+        write: function (val) {
+            console.log(parseFloat(val)-parseFloat(self.creditlimit()));
+            self.sum(parseFloat(val)-parseFloat(self.creditlimit()));
+        },
+        owner: this
+    }).extend({throttle: 1});
 
     this.children = ko.observableArray([]);
     this.transactions = [];
@@ -113,7 +125,6 @@ var AccountViewModel = function (data, app) {
                     lastFixDate = trDate;
                     res = parseFloat(tr.amount);
                 }
-                console.log(self.description(),lastFixDate,tr.id);
             }
         });
 
@@ -141,8 +152,13 @@ var AccountViewModel = function (data, app) {
             }
         });
         if ((self.creditlimit() | 0) > 0) {
-            res = parseFloat(self.creditlimit()) - res;
-            res = 0;//TODO
+//            res -= parseFloat(self.creditlimit());
+            if(res > 0){
+                self.group(1);
+            }else{
+                self.group(2);
+            }
+//            res = 0;//TODO
         }
         if (self.group() == 0 && self.type() == 'IN') {
             res *= -1;
@@ -250,6 +266,7 @@ var AccountViewModel = function (data, app) {
                 data: JSON.stringify({
                     description: self.description(),
                     currency_id: self.currency(),
+                    creditlimit: self.creditlimit(),
                     parent: self.parent(),
                     type: self.type(),
                     group: self.group(),
@@ -264,6 +281,7 @@ var AccountViewModel = function (data, app) {
             ServerApi.createAccount({
                 description: self.description(),
                 currency_id: self.currency(),
+                creditlimit: self.creditlimit(),
                 parent: self.parent(),
                 type: self.type(),
                 group: self.group(),

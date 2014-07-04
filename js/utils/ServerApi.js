@@ -44,7 +44,7 @@ var ServerApi = {
                             console.info(r,data);
                             if(!doNotShowError){
                                 $.gritter.add({
-                                    title : 'Ошибка ',
+                                    title : 'Предупреждение ',
                                     text : r.text,
                                     time: 4500
                                 });
