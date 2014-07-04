@@ -956,6 +956,10 @@ input.vse-cancel:active{
     border-radius: 0 3px 3px 0;
 }
 
+.fake_select{
+    overflow: hidden;
+}
+
 .fake_select:before,
 .td_fromaccount_input .fake_select:before,
 .fake_tree_select:before{

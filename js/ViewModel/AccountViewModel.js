@@ -45,11 +45,10 @@ var AccountViewModel = function (data, app) {
     this.sum = ko.observable(0);
     this.availableSum = ko.computed({
         read: function () {
-            return self.sum() + parseFloat(self.creditlimit());
+            return (parseFloat(self.creditlimit()) - self.sum()) || 0 ;
         },
         write: function (val) {
-            console.log(parseFloat(val)-parseFloat(self.creditlimit()));
-            self.sum(parseFloat(val)-parseFloat(self.creditlimit()));
+            self.sum(parseFloat(self.creditlimit()) - parseFloat(val));
         },
         owner: this
     }).extend({throttle: 1});
@@ -153,11 +152,15 @@ var AccountViewModel = function (data, app) {
         });
         if ((self.creditlimit() | 0) > 0) {
 //            res -= parseFloat(self.creditlimit());
-            if(res > 0){
-                self.group(1);
-            }else{
-                self.group(2);
-            }
+//            if(res < 0 && self.group() == 1){
+//                self.group(2);
+//                res *= -1;
+//            }
+//            if(res < 0 && self.group() == 2){
+//                self.group(1);
+//                res *= -1;
+//            }
+
 //            res = 0;//TODO
         }
         if (self.group() == 0 && self.type() == 'IN') {
@@ -294,7 +297,7 @@ var AccountViewModel = function (data, app) {
                     self.id = r.account_id;
                     app.accountsHash[self.id] = self;
                     if (!oldId)app.accounts.push(self);
-                    if (self.sum() > 0) {
+                    if (self.sum() != 0) {
                         var obj = {
                             from_id: r.account_id,
                             to_id: r.account_id,
