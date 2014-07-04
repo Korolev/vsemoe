@@ -578,7 +578,7 @@ var ApplicationViewModel = function () {
         each(self.accounts(), function (k, acc) {
             if (acc.group() == 2 && acc.parent() == 0) {
                 res.push(acc);
-                sum += acc.currency() != self.baseCurrencyId() ?
+                sum -= acc.currency() != self.baseCurrencyId() ?
                     self.calculateAmount(acc.currency(), self.baseCurrencyId(), acc.sum()) :
                     parseInt(acc.sum());
             }
