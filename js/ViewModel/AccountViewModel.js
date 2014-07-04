@@ -100,8 +100,23 @@ var AccountViewModel = function (data, app) {
             amount = 0,
             __now = new Date(),
             date,
+            lastFixDate,
             currentmonth = new Date(__now.getFullYear(), __now.getMonth());
-console.log(self.transactions);
+
+        each(self.transactions, function (k, tr) {
+            var trDate = tr.created.unix() * 1000;
+            if (tr.position) {
+                if (!lastFixDate) {
+                    lastFixDate = trDate;
+                    res = parseFloat(tr.amount);
+                } else if (trDate > lastFixDate) {
+                    lastFixDate = trDate;
+                    res = parseFloat(tr.amount);
+                }
+                console.log(self.description(),lastFixDate,tr.id);
+            }
+        });
+
         each(self.transactions, function (k, tr) {
             if (!tr.hasSplit()) {
                 amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
@@ -116,16 +131,12 @@ console.log(self.transactions);
                 date = tr.created.unix() * 1000;
 
                 //TODO use rates;
-                if(!tr.hidden){
+                if (!tr.hidden) {
                     if (self.group() == 0 && tr.deleted() == 0) {
                         if (date > currentmonth.getTime())res += amount;
-                    } else if (tr.deleted() == 0) {
+                    } else if (tr.deleted() == 0 && date > lastFixDate) {
                         res += amount;
                     }
-                }
-
-                if(tr.position){
-                    res = parseFloat(tr.amount);
                 }
             }
         });
@@ -195,16 +206,21 @@ console.log(self.transactions);
                 position: 1
             };
             app.createTransaction(obj, function (r) {
-            });
-            obj.amount = newSumm - self.sum();
-            obj.description = newSumm - self.sum();
-            obj.position = 0;
-            app.createTransaction(obj, function (r) {
                 if (r.transaction_id) {
                     obj.transaction_id = r.transaction_id;
                     app.transactions.push(new TransactionViewModel(obj, app));
                 }
-                self.recalculateSum(app);
+            });
+            var objClone = JSON.parse(JSON.stringify(obj));
+            objClone.amount = newSumm - self.sum();
+            objClone.description = newSumm - self.sum();
+            objClone.position = 0;
+            objClone.created = moment().unix();
+            app.createTransaction(obj, function (r) {
+                if (r.transaction_id) {
+                    objClone.transaction_id = r.transaction_id;
+                    app.transactions.push(new TransactionViewModel(objClone, app));
+                }
                 self.save();
             });
         } else {
