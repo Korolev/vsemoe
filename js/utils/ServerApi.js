@@ -95,10 +95,10 @@ var ServerApi = {
     checkToken: function (dataObj, callback) {
         this.utils().post("/token/check", dataObj, function(r){
             callback(!(r === false));
-        });
+        },true);
     },
     getUserByToken: function (dataObj, callback) {
-        this.utils().post("/token/getuser", dataObj, callback);
+        this.utils().post("/token/getuser", dataObj, callback,true);
     },
 //Currency
     createCurrency: function (token, shortname, callback) {

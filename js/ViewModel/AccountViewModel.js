@@ -101,7 +101,7 @@ var AccountViewModel = function (data, app) {
             __now = new Date(),
             date,
             currentmonth = new Date(__now.getFullYear(), __now.getMonth());
-
+console.log(self.transactions);
         each(self.transactions, function (k, tr) {
             if (!tr.hasSplit()) {
                 amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
@@ -116,10 +116,16 @@ var AccountViewModel = function (data, app) {
                 date = tr.created.unix() * 1000;
 
                 //TODO use rates;
-                if (self.group() == 0 && tr.deleted() == 0) {
-                    if (date > currentmonth.getTime())res += amount;
-                } else if (tr.deleted() == 0) {
-                    res += amount;
+                if(!tr.hidden){
+                    if (self.group() == 0 && tr.deleted() == 0) {
+                        if (date > currentmonth.getTime())res += amount;
+                    } else if (tr.deleted() == 0) {
+                        res += amount;
+                    }
+                }
+
+                if(tr.position){
+                    res = parseFloat(tr.amount);
                 }
             }
         });
