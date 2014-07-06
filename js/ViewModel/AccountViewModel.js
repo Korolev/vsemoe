@@ -145,6 +145,9 @@ var AccountViewModel = function (data, app) {
                     if (self.group() == 0 && tr.deleted() == 0) {
                         if (date > currentmonth.getTime())res += amount;
                     } else if (tr.deleted() == 0 && date > lastFixDate) {
+                        if (self.group() == 2){
+                            amount *= -1;
+                        }
                         res += amount;
                     }
                 }
