@@ -1,0 +1,12 @@
+# main section
+User-agent:*
+Disallow: /css/
+Disallow: /js/
+# End of main section
+
+User-agent: Yandex
+Allow: /
+Sitemap: http://vsemoe.ru/sitemap.xml
+
+# Images section
+# End of images section
