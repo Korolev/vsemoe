@@ -312,6 +312,10 @@ var AccountViewModel = function (data, app) {
                             hidden: 1,
                             position: 1
                         };
+                        if(self.createFormAcc()){
+                            obj.from_id = self.createFormAcc().id;
+                            obj.hidden = 0;
+                        }
                         app.createTransaction(obj, function (r) {
                             if (r.transaction_id) {
                                 obj.transaction_id = r.transaction_id;
