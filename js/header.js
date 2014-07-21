@@ -13,7 +13,7 @@ var _ues = {
     host: 'vsemoe.userecho.com',
     forum: '31891',
     lang: 'ru',
-    tab_corner_radius: 5,
+    tab_corner_radius: 2,
     tab_font_size: 20,
     tab_image_hash: '0L7RgdGC0LDQstC40YLRjCDQvtGC0LfRi9Cy',
     tab_chat_hash: '0YfQsNGC',
