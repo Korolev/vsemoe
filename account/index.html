@@ -634,6 +634,7 @@
                             <!-- ko ifnot: editInstance() -->
                             <!-- ko ifnot: deleted -->
                             <div class="t_row" data-bind="css:{empty:!created, tr_newday:newday == 1, tr_show_splits:_showSplits},
+                                    attr:{id:'tr__'+ $data.id},
                                     template{name: 'tr-row-tpl',data: $data}">
                             </div>
                             <!-- /ko -->
@@ -959,8 +960,7 @@
                 <input type="hidden" data-bind="select:{
                                         options:$root.getActiveAcc,
                                         optionText:'description',
-                                        optionValue: 'id',
-                                        value:createFormAcc
+                                        value:createFromAcc
                                         }">
             </div>
         </div>

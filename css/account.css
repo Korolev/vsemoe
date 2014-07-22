@@ -377,6 +377,9 @@ input.vse-cancel:active{
     float: right;
     height: 26px;
     min-width: 50px;
+    position: absolute;
+    right: 1px;
+    background-color: #ffffff;
 }
 .tableFilters .filterItem{
     margin-left:10px;

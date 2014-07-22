@@ -28,8 +28,8 @@ var TransactionViewModel = function (data, app) {
     if (app.accountsHash[self.from_id]
         && app.accountsHash[self.from_id]
         && self.from_id != self.to_id
-        && !app.accountsHash[self.to_id].createFormAcc()) {
-        app.accountsHash[self.to_id].createFormAcc(app.accountsHash[self.from_id]);
+        && !app.accountsHash[self.to_id].createFromAcc()) {
+        app.accountsHash[self.to_id].createFromAcc(app.accountsHash[self.from_id]);
     }
 
     if(self.from_id && self.to_id && (self.from_id != self.to_id)){

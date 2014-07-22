@@ -29,7 +29,7 @@ var AccountViewModel = function (data, app) {
     this.creditlimit = ko.observable(data.creditlimit || "");
 
     this.showFromIdSelect = ko.observable(false);
-    this.createFormAcc = ko.observable();
+    this.createFromAcc = ko.observable();
 
 //    this.comment = ko.observable(data.comment);
     this.comment = ko.observable(app.accountIconsHash[data.category]);
@@ -312,9 +312,12 @@ var AccountViewModel = function (data, app) {
                             hidden: 1,
                             position: 1
                         };
-                        if (self.createFormAcc()) {
-                            obj.from_id = self.createFormAcc().id;
+                        if (self.createFromAcc()) {
+                            obj.from_id = self.createFromAcc().id;
                             obj.hidden = 0;
+                            obj.position = 0;
+                            obj.amount = obj.amount*-1;
+                            obj.description = obj.amount;
                         }
                         app.createTransaction(obj, function (r) {
                             if (r.transaction_id) {
