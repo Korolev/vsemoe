@@ -281,6 +281,9 @@ footer .copy {
     color: #ccc;
     letter-spacing: 1px;
 }
+.inputText.moveBottom {
+    margin: 56px 30px 40px;
+}
 
 .contentTable {
     font-family: Verdana, Lucida Grande, Helvetica, Arial san-serif;

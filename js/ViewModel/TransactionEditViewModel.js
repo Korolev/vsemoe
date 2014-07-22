@@ -24,7 +24,8 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
         this.amount.subscribe(function (val) {
             self.checkSplitSumm();
             if (parseFloat(self.amount()) < 0 && val > 0) {
-                _self.amount(-1 * val);
+                var res = -1 * val;
+                _self.amount(isNaN(res) ? 0 : parseFloat(res));
             }
         });
     };
@@ -90,8 +91,11 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     });
 
     self.validateKeyDown = function (el,e) {
-        if(e.keyCode == 13 || (e.keyCode == 61 && !e.shiftKey)){
+        if(e.keyCode == 61 && !e.shiftKey){
             self.validateAmount(e.target.value);
+        }else if(e.keyCode == 13){
+            self.validateAmount(e.target.value);
+            self.save();
         }else{
             return true;
         }
@@ -107,9 +111,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
         }
         if(val.search(/\d*[-\/\+\*]+\d+/g) > -1){
             try{
-                console.log(val);
                 res = parseMathString(val);
-                console.log(res);
             } catch (e){
 
             }
@@ -119,13 +121,7 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
                 res = '';
             }
         }
-
-        if (self.action().action == 'substract' && val > 0) {
-            res = val * -1;
-        } else if (self.action().action != 'substract' && val < 0) {
-            res = val * -1;
-        }
-        self.amount(res);
+        self.amount(isNaN(res) ? 0 : res);
     };
 
     this.template = data.template | 0;
@@ -180,10 +176,10 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
             group_to: 0,
             type_to: 'OUT'
         }, add: {
-            group_from: [1, 2],
-            type_from: false,
-            group_to: 0,
-            type_to: 'IN'
+            group_from: 0,
+            type_from: 'IN',
+            group_to: [1, 2],
+            type_to: false
         },
         move: {
             group_from: [1, 2],
@@ -273,10 +269,6 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
 
         var send = function (amount) {
             var _new_from;
-            if (self.action().action == 'move' && amount > 0) {
-                amount = amount * -1;
-                console.log(amount);
-            }
             self.commentEdit(false);
             self.splitEdit(false);
             var obj = {

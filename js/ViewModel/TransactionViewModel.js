@@ -55,7 +55,7 @@ var TransactionViewModel = function (data, app) {
             }
 
             if (status == 2) {
-                if (to_type == 'IN') {
+                if (from_type == 'IN') {
                     self.action_index = 1;
                 } else if (from_group > 0 && to_group > 0) {
                     self.action_index = 2;
