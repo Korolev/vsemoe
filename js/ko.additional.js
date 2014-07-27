@@ -430,7 +430,7 @@ ko.bindingHandlers['tabs'] = {
                     $(el).addClass(i > 0 ? 'hidden' : '');
                 });
                 $(divId).removeClass('hidden');
-                if (options.callback[href]) {
+                if (options.callback && options.callback[href]) {
                     try {
                         options.callback[href].apply(bindingContext.$root);
                     } catch (e) {

@@ -17,14 +17,14 @@ var _ues = {
     tab_hover_color: '#76A2CA'
 };
 
-(function () {
-    var _ue = document.createElement('script');
-    _ue.type = 'text/javascript';
-    _ue.async = true;
-    _ue.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(_ue, s);
-})();
+//(function () {
+//    var _ue = document.createElement('script');
+//    _ue.type = 'text/javascript';
+//    _ue.async = true;
+//    _ue.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+//    var s = document.getElementsByTagName('script')[0];
+//    s.parentNode.insertBefore(_ue, s);
+//})();
 
 //TODO move all date manipulation to Moment.js
 var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
@@ -87,7 +87,7 @@ var ApplicationViewModel = function () {
             "changepass": "",
             "observe": "У вас есть...",
             "insert": "Ввод платежей...",
-            "settings": "Настройки...",
+            "settings": "Категории бюджета...",
             "accmanage": "Выберите тип средств..."
         },
         pageParams = {
@@ -152,7 +152,8 @@ var ApplicationViewModel = function () {
     this.minTransactionDate;
     this.timeFilterTo = ko.observable(new moment().endOf('day'));
     this.timeFilterFrom = ko.observable(new moment().startOf('day'));
-
+//Settings
+    this.settingsPageLayout = ko.observable('categories');
 //Modals
     this.modalWindow = ko.observable();
     this.modalCancelLabel = "Отмена";
@@ -639,7 +640,7 @@ var ApplicationViewModel = function () {
 
     this.userChangepass = function () {
         if (!self.user.passwordError() && self.user.repassword() && !self.user.tokenError()) {
-            ServerApi.restorepasswordUser({
+            ServerApi.changePasswordByToken({
                 password: self.user.repassword()
             }, function (res) {
                 if (res) {

@@ -82,6 +82,12 @@ var ServerApi = {
         //TODO: what about token ?
         this.utils().post("/user/logout", dataObj, callback);
     },
+    clearUser: function (dataObj, callback) {
+        this.utils().post("/user/clear", dataObj || {}, callback);
+    },
+    changePasswordByToken: function (dataObj, callback) {
+        this.utils().post("/user/changepasswordtoken", dataObj, callback);
+    },
     restorepasswordUser: function (dataObj, callback) {
         this.utils().post("/user/changepasswordtoken", dataObj, callback);
     },
@@ -181,6 +187,7 @@ var ServerApi = {
     },
     checkAutoLogin: function(token, callback){
         this.utils().post("/settings/list", {token: token, option: "user_login_auto"}, function(r){
+            console.log('!!!',r);
             callback(!!r.user_login_auto);
         });
     },
@@ -199,5 +206,14 @@ var ServerApi = {
     },
     getUserPayment: function (dataObj, callback) {
         this.utils().post("/user/payment", dataObj, callback, true);
+    },
+    getConfigList: function(dataObj, callback) {
+        this.utils().post("/config/list", dataObj, callback, true);
+    },
+    updateConfig: function(dataObj, callback) {
+        this.utils().post("/config/update", dataObj, callback, true);
+    },
+    setConfig: function(dataObj, callback) {
+        this.utils().post("/config/update", dataObj, callback, true);
     }
 };

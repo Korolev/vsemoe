@@ -578,11 +578,14 @@ input.vse-cancel:active{
     color: #fff !important;
 }
 
+.tdrightMenu.settings,
 .tdrightMenu.categories{
     background-color: #EAE9E5;
     background-color: #ebe8dc;
     padding: 0 0 0 0;
 }
+
+.tdrightMenu.settings .inputText,
 .tdrightMenu.categories .inputText{
     margin-left: 46px;
     color: #938e85;
@@ -1764,3 +1767,178 @@ input.vse-cancel:active{
 .out_total{
     color: #424C58;
 }
+
+/*SETTING CSS*/
+
+.import .vse-tabs-tabs i.icon,
+.import .vse-tabs-tabs i.icon{
+    background-image: url("/img/settings/imprexp.png");
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-position: 0px 0px;
+}
+.import i.icon.import_i{
+    background-position: 1px -1px;
+}
+.import i.icon.export_i{
+    background-position: 1px -37px;
+}
+
+.currency .vse-tabs-tabs i.icon{
+    background-image: url("/img/settings/currency.png");
+    background-size: 12px 14px;
+    background-position: 5px 0;
+}
+
+.currency .vse-tabs-tabs span:first-of-type,
+.personal .vse-tabs-tabs span:first-of-type ,
+.import .vse-tabs-tabs span:first-of-type {
+    padding: 0 2px 0 20px;
+}
+
+.personal .row i.icon,
+.personal .vse-tabs-tabs i.icon{
+    background-image: url("/img/settings/account.png");
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-position: 0px 0px;
+}
+.personal i.icon.main{
+    background-position: 2px -5px;
+}
+.personal i.icon.user-email{
+    background-position: 1px -47px;
+}
+.personal i.icon.user-pass{
+    background-position: 2px -92px;
+}
+.personal i.icon.pin{
+    background-position: 0px 0px;
+}
+.personal i.icon.edit{
+    background-position: 0 -3px;
+    background-image: none;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    left: -4px;
+    position: relative;
+    top: 9px;
+    width: 20px;
+}
+
+.personal .personal-info:hover i.icon.edit{
+    background-image: url("/img/edit_del_next.png");
+}
+
+.personal .flexlist{
+    overflow: hidden;
+}
+
+.personal-info h1{
+    height: 40px;
+    line-height: 45px;
+    padding-left: 40px;
+}
+.personal-info{
+    width: 60%;
+}
+
+.personal-info .row{
+    border: 1px solid #ccc;
+    border-right: none;
+    border-left: none;
+    width: 345px;
+    height: 38px;
+    line-height: 40px;
+}
+
+.personal-info .row >div{
+    float: left;
+    height: 38px;
+}
+
+.personal-info .row + .row{
+    border-top: none;
+}
+.personal-info .first{
+    width: 30px;
+    text-align: center;
+    vertical-align: top;
+}
+.personal .personal-info .row .first i{
+    display: block;
+    margin: 0 0 0 10px ;
+    padding: 0;
+}
+.personal-info .second{width: 70px; padding-left: 10px}
+.personal-info .third{width: 200px}
+.personal-info .controls{width: 30px}
+
+.personal-info .acc_edit_holder{
+    padding: 5px;
+}
+.personal-info .acc_edit_row input[type="button"] {
+    height: 36px;
+    line-height: 37px;
+    margin-left: 3px;
+}
+
+.personal-info .acc_edit_row label{
+    width: 50px;
+}
+.personal-info .acc_edit_row.form_row{
+    margin-top: 5px;
+}
+
+.currency_list{
+    border-top: 1px solid #bbb;
+    padding: 30px;
+}
+.currency_list .floatcont{
+    margin: 0 16px;
+    width: 316px;
+    float: left;
+}
+
+.currency_list .floatcont h2{
+    margin: 10px 0;
+}
+
+.currency_list .floatcont li{
+    display: block;
+    height: 38px;
+    border-bottom: 1px solid#ccc;
+    line-height: 40px;
+}
+.currency_list .floatcont li:first-child{
+    border-top: 1px solid#ccc;
+}
+
+.currency_list .floatcont ul{
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.currency_list .floatcont li span{
+    float: left;
+    width: 36px;
+    height: 38px;
+}
+.currency_list .floatcont li span.currency_name{
+    width: 220px;
+    padding-left: 10px;
+}
+.currency_list .floatcont li span.currency_abbr{
+    width: 50px;
+}
+.currency_list .floatcont li span.controls{
+    margin-right: -30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #CCCCCC;
+    cursor: pointer;
+}
+/*SETTING CSS*/

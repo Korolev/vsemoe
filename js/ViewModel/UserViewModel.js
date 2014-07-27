@@ -3,6 +3,17 @@
  */
 var UserViewModel = function () {
     var self = this,
+        each = function (arr, callback) {
+            var i = 0;
+            try {
+                while (i < arr.length) {
+                    callback(i, arr[i]);
+                    i++;
+                }
+            } catch (e) {
+                console && console.log(e);
+            }
+        },
         validateEmail = function (email) {
             var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             return re.test(email);
@@ -31,6 +42,56 @@ var UserViewModel = function () {
     this.password = ko.observable("");
     this.repassword = ko.observable("");
     this.remember = ko.observable(true);
+
+    this.userConfig = ko.observable();
+
+    this.usersCurrency = ko.observableArray([]);
+
+    self.usersCurrency.subscribe(function(val){
+        var res = [];
+        each(val,function(k,v){
+           res.push(v.currency_id);
+        });
+        ServerApi.updateConfig({
+            data: JSON.stringify({config_id:1,name:'used_currency',deleted:'0',value:res.join(',')})
+        },function(r){
+            console.log(r);
+        })
+    });
+
+    this.addCurrency = function(item){
+        if(self.usersCurrency().indexOf(item) == -1){
+            self.usersCurrency.push(item);
+        }
+    };
+    this.removeCurrency = function(item){
+
+    };
+
+    this.editMode = ko.observable(false);
+
+    this.switchMode = function(){
+        self.editMode(!self.editMode());
+    };
+
+    this.savePassword = function(){
+        ServerApi.changePasswordByToken({password:self.password()},function(r){
+            if(r){
+                self.switchMode();
+            }
+        })
+    };
+
+    this.viewMode = ko.computed(function(){
+      return !self.editMode();
+    },this).extend({throttle:1});
+    this.maskedpass = ko.computed(function(){
+        var res = '******';
+        if(self.password().length){
+            res = self.password().replace(/./gi,'*');
+        }
+        return res;
+    },this).extend({throttle:1});
 
     this.afterLoginFunc = function(){
 

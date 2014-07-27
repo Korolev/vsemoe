@@ -765,7 +765,7 @@
             <div class="acc_currency acc_button">
                 <!--<span data-bind="currency:currency"></span>-->
                 <input type="hidden" data-bind="select:{
-                                        options:$root.currencyArr,
+                                        options:$root.user.usersCurrency,
                                         optionText:'shortname',
                                         optionValue:'currency_id',
                                         value:currency,
@@ -791,23 +791,10 @@
     <div class="row_edit_form_additional" data-bind="template:getTpl"></div>
 </script>
 
-<script type="text/html" id="settings-tpl">
-    <table class="contentTable">
-        <tr style="display: none">
-            <td class="tdleftMenu settings" data-bind="">
-                <div class="totalMenu selected" style="top:2px;line-height: 39px">Все категории</div>
-                <ul>
-                    <li>Категории</li>
-                    <li>Моий профиль</li>
-                    <li>Валюта</li>
-                </ul>
-            </td>
-            <!--------rightMenu-------->
-            <td class="tdrightMenu categories">
-                <div class="rightMenu">
-                    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
-                    <div class="clear"></div>
-                    <div class="vse-tabs" data-bind="tabs:{options:{
+<script type="text/html" id="categories-settings-tpl">
+    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
+    <div class="clear"></div>
+    <div class="vse-tabs" data-bind="tabs:{options:{
                         callback:{
                             'tabs-1': function(){
                                  this.accountsViewListParent(0);
@@ -821,27 +808,168 @@
                             },
                         }
                     }}">
-                        <ul>
-                            <li><a href="#tabs-1">
-                                <span class="vseOrange">&ndash;</span>
-                                <span>Расход</span>
-                            </a></li>
-                            <li><a href="#tabs-2">
-                                <span class="vseGreen">+</span>
-                                <span>Доход</span>
-                            </a></li>
-                        </ul>
-                        <div id="tabs-1">
-                            <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
-                            <div class="flexlist"
-                                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
+        <ul>
+            <li><a href="#tabs-1">
+                <span class="vseOrange">&ndash;</span>
+                <span>Расход</span>
+            </a></li>
+            <li><a href="#tabs-2">
+                <span class="vseGreen">+</span>
+                <span>Доход</span>
+            </a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
+            <div class="flexlist"
+                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
+        </div>
+        <div id="tabs-2">
+            <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
+            <div class="flexlist"
+                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="personal-settings-tpl">
+    <div class="inputText floatHeader" >Мой профиль...</div>
+    <div class="clear"></div>
+    <div class="vse-tabs" data-bind="tabs:{options:{}}">
+        <ul>
+            <li><a href="#tabs-1">
+                <span><i class="icon main"></i></span>
+                <span>Аккаунт</span>
+            </a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="flexlisttitle" ></div>
+            <div class="flexlist">
+                <div class="personal-info" data-bind="css:{hidden:user.editMode()}">
+                    <h1>Почта и пароль</h1>
+                    <div class="row">
+                        <div class="first"><i class="icon user-email"></i></div>
+                        <div class="second">Email</div>
+                        <div class="third"><span data-bind="text: user.login"></span></div>
+                        <div class="controls"></div>
+                    </div>
+                    <div class="row">
+                        <div class="first"><i class="icon user-pass"></i></div>
+                        <div class="second">Пароль</div>
+                        <div class="third"><span data-bind="text: user.maskedpass"></span></div>
+                        <div class="controls"><i data-bind="click:user.switchMode" class="icon edit"></i></div>
+                    </div>
+
+                </div>
+                <div class="personal-info hidden" data-bind="css:{'hidden': !user.editMode()}">
+                    <h1>Почта и пароль</h1>
+                    <div class="acc_edit_holder">
+                        <div class="acc_edit_close"><i data-bind="click:function(){ user.editMode(false);}" class="icon del"></i>
                         </div>
-                        <div id="tabs-2">
-                            <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
-                            <div class="flexlist"
-                                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
+                        <div class="acc_edit_row form_row">
+                            <div class="form_row_label">
+                                <label>Email</label>
+                            </div>
+                            <div class="form_row_input">
+                                <input type="text" disabled data-bind="value:user.login">
+                            </div>
+                        </div>
+                        <div class="acc_edit_row form_row">
+                            <div class="form_row_label">
+                                <label>Пароль</label>
+                            </div>
+                            <div class="form_row_input">
+                                <input type="password" data-bind="value:user.password" autofocus>
+                            </div>
+                            <div class="form_row_input" style="width: 50px">
+                                <input type="button" data-bind="click:user.savePassword" value="Сохранить" class="button">
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="import-settings-tpl">
+    <div class="inputText floatHeader" >Ввод или вывод информации...</div>
+    <div class="clear"></div>
+    <div class="vse-tabs" data-bind="tabs:{options:{}}">
+        <ul>
+            <li><a href="#tabs-1">
+                <span ><i class="icon import_i"></i></span>
+                <span>Ввод</span>
+            </a></li>
+            <li><a href="#tabs-2">
+                <span ><i class="icon export_i"></i></span>
+                <span>Вывод</span>
+            </a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="flexlisttitle" ></div>
+            <div class="flexlist">
+                <h2 style="padding-top: 30px">В данный момент функционал находится в разработке. И будет доступен в ближайшее время</h2>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div class="flexlisttitle" ></div>
+            <div class="flexlist">
+                <h2 style="padding-top: 30px">В данный момент функционал находится в разработке. И будет доступен в ближайшее время</h2>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="currency-settings-tpl">
+    <div class="inputText floatHeader" >Управление списком валют...</div>
+    <div class="clear"></div>
+    <div class="vse-tabs" data-bind="tabs:{options:{}}">
+        <ul>
+            <li><a href="#tabs-1">
+                <span ><i class="icon currency_i"></i></span>
+                <span>Валюта</span>
+            </a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="flexlisttitle" ></div>
+            <div class="currency_list">
+                <div class="floatcont">
+                    <h2>Денежные еденицы приложения</h2>
+                    <ul data-bind="foreach:user.usersCurrency">
+                        <li>
+                           <span class="currency_name" data-bind="text:description"></span>
+                           <span class="currency_abbr" data-bind="text:shortname"></span>
+                           <span class="controls" data-bind="click:$root.user.removeCurrency">-</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="floatcont">
+                    <h2>Все денежные еденицы</h2>
+                    <ul data-bind="foreach:$root.currencyArr">
+                        <li >
+                            <span class="currency_name" data-bind="text:description"></span>
+                            <span class="currency_abbr" data-bind="text:shortname"></span>
+                            <span class="controls" data-bind="click:$root.user.addCurrency">+</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="settings-tpl">
+    <table class="contentTable">
+        <tr >
+            <td class="tdleftMenu settings" data-bind="">
+                <ul>
+                    <li data-bind="click:function(){$root.settingsPageLayout('categories')},css:{selected:$root.settingsPageLayout()=='categories'}">Категории</li>
+                    <li data-bind="click:function(){$root.settingsPageLayout('personal')},css:{selected:$root.settingsPageLayout()=='personal'}">Моий профиль</li>
+                    <li data-bind="click:function(){$root.settingsPageLayout('import')},css:{selected:$root.settingsPageLayout()=='import'}">Импорт/Экспорт</li>
+                    <li data-bind="click:function(){$root.settingsPageLayout('currency')},css:{selected:$root.settingsPageLayout()=='currency'}">Валюта</li>
+                </ul>
+            </td>
+            <!--------rightMenu-------->
+            <td class="tdrightMenu settings " data-bind="css:settingsPageLayout">
+                <div class="rightMenu" data-bind="template:settingsPageLayout()+'-settings-tpl'">
+
                 </div>
 
             </td>
@@ -919,7 +1047,7 @@
             </div>
             <div class="form_row_input split_input">
                 <input type="text" data-bind="value:sum"/><input type="hidden" data-bind="select:{
-                options: $root.currencyArr,
+                options: $root.user.usersCurrency,
                 optionText: 'shortname',
                 optionValue:'currency_id',
                 value:currency}">
@@ -934,7 +1062,7 @@
             </div>
             <div class="form_row_input split_input">
                 <input type="text" data-bind="value:creditlimit"/><input type="hidden" data-bind="select:{
-                options: $root.currencyArr,
+                options: $root.user.usersCurrency,
                 optionText: 'shortname',
                 optionValue:'currency_id',
                 value:currency}">
@@ -1203,7 +1331,7 @@
                     </div>
                     <div class="tablecell span2">
                         <input type="hidden" data-bind="select:{
-                    options:$root.currencyArr,
+                    options:$root.user.usersCurrency,
                     optionText:'shortname',
                     optionValue:'currency_id',
                     value:$data.currency,
