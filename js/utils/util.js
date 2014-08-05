@@ -1,17 +1,16 @@
-
-function parseMathString(string){
-    try{
+function parseMathString(string) {
+    try {
         var res = 0,
             elems = [],
             parts = string.split('='),
             func;
 
-        if(parts[0].length){
-            res = (new Function('','return '+parts[0]))();
+        if (parts[0].length) {
+            res = (new Function('', 'return ' + parts[0]))();
         }
 
         return res;
-    }catch (e){
+    } catch (e) {
         console.log(e);
     }
 }
@@ -61,5 +60,49 @@ function getParameterByName(name) {
         return "";
     else
         return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function showIframeDialog(url, options) {
+    var
+        body = $('body'),
+        dialogHolder = $('<div class="dialogHolder"></div>'),
+        dialogBody = $('<div class="dialogBody"></div>'),
+        dialogClose = $('<div class="dialogClose"></div>');
+    dialogClose.appendTo(dialogBody);
+    dialogHolder.appendTo(body);
+    dialogBody.appendTo(body);
+
+    var ifrm = $('<iframe id="your-iframe-id" />').attr('src', url).appendTo(dialogBody);
+
+    var style = {
+        width:'872px',
+        height: '2100px'
+    };
+    dialogBody.css(style);
+    ifrm.css(style);
+
+    dialogClose.on('click',function(){
+        dialogBody.remove();
+        dialogHolder.remove();
+    });
+
+
+    ifrm.load(function () {
+        setTimeout(iResize, 100);
+        // Safari and Opera need a kick-start.
+//        document.getElementById('your-iframe-id').src = '';
+//        document.getElementById('your-iframe-id').src = url;
+    });
+    function iResize() {
+        var style = {
+            width:'872px',
+            height: (document.getElementById('your-iframe-id').contentWindow.document.body.offsetHeight+2)+'px'
+        };
+        dialogBody.css(style);
+        ifrm.css(style);
+    }
+
+
+//    console.log(ifrm[0].window.document.outerWidth);
 }
 

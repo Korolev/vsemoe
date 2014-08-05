@@ -8,3 +8,7 @@ $(function () {
         $('header').css({ 'opacity': '1' });
     });
 });
+
+function showPartnerForm(){
+    showIframeDialog('/partner');
+}

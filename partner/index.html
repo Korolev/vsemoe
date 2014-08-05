@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Всё Моё &mdash; Какой продукт Вам наиболее интересен?</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+<meta name="title" content="Всё Моё &mdash; Сервис управления личными финансами - VseMoe.RU">
+<meta name="description"
+      content="Всё Моё &mdash; Сервис управления личными финансами и и семейным бюджетом - VseMoe.RU">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<link href="../css/fonts.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 1em;
+    vertical-align: middle;
+    font-family: "HelveticaNeue Light", Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;;
+}
+
+b {
+    font-weight: bold;
+    font-family: "helveticaneue bold", Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;;
+}
+
+body {
+    font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 14px;
+    background-color: #fefefe;
+}
+
+h1, h2, h3 {
+    color: #fe6000;
+    font-weight: bold;
+    font-family: "helveticaneue bold", Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;;
+}
+
+h1 {
+    font-size: 19px;
+}
+
+p,
+ul,
+label {
+    line-height: 20px;
+}
+
+.clear {
+    float: none;
+    clear: both;
+}
+
+.hidden {
+    display: none;
+}
+
+.wrapper {
+    width: 780px;
+    margin: 0 auto;
+    padding: 70px 45px;
+    border: 1px solid #fafafa;
+    background-color: #ffffff;
+}
+
+.left_column {
+    min-height: 100px;
+    width: 520px;
+    float: left;
+}
+
+.right_column {
+    min-height: 100px;
+    width: 260px;
+    float: left;
+}
+
+/* FORM */
+.right_column h3 {
+    font-weight: normal;
+    font-family: "HelveticaNeue Light", Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
+.reg_button {
+    background-image: url('img/reg_btn.png');
+    height: 47px;
+    width: 229px;
+}
+
+.form_button {
+    background-image: url('img/sent_btn.png');
+    background-position: center center;
+    height: 47px;
+    width: 229px;
+}
+
+.form_row {
+    margin-top: 10px;
+    width: 224px;
+}
+
+.form_row input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 43px;
+    border: 1px solid #CCCCCC;
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+}
+
+.form_row label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #aaaaaa;
+    display: block;
+}
+
+.form_row label span {
+    color: #fe6000;
+    font-size: 14px;
+}
+
+.form_button {
+    margin-top: 21px;
+    cursor: pointer;
+}
+
+.form_notification {
+    position: absolute;
+    width: 710px;
+    color: #fe6000;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px 20px;
+}
+
+/* FORM */
+.orange {
+    color: #FF6000;
+}
+
+.grey {
+    color: #CCCCCC;
+}
+
+.smalltext {
+    font-size: 70%;
+}
+
+.paddingsmall {
+    padding-top: 10px;
+}
+
+input[type='radio'] {
+    opacity: 0;
+    float: left;
+}
+
+input[type='radio'] + label {
+    display: block;
+    padding: 15px 0 15px 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type='radio'] + label:before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background-image: url("img/radio_btn.png");
+    background-repeat: no-repeat;
+    background-position: 0 bottom;
+    left: 0px;
+    top: 50%;
+    margin-top: -12px;
+}
+
+input[type='radio']:checked + label:before {
+    background-position: 0 top;
+}
+
+.head {
+    height: 54px;
+
+}
+
+.head .logo {
+    float: left;
+    width: 54px;
+    height: 54px;
+    padding: 0 25px 0 10px;
+}
+
+.head .header {
+    float: left;
+    height: 54px;
+    line-height: 54px;
+}
+
+.main_cont {
+    min-height: 100px;
+    width: 600px;
+    padding-left: 40px;
+    padding-top: 60px;
+}
+
+.main_cont h1 {
+    font-size: 17px;
+}
+
+.main_cont ul {
+    padding-left: 12px;
+}
+
+.main_cont ul li {
+    padding-left: 20px;
+}
+
+.main_cont p {
+    margin: 20px 0;
+}
+
+#reg_btn {
+    cursor: pointer;
+}
+
+.no_bot_marg {
+    margin-bottom: 0 !important;
+}
+
+</style>
+<script src="../js/jquery-1.9.1.min.js?v9"></script>
+<script type="text/javascript">
+    $.fn.serializeObject = function()
+    {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    $(function () {
+        var form = $('form');
+        $('#sent_btn').on('click', function () {
+            var data = form.serializeObject();
+            console.log(data);
+
+            var serverUrl = {
+                dev: "http://dev.vsemoe.com",
+                production: "https://api.vsemoe.com"
+            };
+
+            $.ajax({
+                url: serverUrl.dev+'/rek/upload',
+                type: 'POST',
+                dataType: 'JSONP',
+                data: data,
+                success: function (r) {
+                    console.log(r);
+                    if (r.status == 1) {
+
+                    } else {
+
+                    }
+                }
+            });
+
+        });
+
+        $('#reg_btn').on('click', function () {
+            window.scrollTo(0, 0);
+            $('.form_row input')[0].focus();
+        });
+    })
+</script>
+</head>
+<body>
+<div class="wrapper">
+    <form id="form_main">
+        <div class="left_column">
+            <div class="head">
+                <div class="logo">
+                    <img src="img/logo.png">
+                </div>
+                <div class="header">
+                    <h1>Какой продукт Вам наиболее интересен?</h1>
+                </div>
+            </div>
+
+            <div>
+                <input type="radio" name="product" id="prod1" value="1">
+                <label for="prod1">
+                    <span class="grey smalltext">ПРОДУКТ 1</span><br>
+                    <b class="paddingsmall">Уровень доходности 1,5% в неделю.</b><br>
+                    От 100 000 до 300 000 руб<br>
+                    На срок 7- 8 дней.<br>
+                    <span class="grey smalltext paddingsmall">Выплаты % производятся на 8 день вместе с возвратом суммы займа.</span>
+                </label>
+            </div>
+
+            <div>
+                <input type="radio" name="product" id="prod2" value="2">
+                <label for="prod2">
+                    <span class="grey smalltext">ПРОДУКТ 2</span><br>
+                    <b class="paddingsmall">Уровень доходности от 3-4% в месяц (36-48% годовых)</b><br>
+                    Инвестиции от 300 000 руб<br>
+                    На срок от 3 месяцев до 1 года.<br>
+                </label>
+            </div>
+
+            <div>
+                <input type="radio" name="product" id="prod3" value="3">
+                <label for="prod3">
+                    <span class="grey smalltext">ПРОДУКТ 3</span><br>
+                    <b class="paddingsmall">Суммы инвестиций от 1,5 млн. руб.</b><br>
+                    Вхождение в бизнес, долевое участие.<br>
+                    Прибыльность рассчитывается в каждом случае индивидуально.<br>
+                </label>
+            </div>
+
+
+        </div>
+        <div class="right_column">
+            <img src="img/pageimage.jpg">
+
+            <h3>Регистрация</h3>
+
+            <div class="form_row">
+                <label>Имя и фамилия <span>*</span></label>
+                <input type="text" name="fio"/>
+            </div>
+            <div class="form_row">
+                <label>Мобильный телефон <span>*</span></label>
+                <input type="text" name="phone"/>
+            </div>
+            <div class="form_row">
+                <label>Электронная почта <span>*</span></label>
+                <input type="text" name="email"/>
+            </div>
+            <div class="form_row">
+                <div id="sent_btn" class="form_button"></div>
+            </div>
+        </div>
+    </form>
+    <div class="clear"></div>
+    <div class="form_notification">
+        <span class="form_error hidden">
+        Пожалуйста заполните пропущенные поля,
+        в Институте ИНЕКБИ действует пропускная система.
+        </span>
+        <span class="form_success hidden">
+            Благодарим за регистрацию
+        </span>
+    </div>
+    <div class="main_cont">
+        <h1>ООО «Финансовый Аналитический Центр «Инвест–Проект»</h1>
+        <span>осуществит доверительное управление инвестициями.</span>
+
+        <p>
+            Наша компания на рынке финансовых консалтинговых услуг Москвы,
+            работает более 3-х лет.
+        </p>
+
+        <p>
+            Мы выполняем работу, очень похожу на банковскую деятельность. Привлекаем с одной стороны частных инвесторов
+            (физических лиц) с предложением вложить свои накопления в надежный, стабильный и прибыльный бизнес через ООО
+            «Финансовый Аналитический Центр «Инвест–Проект», а с другой стороны организации–заемщики (юридические лица),
+            которые нуждаются в финансировании и увеличении товарооборота своей компании.
+        </p>
+
+        <p>
+            Доход нашей компании заложен в прибыль организации-заемщика, поэтому мы заинтересованы в его развитии и
+            безопасности. Наша компания берет на себя полный контроль и ответственность над инвестиционными средствами.
+            Мы обеспечиваем прозрачную систему работы (без скрытых комиссий и вычетов, как это принято у банков) и
+            ежемесячную стабильную выплату процентов инвесторам.
+        </p>
+
+        <p><b class="orange">Наша задача:</b> Экономическая безопасность Ваших инвестиций.
+            Прежде чем выдать инвестиции какой-либо организации, мы проводим всестороннюю проверку
+            финансово-экономических показателей компании, ее руководителей и учредителей:
+        </p>
+        <ul>
+            <li>Выявляем уровень надежности (проводим полный аудит), высокого дохода и возможности развития компании и
+                отрасли в целом.
+            </li>
+            <li>Проверяем на отсутствие долговых обязательств и судебных споров.</li>
+            <li>Смотрим на наличие активов и возможных залогов.</li>
+            <li>Выдаем деньги только под увеличение оборотных средств, при наличии собственного капитала, не менее 100 %
+                от суммы займа.
+            </li>
+            <li>Ни каких вложений в длинные проекты и СТАРТ-АПы.</li>
+            <li>Ваши вложенные средства, находятся в обороте компаний заемщиков, под полным нашим контролем.</li>
+            <li>Мы не аккумулируем деньги на счетах, все финансы постоянно в работе.</li>
+            <li>Вложенные деньги работают с первого дня поступления, и находятся в обороте компаний-заемщиков – надежных
+                и проверенных партнеров.
+            </li>
+        </ul>
+
+
+        <p class="no_bot_marg"><b class="orange">Итоги 2013 года:</b><br>
+            Привлечено порядка 30 млн. рублей в разные сектора малого бизнеса, такие как:
+        </p>
+        <ul>
+            <li>Аграрные сектор – крупные поставки сельхоз продукции в Центральные области РФ, в Республику Беларусь.
+            </li>
+            <li>Аграрный сектор – овощные поставки в Крупные гипермаркеты Центральных Областей.</li>
+            <li>Аграрный сектор – производство кормов, и оптовые поставки Экспорта в ближайшие страны зарубежья.</li>
+            <li>Строительный сектор, участие в строительстве жилых домов в ЮФО.</li>
+            <li>Транспортная Логистика – перевозка автомобильных грузов по РФ, за год более 6000 т рейсов.</li>
+            <li>Заключено более 25 договоров с инвесторами и компаниями заемщиками.</li>
+            <li>Выплачено инвесторам процентов на общую сумму 10 млн. рублей</li>
+        </ul>
+
+
+        <p>У нашей компании нет, и не было ни одного судебного разбирательства или иска по финансовым вопросам за весь
+            период работы, начиная с января 2011 года. Проценты выплачиваются в срок. Сумма займа возвращаются
+            своевременно в соответствии с договорными обязательствами.</p>
+
+        <p class="no_bot_marg"><b class="orange">Сектора экономики, в которые вложены инвестиции с начала 2014 года:</b>
+        </p>
+        <ul>
+            <li>Оптовая торговля продуктами питания.</li>
+            <li>Производство кормов.</li>
+            <li>Фармацевтическая отрасль.</li>
+            <li>Сеть кафе суши.</li>
+            <li>Оптовая торговля овощами.</li>
+            <li>Сеть магазинов автозапчасти.</li>
+            <li>Транспортно-логистические услуги.</li>
+            <li>Строительные услуги.</li>
+            <li>Туристические агентства.</li>
+            <li>Сеть продаж косметических средств.</li>
+        </ul>
+
+        <p class="orange">Если Вы решите вложить накопленные денежные средства в работающие компании так, чтобы они
+            приносили достойную
+            прибыль, но не готовы рисковать –
+        </p>
+
+        <p class="orange">
+            ИНВЕСТИРУЙТЕ ВМЕСТЕ С НАМИ
+        </p>
+
+        <div style="text-align: center">
+            <img src="img/reg_btn.png" id="reg_btn">
+        </div>
+    </div>
+</div>
+</body>
+</html>
