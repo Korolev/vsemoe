@@ -3,6 +3,38 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=1100">
+    <style>
+
+        .dialogHolder{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            background-color: rgba(0,0,0,0.2);
+            z-index: 10000;
+        }
+        .dialogBody{
+            position: absolute;
+            background-color: #ffffff;
+            min-height: 30px;
+            z-index: 10001;
+            width: 880px;
+            margin-left: -445px;
+            left: 50%;
+            top: 40px;
+        }
+        .dialogClose{
+            position: absolute;
+            background-image: url("../img/closeDialog.png");
+            height: 24px;
+            width: 24px;
+            top: 3px;
+            right: -34px;
+            z-index: 10001;
+            cursor: pointer;
+        }
+    </style>
     <link href="css/fonts.css" rel="stylesheet" type="text/css">
     <link href="fancybox/2.0/jquery.fancybox.css" rel="stylesheet" type="text/css">
     <link href="css/newmain.css" rel="stylesheet" type="text/css" media="screen">
@@ -12,6 +44,7 @@
     <script type="text/javascript" src="js/newmain.js"></script>
     <script src="/js/utils/ServerApi.js"></script>
     <script src="/js/testimonials.js"></script>
+    <script src="/js/utils/util.js"></script>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-38982546-1']);

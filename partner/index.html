@@ -259,8 +259,17 @@ input[type='radio']:checked + label:before {
     };
 
     $(function () {
-        var form = $('form');
+        var form = $('form'),
+        form_err = $('.form_error'),
+        form_success = $('.form_success'),
+                form_busy = false;
+
+
         $('#sent_btn').on('click', function () {
+            if(form_busy){
+                return false;
+            }
+            form_busy = true;
             var data = form.serializeObject();
             console.log(data);
 
@@ -269,17 +278,34 @@ input[type='radio']:checked + label:before {
                 production: "https://api.vsemoe.com"
             };
 
+            if(!data.fio || !data.email || !data.phone){
+                form_err.removeClass('hidden');
+                setTimeout(function(){
+                    form_err.addClass('hidden');
+                    form_busy = false;
+                },3000);
+                return false;
+            }
+
+
             $.ajax({
                 url: serverUrl.dev+'/rek/upload',
                 type: 'POST',
                 dataType: 'JSONP',
                 data: data,
                 success: function (r) {
-                    console.log(r);
                     if (r.status == 1) {
-
+                        form_success.removeClass('hidden');
+                        setTimeout(function(){
+                            form_success.addClass('hidden');
+                            form_busy = false;
+                        },3000);
                     } else {
-
+                        form_err.removeClass('hidden');
+                        setTimeout(function(){
+                            form_err.addClass('hidden');
+                            form_busy = false;
+                        },3000);
                     }
                 }
             });

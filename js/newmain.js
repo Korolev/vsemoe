@@ -88,5 +88,15 @@ $(function() {
     $('.four-steps-action .step-pic a, .smallvideo a').fancybox({
       hideOnContentClick: false
     });
+
+    function showPartnerForm(){
+        showIframeDialog('/partner');
+    }
+
+    if(location.hash == '#showpartner'){
+        showPartnerForm();
+    }
 });
+
+
 

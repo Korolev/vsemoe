@@ -72,6 +72,9 @@ function showIframeDialog(url, options) {
     dialogHolder.appendTo(body);
     dialogBody.appendTo(body);
 
+    dialogHolder.hide();
+    dialogBody.hide();
+
     var ifrm = $('<iframe id="your-iframe-id" />').attr('src', url).appendTo(dialogBody);
 
     var style = {
@@ -94,12 +97,17 @@ function showIframeDialog(url, options) {
 //        document.getElementById('your-iframe-id').src = url;
     });
     function iResize() {
+        var newH = document.getElementById('your-iframe-id').contentWindow.document.body.offsetHeight+2;
+
+        newH = newH < 2000 ? 2070 : newH;
         var style = {
             width:'872px',
-            height: (document.getElementById('your-iframe-id').contentWindow.document.body.offsetHeight+2)+'px'
+            height: newH+'px'
         };
         dialogBody.css(style);
         ifrm.css(style);
+        dialogHolder.show();
+        dialogBody.show();
     }
 
 
