@@ -199,5 +199,8 @@ var ServerApi = {
     },
     getUserPayment: function (dataObj, callback) {
         this.utils().post("/user/payment", dataObj, callback, true);
+    },
+    unsubscribeUser: function(dataObj,callback){
+        this.utils().post("/user/unsubscribe", dataObj, callback, true);
     }
 };
