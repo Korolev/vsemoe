@@ -546,7 +546,7 @@
             <!--------rightMenu-------->
             <td class="tdrightMenu">
                 <div class="rightMenu">
-                    <div class="inputText floatHeader" data-bind="text:$root.header, css:{moveBottom:tableFiltersCheckedLen() > 7}"></div>
+                    <div class="inputText floatHeader" data-bind="text:$root.header"></div>
                     <div class="tableFilters">
                         <div class="filterItem" data-bind="foreach:tableFilters">
                             <!-- ko if : selected -->
@@ -634,7 +634,6 @@
                             <!-- ko ifnot: editInstance() -->
                             <!-- ko ifnot: deleted -->
                             <div class="t_row" data-bind="css:{empty:!created, tr_newday:newday == 1, tr_show_splits:_showSplits},
-                                    attr:{id:'tr__'+ $data.id},
                                     template{name: 'tr-row-tpl',data: $data}">
                             </div>
                             <!-- /ko -->
@@ -791,17 +790,10 @@
     <div class="row_edit_form_additional" data-bind="template:getTpl"></div>
 </script>
 
-<script type="text/html" id="settings-tpl">
+<script type="text/html" id="categories-tpl">
     <table class="contentTable">
-        <tr style="display: none">
-            <td class="tdleftMenu settings" data-bind="">
-                <div class="totalMenu selected" style="top:2px;line-height: 39px">Все категории</div>
-                <ul>
-                    <li>Категории</li>
-                    <li>Моий профиль</li>
-                    <li>Валюта</li>
-                </ul>
-            </td>
+        <tr>
+            <td class="tdleftMenu" data-bind="template:'left-menu-category-tpl'"></td>
             <!--------rightMenu-------->
             <td class="tdrightMenu categories">
                 <div class="rightMenu">
@@ -967,7 +959,8 @@
                 <input type="hidden" data-bind="select:{
                                         options:$root.getActiveAcc,
                                         optionText:'description',
-                                        value:createFromAcc
+                                        optionValue: 'id',
+                                        value:createFormAcc
                                         }">
             </div>
         </div>
@@ -1057,6 +1050,11 @@
     </div>
 </script>
 
+<script type="text/html" id="left-menu-category-tpl">
+    <!--------leftMenu-------->
+    <div class="totalMenu selected" style="top:2px;line-height: 39px">Все категории</div>
+</script>
+
 <script type="text/html" id="left-menu-insert-new-tpl">
     <!--------leftMenu-------->
     <div class="leftMenu">
@@ -1091,13 +1089,13 @@
     </div>
 </script>
 
-<script type="text/html" id="edit-settings-tpl">
+<script type="text/html" id="edit-categories-tpl">
 </script>
 <script type="text/html" id="edit-insert-tpl">
 </script>
 <script type="text/html" id="edit-observe-tpl">
 </script>
-<script type="text/html" id="default-settings-tpl">
+<script type="text/html" id="default-categories-tpl">
 </script>
 <script type="text/html" id="default-insert-tpl">
 </script>
@@ -1124,7 +1122,7 @@
                  data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+
             </div>
             <div class="topMenuBox shortMenuItem categories_tab"
-                 data-bind="gotoaction:'settings', css:{selected:action() == 'settings'}">
+                 data-bind="gotoaction:'categories', css:{selected:action() == 'categories'}">
             </div>
             <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
             <div class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>

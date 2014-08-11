@@ -29,7 +29,7 @@ var AccountViewModel = function (data, app) {
     this.creditlimit = ko.observable(data.creditlimit || "");
 
     this.showFromIdSelect = ko.observable(false);
-    this.createFromAcc = ko.observable();
+    this.createFormAcc = ko.observable();
 
 //    this.comment = ko.observable(data.comment);
     this.comment = ko.observable(app.accountIconsHash[data.category]);
@@ -40,27 +40,9 @@ var AccountViewModel = function (data, app) {
         return app.accountIconsHash[self.category()] || "other";
     }, this).extend({throttle: 1});
 
-    this.children = ko.observableArray([]);
-    this.transactions = [];
-
     this.editMode = ko.observable(!!data.editMode);
 
-//    this.sum = ko.observable(0);
-    this._sum = ko.observable(0);
-    this.sum = ko.computed({
-        read: function () {
-            if((self.group() == 2 || (self.group() == 0 && self.type()=='IN')) && self.children().length == 0){
-                return self._sum() * -1;
-            }else{
-                return self._sum();
-            }
-
-        },
-        write: function (val) {
-            self._sum(val);
-        },
-        owner: this
-    });
+    this.sum = ko.observable(0);
     this.availableSum = ko.computed({
         read: function () {
             return (parseFloat(self.creditlimit()) - self.sum()) || 0 ;
@@ -70,6 +52,9 @@ var AccountViewModel = function (data, app) {
         },
         owner: this
     }).extend({throttle: 1});
+
+    this.children = ko.observableArray([]);
+    this.transactions = [];
 
     //feature
     this.currentBlock = ko.observable(data.currentBlock || {});
@@ -127,8 +112,7 @@ var AccountViewModel = function (data, app) {
             __now = new Date(),
             date,
             lastFixDate,
-            currentmonth = new Date(__now.getFullYear(), __now.getMonth()),
-            currentmonthGetTime = currentmonth.getTime();
+            currentmonth = new Date(__now.getFullYear(), __now.getMonth());
 
         each(self.transactions, function (k, tr) {
             var trDate = tr.created.unix() * 1000;
@@ -145,7 +129,7 @@ var AccountViewModel = function (data, app) {
 
         each(self.transactions, function (k, tr) {
             if (!tr.hasSplit()) {
-                amount = parseFloat(tr.amount) * (tr.from_id == self.id ? -1 : 1);
+                amount = parseFloat(tr.amount) * (tr.from_id == self.id ? 1 : -1);
                 if (self.currency() && tr.currency != self.currency()) {
                     amount = app.calculateAmount(
                         tr.currency,
@@ -155,23 +139,42 @@ var AccountViewModel = function (data, app) {
                     );
                 }
                 date = tr.created.unix() * 1000;
-                lastFixDate = lastFixDate ? lastFixDate : 0;
 
-                if (!tr.hidden && tr.deleted() == 0) {
-                    if (self.group() == 0 && date > currentmonthGetTime) {
-                        res += amount;
-                    } else if (date > lastFixDate) {
+                //TODO use rates;
+                if (!tr.hidden) {
+                    if (self.group() == 0 && tr.deleted() == 0) {
+                        if (date > currentmonth.getTime())res += amount;
+                    } else if (tr.deleted() == 0 && date > lastFixDate) {
+                        if (self.group() == 2){
+                            amount *= -1;
+                        }
                         res += amount;
                     }
                 }
             }
         });
+        if ((self.creditlimit() | 0) > 0) {
+//            res -= parseFloat(self.creditlimit());
+//            if(res < 0 && self.group() == 1){
+//                self.group(2);
+//                res *= -1;
+//            }
+//            if(res < 0 && self.group() == 2){
+//                self.group(1);
+//                res *= -1;
+//            }
+
+//            res = 0;//TODO
+        }
+        if (self.group() == 0 && self.type() == 'IN') {
+            res *= -1;
+        }
 
         each(self.children(), function (k, acc) {
             res += acc.sum();
         });
 
-        self._sum(res);
+        self.sum(res);
 
         if (self.parent() && (self.parent() | 0) > 1 && res) {
             app.accountsHash[self.parent()].recalculateSum();
@@ -228,6 +231,17 @@ var AccountViewModel = function (data, app) {
                 if (r.transaction_id) {
                     obj.transaction_id = r.transaction_id;
                     app.transactions.push(new TransactionViewModel(obj, app));
+                }
+            });
+            var objClone = JSON.parse(JSON.stringify(obj));
+            objClone.amount = newSumm - self.sum();
+            objClone.description = newSumm - self.sum();
+            objClone.position = 0;
+            objClone.created = moment().unix();
+            app.createTransaction(obj, function (r) {
+                if (r.transaction_id) {
+                    objClone.transaction_id = r.transaction_id;
+                    app.transactions.push(new TransactionViewModel(objClone, app));
                 }
                 self.save();
             });
@@ -298,12 +312,9 @@ var AccountViewModel = function (data, app) {
                             hidden: 1,
                             position: 1
                         };
-                        if (self.createFromAcc()) {
-                            obj.from_id = self.createFromAcc().id;
+                        if (self.createFormAcc()) {
+                            obj.from_id = self.createFormAcc().id;
                             obj.hidden = 0;
-                            obj.position = 0;
-                            obj.amount = obj.amount*-1;
-                            obj.description = obj.amount;
                         }
                         app.createTransaction(obj, function (r) {
                             if (r.transaction_id) {

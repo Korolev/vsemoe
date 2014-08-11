@@ -28,8 +28,8 @@ var TransactionViewModel = function (data, app) {
     if (app.accountsHash[self.from_id]
         && app.accountsHash[self.from_id]
         && self.from_id != self.to_id
-        && !app.accountsHash[self.to_id].createFromAcc()) {
-        app.accountsHash[self.to_id].createFromAcc(app.accountsHash[self.from_id]);
+        && !app.accountsHash[self.to_id].createFormAcc()) {
+        app.accountsHash[self.to_id].createFormAcc(app.accountsHash[self.from_id]);
     }
 
     if(self.from_id && self.to_id && (self.from_id != self.to_id)){
@@ -55,7 +55,7 @@ var TransactionViewModel = function (data, app) {
             }
 
             if (status == 2) {
-                if (from_type == 'IN') {
+                if (to_type == 'IN') {
                     self.action_index = 1;
                 } else if (from_group > 0 && to_group > 0) {
                     self.action_index = 2;

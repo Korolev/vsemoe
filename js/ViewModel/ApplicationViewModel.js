@@ -76,7 +76,7 @@ var ApplicationViewModel = function () {
             "changepass": "login",
             "observe": "account",
             "insert": "account",
-            "settings": "account",
+            "categories": "account",
             "accmanage": "account"
         },
         actionHeader = {
@@ -87,7 +87,7 @@ var ApplicationViewModel = function () {
             "changepass": "",
             "observe": "У вас есть...",
             "insert": "Ввод платежей...",
-            "settings": "Настройки...",
+            "categories": "Категории бюджета...",
             "accmanage": "Выберите тип средств..."
         },
         pageParams = {
@@ -138,14 +138,6 @@ var ApplicationViewModel = function () {
         });
         return res;
     }(tableFilters));
-    this.tableFiltersCheckedLen = ko.computed(function(){
-        var res = 0,
-            fs = self.tableFilters();
-        each(fs,function(k,filt){
-           res+= filt.selected() ? 1 : 0;
-        });
-        return res;
-    }).extend({throttle:1});
     this.selectedFilter = ko.observable();
     this.accountId = ko.observable('');
     this.showFilterConfig = ko.observable(false);
