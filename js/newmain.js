@@ -90,7 +90,7 @@ $(function() {
     });
 
     function showPartnerForm(){
-        showIframeDialog('/partner');
+        showIframeDialog('/partner?v2');
     }
 
     if(location.hash == '#showpartner'){
