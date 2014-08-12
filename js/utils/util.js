@@ -78,8 +78,8 @@ function showIframeDialog(url, options) {
     var ifrm = $('<iframe id="your-iframe-id" />').attr('src', url).appendTo(dialogBody);
 
     var style = {
-        width:'872px',
-        height: '2100px'
+        width:'315px',
+        height: '505px'
     };
     dialogBody.css(style);
     ifrm.css(style);
@@ -99,9 +99,9 @@ function showIframeDialog(url, options) {
     function iResize() {
         var newH = document.getElementById('your-iframe-id').contentWindow.document.body.offsetHeight+2;
 
-        newH = newH < 2000 ? 2070 : newH;
+        newH = newH < 505 ? 520 : newH;
         var style = {
-            width:'872px',
+            width:'315px',
             height: newH+'px'
         };
         dialogBody.css(style);
