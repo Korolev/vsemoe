@@ -1,7 +1,7 @@
 /**
  * Created by Lenovo on 09.11.13.
  */
-var UserViewModel = function () {
+var UserViewModel = function (app) {
     var self = this,
         each = function (arr, callback) {
             var i = 0;
@@ -42,58 +42,85 @@ var UserViewModel = function () {
     this.password = ko.observable("");
     this.repassword = ko.observable("");
     this.remember = ko.observable(true);
+    this.subscribenew = ko.observable(true);
+    this.timeOutId = null;
 
     this.userConfig = ko.observable();
+//TODO get users currensy from config; fill usersCurrency array
+    //maybe get user settings in class constructor
+    this.__usersCurrencyStr = '';
+    this.__usersCurrency = ko.observableArray([]);
 
-    this.usersCurrency = ko.observableArray([]);
+    this.usersCurrency = ko.computed(function () {
+        var res = [],
+            appCur = app.currencyArr(),
+            appMainCur = app.baseCurrencyId();
 
-    self.usersCurrency.subscribe(function(val){
-        var res = [];
-        each(val,function(k,v){
-           res.push(v.currency_id);
+        each(self.__usersCurrency(), function (k, cId) {
+            if (app.currencyHash[cId]) {
+                res.push(app.currencyHash[cId]);
+            }
         });
-        ServerApi.updateConfig({
-            data: JSON.stringify({config_id:1,name:'used_currency',deleted:'0',value:res.join(',')})
-        },function(r){
-            console.log(r);
-        })
+        return res;
+    }, this).extend({throttle: 5});
+
+    self.__usersCurrency.subscribe(function (val) {
+        if(!self.__usersCurrencyStr || self.__usersCurrencyStr == val.join(',')){
+            return false;
+        }
+        if(self.timeOutId){
+            clearTimeout(self.timeOutId);
+        }
+        self.timeOutId = setTimeout(function(){
+            self.__usersCurrencyStr = self.__usersCurrency().join(',');
+            ServerApi.updateConfig({
+                data: JSON.stringify({config_id: 1, name: 'used_currency', deleted: '0', value: self.__usersCurrencyStr})
+            }, function (r) {
+                console.log(r);
+            })
+        },1000);
     });
 
-    this.addCurrency = function(item){
-        if(self.usersCurrency().indexOf(item) == -1){
+    this.setConf = function (conf) {
+        console.log(conf);
+        self.__usersCurrency(conf && conf.currency || []);
+    };
+
+    this.addCurrency = function (item) {
+        if (self.usersCurrency().indexOf(item) == -1) {
             self.usersCurrency.push(item);
         }
     };
-    this.removeCurrency = function(item){
+    this.removeCurrency = function (item) {
 
     };
 
     this.editMode = ko.observable(false);
 
-    this.switchMode = function(){
+    this.switchMode = function () {
         self.editMode(!self.editMode());
     };
 
-    this.savePassword = function(){
-        ServerApi.changePasswordByToken({password:self.password()},function(r){
-            if(r){
+    this.savePassword = function () {
+        ServerApi.changePasswordByToken({password: self.password()}, function (r) {
+            if (r) {
                 self.switchMode();
             }
         })
     };
 
-    this.viewMode = ko.computed(function(){
-      return !self.editMode();
-    },this).extend({throttle:1});
-    this.maskedpass = ko.computed(function(){
+    this.viewMode = ko.computed(function () {
+        return !self.editMode();
+    }, this).extend({throttle: 1});
+    this.maskedpass = ko.computed(function () {
         var res = '******';
-        if(self.password().length){
-            res = self.password().replace(/./gi,'*');
+        if (self.password().length) {
+            res = self.password().replace(/./gi, '*');
         }
         return res;
-    },this).extend({throttle:1});
+    }, this).extend({throttle: 1});
 
-    this.afterLoginFunc = function(){
+    this.afterLoginFunc = function () {
 
     };
 
@@ -148,63 +175,86 @@ var UserViewModel = function () {
 
     this.getLoginFromServer = function (callback) {
         var token = getCookie(ApplicationSettings.cookieName);
-        if(!token) {
-            if(typeof callback == 'function') { callback(); }
+        if (!token) {
+            if (typeof callback == 'function') {
+                callback();
+            }
         } else {
             ServerApi.getUserByToken({token: token}, function (r) {
-                try{
+                try {
                     self.login(r[0].login);
-                    if(typeof callback == 'function') { callback(); }
-                }catch (e){
-                    if(!r){
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                } catch (e) {
+                    if (!r) {
                         self.removeToken();
                     }
                     console.log(r);
                     console.log(e);
-                    if(typeof callback == 'function') { callback(); }
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
                 }
             });
         }
     };
 
-    this.logout = function(callback) {
+    this.logout = function (callback) {
         var token = getCookie(ApplicationSettings.cookieName);
-        ServerApi.logoutUser({token: token}, function(r) {
+        ServerApi.logoutUser({token: token}, function (r) {
             console.log(r);
             self.login('');
             self.removeToken();
-            if(typeof callback == 'function') { callback(); }
+            if (typeof callback == 'function') {
+                callback();
+            }
             else {
                 window.location = '/';
             }
         })
     }
 
-    this.setToken = function(val){
+    this.setToken = function (val) {
         var currDate = new Date(),
             token = getCookie(ApplicationSettings.cookieName);
 
         currDate.addYears(4);
-        if(token != val){
+        if (token != val) {
             setCookie(ApplicationSettings.cookieName, val, self.remember() ? {
                 expires: currDate
             } : {});
         }
     };
 
-    this.removeToken = function(){
+    this.removeToken = function () {
         setCookie(ApplicationSettings.cookieName, 0, {expires: new Date('1990')});
     };
 
     this.token.subscribe(function (val) {
         ServerApi.options.token = val;
+        ServerApi.getConfigList({}, function (r) {
+            var currConf = [];
+            each(r, function (k, conf) {
+                if (conf.name == 'used_currency' && conf.deleted == 0) {
+                    if (conf.value) {
+                        currConf = conf.value.split(',');
+                    }
+                }
+            });
+            if (currConf.length == 0) {
+                currConf.push(app.baseCurrencyId());
+            }
+            self.setConf({currency: currConf});
+            self.userLoadReady = true;
+        });
         var token = getCookie(ApplicationSettings.cookieName);
 
         if (val && val != token) {
             self.setToken(val);
         }
 
-        if(val){
+        if (val) {
             self.afterLoginFunc();
         }
     });

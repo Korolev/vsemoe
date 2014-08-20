@@ -136,7 +136,6 @@
 <!--<script src="../js/lib/easyXDM/easyXDM.debug.js"></script>-->
 <!--<script src="../js/lib/json2.js"></script>-->
 <!--<script type="text/javascript" src="../js/touchslider.js"></script>-->
-<!--<script src="../js/util.js"></script>-->
 <!--<script src="../js/main.js"></script>-->
 <!--<script src="../js/account.js"></script>-->
 <!--<script src="Scripts/jquery-ui-1.8.11.min.js" type="text/javascript"></script>-->
@@ -290,9 +289,13 @@
                     <p>Пользователь с таким логином уже существует</p>
                 </div>
             </div>-->
-        <div class="form_item remember">
-            <input type="checkbox" id="remember" data-bind="checked: user.remember"/>
-            <label for="remember">Запомнить меня</label>
+        <div class="form_item remember" style="text-align: left;">
+            <input type="checkbox" id="remember" data-bind="checked: user.subscribenew"/>
+            <label for="remember">Подписаться на новости</label>
+            <span style="float: right;">
+                <input type="checkbox" id="remember" data-bind="checked: user.remember"/>
+                <label for="remember">Запомнить меня</label>
+            </span>
         </div>
         <div class="form_but">
             <input type="button" data-bind="click:userRegister" value="Регистрироваться"/>
@@ -736,6 +739,7 @@
         </div><div class="td_fromaccount_input">
             <input type="hidden" data-bind="select:{
                                         options:fromAcc,
+                                        placeholder:'Откуда',
                                         optionText:'description',
                                         optionValue: 'id',
                                         value:from_id,
@@ -754,6 +758,7 @@
             </div><div class="acc_select">
                 <input type="hidden" data-bind="treeSelect:{
                                             options:toAcc,
+                                            placeholder:'Куда',
                                             optionText:'description',
                                             optionValue: 'id',
                                             optionTree: 'children',
@@ -928,27 +933,40 @@
             </a></li>
         </ul>
         <div id="tabs-1">
-            <div class="flexlisttitle" ></div>
+            <div class="flexlisttitle" >
+                <h2 style="padding-left: 55px; font-size: 120%">Денежные еденицы приложения</h2>
+            </div>
             <div class="currency_list">
+                <!--<div class=" currency_clouds">-->
+                    <!--<h3>Основная валюта</h3>-->
+                    <!--<div class="cloud" data-bind="with: $root.currencyHash[$root.baseCurrencyId]">-->
+                        <!--<span class="cloud_tag" data-bind="text:description"></span>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="floatcont">
-                    <h2>Денежные еденицы приложения</h2>
-                    <ul data-bind="foreach:user.usersCurrency">
-                        <li>
-                           <span class="currency_name" data-bind="text:description"></span>
-                           <span class="currency_abbr" data-bind="text:shortname"></span>
-                           <span class="controls" data-bind="click:$root.user.removeCurrency">-</span>
-                        </li>
-                    </ul>
+                    <!--<h2>Денежные еденицы приложения</h2>-->
+                    <table class="baseTable">
+                        <tbody data-bind="foreach:$root.currencyArr">
+                            <tr>
+                                <td data-bind="text:description"></td>
+                                <td data-bind="text:shortname"></td>
+                                <td>
+                                    <input type="checkbox" data-bind="attr:{value:currency_id,id:'cur'+currency_id},checked:$root.user.__usersCurrency"/>
+                                    <label data-bind="attr:{for:'cur'+currency_id}">&nbsp;</label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="floatcont">
-                    <h2>Все денежные еденицы</h2>
-                    <ul data-bind="foreach:$root.currencyArr">
-                        <li >
-                            <span class="currency_name" data-bind="text:description"></span>
-                            <span class="currency_abbr" data-bind="text:shortname"></span>
-                            <span class="controls" data-bind="click:$root.user.addCurrency">+</span>
-                        </li>
-                    </ul>
+                    <!--<h2>Все денежные еденицы</h2>-->
+                    <!--<ul data-bind="foreach:$root.currencyArr">-->
+                        <!--<li >-->
+                            <!--<span class="currency_name" data-bind="text:description"></span>-->
+                            <!--<span class="currency_abbr" data-bind="text:shortname"></span>-->
+                            <!--<span class="controls" data-bind="click:$root.user.addCurrency">+</span>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                 </div>
             </div>
             <div class="clear"></div>

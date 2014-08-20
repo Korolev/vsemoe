@@ -31,7 +31,7 @@ $(document).on('click', function (e) {
             }
             target = target.parentNode;
         }
-        if(target){
+        if (target) {
             $('.dateInput').not(target).each(function (k, el) {
                 $(el).find('.itemDropDown').removeClass('fadeInDon').addClass('hidden');
             });
@@ -52,7 +52,7 @@ $(document).on('click', function (e) {
             }
             target = target.parentNode;
         }
-        if(target){
+        if (target) {
             $('.binding_select').not(target).each(function (k, el) {
                 $(el).find('.fake_select_body').addClass('hidden');
             });
@@ -73,7 +73,7 @@ $(document).on('click', function (e) {
             }
             target = target.parentNode;
         }
-        if(target){
+        if (target) {
             $('.binding_tree_select').not(target).each(function (k, el) {
                 $(el).find('.fake_tree_select_body').addClass('hidden');
             });
@@ -96,10 +96,10 @@ ko.bindingHandlers['digitext'] = {
     'update': function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor()) + "";
         value = value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-        if(value.indexOf('.') > -1){
-            value = function(val){
+        if (value.indexOf('.') > -1) {
+            value = function (val) {
                 var res = val.split('.');
-                return res[0]+','+res[1].substr(0,2);
+                return res[0] + ',' + res[1].substr(0, 2);
             }(value);
         }
         ko.utils.setTextContent(element, value);
@@ -279,7 +279,7 @@ ko.bindingHandlers['datepick'] = {
 
 
                 resizer.on('mousedown', function (e) {
-                    var target = e.target.className == 'slider-value-setter'?
+                    var target = e.target.className == 'slider-value-setter' ?
                         e.target.parentNode
                         : e.target;
 
@@ -289,8 +289,8 @@ ko.bindingHandlers['datepick'] = {
                     dx = e.screenX - ox;
                     drag = true;
 
-                    valCss = dx/width*100 | 0;
-                    val = parts*valCss/100  | 0;
+                    valCss = dx / width * 100 | 0;
+                    val = parts * valCss / 100 | 0;
                     val = val > parts ? parts : val;
                     val = val < 0 ? 0 : val;
 
@@ -300,22 +300,22 @@ ko.bindingHandlers['datepick'] = {
                     resizerSetter.css({'left': valCss + '%'});
                     resizerVal.css({'width': valCss + '%'});
 
-                    $(document).on('mouseup.'+title, function () {
+                    $(document).on('mouseup.' + title, function () {
                         drag = false;
                         callback(val);
-                        $(document).off('mouseup.'+title);
+                        $(document).off('mouseup.' + title);
                     });
                 });
 
                 $(document).on('mousemove', function (e) {
-                    var target = e.target.className == 'slider-value-setter'?
+                    var target = e.target.className == 'slider-value-setter' ?
                         e.target.parentNode
                         : e.target;
                     if (drag) {
                         dx = e.screenX - ox;
 
-                        valCss = dx/width*100 | 0;
-                        val = parts*valCss/100  | 0;
+                        valCss = dx / width * 100 | 0;
+                        val = parts * valCss / 100 | 0;
                         val = val > parts ? parts : val;
                         val = val < 0 ? 0 : val;
 
@@ -329,27 +329,26 @@ ko.bindingHandlers['datepick'] = {
                 });
 
 
-
                 return $('<div/>', {class: 'slider-holder'})
                     .append(text)
                     .append(resizer);
             },
             timePicker,
             timeOut = $('<div/>', {class: 'timeOut'}),
-            minSlider = createSlider('minute', 'Мин', 59, moment(value.value()).minutes(), function(val){
+            minSlider = createSlider('minute', 'Мин', 59, moment(value.value()).minutes(), function (val) {
                 var new_val = moment(value.value()).minutes(val);
                 value.value(new_val);
                 timeOut.text(new_val.format("HH:mm"));
             }),
-            hourSlider = createSlider('hour', 'Час', 23, moment(value.value()).hours(), function(val){
+            hourSlider = createSlider('hour', 'Час', 23, moment(value.value()).hours(), function (val) {
                 var new_val = moment(value.value()).hours(val);
                 value.value(new_val);
                 timeOut.text(new_val.format("HH:mm"));
             }),
             okButton = $('<input type="button" class="vse-cancel small button" value="OK"/>');
-            okButton.on('click',function(){
-                datePicker.addClass('hidden').removeClass('fadeInDown');
-            });
+        okButton.on('click', function () {
+            datePicker.addClass('hidden').removeClass('fadeInDown');
+        });
 
         if (value.time) {
             timePicker = $('<div/>', {class: 'timepicker'})
@@ -579,6 +578,7 @@ ko.bindingHandlers['select'] = {
         var uw = ko.utils.unwrapObservable,
             $element = $(element),
             config = valueAccessor(),
+            placeholder = uw(config.placeholder) || '',
             optionText = uw(config.optionText),
             optionValue = uw(config.optionValue),
             optionsCaption = uw(config.optionCaption),
@@ -588,7 +588,9 @@ ko.bindingHandlers['select'] = {
             _options = $element.data('options'),
             _optionValue,
             isSelected;
+
         for (var i = 0; i < _options.length; i++) {
+            if(isSelected) continue;
             _optionValue = optionValue ?
                 _options[i].data('_option')[optionValue]
                 : _options[i].data('_option');
@@ -606,6 +608,9 @@ ko.bindingHandlers['select'] = {
             }
         }
 
+        if (!value || (value && !isSelected)) {
+            _text.html('<span style="color: #CCCCCC">' + placeholder + '</span>');
+        }
 
     }
 };
@@ -618,6 +623,7 @@ ko.bindingHandlers['treeSelect'] = {
             optionText = uw(config.optionText),
             optionTree = uw(config.optionTree),
             optionValue = uw(config.optionValue),
+            placeholder = uw(config.placeholder) || '',
             optionsCaption = uw(config.optionCaption),
             tag = uw(config.tag ? config.tag : 'div'),
             icon = uw(config.icon),
@@ -648,6 +654,14 @@ ko.bindingHandlers['treeSelect'] = {
                     'left': _text.position().left,
                     'width': _text.innerWidth()
                 });
+
+
+
+                var checkSelected = function(){
+                    if(!selected){
+                        _text.html('<span style="color: #CCCCCC">' + placeholder + '</span>');
+                    }
+                };
 
                 var buildLi = function (arr, parent) {
                     var __options = [],
@@ -682,21 +696,25 @@ ko.bindingHandlers['treeSelect'] = {
                             });
                         } else {
                             __text.on('click', function () {
-                                var selected = $(this).data('_option');
+                                selected = $(this).data('_option');
                                 config.value(selected[optionValue]);
                                 _text.text(uw(selected[optionText]));
                                 _ul.find('.selected').removeClass('selected');
                                 $(this).data('_parent').addClass('selected');
                                 _ul.addClass('hidden');
+                                checkSelected();
                             });
                         }
                     }
                     parent.data('_options', __options);
                 };
 
+                checkSelected();
+
                 buildLi(options, _ul);
                 _text.on('click', function () {
                     _ul.toggleClass('hidden');
+                    checkSelected();
                 });
             };
 
@@ -723,6 +741,5 @@ ko.bindingHandlers['treeSelect'] = {
             _options = $element.data('options'),
             _optionValue,
             isSelected;
-
     }
 };

@@ -179,9 +179,11 @@ var ApplicationViewModel = function () {
     this.editItem = ko.observable();
 
     this.currencyArr = ko.observableArray([]);
+    this.currencyHash = {};
     this.currency = {"478": {shortname: "RUB"}, "0": {shortname: "--"}};
     this.baseCurrencyId = ko.observable(478);
-    this.user = new UserViewModel();
+    this.user = new UserViewModel(self);
+
 
 //Accounts
     this.accountIconsHash = {
@@ -727,10 +729,12 @@ var ApplicationViewModel = function () {
             var cArr = [];
             each(r, function (k, v) {
                 self.currency[v.currency_id] = v;
+                v.selected = ko.observable(false);
                 cArr.push(v);
+                self.currencyHash[v.currency_id] = v;
             });
             cArr.sort(function (a, b) {
-                return a.shortname < b.shortname ? -1 : 1;
+                return  a.shortname < b.shortname ? -1 : 1;
             });
             self.currencyArr(cArr);
         });
