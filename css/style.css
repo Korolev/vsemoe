@@ -1798,7 +1798,7 @@ span.attach:hover {
 
 .additional-info-colapser .switcher{
     position: absolute;
-    right: 0px;
+    left: 0px;
     background-image: url("/img/payment/payments_sprite.png");
     background-repeat: no-repeat;
     background-position: -361px -13px;
@@ -1813,7 +1813,7 @@ span.attach:hover {
     position: absolute;
     color: #ccc;
     content: 'Скрыть';
-    right: 22px;
+    left: 22px;
     top: 0px;
     font-size:10px;
 }
@@ -2006,7 +2006,7 @@ span.attach:hover {
 }
 
 .payment-methods {
-    padding: 63px 45px 0 0;
+    padding: 43px 45px 20px 0;
     text-align: center;
     letter-spacing: 10px;
 }
@@ -2353,4 +2353,12 @@ span.attach:hover {
     right: -34px;
     z-index: 10001;
     cursor: pointer;
+}
+
+.sortable-placeholder{
+    border-bottom: 1px solid #ccc;
+    height: 38px;
+    line-height: 40px;
+    padding-left: 20px;
+    background-color: #e0e0e0;
 }

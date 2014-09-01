@@ -45,8 +45,8 @@ $(document).on('click', function (e) {
 $(document).on('click', function (e) {
     var target = e.target;
     try {
-        while (target != document) {
-            var attrClass = target.getAttribute('class');
+        while (target && target != document) {
+            var attrClass = target && target.getAttribute('class');
             if (attrClass && (attrClass.indexOf('binding_select') > -1)) {
                 break;
             }
@@ -741,5 +741,70 @@ ko.bindingHandlers['treeSelect'] = {
             _options = $element.data('options'),
             _optionValue,
             isSelected;
+    }
+};
+
+ko.bindingHandlers['autocomplete'] = {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            config = valueAccessor(),
+            opts = uw(config.options),
+            optionTextPattern = uw(config.optionText),
+            selectCallback = uw(config.selectCallback),
+            options,
+            isSelected,
+            _text,
+            _ul,
+            _options = [];
+
+        var s = {
+            source:[],
+            select:function(event,obj){
+                console.log('!!!',arguments);
+                console.log('!!!',viewModel.currencyHash[obj.item._value]);
+                var selectedC = viewModel.currencyHash[obj.item._value],
+                    user = viewModel.user;
+                if(selectedC.currency_id != viewModel.baseCurrencyId() && user.__usersCurrency().indexOf(selectedC.currency_id) == -1){
+                    user.__usersCurrency.push(selectedC.currency_id);
+                }
+                setTimeout(function(){
+                    $element.val('');
+                },50);
+            }
+        };
+
+        console.log($element);
+        console.log(config);
+        console.log(opts);
+
+
+        $.each(opts,function(k,o){
+            var r = {};
+            r.label = optionTextPattern.replace(/{%(\w)+%}/g, function (str) {
+                var match = str.match(/{%(\w+)%}/);
+                return o[match[1]]
+            });
+            r.value = o.description;
+            r._value = o.currency_id;
+            s.source.push(r);
+        });
+console.log(s)
+        $element.autocomplete(s);
+
+    },
+    update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var uw = ko.utils.unwrapObservable,
+            $element = $(element),
+            config = valueAccessor(),
+            optionTextPattern = uw(config.optionText),
+            optionValue = uw(config.optionValue),
+            selectCallback = uw(config.selectCallback),
+            options,
+            isSelected,
+            _text,
+            _ul,
+            _options = [];
+
     }
 };

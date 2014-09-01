@@ -63,9 +63,12 @@ var TransactionViewModel = function (data, app) {
             }
 
         }());
+    }else if(self.from_id == self.to_id){
+        self.action_index = 3;
+        self.comment = 'Изменение суммы денежных средств';
     }
 
-    this.cssClass = ["passive_tr", "incoming_tr", "transport_tr"][self.action_index];
+    this.cssClass = ["passive_tr", "incoming_tr", "transport_tr","fixed_tr"][self.action_index];
 
     this.currencyRate = ko.observable(1);
 

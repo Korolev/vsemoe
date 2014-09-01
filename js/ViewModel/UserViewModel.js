@@ -42,58 +42,92 @@ var UserViewModel = function (app) {
     this.password = ko.observable("");
     this.repassword = ko.observable("");
     this.remember = ko.observable(true);
-    this.subscribenew = ko.observable(true);
+    this.subscribenews = ko.observable(true);
     this.timeOutId = null;
 
     this.userConfig = ko.observable();
-//TODO get users currensy from config; fill usersCurrency array
-    //maybe get user settings in class constructor
-    this.__usersCurrencyStr = '';
-    this.__usersCurrency = ko.observableArray([]);
+    this.userConfigHash = {};
 
-    this.usersCurrency = ko.computed(function () {
-        var res = [],
-            appCur = app.currencyArr(),
-            appMainCur = app.baseCurrencyId();
-
-        each(self.__usersCurrency(), function (k, cId) {
-            if (app.currencyHash[cId]) {
-                res.push(app.currencyHash[cId]);
-            }
+    this.setConfig = function (key, value) {
+        self.userConfigHash[key].value = value;
+        delete  self.userConfigHash[key].modified;
+        var dataClone = JSON.parse(JSON.stringify(self.userConfigHash[key]));
+//        dataClone.value = JSON.stringify(dataClone.value);
+//        dataClone.value = encodeURIComponent(dataClone.value);
+        ServerApi.updateConfig({
+            data: JSON.stringify(dataClone)
+        }, function (r) {
+            console.log(r);
+        })
+    };
+    this.loadConfig = function (conf) {
+        each(default_conf, function (k, cfg) {
+            self.userConfigHash[cfg.name] = cfg;
         });
-        return res;
-    }, this).extend({throttle: 5});
+        each(conf, function (k, cfg) {
+//            console.log('??',cfg);
+//            cfg.value = decodeURIComponent(cfg.value);
+//            cfg.value = JSON.parse(cfg.value);
+            self.userConfigHash[cfg.name] = cfg;
+        });
 
-    self.__usersCurrency.subscribe(function (val) {
-        if(!self.__usersCurrencyStr || self.__usersCurrencyStr == val.join(',')){
-            return false;
+        console.log('!!!', self.userConfigHash[appSettings.appFilters]);
+        console.log('!!!', self.userConfigHash[appSettings.appFilters].value);
+        console.log('!!!', self.userConfigHash[appSettings.appFilters].value.selectedFilter);
+        console.log('!!!', !self.userConfigHash[appSettings.appFilters].value.selectedFilter);
+        if (!self.userConfigHash[appSettings.appFilters].value.selectedFilter) {
+            //startFilterInit
+            app.selectedFilter(app.tableFilters()[0]);
+        } else {
+            console.log('???', self.userConfigHash[appSettings.appFilters].value.selectedFilter);
         }
-        if(self.timeOutId){
-            clearTimeout(self.timeOutId);
+        if (self.userConfigHash[appSettings.additionalCurrency].value) {
+            this.__usersCurrencyStr = self.userConfigHash[appSettings.additionalCurrency].value;
+            this.__usersCurrency(this.__usersCurrencyStr.split(','));
         }
-        self.timeOutId = setTimeout(function(){
-            self.__usersCurrencyStr = self.__usersCurrency().join(',');
-            ServerApi.updateConfig({
-                data: JSON.stringify({config_id: 1, name: 'used_currency', deleted: '0', value: self.__usersCurrencyStr})
-            }, function (r) {
-                console.log(r);
-            })
-        },1000);
-    });
-
-    this.setConf = function (conf) {
-        console.log(conf);
-        self.__usersCurrency(conf && conf.currency || []);
+        if (self.userConfigHash[appSettings.baseCurrencyId].value) {
+            app.baseCurrencyId(self.userConfigHash[appSettings.baseCurrencyId].value);
+        }
+        console.log(self.userConfigHash);
     };
 
-    this.addCurrency = function (item) {
-        if (self.usersCurrency().indexOf(item) == -1) {
-            self.usersCurrency.push(item);
-        }
-    };
-    this.removeCurrency = function (item) {
+    if (app) {
+        //TODO get users currensy from config; fill usersCurrency array
+        //maybe get user settings in class constructor
+        this.__usersCurrencyStr = '';
+        this.__usersCurrency = ko.observableArray([]);
 
-    };
+        this.usersCurrency = ko.computed(function () {
+            var res = [],
+                appCur = app && app.currencyArr(),
+                appMainCur = app && app.baseCurrencyId();
+
+            each(self.__usersCurrency(), function (k, cId) {
+                if (app.currencyHash[cId]) {
+                    res.push(app.currencyHash[cId]);
+                }
+            });
+
+            if (self.__usersCurrency().indexOf(app.baseCurrencyId) == -1) {
+                res.push(app.baseCurrency());
+            }
+            return res;
+        }, this).extend({throttle: 5});
+
+        self.__usersCurrency.subscribe(function (val) {
+            if (!self.__usersCurrencyStr || self.__usersCurrencyStr == val.join(',')) {
+                return false;
+            }
+            if (self.timeOutId) {
+                clearTimeout(self.timeOutId);
+            }
+            self.timeOutId = setTimeout(function () {
+                self.__usersCurrencyStr = self.__usersCurrency().join(',');
+                self.setConfig(appSettings.additionalCurrency, self.__usersCurrencyStr);
+            }, 500);
+        });
+    }
+
 
     this.editMode = ko.observable(false);
 
@@ -233,21 +267,21 @@ var UserViewModel = function (app) {
 
     this.token.subscribe(function (val) {
         ServerApi.options.token = val;
-        ServerApi.getConfigList({}, function (r) {
-            var currConf = [];
-            each(r, function (k, conf) {
-                if (conf.name == 'used_currency' && conf.deleted == 0) {
-                    if (conf.value) {
-                        currConf = conf.value.split(',');
-                    }
-                }
-            });
-            if (currConf.length == 0) {
-                currConf.push(app.baseCurrencyId());
-            }
-            self.setConf({currency: currConf});
-            self.userLoadReady = true;
-        });
+//        ServerApi.getConfigList({}, function (r) {
+//            var currConf = [];
+//            each(r, function (k, conf) {
+//                if (conf.name == 'used_currency' && conf.deleted == 0) {
+//                    if (conf.value) {
+//                        currConf = conf.value.split(',');
+//                    }
+//                }
+//            });
+//            if (currConf.length == 0) {
+//                currConf.push(app.baseCurrencyId());
+//            }
+//            self.setConf({currency: currConf});
+//            self.userLoadReady = true;
+//        });
         var token = getCookie(ApplicationSettings.cookieName);
 
         if (val && val != token) {

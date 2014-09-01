@@ -105,6 +105,10 @@ ul li span,
     letter-spacing: 0.04rem;
 }
 
+.fixed_tr{
+    color: #FF6900;
+}
+
 .incoming_tr {
     color: #819625;
 }
@@ -1941,4 +1945,33 @@ input.vse-cancel:active{
     color: #CCCCCC;
     cursor: pointer;
 }
+
+.currency_list h3{
+    text-transform: uppercase;
+    color: #938e85;
+    margin: 20px 0 5px 0;
+    font-family: "helveticaneue bold";
+}
+
+.currency_list .cloud-tag{
+    border-radius: 2px;
+    background: none repeat scroll 0 0 #eee;
+    padding: 0px 10px;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+}
+.currency_list .cloud-tag .remove-tag{
+    font-size: 12px;
+    font-weight: bold;
+    color: #424c57;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+
 /*SETTING CSS*/
+
+.ui-widget-content{
+    z-index: 1000;
+}

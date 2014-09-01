@@ -38,3 +38,14 @@ var FilterViewModel = function (data, app) {
         return res;
     }
 };
+
+FilterViewModel.prototype.toJSON = function () {
+    return {
+        type: ko.utils.unwrapObservable(this.type),
+        label: ko.utils.unwrapObservable(this.label),
+        short: ko.utils.unwrapObservable(this.short),
+        selected: ko.utils.unwrapObservable(this.selected),
+        hidden: ko.utils.unwrapObservable(this.hidden),
+        value: ko.utils.unwrapObservable(this.value)
+    };
+};

@@ -5,15 +5,21 @@
         <!--<span>3. ОПЛАТА</span>-->
     <!--</div>-->
 <!--</div>-->
+<script type="text/javascript">
+ServerApi.options.token = getCookie(ApplicationSettings.cookieName);
+ServerApi.getUserPayment({},function(r){
+    moment.months = calendarMonthNamesLoc;
+    $("#do_date").text(moment(new Date(r.end)).format('D MMMM YYYY'));
+});
+</script>
 <div class="success_pay">
     <p>Дорогой друг.</p>
     <h2>Ваш платеж прошел!</h2>
     <p class="italic" style="color: #CCCCCC">Чтобы сохранить своим настройки, за несколько дней продлите статус.</p>
 <br>
 <br>
-    <p>Ваш текущий статус - 1 месяц123.<br>
-        Заканчиваеться через 31 день.<br>
-        Действует по <b style="color: #ff9000">21 января 2014 года.</b>
+    <p>Выбранный период - {!period}.<br>
+        Действует по <b id="do_date" style="color: #ff9000">21 января 2014 года.</b>
     </p>
 <br>
 <br>

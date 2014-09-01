@@ -1,157 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Page Not Found :(</title>
-        <style>
-            ::-moz-selection {
-                background: #b3d4fc;
-                text-shadow: none;
-            }
+<!DOCTYPE HTML>
+<html lang="ru-RU">
+<head>
+    <link href="/css/fonts.css" rel="stylesheet" type="text/css">
+    <link href="/css/login.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/newmain.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="/css/jquery.gritter.css" rel="stylesheet" type="text/css">
 
-            ::selection {
-                background: #b3d4fc;
-                text-shadow: none;
-            }
+    <style>
+        .container a{
+            color: #02a3c5;
+        }
+    </style>
 
-            html {
-                padding: 30px 10px;
-                font-size: 20px;
-                line-height: 1.4;
-                color: #737373;
-                background: #f0f0f0;
-                -webkit-text-size-adjust: 100%;
-                -ms-text-size-adjust: 100%;
-            }
+    <script src="/js/lib/jquery-1.8.2.min.js?v9"></script>
+    <script src="/js/lib/jquery.gritter.js?v9"></script>
+    <script src="/js/lib/moment.min.js?v9"></script>
+    <script src="/js/lib/sammy-latest.min.js?v9"></script>
+    <script src="/js/config/ApplicationSettings.js"></script>
+    <script src="/js/utils/util.js?v9"></script>
+    <script src="/js/lib/knockout-latest.js?v9"></script>
+    <script src="/js/ko.additional.js?v9"></script>
+    <script src="/js/utils/ServerApi.js?v9"></script>
+    <script src="/js/ViewModel/UserViewModel.js?v9"></script>
+    <script src="/js/header.js"></script>
 
-            html,
-            input {
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1100">
+    <title>Правила сервиса. Защита информации и конфиденциальность - VseMoe.RU.</title>
+    <meta name="title" content="Правила сервиса. Защита информации и конфиденциальность - VseMoe.RU">
+    <meta name="description" content="Правила сервиса. Защита информации и конфиденциальность данных - VseMoe.RU">
+    <meta name="keywords" content="всёмоё, веб-сервис, правила, сервис">
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body class="inner">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function () {
+            try {
+                w.yaCounter22607524 = new Ya.Metrika({id: 22607524,
+                    webvisor: true,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true});
+            } catch (e) {
             }
+        });
 
-            body {
-                max-width: 500px;
-                _width: 500px;
-                padding: 30px 20px 50px;
-                border: 1px solid #b3b3b3;
-                border-radius: 4px;
-                margin: 0 auto;
-                box-shadow: 0 1px 10px #a7a7a7, inset 0 1px 0 #fff;
-                background: #fcfcfc;
-            }
+        var n = d.getElementsByTagName("script")[0],
+                s = d.createElement("script"),
+                f = function () {
+                    n.parentNode.insertBefore(s, n);
+                };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
 
-            h1 {
-                margin: 0 10px;
-                font-size: 50px;
-                text-align: center;
-            }
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else {
+            f();
+        }
+    })(document, window, "yandex_metrika_callbacks");
 
-            h1 span {
-                color: #bbb;
-            }
-
-            h3 {
-                margin: 1.5em 0 0.5em;
-            }
-
-            p {
-                margin: 1em 0;
-            }
-
-            ul {
-                padding: 0 0 0 40px;
-                margin: 1em 0;
-            }
-
-            .container {
-                max-width: 380px;
-                _width: 380px;
-                margin: 0 auto;
-            }
-
-            /* google search */
-
-            #goog-fixurl ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-
-            #goog-fixurl form {
-                margin: 0;
-            }
-
-            #goog-wm-qt,
-            #goog-wm-sb {
-                border: 1px solid #bbb;
-                font-size: 16px;
-                line-height: normal;
-                vertical-align: top;
-                color: #444;
-                border-radius: 2px;
-            }
-
-            #goog-wm-qt {
-                width: 220px;
-                height: 20px;
-                padding: 5px;
-                margin: 5px 10px 0 0;
-                box-shadow: inset 0 1px 1px #ccc;
-            }
-
-            #goog-wm-sb {
-                display: inline-block;
-                height: 32px;
-                padding: 0 10px;
-                margin: 5px 0 0;
-                white-space: nowrap;
-                cursor: pointer;
-                background-color: #f5f5f5;
-                background-image: -webkit-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                background-image: -moz-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                background-image: -ms-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                background-image: -o-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                *overflow: visible;
-                *display: inline;
-                *zoom: 1;
-            }
-
-            #goog-wm-sb:hover,
-            #goog-wm-sb:focus {
-                border-color: #aaa;
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-                background-color: #f8f8f8;
-            }
-
-            #goog-wm-qt:hover,
-            #goog-wm-qt:focus {
-                border-color: #105cb6;
-                outline: 0;
-                color: #222;
-            }
-
-            input::-moz-focus-inner {
-                padding: 0;
-                border: 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Not found <span>:(</span></h1>
-            <p>Sorry, but the page you were trying to view does not exist.</p>
-            <p>It looks like this was the result of either:</p>
-            <ul>
-                <li>a mistyped address</li>
-                <li>an out-of-date link</li>
-            </ul>
-            <script>
-                var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
-            </script>
-            <script src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
+</script>
+<noscript>
+    <div><img src="//mc.yandex.ru/watch/22607524" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+<header>
+    <div class="wrap">
+        <div class="logo-slogan">
+            <a href="/" title="Всё Мое">&nbsp;</a>
         </div>
-    </body>
+        <!-- ko if: login -->
+        <div class="menu-login-authorized">
+            <span class="user-email" data-bind="text: login"></span>
+            <nav class="user-pages-nav">
+                <ul class="fr">
+                    <li><a href="/feedback">Поддержка</a></li>
+                    <li><a href="/payment">Тарифы</a></li>
+                    <li><a href="/account">Приложение</a></li>
+                    <li><a href="#" class="logout-link" data-bind="click:logout">Выйти</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- /ko -->
+        <!-- ko ifnot: login -->
+        <div class="menu-login-register">
+            <nav class="navigation">
+                <ul class="fr">
+                    <li><a href="/tour.html">Экскурсия</a></li>
+                    <li class="chertochka"></li>
+                    <li><a href="http://media.vsemoe.ru">Новости</a></li>
+                    <li class="chertochka"></li>
+                    <li><a href="/payment">Тарифы</a></li>
+                    <li class="chertochka"></li>
+                    <li>
+                        <span>Контакты</span>
+                        <ul>
+                            <li><a href="/contacts.html">Контакты</a></li>
+                            <li><a href="/feedback">Поддержка</a></li>
+                        </ul>
+
+                    </li>
+                    <li class="chertochka"></li>
+                </ul>
+            </nav>
+            <div class="social-links">
+                <ul class="minisocials">
+                    <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+                    <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+                    <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+                </ul>
+            </div>
+            <div class="signin-login-button">
+                <a href="/account" class="loginbtn-minisocials">Войти</a> /
+                <a href="/account/#register" class="loginbtn-minisocials">Начать</a>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+</header>
+<div class="wrap">
+    <div class="container" >
+
+        <div class="in-page">
+            <section class="content-block" style="background-image: url('/img/404pageimg.jpg');background-position: right bottom; background-repeat: no-repeat;width: 625px;">
+                <div style="width: 520px;margin: 40px 0 40px 40px;">
+                    <img src="img/404pagenum.jpg">
+
+                    <h2 style="color: #ff9000">К сожалению, страница не найдена!</h2>
+
+                    <p>
+                        Попробуйте начать с главной страницы <a href="http://vsemoe.ru/">http://vsemoe.ru/</a>
+                        либо начать вводить транзакций с <a href="http://vsemoe.ru/account/#insert">http://vsemoe.ru/account/#insert</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>
+<footer class="footer">
+    <div class="in">
+        <div class="bottomlogo"><a href="http://studiovsemoe.com"></a></div>
+        <ul class="navi">
+            <li><a href="/tour.html">Экскурсия</a></li>
+            <li><a href="http://media.vsemoe.ru">Новости</a></li>
+            <li><a href="/payment">Тарифы</a></li>
+            <li><a href="/contacts.html">Контакты</a></li>
+            <li><a href="/rules.html">Правила</a></li>
+        </ul>
+        <ul class="socials">
+            <li><a href="http://facebook.com/vsemoe.ru" target="_blank" class="fb"></a></li>
+            <li><a href="https://twitter.com/vsemoe_ru" target="_blank" class="twitter"></a></li>
+            <li><a href="http://vk.com/vsemoe_ru" target="_blank" class="vk"></a></li>
+        </ul>
+        <span class="copy">@ 2013-2014 &laquo;Всё Моё&raquo; Все права защищены</span>
+    </div>
+</footer>
+</body>
 </html>

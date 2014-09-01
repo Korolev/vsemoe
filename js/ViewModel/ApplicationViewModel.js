@@ -26,26 +26,6 @@ var _ues = {
 //    s.parentNode.insertBefore(_ue, s);
 //})();
 
-//TODO move all date manipulation to Moment.js
-var calendarMonthNamesLoc = ["Января", "Февраля", "Марта",
-        "Апреля", "Мая", "Июня",
-        "Июля", "Августа", "Сентября",
-        "Октября", "Ноября", "Декабря"],
-    dayOfWeeks = [ "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
-    tableFilters = [
-        { label: "1 день", short: "1д", selected: true, value: "1439 m"},
-        { label: "1 неделя", short: "1н", selected: true, value: "1 w"},
-        { label: "2 недели", short: "2н", selected: false, value: "2 w"},
-        { label: "1 месяц", short: "1м", selected: true, value: "1 M"},
-        { label: "3 месяца", short: "3м", selected: false, value: "3 M"},
-        { label: "6 месяцев", short: "6м", selected: true, value: "6 M"},
-        { label: "9 месяцев", short: "9м", selected: false, value: "9 M"},
-        { label: "1 год", short: "1г", selected: false, value: "1 y"},
-        { label: "2 года", short: "2г", selected: false, value: "2 y"},
-        { label: "5 лет", short: "5л", selected: false, value: "5 y"},
-        { label: "Все", short: "Все", selected: true, value: "all", hidden: true}
-    ];
-
 
 var ApplicationViewModel = function () {
     var self = this,
@@ -133,19 +113,19 @@ var ApplicationViewModel = function () {
 //Filters
     this.tableFilters = ko.observableArray(function (arr) {
         var res = [];
-        ko.utils.arrayForEach(arr, function (data) {
+        each(arr, function (k, data) {
             res.push(new FilterViewModel(data, self));
         });
         return res;
     }(tableFilters));
-    this.tableFiltersCheckedLen = ko.computed(function(){
+    this.tableFiltersCheckedLen = ko.computed(function () {
         var res = 0,
             fs = self.tableFilters();
-        each(fs,function(k,filt){
-           res+= filt.selected() ? 1 : 0;
+        each(fs, function (k, filt) {
+            res += filt.selected() ? 1 : 0;
         });
         return res;
-    }).extend({throttle:1});
+    }).extend({throttle: 1});
     this.selectedFilter = ko.observable();
     this.accountId = ko.observable('');
     this.showFilterConfig = ko.observable(false);
@@ -181,6 +161,7 @@ var ApplicationViewModel = function () {
     this.currencyArr = ko.observableArray([]);
     this.currencyHash = {};
     this.currency = {"478": {shortname: "RUB"}, "0": {shortname: "--"}};
+    this.baseCurrency = ko.observable({});
     this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel(self);
 
@@ -302,32 +283,63 @@ var ApplicationViewModel = function () {
 
 //baseTypeAccount: ["IN", "OUT", "CASH", "BANK", "CARD", "LOAN", "ELECTRON", "OTHER"],
 //group 0 - ALL; 1 - Active; 2 - Passive;
+    var _accountsViewList = function () {
+        if (self.ViewListTimeOut) {
+            clearTimeout(self.ViewListTimeOut);
+        }
+        self.ViewListTimeOut = setTimeout(function () {
+            var res = [],
+                acs = self.accounts(),
+                len = acs.length,
+                i = 0,
+                parent = self.accountsViewListParent(),
+                group = self.accountsViewListGroup(),
+                type = self.accountsViewListType();
+
+            while (i < len) {
+
+                if (acs[i].parent() == parent
+                    && acs[i].group() == group
+                    && acs[i].type() == type) {
+                    res.push(acs[i]);
+                }
+                i++;
+            }
+
+            res.sort(function (a, b) {
+                return a.position < b.position ? -1 : 1;
+            });
+
+            self.accountsViewList(res);
+        }, 50)
+    };
+
     this.accounts = ko.observableArray([]);
     this.accountsViewListParent = ko.observable(0);
     this.accountsViewListGroup = ko.observable(0);
     this.accountsViewListType = ko.observable('OUT');
-    this.accountsViewList = ko.computed(function () {
-        var res = [],
-            acs = self.accounts(),
-            len = acs.length,
-            i = 0,
-            parent = self.accountsViewListParent(),
-            group = self.accountsViewListGroup(),
-            type = self.accountsViewListType();
+    this.accountsViewList = ko.observableArray([]);
 
-        while (i < len) {
+    _accountsViewList();
 
-            if (acs[i].parent() == parent
-                && acs[i].group() == group
-                && acs[i].type() == type) {
-                res.push(acs[i]);
-            }
-            i++;
-        }
-        return res;
-    }, this).extend({throttle: 50});
+    this.accounts.subscribe(_accountsViewList);
+    this.accountsViewListParent.subscribe(_accountsViewList);
+    this.accountsViewListType.subscribe(_accountsViewList);
+    this.accountsViewListGroup.subscribe(_accountsViewList);
+
     this.accountsHash = {};
     this.accountInEdit = ko.observable();
+
+    this.moveCatCallback = function (obj, event, placeholder) {
+        each(obj.targetParent(), function (i, el) {
+            var k = el.group();
+            if (!k && el.type() == 'OUT') {
+                k = 0.5;
+            }
+            el.position = k * 10000 + i;
+        });
+        console.log(obj.targetParent());
+    };
 
     this.editAcc = function (item, event) {
         location.hash = self.action() + '/' + self.accountIconsHash[item.category];
@@ -395,7 +407,7 @@ var ApplicationViewModel = function () {
             _transFiltered = [];
         //mk logic
         each(self.transactions(), function (k, t) {
-            if (t.hidden == 0 && t.template == 0 && !!t.finished && !t.deleted() && !t.split) {
+            if ((t.hidden == 0 || t.hidden == 1 && t.position == 1) && t.template == 0 && !!t.finished && !t.deleted() && !t.split) {
                 t.amount = parseFloat(t.amount).toFixed(2);
                 transFiltered.push(t);
 
@@ -523,6 +535,19 @@ var ApplicationViewModel = function () {
     });
 
     this.selectedFilter.subscribe(function (val) {
+        self.user.setConfig(appSettings.appFilters, {
+            tableFilters: function (tFilters) {
+                var res = [];
+                each(tFilters, function (k, f) {
+                    res.push(f.toJSON());
+                });
+                return res;
+            }(self.tableFilters()),
+            selectedFilter: val.toJSON(),
+            timeFilterTo: self.timeFilterTo().format(),
+            timeFilterFrom: self.timeFilterFrom().format()
+        });
+
         var sub,
             endDate = new moment().endOf('day');
         if (val && val.type) {
@@ -654,9 +679,6 @@ var ApplicationViewModel = function () {
 
     this.userRestore = function () {
         var user = self.user;
-//    ServerApi.existUser({user:user.email()},function(r){
-//      console.log(r);
-//    });
         ServerApi.lostpasswordUser({user: user.email()}, function (r) {
             if (r) {
                 self.action("congratulations");
@@ -725,84 +747,103 @@ var ApplicationViewModel = function () {
     };
 
     this.user.afterLoginFunc = function () {
-        ServerApi.getCurrencyList({}, function (r) {
-            var cArr = [];
-            each(r, function (k, v) {
-                self.currency[v.currency_id] = v;
-                v.selected = ko.observable(false);
-                cArr.push(v);
-                self.currencyHash[v.currency_id] = v;
-            });
-            cArr.sort(function (a, b) {
-                return  a.shortname < b.shortname ? -1 : 1;
-            });
-            self.currencyArr(cArr);
-        });
-        ServerApi.getAccountList({}, function (r) {
-            self.accounts.removeAll();
-            self.accountsHash = {};
-            var res = [],
-                accIds = [];
+        var loadData = function () {
+                ServerApi.getAccountList({}, function (r) {
+                    self.accounts.removeAll();
+                    self.accountsHash = {};
+                    var res = [],
+                        accIds = [];
 
-            self.___firstDate = moment().unix();
-            self.___usedCurrency = self.___usedCurrency || {};
-            self.___usedCurrencyRates = self.___usedCurrencyRates || {};
+                    self.___firstDate = moment().unix();
+                    self.___usedCurrency = self.___usedCurrency || {};
+                    self.___usedCurrencyRates = self.___usedCurrencyRates || {};
 
-            each(r, function (k, acc) {
-                self.___usedCurrency[acc.currency_id] = {};
-                var a = new AccountViewModel(acc, self);
-                res.push(a);
-                self.accountsHash[a.id] = a;
-                accIds.push(a.id);
-            });
-            self.accounts.pushAll(res);
+                    each(r, function (k, acc) {
+                        self.___usedCurrency[acc.currency_id] = {};
+                        var a = new AccountViewModel(acc, self);
+                        res.push(a);
+                        self.accountsHash[a.id] = a;
+                        accIds.push(a.id);
+                    });
+                    self.accounts.pushAll(res);
 
-            each(self.accounts(), function (k, acc) {
-                acc.initChildren(self);
-            });
-            ServerApi.getTransactionList({
-                account_id: accIds.join(',')
-            }, function (r) {
-                var trs = [];
-                each(r, function (k, tr) {
-                    self.___usedCurrency[tr.currency_id] = 1;
-                    if (tr.currency_id != self.baseCurrencyId()) {
-                        self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
-                        self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
-                    }
-                    var transaction = new TransactionViewModel(tr, self);
-                    trs.push(transaction);
-                    self.minTransactionDate = self.minTransactionDate ?
-                        transaction.created < moment(self.minTransactionDate) ?
-                            transaction.created.format() : self.minTransactionDate
-                        : transaction.created.format();
-                    self.transactionsHash[tr.transaction_id] = transaction;
-                });
-
-                each(trs, function (k, tr) {
-                    if (tr.split) {
-                        self.transactionsHash[tr.split].hasSplit(true);
-                        self.transactionsHash[tr.split].splitTransactions.push(tr);
-                    }
-                });
-                $.each(self.___usedCurrency, function (key, val) {
-                    if (key - 0 && key != self.baseCurrencyId()) {
-                        ServerApi.getCurrencyRateList({
-                            currency_id: key,
-                            from: moment.unix(self.___firstDate).subtract('d', 1).unix()
-                        }, function (r) {
-                            each(r, function (k, curr) {
-                                self.___usedCurrencyRates[curr.currency_id + '-' + moment(Date(curr.modified * 1000)).format('YYYY-MM-DD')] = curr.rate;
-                            });
-                            self.transactions.valueHasMutated();
-                            self.accounts.valueHasMutated();
-                            self.transactionsSetGen();
+                    each(self.accounts(), function (k, acc) {
+                        acc.initChildren(self);
+                    });
+                    ServerApi.getTransactionList({
+                        account_id: accIds.join(',')
+                    }, function (r) {
+                        var trs = [];
+                        each(r, function (k, tr) {
+                            self.___usedCurrency[tr.currency_id] = 1;
+                            if (tr.currency_id != self.baseCurrencyId()) {
+                                self.___usedCurrencyRates[tr.currency_id + '-' + moment.unix(tr.created).format('YYYY-MM-DD')] = 1;
+                                self.___firstDate = self.___firstDate > +tr.created ? +tr.created : self.___firstDate;
+                            }
+                            var transaction = new TransactionViewModel(tr, self);
+                            trs.push(transaction);
+                            self.minTransactionDate = self.minTransactionDate ?
+                                transaction.created < moment(self.minTransactionDate) ?
+                                    transaction.created.format() : self.minTransactionDate
+                                : transaction.created.format();
+                            self.transactionsHash[tr.transaction_id] = transaction;
                         });
-                    } else {
-                        self.transactions.removeAll();
-                        self.transactions.pushAll(trs);
-                    }
+
+                        each(trs, function (k, tr) {
+                            if (tr.split) {
+                                self.transactionsHash[tr.split].hasSplit(true);
+                                self.transactionsHash[tr.split].splitTransactions.push(tr);
+                            }
+                        });
+                        $.each(self.___usedCurrency, function (key, val) {
+                            if (key - 0 && key != self.baseCurrencyId()) {
+                                ServerApi.getCurrencyRateList({
+                                    currency_id: key,
+                                    from: moment.unix(self.___firstDate).subtract('d', 1).unix()
+                                }, function (r) {
+                                    each(r, function (k, curr) {
+                                        self.___usedCurrencyRates[curr.currency_id + '-' + moment(Date(curr.modified * 1000)).format('YYYY-MM-DD')] = curr.rate;
+                                    });
+                                    self.transactions.valueHasMutated();
+                                    self.accounts.valueHasMutated();
+                                    self.transactionsSetGen();
+                                });
+                            } else {
+                                self.transactions.removeAll();
+                                self.transactions.pushAll(trs);
+                            }
+                        });
+                    });
                 });
+            };
+
+
+        ServerApi.getConfigList({}, function (r) {
+            self.user.loadConfig(r);
+
+            ServerApi.getCurrencyList({}, function (r) {
+                var cArr = [];
+                each(r, function (k, v) {
+                    self.currency[v.currency_id] = v;
+                    v.selected = ko.observable(false);
+                    v.unCheck = function (item) {
+                        v.selected(false);
+                        self.currencyArr.valueHasMutated();
+                        self.user.__usersCurrency.splice(self.user.__usersCurrency.indexOf(item.currency_id),1);
+                    };
+                    v.setCheck = function (item) {
+                        v.selected(true);
+                        self.currencyArr.valueHasMutated();
+                    };
+                    cArr.push(v);
+                    self.currencyHash[v.currency_id] = v;
+                });
+                cArr.sort(function (a, b) {
+                    return  a.shortname < b.shortname ? -1 : 1;
+                });
+                self.baseCurrency(self.currencyHash[self.baseCurrencyId()]);
+                self.currencyArr(cArr);
+                loadData();
             });
         });
     };
@@ -911,9 +952,6 @@ var ApplicationViewModel = function () {
             + self.pageContentTemplateName();
     }, this);
 
-    //startFilterInit
-    self.selectedFilter(this.tableFilters()[0]);
-
     //Pay check protection
 //    if ((new Date()).getTime() > (new Date(2013, 11)).getTime()) {
 //        ko = {};
@@ -942,7 +980,7 @@ var ApplicationViewModel = function () {
                             } else {
                                 self.action(a);
                             }
-                        }else{
+                        } else {
                             self.user.removeToken();
                             location.reload();
                         }
@@ -995,11 +1033,6 @@ var ApplicationViewModel = function () {
 
     this.createTransaction = function (obj, callback) {
         var app = self;
-//        console.log(JSON.parse(JSON.stringify(obj)));
-//        callback({
-//            transaction_id: (Math.random() * 100000) | 0
-//        });
-
         if (obj.currency_id != app.baseCurrencyId()
             && !app.___usedCurrencyRates[obj.currency_id + '-' + moment().format('YYYY-MM-DD')]) {
             ServerApi.getCurrencyRateDay({
@@ -1021,7 +1054,7 @@ var ApplicationViewModel = function () {
     $(document).on('click', function (e) {
         var target = e.target;
         try {
-            while (target != document) {
+            while (target && target != document) {
                 var attrClass = target.getAttribute('class');
                 if (attrClass && (attrClass.indexOf('filterItemConfig_holder') > -1)) {
                     break;
