@@ -931,3 +931,216 @@ header .menu-login-register .signin-login-button {
 .footer .socials .vk:hover {
   background-position: -122px -61px;
 }
+
+.payment_head{
+    height: 150px;
+}
+
+.payment_table div{
+    /*background-color: rgba(0,0,0,0.1);*/
+}
+
+.payment_head .payment_head_left{
+    float: left;
+    width: 650px;
+    font-size: 16px;
+}
+.payment_head .payment_head_left h1{
+    margin-left: 0;
+}
+.payment_head .payment_head_right{
+    float: right;
+    width: 120px;
+    text-align: center;
+    padding-top: 22px;
+    background-image: url("../img/payment/shape459.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+.payment_head .payment_head_right a{
+    font-size: 12px;
+    line-height: 14px !important;
+}
+
+.payment_table{
+}
+
+.payment_table .top_squire_block{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+
+    display: inline-block;
+    width: 25%;
+    height: 180px;
+    border: 1px solid #cccccc;
+    border-right: none;
+
+    text-align: center;
+}
+.payment_table .top_squire_block.last{
+    border-right: 1px solid #cccccc;
+}
+
+.payment_table .price_button{
+    display: inline-block;
+    height: 45px;
+    width: 180px;
+    line-height: 45px;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #2E7BD9;
+}
+
+.top_squire_block .price_button{
+    margin-bottom: -23px;
+}
+
+.price_button.deep_red{
+    background-color: #FF0000;
+}
+.price_button.red{
+    background-color: #FF4300;
+}
+.price_button.yellow{
+    background-color: #FFD200;
+}
+.price_button.green{
+    background-color: #8DCC40;
+}
+.price_button a{
+    color: #FFFFFF;
+    display: block;
+    position: relative;
+    line-height: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 100;
+}
+.price_new a{
+    color: #3B4742 !important;
+}
+
+.strikethrough {
+    position: relative;
+}
+
+.strikethrough:before {
+    position: absolute;
+    content: " ";
+    left: 0;
+    top: 40%;
+    right: 0;
+    border-top: 1px solid;
+    border-color: inherit;
+
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    -ms-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+    padding: 0 4px;
+}
+
+.strikethrough1:before{
+    -webkit-transform: rotate(-12deg);
+    -moz-transform: rotate(-12deg);
+    -ms-transform: rotate(-12deg);
+    -o-transform: rotate(-12deg);
+    transform: rotate(-12deg);
+}
+
+.strikethrough2:before{
+    -webkit-transform: rotate(-16deg);
+    -moz-transform: rotate(-16deg);
+    -ms-transform: rotate(-16deg);
+    -o-transform: rotate(-16deg);
+    transform: rotate(-16deg);
+}
+
+.payment_table .price_old{
+    color: #b4b4b4;
+    display: inline-block;
+    height: 30px;
+    margin-top: 25px;
+}
+.payment_table .price_new{
+    color: #3B4743;
+    font-size: 36px;
+    line-height: 50px;
+}
+.payment_table .price_period{
+    color: #618336;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.payment_table .mid_squire_block{
+    border: 1px solid #cccccc;
+    border-top: none;
+    display: inline-block;
+    width: 75.1111%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    vertical-align: top;
+    height: 500px;
+    padding-left: 40px;
+    position: relative;
+}
+.payment_table .mid_squire_block.last{
+    border-left: none;
+    width: 24.888%;
+    padding-left: 0px;
+}
+
+.payment_table .button_holder{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.payment_table .after_button{
+    display: block;
+    font-size: 10px;
+    color: #cccccc;
+    text-align: center;
+}
+
+.mid_squire_block h3,
+.mid_squire_block .fake_h3{
+    margin: 50px 20px 10px;
+    display: block;
+    padding: 0;
+    height: 50px;
+    line-height: 50px;
+}
+
+.payment_table ul{
+    display: block;
+    padding-left: 30px;
+}
+.payment_table ul li{
+    display: block;
+    position: relative;
+    padding-left: 10px;
+    line-height: 20px;
+    margin-top: 5px;
+    height: 40px;
+}
+.payment_table ul li:before{
+    position: absolute;
+    content: "–";
+    margin-top: -1px;
+    left: -5px;
+}
+.payment_table ul li span{
+    display: block;
+    font-size: 10px;
+    color: #cccccc;
+}
+.payment_table .after_button{}
+
