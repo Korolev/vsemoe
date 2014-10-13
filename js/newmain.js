@@ -18,7 +18,7 @@ $(function() {
     });
 
     function showPartnerForm(){
-        showIframeDialog('/partner');
+        showIframeDialog('/partner/?v4');
     }
 
     if(location.hash == '#showpartner'){

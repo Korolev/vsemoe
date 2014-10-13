@@ -281,6 +281,9 @@ footer .copy {
     color: #ccc;
     letter-spacing: 1px;
 }
+.inputText.moveBottom {
+    margin: 56px 30px 40px;
+}
 
 .contentTable {
     font-family: Verdana, Lucida Grande, Helvetica, Arial san-serif;
@@ -427,6 +430,45 @@ footer .copy {
     border-right: 1px solid #E7E7E7;
     border-top: 1px solid #eeeeee;
     vertical-align: top;
+}
+
+.tdleftMenu.settings{
+    padding: 0;
+}
+
+.tdleftMenu.settings ul{
+
+}
+
+.tdleftMenu.settings ul li{
+    display: block;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    width: 217px;
+    line-height: 39px;
+    height: 35px;
+    background: none repeat scroll 0% 0% #4A4C4F;
+    color: rgb(255, 255, 255);
+    padding: 0px 0px 0px 24px;
+    text-transform: uppercase;
+    border: 1px solid #4A4C4F;
+    border-bottom-color: #414243;
+    border-top-color: #515253;
+}
+.tdleftMenu.settings ul li.selected{
+    cursor: default;
+    position: relative;
+    overflow: visible;
+}
+.tdleftMenu.settings ul li.selected:before{
+    content: '';
+    position: absolute;
+    height: 37px;
+    width: 8px;
+    background-color: rgb(255, 105, 0);
+    left: -1px;
+    top: -1px;
 }
 
 .leftMenu {

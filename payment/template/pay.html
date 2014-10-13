@@ -61,10 +61,7 @@
                         info = parseMathString($el.data('info')),
                         container = $('.paper_content');
 
-                console.log(info);
                 href = info ? info.url : false;
-
-                console.log(href);
 
                 $.get(location.pathname+location.search+'&dir='+href,function(r){
                    var res = r.response,
@@ -79,13 +76,15 @@
                         span.text(span.next().text());
                         span.next().remove();
 
-                        $('#token').val(token);
-                        $('#summ').val(getParameterByName('summ'));
-                        $('#text_summ').text(getParameterByName('summ')+' руб.');
+                        var tarif = getParameterByName('summ');
 
-                        $('#shopSuccessURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm');
+                        $('#token').val(token);
+                        $('#summ').val(tarif);
+                        $('#text_summ').text(tarif+' руб.');
+
+                        $('#shopSuccessURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm&tarif='+tarif);
                         $('#shopFailURL').val(location.protocol+'//'+location.host+'/payment/?action=fail');
-                        $('#successURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm');
+                        $('#successURL').val(location.protocol+'//'+location.host+'/payment/?action=confirm&tarif='+tarif);
                         $('#failURL').val(location.protocol+'//'+location.host+'/payment/?action=fail');
 
                         $('#'+info.key+info.val).attr('checked','checked');

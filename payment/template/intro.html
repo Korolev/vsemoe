@@ -3,13 +3,23 @@
 <script type="text/javascript">
     $(document).ready(function(){
         //additional-info-colapser
-        var colapser = $('.additional-info-colapser .switcher'),
-                colapsCont = $('.additional-info');
+//        var colapser = $('.additional-info-colapser .switcher'),
+//                colapsCont = $('.additional-info');
+//
+//        colapser.on('click',function(){
+//            colapsCont.toggleClass('hidden');
+//            colapser.toggleClass('open');
+//        });
 
-        colapser.on('click',function(){
-            colapsCont.toggleClass('hidden');
-            colapser.toggleClass('open');
-        });
+        var colapsCont = $('.additional-info');
+        $("#show_addtitional_info").on('click',function(){
+            colapsCont.removeClass('hidden');
+            colapsCont.css({height:0,overflow:'hidden'});
+            colapsCont.animate({height:'451px'},800,function(){
+
+            });
+            return false;
+        })
     });
 </script>
 <div class="wizard-navigation">
@@ -25,14 +35,144 @@
         </div>
     </div>
 </div>
-<h1>Мы помогаем людям создать
-    <br>положительные изменения с своими деньгами.
-    <br>Сейчас Ваша очередь.</h1>
-<div class="additional-info-colapser">
-    <div class="switcher"></div>
+
+<!-- 29.09.2014 -->
+<div class="payment_head">
+    <div class="payment_head_left">
+        <h1>Наидите верное решение ...</h1>
+        Есть интерес к личным деньгам?
+        <br> Мы помогаем людям собрать их в едином месте
+        <br>и создать положительные изменения. Сейчас Ваша очередь.
+    </div>
+    <div class="payment_head_right">
+        <a href="/rules.html#intro_terms">Условия<br> предоставления<br> услуг - Оферта</a>
+    </div>
 </div>
-<div class="additional-info">
+
+<div class="payment_table">
+    <h2 class="center">Стоимость</h2>
+    <div class="top_squire_block">
+        <div class="price_old"><span class="strikethrough">1499</span></div>
+        <div class="price_new"><a href="?action=pay&amp;summ=856">856</a></div>
+        <div class="price_period">рублей / 1 ГОД</div>
+        <div class="price_button deep_red">Отлично, надо брать</div>
+    </div><div class="top_squire_block">
+        <div class="price_old"><span class="strikethrough strikethrough1">150</span></div>
+        <div class="price_new">164</div>
+        <div class="price_period">рублей / 2 МЕСЯЦА</div>
+        <div class="price_button red"><a href="?action=pay&amp;summ=164">Хорошо, покупаем</a></div>
+    </div><div class="top_squire_block">
+        <div class="price_old"><span class="strikethrough strikethrough2">99</span></div>
+        <div class="price_new">82</div>
+        <div class="price_period">рублей / 1 МЕСЯЦ</div>
+        <div class="price_button yellow"><a href="?action=pay&amp;summ=82">Ок, берем</a></div>
+    </div><div class="top_squire_block last">
+        <div class="price_old"></div>
+        <div class="price_new">0</div>
+        <div class="price_period">рублей / БЕСПЛАТНО</div>
+        <div class="price_button green"><a href="/account/#register">Ок, начнем</a></div>
+    </div>
+    <div class="mid_squire_block">
+        <h3>ВЫ СМОЖЕТЕ</h3>
+        <ul>
+            <li>Совершать больше транзакций.
+                <span>(Любое количество)</span></li>
+            <li>Работать с дополнительными ресурсами.
+                <span>(Банковскими счетами и картами, инвестициями и другими средствами)</span></li>
+            <li>Создавать вложенные платежи.
+                <span>(Сплит платежи)</span></li>
+            <li>Синхронизироваться
+                <span>(между Web и Mobil приложениями)</span></li>
+            <li>Своевременно получать техническую поддержку.
+                <span>(Быстрое решение проблем)</span></li>
+            <li>Безопаснее работать с приложениями.
+                <span>(Самые современные технологии защиты и шифрования данных)</span></li>
+        </ul>
+        <div class="button_holder">
+            <div class="price_button blue">Нужно пробовать</div>
+            <span class="after_button">Бесплатно 30 дней</span>
+        </div>
+
+    </div><div class="mid_squire_block last">
+        <div class="fake_h3"></div>
+        <ul>
+            <li>Взаимно <span>
+                (Любое количество)</span></li>
+            <li>Ограниченно</li>
+            <li>Нет</li>
+            <li>Нет</li>
+            <li>Ограниченно</li>
+            <li>Ограниченно  <span>
+                (SSL криптографический протокол)</span></li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- /29.09.2014 -->
+
+
+<div class="app_cost" style="margin-top: 22px">
+    <p class="center">Просто зарегистрируйтесь и пробуйте!</p>
+    <p class="center italic">Отсвлеживайте сови денежные средства, анализируйте, планируйте, увеличивайте
+        <br> и будьте благополучны!</p>
+    <!--<p class="center">-->
+        <!--&lt;!&ndash;<br>&ndash;&gt;-->
+        <!--&lt;!&ndash;<a href="/rules.html#intro_terms">Условия тарифных планов</a>&ndash;&gt;-->
+    <!--</p>-->
+</div>
+<div class="payment-methods">
+    <span class="visa"></span>
+    <span class="mastercard"></span>
+    <span class="svyaznoy"></span>
+    <span class="webmoney"></span>
+    <span class="yamoney"></span>
+</div>
+
+<div class="">
+    <div class="testimonials" style="background-color: #ffffff; padding-top: 1px">
+        <div class="testimonials_header center">
+            <h2>Клиенты о нас ...</h2>
+            <div class="testimonials_navigation">
+                <div class="nav_prev"></div>
+                <div class="nav_next"></div>
+            </div>
+        </div>
+        <div class="testimonials_holder">
+            <div class="testimonials_body">
+                <div class="testimonials_user">от Superbabochka</div>
+                <div class="testimonials_user_message">
+                    <p>Спасибо! Двигайтесь в том же направлении!</p>
+                </div>
+            </div>
+            <div class="testimonials_body">
+                <div class="testimonials_user">от Jou_Jizzy</div>
+                <div class="testimonials_user_message">
+                    <p>Все отлично и хорошо! Прям хватает по полной:) Единственное что хотелось
+                        бы - вместо стартового экрана с почтой и паролем, вводить цифровой пароль
+                        из 4 цифр, как на защите разблокировки.</p>
+                </div>
+            </div>
+            <div class="testimonials_body">
+                <div class="testimonials_user">от IVAN312330</div>
+                <div class="testimonials_user_message">
+                    <p>К плюсам отнесу простоту, минималистичный дизайн. То что надо простому
+                        человеку. Нет кучи дурацких настоек. Но конечно, чувствуется некоторая
+                        недоработанность, не очень удобная навигация. Не хватает раздела “Помощь”.</p>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
     <div class="payment_description">
+<div class="center">
+    <a style="color: #00a5c7;cursor: pointer" id="show_addtitional_info">Подробнее</a>
+</div>
+<div class="additional-info hidden">
         <h2 class="center">Содержание</h2>
         <p class="center italic">Сервис включает в себя:</p>
         <div class="float_left_column">
@@ -66,68 +206,9 @@
             <div class="italic">Для пользователей, которые предпочтут увидеть информацию более развернуто,
                 чем может дать мобильный телефон.</div>
         </div>
+</div>
         <div class="app-image center clear">
             <img src="/img/payment/iPhoneImac.png">
         </div>
-        <div class="testimonials">
-            <div class="testimonials_header center">
-                <h2>Клиенты о нас ...</h2>
-                <div class="testimonials_navigation">
-                    <div class="nav_prev"></div>
-                    <div class="nav_next"></div>
-                </div>
-            </div>
-            <div class="testimonials_holder">
-                <div class="testimonials_body">
-                    <div class="testimonials_user">от Superbabochka</div>
-                    <div class="testimonials_user_message">
-                        <p>Спасибо! Двигайтесь в том же направлении!</p>
-                    </div>
-                </div>
-                <div class="testimonials_body">
-                    <div class="testimonials_user">от Jou_Jizzy</div>
-                    <div class="testimonials_user_message">
-                        <p>Все отлично и хорошо! Прям хватает по полной:) Единственное что хотелось
-                            бы - вместо стартового экрана с почтой и паролем, вводить цифровой пароль
-                            из 4 цифр, как на защите разблокировки.</p>
-                    </div>
-                </div>
-                <div class="testimonials_body">
-                    <div class="testimonials_user">от IVAN312330</div>
-                    <div class="testimonials_user_message">
-                        <p>К плюсам отнесу простоту, минималистичный дизайн. То что надо простому
-                            человеку. Нет кучи дурацких настоек. Но конечно, чувствуется некоторая
-                            недоработанность, не очень удобная навигация. Не хватает раздела “Помощь”.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
     </div>
-</div>
-<div class="app_cost">
-    <h2 class="center">Стоимость</h2>
-    <p class="center italic">Каждый месяц, первые 3 зарегистрированных пользователя получют бесплатно
-        подписку на месяц.</p>
-    <div class="app_cost_table">
-        <img src="/img/payment/Form-Cost.jpg" />
-        <div class="pay_links">
-            <a href="?action=pay&amp;summ=680"></a>
-            <a href="?action=pay&amp;summ=112"></a>
-            <a href="?action=pay&amp;summ=63"></a>
-        </div>
-    </div>
-    <p class="center italic">Следите за своими денежными средствами, анализируйте, планируйте, будьте
-        благополучны!</p>
-    <p class="center">
-        <br>
-        <a href="/rules.html#intro_terms">Условия тарифных планов</a>
-    </p>
-</div>
-<div class="payment-methods">
-    <span class="visa"></span>
-    <span class="mastercard"></span>
-    <span class="svyaznoy"></span>
-    <span class="webmoney"></span>
-    <span class="yamoney"></span>
 </div>

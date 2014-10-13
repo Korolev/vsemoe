@@ -5,6 +5,7 @@ $userCookie = $_COOKIE;
 $page = $_GET['action'];
 $sub_action = $_GET['dir'];
 $cost = $_GET['summ'];
+$tarif = $_GET['tarif'];
 $response = '';
 
 if($page == 'PaymentFail'){
@@ -21,10 +22,17 @@ if(!$userCookie['vse_cookie_token_'] & $page == 'pay'){
 }
 
 $payTextHash = array(
-    63 => 'Дорогой друг, вы покупаете за 63 рублей программный пакет на 1 месяц.',
-    112 => 'Дорогой друг, вы покупаете за 112 рублей программный пакет на 2 месяца.',
-    680 => 'Дорогой друг, вы покупаете за 680 рублей программный пакет на 1 год.'
+    82 => 'Дорогой друг, вы покупаете за 82 рублея программный пакет на 1 месяц.',
+    164 => 'Дорогой друг, вы покупаете за 164 рублея программный пакет на 2 месяца.',
+    856 => 'Дорогой друг, вы покупаете за 856 рублей программный пакет на 1 год.'
     );
+
+$payTextHash = array(
+    82 => '1 месяц',
+    164 => '2 месяца',
+    856 => '1 год'
+    );
+
 if(isset($page)){
     $action = $page;
 }
@@ -42,8 +50,12 @@ if(isset($sub_action)){
     $content = file_get_contents('template/'.$action.'.html');
     if(isset($cost)){
         $content = str_replace('{!invitation}',$payTextHash[$cost], $content);
+    }  
+    if(isset($tarif)){
+        $content = str_replace('{!period}',$payTextHash[$tarif], $content);
     }    
     $content = str_replace('{!document_content}',$content, $html);
+
 }
 
 echo $content;
