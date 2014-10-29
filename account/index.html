@@ -787,8 +787,12 @@
         </div>
         <div id="tabs-2">
             <div class="flexlisttitle" data-bind="template:'flexlist-title'"></div>
-            <div class="flexlist"
-                 data-bind="template:{name:'catlist-box-tpl',foreach:accountsViewList}"></div>
+            <div class="flexlist" data-bind="sortable: {template: 'catlist-box-tpl',
+                                   data: accountsViewList,
+                                   afterMove: $root.moveCatCallback,
+                                   options: { placeholder: 'sortable-placeholder' } }">
+
+            </div>
         </div>
     </div>
 </script>

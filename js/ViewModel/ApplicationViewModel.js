@@ -437,7 +437,7 @@ var ApplicationViewModel = function () {
         var tLen = self.transFiltered().length;
         self.totalPages(tLen % self.pageSize == 0 ? tLen / self.pageSize : (tLen / self.pageSize | 0) + 1);
         self.totalPagesArr.removeAll();
-        self.totalPagesArr.pushAll(range(1, self.totalPages() > 5 ? 5 : self.totalPages()));
+        self.totalPagesArr.pushAll(range(1, self.totalPages() > 4 ? 4 : self.totalPages()));
 
         self.transactionsSetGen();
     };
@@ -531,10 +531,10 @@ var ApplicationViewModel = function () {
             self.transactionsSetGen();
             if (val - 2 > 0 && (val + 2) <= self.totalPages()) {
                 self.totalPagesArr(range(val - 2, val + 2));
-            } else if (val < 5) {
-                self.totalPagesArr(range(1, 5));
+            } else if (val < 4) {
+                self.totalPagesArr(range(1, self.totalPages()));
             } else {
-                self.totalPagesArr(range(self.totalPages() - 4, self.totalPages()));
+                self.totalPagesArr(range(self.totalPages() - 3, self.totalPages()));
             }
         }
     });
