@@ -766,18 +766,13 @@ ko.bindingHandlers['autocomplete'] = {
                 var selectedC = viewModel.currencyHash[obj.item._value],
                     user = viewModel.user;
                 if(selectedC.currency_id != viewModel.baseCurrencyId() && user.__usersCurrency().indexOf(selectedC.currency_id) == -1){
-                    user.__usersCurrency.push(selectedC.currency_id);
+                    user.addNewCurrency(selectedC.currency_id)
                 }
                 setTimeout(function(){
                     $element.val('');
                 },50);
             }
         };
-
-        console.log($element);
-        console.log(config);
-        console.log(opts);
-
 
         $.each(opts,function(k,o){
             var r = {};
@@ -789,7 +784,6 @@ ko.bindingHandlers['autocomplete'] = {
             r._value = o.currency_id;
             s.source.push(r);
         });
-console.log(s)
         $element.autocomplete(s);
 
     },

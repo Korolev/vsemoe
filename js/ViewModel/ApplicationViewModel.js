@@ -66,7 +66,7 @@ var ApplicationViewModel = function () {
             "congratulations": "",
             "changepass": "",
             "observe": "У вас есть...",
-            "insert": "Ввод платежей...",
+            "insert": "Ввод транзакций...",
             "settings": "Категории бюджета...",
             "accmanage": "Выберите тип средств..."
         },
@@ -164,6 +164,11 @@ var ApplicationViewModel = function () {
     this.baseCurrency = ko.observable({});
     this.baseCurrencyId = ko.observable(478);
     this.user = new UserViewModel(self);
+
+    this.baseCurrency.subscribe(function(){
+        console.log('this.baseCurrency.subscribe');
+        self.baseCurrencyId.valueHasMutated();
+    });
 
 
 //Accounts
@@ -648,6 +653,7 @@ var ApplicationViewModel = function () {
     }, this).extend({throttle: 1});
 
     this.calculateAmount = function (fromCurId, toCurId, amount, from) {
+        console.log(arguments,"!&@");
         //TODO use rate to baseCurrency
         if (moment.isMoment(from)) {
             from = from.format('YYYY-MM-DD');
@@ -660,6 +666,8 @@ var ApplicationViewModel = function () {
             toRate = toCurId == self.baseCurrencyId() ?
                 1
                 : self.___usedCurrencyRates[toCurId + '-' + date] || 1;
+        console.log(self.___usedCurrencyRates[toCurId + '-' + date]);
+        console.log(self.___usedCurrencyRates,fromRate,toRate);
         res = res * fromRate;
         res = res / toRate;
         return res;

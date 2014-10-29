@@ -1456,6 +1456,17 @@ input.vse-cancel:active{
     padding: 0 22px;
     display: block;
 }
+.split_input.acc_ammount .clear_input_ico{
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background-image: url("/img/clear_inp.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    top: 8px;
+    left: 40px;
+    cursor: pointer;
+}
 .split_input.acc_ammount span,
 .split_input.acc_ammount > div{
     padding: 0 4px;
@@ -1946,12 +1957,24 @@ input.vse-cancel:active{
     cursor: pointer;
 }
 
-.currency_list h3{
+.currency_list h3,
+.currency_list input+label{
     text-transform: uppercase;
     color: #938e85;
     margin: 20px 0 5px 0;
-    font-family: "helveticaneue bold";
+    padding-left: 15px;
+    font-family: "HelveticaNeue Light";
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 14px;
 }
+
+.currency_list input+label{
+    margin: 0 0 0 5px;
+    padding-left: 0px;
+}
+
+
 
 .currency_list .cloud-tag{
     border-radius: 2px;
@@ -1960,6 +1983,7 @@ input.vse-cancel:active{
     display: inline-block;
     height: 35px;
     line-height: 35px;
+    margin-bottom: 4px;
 }
 .currency_list .cloud-tag .remove-tag{
     font-size: 12px;

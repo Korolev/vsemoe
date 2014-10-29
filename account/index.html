@@ -725,6 +725,7 @@
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
             </div><input type="text" data-bind="value:amount, hasfocus:amounFocus, event:{keydown:validateKeyDown}"/>
+            <div class="clear_input_ico" data-bind="click:clearAmount"></div>
         </div><div class="acc_controls">
             <div class="acc_button" data-bind="
                                     click:function(){$data.commentEdit(!$data.commentEdit())},
@@ -911,7 +912,11 @@
                         </span>
                         <!-- /ko -->
                     </span>
-                    <div style="margin-top: 30px">
+                    <div style="margin-top: 40px" >
+                        <input type="checkbox" id="set_main_curr"  data-bind="checked:$root.user.changeMainCurrency"/><label for="set_main_curr">Сделать основной валютой</label>
+                    </div>
+                    <div style="margin-top: 10px">
+                        <h3>Для добавления<br>введите валюту</h3>
                         <span class="add-currency-tag">
                         <input type="text" data-bind="autocomplete:{
                             options: $root.currencyArr,
@@ -1177,7 +1182,7 @@
             <span gr="2" class="grayResult" data-bind="digitext:totalPassive"></span>
         </div>
         <div style="z-index:100;position: relative;top:53px;left:-10px;margin:0 -30px 33px 0;width: 210px;" class="totalMenu" data-bind="css:{selected:$root.accountId() == ''},
-                click:function(){$root.addAccIdToFilter({id:''})}">Все платежи
+                click:function(){$root.addAccIdToFilter({id:''})}">Все транзакции
         </div>
         <div class="emptyBox">
             <span class="categoryText">МОИ СРЕДСТВА</span>
@@ -1220,10 +1225,10 @@
 
         <div class="topMenu">
             <div class="topMenuBox shortMenuItem lastItem" style="font-size: 22px;"
-                 data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}">+
+                 data-bind="gotoaction:'accmanage', css:{selected:action() == 'accmanage'}" title="Создать счет">+
             </div>
             <div class="topMenuBox shortMenuItem categories_tab"
-                 data-bind="gotoaction:'settings', css:{selected:action() == 'settings'}">
+                 data-bind="gotoaction:'settings', css:{selected:action() == 'settings'}" title="Настройки">
             </div>
             <div class="topMenuBox" data-bind="gotoaction:'observe', css:{selected:action() == 'observe'}">ОБЗОР</div>
             <div class="topMenuBox" data-bind="gotoaction:'insert', css:{selected:action() == 'insert'}">ВВОД</div>

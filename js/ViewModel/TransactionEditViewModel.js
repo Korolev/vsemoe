@@ -43,6 +43,10 @@ var TransactionEditViewModel = function (data, app, saveCallback) {
     this.finished = data.finished | 0;
     this.hidden = data.hidden | 0;
 
+    this.clearAmount = function(){
+        self.amount(0);
+    }
+
     this.amounFocus = ko.observable();
 
     this.cssClass = data.cssClass;

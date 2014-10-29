@@ -48,6 +48,21 @@ var UserViewModel = function (app) {
     this.userConfig = ko.observable();
     this.userConfigHash = {};
 
+    this.changeMainCurrency =ko.observable(false);
+
+    this.addNewCurrency = function(cId){
+        if(self.changeMainCurrency()){
+            var oldCurId = app.baseCurrencyId();
+            app.baseCurrencyId(cId);
+            app.baseCurrency(app.currencyHash[cId]);
+            self.setConfig(appSettings.baseCurrencyId,cId);
+            self.__usersCurrency.push(oldCurId);
+            self.changeMainCurrency(false);
+        }else{
+            self.__usersCurrency.push(cId);
+        }
+    };
+
     this.setConfig = function (key, value) {
         self.userConfigHash[key].value = value;
         delete  self.userConfigHash[key].modified;
@@ -61,6 +76,7 @@ var UserViewModel = function (app) {
         })
     };
     this.loadConfig = function (conf) {
+        console.log(conf);
         each(default_conf, function (k, cfg) {
             self.userConfigHash[cfg.name] = cfg;
         });
@@ -115,7 +131,8 @@ var UserViewModel = function (app) {
         }, this).extend({throttle: 5});
 
         self.__usersCurrency.subscribe(function (val) {
-            if (!self.__usersCurrencyStr || self.__usersCurrencyStr == val.join(',')) {
+            console.log(val);
+            if (self.__usersCurrencyStr == val.join(',')) {
                 return false;
             }
             if (self.timeOutId) {
