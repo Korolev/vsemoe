@@ -40,7 +40,6 @@ var TransactionViewModel = function (data, app) {
                 to_group,
                 status = 0,
                 acc;
-
             if(app.accountsHash[self.from_id]){
                 status++;
                 acc = app.accountsHash[self.from_id];
@@ -48,12 +47,12 @@ var TransactionViewModel = function (data, app) {
                 from_type = acc.type();
             }
             if(app.accountsHash[self.to_id]){
+
                 status++;
                 acc = app.accountsHash[self.to_id];
                 to_group = acc.group();
                 to_type = acc.type();
             }
-
             if (status == 2) {
                 if (from_type == 'IN') {
                     self.action_index = 1;
@@ -69,6 +68,8 @@ var TransactionViewModel = function (data, app) {
     }
 
     this.cssClass = ["passive_tr", "incoming_tr", "transport_tr","fixed_tr"][self.action_index];
+
+    console.log('this.cssClass',this.cssClass);
 
     this.currencyRate = ko.observable(1);
 

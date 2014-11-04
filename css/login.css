@@ -33,6 +33,41 @@ input[type='text'], input[type='email'], input[type='password'], textarea {
     color: #acacac;
 }
 
+.currency_list_custom input[type='text']{
+    height: 37px;
+    background: #fff;
+    border: none;
+    font-size: 14px;
+    padding: 0 17px;
+    color: #acacac;
+    box-shadow: none;
+    border-radius: 0px;
+    width: 195px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.currency_pick_combo{
+    border: 1px solid #cccccc;
+    width: 232px;
+}
+
+.currency_pick_combo span span{
+    line-height: 37px;
+    padding: 0 10px;
+    color: #cccccc;
+    -webkit-transform:  rotate(180deg);
+    -moz-transform:  rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+    writing-mode: lr-tb;
+    position: absolute;
+    cursor: pointer;
+    font-family: Tahoma;
+    font-weight: bold;
+}
+
 input[type='submit'],
 input[type='button'] {
     height: 30px;

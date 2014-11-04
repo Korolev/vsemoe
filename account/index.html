@@ -725,7 +725,7 @@
                                         css:{width: 'auto',top: '28px',left:'0px'}
                                         }">
             </div><input type="text" data-bind="value:amount, hasfocus:amounFocus, event:{keydown:validateKeyDown}"/>
-            <div class="clear_input_ico" data-bind="click:clearAmount"></div>
+            <div class="clear_input_ico" data-bind="click:clearAmount, css:{hidden:$data.amount()*1 == 0}"></div>
         </div><div class="acc_controls">
             <div class="acc_button" data-bind="
                                     click:function(){$data.commentEdit(!$data.commentEdit())},
@@ -897,7 +897,7 @@
             <div class="flexlisttitle" >
                 <h2 style="padding-left: 55px; font-size: 120%">Денежные единицы приложения</h2>
             </div>
-            <div class="currency_list">
+            <div class="currency_list" style="padding-left: 55px">
                 <div>
                     <h3>Основная валюта</h3>
                     <div data-bind="with:$root.baseCurrency">
@@ -906,7 +906,7 @@
                         </span>
                     </div>
                 </div>
-                <div>
+                <div data-bind="if:user.usersCurrency().length > 1">
                     <h3>Дополнительные валюты</h3>
                     <span data-bind="foreach:user.usersCurrency">
                         <!-- ko if: $data.currency_id != $root.baseCurrencyId() -->
@@ -916,19 +916,27 @@
                         </span>
                         <!-- /ko -->
                     </span>
-                    <div style="margin-top: 40px" >
+                </div>
+                <div class="currency_list_custom">
+                    <div style=" border-top: 1px solid #fbfbfc; margin:40px 0px 20px 0px; padding-top: 20px" >
+                        <h2 style="font-size: 120%">Добавьте валюту</h2>
+                    </div>
+                    <div>
                         <input type="checkbox" id="set_main_curr"  data-bind="checked:$root.user.changeMainCurrency"/><label for="set_main_curr">Сделать основной валютой</label>
                     </div>
                     <div style="margin-top: 10px">
-                        <h3>Для добавления<br>введите валюту</h3>
+                        <h3>Для добавления</h3>
                         <span class="add-currency-tag">
-                        <input type="text" data-bind="autocomplete:{
-                            options: $root.currencyArr,
-                            optionText: '{%description%} ({%shortname%})',
-                            selectCallback:'setCheck'}"/>
+                            <div class="currency_pick_combo">
+                                <input id="currency_pick_combo_inp" placeholder="Наберите валюту" type="text" data-bind="autocomplete:{
+                                options: $root.currencyArr,
+                                optionText: '{%description%} ({%shortname%})',
+                                selectCallback:'setCheck'}"/>
+                                <span data-bind="click:function(){$('#currency_pick_combo_inp').val(' ')}"><span >^</span></span>
+                            </div>
+
                         </span>
                     </div>
-
                 </div>
             </div>
             <div class="clear"></div>
@@ -1462,6 +1470,7 @@
         $(".autocompleteFix").each(function () {
             $(this).trigger('change');
         });
+        $(document).tooltip();
     });
 </script>
 </body>

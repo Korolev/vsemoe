@@ -132,7 +132,7 @@ ko.bindingHandlers['accountname'] = {
 ko.bindingHandlers['shorttext'] = {
     'update': function (element, valueAccessor) {
         var value = ko.utils.unwrapObservable(valueAccessor()) + "";
-        value = value.length > 18 ? value.substr(0, 18) + ".." : value;
+        value = value.length > 16 ? value.substr(0, 16) + ".." : value;
         ko.utils.setTextContent(element, value);
     }
 };
