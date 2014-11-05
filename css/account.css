@@ -1033,7 +1033,7 @@ input.vse-cancel:active{
     border: 1px solid #CAD5E0;
     box-shadow: 2px 2px 3px #dee9f4;
     z-index: 100;
-    padding-left: 10px;
+    /*padding-left: 10px;*/
 }
 
 .fake_tree_select_body li{
@@ -1043,6 +1043,7 @@ input.vse-cancel:active{
     padding: 0px 8px;
     line-height: 30px;
     position: relative;
+    margin-left: 10px;
 }
 
 .fake_tree_select_body .last_separated_link a{
@@ -1051,7 +1052,7 @@ input.vse-cancel:active{
 .fake_tree_select_body .last_separated_link{
     border-top: 1px solid #cccccc;
     display: block;
-    margin: 0;
+    margin: 0 !important;
     cursor: pointer;
     padding: 0px 8px 0 20px;
     line-height: 30px;
