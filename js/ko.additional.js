@@ -712,6 +712,7 @@ ko.bindingHandlers['treeSelect'] = {
                 checkSelected();
 
                 buildLi(options, _ul);
+                _ul.append('<li class="last_separated_link"><a href="/account/#settings">Редактор Категорий</a></li>');
                 _text.on('click', function () {
                     _ul.toggleClass('hidden');
                     checkSelected();
@@ -719,6 +720,8 @@ ko.bindingHandlers['treeSelect'] = {
             };
 
         buildUI();
+
+
 
         if (ko.isObservable(config.options)) {
             config.options.subscribe(function (val) {

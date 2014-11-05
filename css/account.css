@@ -1045,6 +1045,22 @@ input.vse-cancel:active{
     position: relative;
 }
 
+.fake_tree_select_body .last_separated_link a{
+    color: #7d8992 !important;
+}
+.fake_tree_select_body .last_separated_link{
+    border-top: 1px solid #cccccc;
+    display: block;
+    margin: 0;
+    cursor: pointer;
+    padding: 0px 8px 0 20px;
+    line-height: 30px;
+    position: relative;
+    background-image: url("/img/category_editor.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
 .fake_tree_select_body li span{
     padding-left: 5px;
     display: block;
