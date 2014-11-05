@@ -1054,12 +1054,12 @@ input.vse-cancel:active{
     display: block;
     margin: 0 !important;
     cursor: pointer;
-    padding: 0px 8px 0 20px;
+    padding: 0px 8px 0 30px;
     line-height: 30px;
     position: relative;
     background-image: url("/img/category_editor.png");
     background-repeat: no-repeat;
-    background-position: left center;
+    background-position: 10px 6px;
 }
 
 .fake_tree_select_body li span{
