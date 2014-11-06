@@ -929,6 +929,7 @@ input.vse-cancel:active{
 .form_row_input .help_text{
     padding: 10px 0px;
     height: auto;
+    line-height: 14px;
 }
 
 .form_row_input label.block{
@@ -992,7 +993,7 @@ input.vse-cancel:active{
     border-left: 4px solid transparent;
 }
 
-.split_input .fake_select:before{
+.row_edit_form .split_input .fake_select:before{
     border: none;
 }
 
@@ -1528,27 +1529,25 @@ input.vse-cancel:active{
 }
 
 .acc_button i.comment_i{
-    background-position: -1px -199px;
+    background-position: -1px -219px;
 }
 .acc_button i.split_i{
-    background-position: -1px -250px;
+    background-position: -1px -271px;
 }
 .acc_button i.ffriend_i{
-    background-position: -1px -99px;
+    background-position: -2px -108px;
 }
 .acc_button i.tofriend_i{
-    background-position: -1px -149px;
+    background-position: -2px -158px;
 }
 .acc_button i.add_i{
-    background-position: -1px 0px;
+    background-position: -2px -20px;
 }
 .acc_button i.substr_i{
-    background-position: -1px -11px;
-    height: 3px;
-    margin-top: 11px;
+    background-position: -2px -323px;
 }
 .acc_button i.move_i{
-    background-position: -1px -50px;
+    background-position: -2px -71px;
 }
 
 .acc_close_button{
@@ -1986,7 +1985,7 @@ input.vse-cancel:active{
     text-transform: uppercase;
     color: #938e85;
     margin: 20px 0 5px 0;
-    padding-left: 15px;
+    padding-left: 2px;
     font-family: "HelveticaNeue Light";
     font-size: 10px;
     font-weight: normal;
