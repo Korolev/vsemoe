@@ -26,7 +26,7 @@ var TransactionViewModel = function (data, app) {
     this.action_index = 0;
 
     if (app.accountsHash[self.from_id]
-        && app.accountsHash[self.from_id]
+        && app.accountsHash[self.to_id]
         && self.from_id != self.to_id
         && !app.accountsHash[self.to_id].createFromAcc()) {
         app.accountsHash[self.to_id].createFromAcc(app.accountsHash[self.from_id]);

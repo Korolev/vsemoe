@@ -49,11 +49,12 @@ var AccountViewModel = function (data, app) {
     this._sum = ko.observable(0);
     this.sum = ko.computed({
         read: function () {
-            if((self.group() == 2 || (self.group() == 0 && self.type()=='IN')) && self.children().length == 0){
-                return self._sum() * -1;
-            }else{
-                return self._sum();
-            }
+//            if((self.group() == 2 || (self.group() == 0 && self.type()=='IN')) && self.children().length == 0){
+//                return self._sum() * -1;
+//            }else{
+//                return self._sum();
+//            }
+            return self._sum();
 
         },
         write: function (val) {
@@ -129,53 +130,72 @@ var AccountViewModel = function (data, app) {
             lastFixDate,
             currentmonth = new Date(__now.getFullYear(), __now.getMonth()),
             currentmonthGetTime = currentmonth.getTime();
+//
+//        each(self.transactions, function (k, tr) {
+//            var trDate = tr.created.unix() * 1000;
+//            if (tr.position) {
+//                if (!lastFixDate) {
+//                    lastFixDate = trDate;
+//                    res = parseFloat(tr.amount);
+//                } else if (trDate > lastFixDate) {
+//                    lastFixDate = trDate;
+//                    res = parseFloat(tr.amount);
+//                }
+//            }
+//        });
+//
+//        each(self.transactions, function (k, tr) {
+//            if (!tr.hasSplit()) {
+//                amount = parseFloat(tr.amount) * (tr.from_id == self.id ? -1 : 1);
+//                if (self.currency() && tr.currency != self.currency()) {
+//                    amount = app.calculateAmount(
+//                        tr.currency,
+//                        self.currency(),
+//                        amount,
+//                        tr.created.format('YYYY-MM-DD')
+//                    );
+//                }
+//                date = tr.created.unix() * 1000;
+//                lastFixDate = lastFixDate ? lastFixDate : 0;
+//
+//                if (!tr.hidden && tr.deleted() == 0) {
+//                    if (self.group() == 0 && date > currentmonthGetTime) {
+//                        res += amount;
+//                    } else if (date > lastFixDate) {
+//                        res += amount;
+//                    }
+//                }
+//            }
+//        });
+//
 
-        each(self.transactions, function (k, tr) {
-            var trDate = tr.created.unix() * 1000;
-            if (tr.position) {
-                if (!lastFixDate) {
-                    lastFixDate = trDate;
-                    res = parseFloat(tr.amount);
-                } else if (trDate > lastFixDate) {
-                    lastFixDate = trDate;
-                    res = parseFloat(tr.amount);
-                }
-            }
-        });
 
-        each(self.transactions, function (k, tr) {
-            if (!tr.hasSplit()) {
-                amount = parseFloat(tr.amount) * (tr.from_id == self.id ? -1 : 1);
-                if (self.currency() && tr.currency != self.currency()) {
-                    amount = app.calculateAmount(
-                        tr.currency,
-                        self.currency(),
-                        amount,
-                        tr.created.format('YYYY-MM-DD')
-                    );
-                }
-                date = tr.created.unix() * 1000;
-                lastFixDate = lastFixDate ? lastFixDate : 0;
-
-                if (!tr.hidden && tr.deleted() == 0) {
-                    if (self.group() == 0 && date > currentmonthGetTime) {
-                        res += amount;
-                    } else if (date > lastFixDate) {
-                        res += amount;
-                    }
-                }
-            }
-        });
 
         each(self.children(), function (k, acc) {
-            res += acc.sum();
+            res += acc._sum();
         });
 
         self._sum(res);
 
-        if (self.parent() && (self.parent() | 0) > 1 && res) {
-            app.accountsHash[self.parent()].recalculateSum();
+        if (self.requestTimeOut) {
+            clearTimeout(self.requestTimeOut);
         }
+        self.requestTimeOut = setTimeout(function () {
+            ServerApi.getAccountSum({account_id: self.id}, function (r) {
+
+
+                if (self.children().length == 0) {
+                    res = r ? r[0].sum : 0
+                    self._sum(res);
+                }
+
+                if (self.parent() && (self.parent() | 0) > 1 && res) {
+                    app.accountsHash[self.parent()].recalculateSum();
+                }
+            });
+        }, 500);
+
+
     };
 
     this.children.subscribe(function (val) {
@@ -339,9 +359,11 @@ var AccountViewModel = function (data, app) {
             self.transactions.splice(idx, 1);
         }
         self.recalculateSum();
-    }
+    };
+
     this.addTransaction = function (tr) {
         self.transactions.push(tr);
         self.recalculateSum();
-    }
+    };
+    self.recalculateSum();
 };

@@ -765,7 +765,6 @@ var ApplicationViewModel = function () {
                     self.___firstDate = moment().unix();
                     self.___usedCurrency = self.___usedCurrency || {};
                     self.___usedCurrencyRates = self.___usedCurrencyRates || {};
-
                     each(r, function (k, acc) {
                         self.___usedCurrency[acc.currency_id] = {};
                         var a = new AccountViewModel(acc, self);
