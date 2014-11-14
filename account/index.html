@@ -874,10 +874,31 @@
             <div class="flexlist upload_page">
                 <h2 style="padding-top: 30px">Загрузить фаил</h2>
                 <div>
-                    <input type="button" class="button" value="Добавить" data-bind="">
-                    <span>фаил не добавлен</span>
+                    <form id="file_upload" enctype="multipart/form-data" method="post">
+                        <input type="file" data-bind="event:{change:user.changeInputFile}">
+                        <div class="button yellow_button" data-bind="click:user.clickUpload">Добавить</div>
+                        <div data-bind="" class="upload-status">
+                            <!-- ko if: user.uploadStatus() == 'ready'-->
+                                <span>фаил не добавлен</span>
+                            <!-- /ko -->
+                            <!-- ko if: user.uploadStatus() == 'loading'-->
+                                <span style="line-height: 13px; padding-top: 24px;">Идет распознование</span>
+                                <div class="upload_progres_holder">
+                                    <div class="upload_progres_status"></div>
+                                </div>
+                            <!-- /ko -->
+                            <!-- ko if: user.uploadStatus() == 'complete'-->
+                            <span style="line-height: 13px; padding-top: 24px;">Фаил загружен:</span>
+                            <div  style="line-height: 20px; font-weight: bold;font-size: 14px" data-bind="text:user.fileName"></div>
+                            <!-- /ko -->
+                        </div>
+                    </form>
+
                     <div class="help_upload_text">
-                        Допустимые форматы: xls, xml, pdf, csv
+                        Допустимые форматы: xls, xml, pdf, txt, CSV, SWIFT, MT940, QIF, OFX и HBCI
+                        <br>
+                        <br>
+                        Принимаются другие форматы
                     </div>
                 </div>
             </div>

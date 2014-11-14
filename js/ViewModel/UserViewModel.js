@@ -282,6 +282,58 @@ var UserViewModel = function (app) {
         setCookie(ApplicationSettings.cookieName, 0, {expires: new Date('1990')});
     };
 
+    this.clickUpload = function(){
+        var form = $('#file_upload');
+        form.find('input').trigger('click');
+    }
+
+    this.fileName = ko.observable('');
+    this.uploadStatus = ko.observable('ready');
+    this.changeInputFile = function(app, event){
+        if (self.fileName()) {
+
+        }
+
+        var element = event.target,
+            file = element.files[0],
+            data = new FormData();
+
+        self.fileName(file.name);
+
+        self.uploadStatus('loading');
+        data.append('file', file);
+
+//TODO check file extension in JavaScript before upload
+        $.ajax({
+            url: '/upload',
+            beforeSend: function (request)
+            {
+                request.setRequestHeader("Cache-Control", "no-store,no-cache,must-revalidate");
+                request.setRequestHeader("Pragma", "no-cache");
+                request.setRequestHeader("Expires", "-1");
+            },
+            type: "POST",
+            data: data,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,   // tell jQuery not to set contentType
+            success: function (r) {
+                if (r.status == 0) {
+                    self.uploadStatus('error');
+                    return false;
+                }
+                if (r.file) {
+                    console.log(r);
+                    setTimeout(function(){
+                        self.uploadStatus('complete');
+                    },1000);
+                }
+            },
+            error: function (r) {
+                self.uploadStatus('error');
+            }
+        });
+    }
+
     this.token.subscribe(function (val) {
         ServerApi.options.token = val;
 //        ServerApi.getConfigList({}, function (r) {
