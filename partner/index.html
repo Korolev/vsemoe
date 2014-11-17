@@ -242,7 +242,13 @@ input[type='radio']:checked + label:before {
 
 </style>
 <script src="../js/jquery-1.9.1.min.js?v9"></script>
+<script src="../js/jquery.maskedinput.js"></script>
 <script type="text/javascript">
+    $(function(){
+        $('#phone_num').mask('+7 (999) 999-99-99');
+    });
+
+
     $.fn.serializeObject = function()
     {
         var o = {};
@@ -370,7 +376,8 @@ input[type='radio']:checked + label:before {
         <div class="right_column">
             <img src="img/pageimage.jpg">
 
-            <h3>Регистрация</h3>
+            <!--<h3>Регистрация</h3>-->
+            <h3>Контактные данные</h3>
 
             <div class="form_row">
                 <label>Имя и фамилия <span>*</span></label>
@@ -378,22 +385,32 @@ input[type='radio']:checked + label:before {
             </div>
             <div class="form_row">
                 <label>Мобильный телефон <span>*</span></label>
-                <input type="text" name="phone"/>
+                <input type="text" name="phone" placeholder="+7 (___) ___-__-__" id="phone_num"/>
             </div>
             <div class="form_row">
                 <label>Электронная почта <span>*</span></label>
                 <input type="text" name="email"/>
             </div>
             <div class="form_row">
+                <label style="line-height: 12px;">Какую сумму необходимо <br>Инвестировать?</label>
+                <input type="text" name="amount" p/>
+            </div>
+            <div class="form_row">
                 <div id="sent_btn" class="form_button"></div>
+            </div>
+            <div class="form_row" style="text-align: center; line-height: 10px;">
+                <I style="color: #CCCCee; font-size: 10px;text-align: center; line-height: 11px">
+                    ООО «Финансовый Аналитический Центр <br> «Инвест-Проект»
+                </I>
             </div>
         </div>
     </form>
     <div class="clear"></div>
     <div class="form_notification">
         <span class="form_error hidden">
-        Пожалуйста заполните пропущенные поля,
-        в Институте ИНЕКБИ действует пропускная система.
+        Пожалуйста заполните пропущенные поля
+            <!--,-->
+        <!--в Институте ИНЕКБИ действует пропускная система.-->
         </span>
         <span class="form_success hidden">
             Благодарим за регистрацию

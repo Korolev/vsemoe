@@ -79,7 +79,7 @@ function showIframeDialog(url, options) {
 
     var style = {
         width:'315px',
-        height: '505px'
+        height: '642'
     };
     dialogBody.css(style);
     ifrm.css(style);
@@ -99,7 +99,7 @@ function showIframeDialog(url, options) {
     function iResize() {
         var newH = document.getElementById('your-iframe-id').contentWindow.document.body.offsetHeight+2;
 
-        newH = newH < 505 ? 520 : newH;
+        newH = newH < 642 ? 642 : newH;
         var style = {
             width:'315px',
             height: newH+'px'
