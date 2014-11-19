@@ -309,13 +309,35 @@ input[type='radio']:checked + label:before {
                         setTimeout(function(){
                             form_success.addClass('hidden');
                             form_busy = false;
-                        },3000);
+
+                            var pJq = window.parent.$;
+                            console.log(pJq);
+                            console.log(window.parent.document.getElementsByClassName('dialogHolder'));
+                            var dialogHolder = window.parent.document.getElementsByClassName('dialogHolder')[0];
+                            // pJq('<div class="dialogHolder"></div>');
+                            var dialogBody = window.parent.document.getElementsByClassName('dialogBody')[0];
+                            //pJq('<div class="dialogBody"></div>');
+
+                            console.log(dialogHolder);
+                            console.log(dialogBody);
+
+//                            dialogBody.remove();
+//                            dialogHolder.remove();
+
+                            dialogHolder.style.display = 'none';
+                            dialogBody.style.display = 'none';
+
+                            window.parent.document.body.removeChild(dialogHolder);
+                            window.parent.document.body.removeChild(dialogBody);
+
+                            window.close();
+                        },2000);
                     } else {
                         form_err.removeClass('hidden');
                         setTimeout(function(){
                             form_err.addClass('hidden');
                             form_busy = false;
-                        },3000);
+                        },2000);
                     }
                 }
             });
