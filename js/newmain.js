@@ -25,13 +25,6 @@ $(function() {
         showPartnerForm();
     }
 
-    if(location.hash == '#unsubscribe'){
-        var email = getParameterByName('email');
-        ServerApi.unsubscribeUser({email:email},function(r){
-            console && console.log(r);
-        });
-
-    }
 });
 
 
