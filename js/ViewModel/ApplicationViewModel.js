@@ -56,6 +56,7 @@ var ApplicationViewModel = function () {
             "changepass": "login",
             "observe": "account",
             "insert": "account",
+            "opportunity": "account",
             "settings": "account",
             "accmanage": "account"
         },
